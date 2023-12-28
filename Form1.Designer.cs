@@ -256,15 +256,15 @@ namespace Anzeige
             // timePicker1
             // 
             this.timePicker1.BackColor = System.Drawing.Color.White;
-            this.timePicker1.Hour = 10;
+            this.timePicker1.Hour = 13;
             this.timePicker1.Location = new System.Drawing.Point(318, 622);
-            this.timePicker1.Minute = 12;
+            this.timePicker1.Minute = 44;
             this.timePicker1.Name = "timePicker1";
-            this.timePicker1.Second = 20;
+            this.timePicker1.Second = 14;
             this.timePicker1.Short = true;
             this.timePicker1.Size = new System.Drawing.Size(116, 29);
             this.timePicker1.TabIndex = 15;
-            this.timePicker1.Value = new System.DateTime(2023, 12, 28, 10, 12, 20, 0);
+            this.timePicker1.Value = new System.DateTime(2023, 12, 28, 13, 44, 14, 0);
             // 
             // listBoxDevices
             // 
@@ -281,6 +281,7 @@ namespace Anzeige
             // button3
             // 
             this.button3.BackColor = System.Drawing.Color.LightGray;
+            this.button3.BackgroundImage = global::Anzeige.Properties.Resources.nummer_5;
             this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button3.Location = new System.Drawing.Point(364, 5);
             this.button3.Name = "button3";

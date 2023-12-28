@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Anzeige</id>
+    <version>1.0.0</version>
+    <authors>Anzeige</authors>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework=".NETCoreApp3.1">
+        <dependency id="32feet.NET" version="3.5.0" exclude="Build,Analyzers" />
+        <dependency id="ExifLib" version="1.7.0" exclude="Build,Analyzers" />
+        <dependency id="ExifLib.PCL" version="1.0.1" exclude="Build,Analyzers" />
+        <dependency id="IronOcr" version="2023.7.28" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="13.0.3" exclude="Build,Analyzers" />
+        <dependency id="iTextSharp" version="5.5.13.3" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkReferences>
+      <group targetFramework=".NETCoreApp3.1">
+        <frameworkReference name="Microsoft.WindowsDesktop.App.WindowsForms" />
+      </group>
+    </frameworkReferences>
+  </metadata>
+  <files>
+    <file src="C:\Users\schip\source\repos\Anzeige\Anzeige\bin\Debug\netcoreapp3.1\Anzeige.runtimeconfig.json" target="lib\netcoreapp3.1\Anzeige.runtimeconfig.json" />
+    <file src="C:\Users\schip\source\repos\Anzeige\Anzeige\bin\Debug\netcoreapp3.1\Anzeige.dll" target="lib\netcoreapp3.1\Anzeige.dll" />
+  </files>
+</package>

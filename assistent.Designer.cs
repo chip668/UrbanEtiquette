@@ -33,6 +33,8 @@ namespace Anzeige
             this.CDisplay = new System.Windows.Forms.TextBox();
             this.CBT2 = new System.Windows.Forms.Button();
             this.CBT3 = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // CBT1
@@ -51,7 +53,7 @@ namespace Anzeige
             this.CDisplay.Location = new System.Drawing.Point(11, 8);
             this.CDisplay.Multiline = true;
             this.CDisplay.Name = "CDisplay";
-            this.CDisplay.Size = new System.Drawing.Size(616, 93);
+            this.CDisplay.Size = new System.Drawing.Size(504, 93);
             this.CDisplay.TabIndex = 2;
             this.CDisplay.Text = "Haben Sie eine Videoaufzeichung oder ein Foto";
             // 
@@ -75,17 +77,29 @@ namespace Anzeige
             this.CBT3.UseVisualStyleBackColor = true;
             this.CBT3.Click += new System.EventHandler(this.CBT_Click);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = global::Anzeige.Properties.Resources.nummer_5;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox1.Location = new System.Drawing.Point(521, 8);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(106, 93);
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
+            // 
             // assistent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(632, 170);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.CDisplay);
             this.Controls.Add(this.CBT3);
             this.Controls.Add(this.CBT2);
             this.Controls.Add(this.CBT1);
             this.Name = "assistent";
             this.Text = "assistent";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -97,5 +111,6 @@ namespace Anzeige
         private System.Windows.Forms.TextBox CDisplay;
         private System.Windows.Forms.Button CBT2;
         private System.Windows.Forms.Button CBT3;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

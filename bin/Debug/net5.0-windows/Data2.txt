@@ -1,0 +1,15 @@
+<zname>
+Schippers
+<zvorname>
+Norbert
+<zstrasse>
+Klopstockweg
+<zhausnummer>
+4
+<zplz>
+40764
+<zort>
+Langenfeld
+<zielpfad>
+Z:\Dokumente\Anzeigen\
+<ort>;<mail>

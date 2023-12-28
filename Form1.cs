@@ -1931,6 +1931,7 @@ namespace Anzeige
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Filter = "Video Files|*.mp4;*.avi;*.mkv|All Files|*.*";
             dlg.Title = "Select a Video File";
+            dlg.InitialDirectory = ZZielpfad + "Download";
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
@@ -1987,7 +1988,10 @@ namespace Anzeige
 
         private void CDirOpen_Click(object sender, EventArgs e)
         {
-            ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
+            // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
+            ConfigEditorForm dlg = new ConfigEditorForm();
+
+            dlg.ShowDialog();
         }
 
         private void panel2_Paint(object sender, PaintEventArgs e)

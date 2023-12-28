@@ -1,0 +1,724 @@
+Ort;Name;Stadt/Landkreis;Bundesland
+A;Augsburg;Stadt Augsburg, Landkreis Augsburg;Bayern
+AA;AAlen;Ostalbkreis;Baden-Württemberg
+AB;AschaffenBurg;Stadt Aschaffenburg, Landkreis Aschaffenburg;Bayern
+ABG;AltenBurG;Landkreis Altenburger Land;Thüringen
+ABI;Anhalt, BItterfeld;Landkreis Anhalt-Bitterfeld;Sachsen-Anhalt
+AC;AaChen;Städteregion Aachen;Nordrhein-Westfalen
+AE;AuErbach;Vogtlandkreis;Sachsen
+AH;AHaus;Kreis Borken;Nordrhein-Westfalen
+AIB;AIBling;Landkreis München, Landkreis Rosenheim;Bayern
+AIC;AIChach;Landkreis Aichach-Friedberg;Bayern
+AK;AltenKirchen;Landkreis Altenkirchen (Westerwald);Rheinland-Pfalz
+ALF;ALFeld;Landkreis Hildesheim;Niedersachsen
+ALZ;ALZenau;Landkreis Aschaffenburg;Bayern
+AM;AMberg;Stadt Amberg;Bayern
+AN;ANsbach;Stadt Ansbach, Landkreis Ansbach;Bayern
+ANA;ANnAberg;Erzgebirgskreis;Sachsen
+ANG;ANGermünde;Landkreis Uckermark;Brandenburg
+ANK;ANKlam;Landkreis Vorpommern-Greifswald ohne die Stadt Greifswald;Mecklenburg-Vorpommern
+AÖ;AltÖtting;Landkreis Altötting;Bayern
+AP;APolda;Landkreis Weimarer Land;Thüringen
+APD;APolDa;Landkreis Weimarer Land;Thüringen
+ARN;ARNstadt;Ilm-Kreis;Thüringen
+ART;ARTern;Kyffhäuserkreis;Thüringen
+AS;Amberg, Sulzbach;Landkreis Amberg-Sulzbach;Bayern
+ASL;ASchersLeben;Salzlandkreis;Sachsen-Anhalt
+ASZ;Aue, SchwarZenberg;Erzgebirgskreis;Sachsen
+AT;AltenTreptow;Landkreis Mecklenburgische Seenplatte ohne die Stadt Neubrandenburg;Mecklenburg-Vorpommern
+AU;AUe;Erzgebirgskreis;Sachsen
+AUR;AURich;Landkreis Aurich;Niedersachsen
+AW;AhrWeiler;Landkreis Ahrweiler;Rheinland-Pfalz
+AZ;AlZey;Landkreis Alzey-Worms;Rheinland-Pfalz
+AZE;Anhalt-ZErbst;Landkreis Anhalt-Bitterfeld;Sachsen-Anhalt
+B;Berlin;Berlin;Berlin
+BA;BAmberg;Stadt Bamberg, Landkreis Bamberg;Bayern
+BAD;BADen-Baden;Stadt Baden-Baden;Baden-Württemberg
+BAR;BARnim;Landkreis Barnim;Brandenburg
+BB;BöBlingen;Landkreis Böblingen;Baden-Württemberg
+BBG;BernBurG;Salzlandkreis;Sachsen-Anhalt
+BBL;BrandenBurgische Landesregierung;Brandenburg, Landesregierung, Landtag und Polizei;Brandenburg
+BC;BiberaCh;Landkreis Biberach;Baden-Württemberg
+BCH;BuCHen;Neckar-Odenwald-Kreis;Baden-Württemberg
+BD;BundesDienst;Deutscher Bundestag, Bundesrat, Bundespräsidialamt, Bundesregierung, Bundesministerien, Bundesfinanzverwaltung und Bundesverfassungsgericht;bundesweit
+BE;BEckum;Kreis Warendorf;Nordrhein-Westfalen
+BED;Brand-ErbisDorf;Landkreis Mittelsachsen;Sachsen
+BER;BERnau;Landkreis Barnim;Brandenburg
+BF;BurgsteinFurt;Kreis Steinfurt;Nordrhein-Westfalen
+BGD;BerchtesGaDen;Landkreis Berchtesgadener Land;Bayern
+BGL;BerchtesGadener Land;Landkreis Berchtesgadener Land;Bayern
+BH;BüHl;Ortenaukreis, Landkreis Rastatt;Baden-Württemberg
+BI;BIelefeld;Stadt Bielefeld;Nordrhein-Westfalen
+BID;BIeDenkopf;Landkreis Marburg-Biedenkopf;Hessen
+BIN;BINgen;Landkreis Mainz-Bingen;Rheinland-Pfalz
+BIR;BIRkenfeld;Landkreis Birkenfeld;Rheinland-Pfalz
+BIT;BITburg;Eifelkreis Bitburg-Prüm;Rheinland-Pfalz
+BIW;BIschofsWerda;Landkreis Bautzen;Sachsen
+BK;BacKnang;Landkreis Backnang;Baden-Württemberg
+BKS;BernKaStel;Landkreis Bernkastel-Wittlich;Rheinland-Pfalz
+BL;BaLingen;Zollernalbkreis;Baden-Württemberg
+BLB;BerLeBurg;Kreis Siegen-Wittgenstein;Nordrhein-Westfalen
+BLK;BurgenLandKreis;Burgenlandkreis;Sachsen-Anhalt
+BM;BergheiM;Rhein-Erft-Kreis;Nordrhein-Westfalen
+BN;BonN;Stadt Bonn, Diplomaten;Nordrhein-Westfalen
+BNA;BorNA;Landkreis Leipzig;Sachsen
+BO;BOchum;Stadt Bochum;Nordrhein-Westfalen
+BÖ;BÖrde;Landkreis Börde;Sachsen-Anhalt
+BOG;BOGen;Landkreis Straubing-Bogen;Bayern
+BOH;BOcHolt;Kreis Borken;Nordrhein-Westfalen
+BOR;BORken;Kreis Borken;Nordrhein-Westfalen
+BOT;BOTtrop;Stadt Bottrop;Nordrhein-Westfalen
+BP;BundesPolizei;Bundespolizei;bundesweit
+BRA;BRAke;Landkreis Wesermarsch;Niedersachsen
+BRB;BRandenBurg;Stadt Brandenburg an der Havel;Brandenburg
+BRG;BuRG;Landkreis Jerichower Land;Sachsen-Anhalt
+BRK;BRücKenau;Landkreis Bad Kissingen;Bayern
+BRL;BRaunLage;Landkreis Goslar;Niedersachsen
+BRV;BRemerVörde;Landkreis Rotenburg (Wümme);Niedersachsen
+BS;BraunSchweig;Stadt Braunschweig, Polizeidirektion Braunschweig (PD 100–9999);Niedersachsen
+BSB;BerSenBrück;Landkreis Osnabrück;Niedersachsen
+BSK;BeeSKow;Landkreis Oder-Spree;Brandenburg
+BT;BayreuTh;Stadt Bayreuth, Landkreis Bayreuth;Bayern
+BTF;BitTerFeld;Landkreis Anhalt-Bitterfeld;Sachsen-Anhalt
+BÜD;BÜDingen;Wetteraukreis;Hessen
+BUL;BUrgLengenfeld;Landkreis Amberg-Sulzbach (B, F und G 1–999), Landkreis Schwandorf;Bayern
+BÜR;BÜRen;Kreis Paderborn;Nordrhein-Westfalen
+BÜS;BÜSingen;Gemeinde Büsingen am Hochrhein (Gemeinde im Landkreis Konstanz, deutsche Exklave in der Schweiz) (A und Z 1–999);Baden-Württemberg
+BÜZ;BÜtZow;Landkreis Rostock;Mecklenburg-Vorpommern
+BW;Bundes-Wasserstraßen- und Schifffahrtsverwaltung;Wasserstraßen- und Schifffahrtsverwaltung des Bundes;bundesweit
+BWL;Baden-Württembergischer Landtag;Baden-Württemberg, Landesregierung, Landtag und Polizei;Baden-Württemberg
+BYL;BaYerischer Landtag;Bayern, Landesregierung und Landtag;Bayern
+BZ;BautZen;Landkreis Bautzen;Sachsen
+C;Chemnitz;Stadt Chemnitz;Sachsen
+CA;CAlau;Landkreis Oberspreewald-Lausitz;Brandenburg
+CAS;CAStrop;Kreis Recklinghausen;Nordrhein-Westfalen
+CB;CottBus;Stadt Cottbus;Brandenburg
+CE;CElle;Landkreis Celle;Niedersachsen
+CHA;CHAm;Landkreis Cham;Bayern
+CLP;CLopPenburg;Landkreis Cloppenburg;Niedersachsen
+CLZ;CLausthal-Zellerfeld;Landkreis Goslar;Niedersachsen
+CO;COburg;Stadt Coburg und Landkreis Coburg;Bayern
+COC;COChem;Landkreis Cochem-Zell;Rheinland-Pfalz
+COE;COEsfeld;Kreis Coesfeld;Nordrhein-Westfalen
+CR;CRailsheim;Landkreis Schwäbisch Hall;Baden-Württemberg
+CUX;CUXhaven;Landkreis Cuxhaven;Niedersachsen
+CW;CalW;Landkreis Calw;Baden-Württemberg
+D;Düsseldorf;Stadt Düsseldorf;Nordrhein-Westfalen
+DA;DArmstadt;Landkreis Darmstadt-Dieburg und Stadt Darmstadt;Hessen
+DAH;DAcHau;Landkreis Dachau;Bayern
+DAN;DANnenberg;Landkreis Lüchow-Dannenberg;Niedersachsen
+DAU;DAUn;Landkreis Vulkaneifel;Rheinland-Pfalz
+DBR;DoBeRan;Landkreis Rostock;Mecklenburg-Vorpommern
+DD;DresDen;Stadt Dresden, Polizei Sachsen (Q 1000–9999);Sachsen
+DE;DEssau;Stadt Dessau-Roßlau;Sachsen-Anhalt
+DEG;DEGgendorf;Landkreis Deggendorf;Bayern
+DEL;DELmenhorst;Stadt Delmenhorst;Niedersachsen
+DGF;DinGolFing;Landkreis Dingolfing-Landau;Bayern
+DH;DiepHolz;Landkreis Diepholz;Niedersachsen
+DI;DIeburg;Landkreis Darmstadt-Dieburg;Hessen
+DIL;DILlenburg;Lahn-Dill-Kreis ohne die Stadt Wetzlar;Hessen
+DIN;DINslaken;Kreis Wesel;Nordrhein-Westfalen
+DIZ;DIeZ;Rhein-Lahn-Kreis;Rheinland-Pfalz
+DKB;DinKelsBühl;Landkreis Ansbach;Bayern
+DL;DöbeLn;Landkreis Mittelsachsen;Sachsen
+DLG;DilLinGen;Landkreis Dillingen an der Donau;Bayern
+DM;DemMin;Landkreis Mecklenburgische Seenplatte ohne die Stadt Neubrandenburg;Mecklenburg-Vorpommern
+DN;DüreN;Kreis Düren;Nordrhein-Westfalen
+DO;DOrtmund;Stadt Dortmund;Nordrhein-Westfalen
+DON;DONauwörth;Landkreis Donau-Ries;Bayern
+DU;DUisburg;Stadt Duisburg;Nordrhein-Westfalen
+DUD;DUDerstadt;Landkreis Göttingen ohne die Stadt Göttingen;Niedersachsen
+DÜW;DÜrkheim an der Weinstraße;Landkreis Bad Dürkheim;Rheinland-Pfalz
+DW;DippoldisWalde;Landkreis Sächsische Schweiz-Osterzgebirge;Sachsen
+DZ;DelitZsch;Landkreis Nordsachsen;Sachsen
+E;Essen;Stadt Essen;Nordrhein-Westfalen
+EA;EisenAch;Stadt Eisenach;Thüringen
+EB;EilenBurg;Landkreis Nordsachsen;Sachsen
+EBE;EBErsberg;Landkreis Ebersberg;Bayern
+EBN;EBerN;Landkreis Haßberge;Bayern
+EBS;EBermannStadt;Landkreis Forchheim, Landkreis Kulmbach (A–M 1–999), Landkreis Bayreuth (N–Z 1–999);Bayern
+ECK;ECKernförde;Kreis Rendsburg-Eckernförde;Schleswig-Holstein
+ED;ErDing;Landkreis Erding;Bayern
+EE;Elbe, Elster;Landkreis Elbe-Elster;Brandenburg
+EF;ErFurt;Stadt Erfurt;Thüringen
+EG;EGgenfelden;Landkreis Rottal-Inn;Bayern
+EH;EisenHüttenstadt;Landkreis Oder-Spree;Brandenburg
+EI;EIchstätt;Landkreis Eichstätt;Bayern
+EIC;EIChsfeld;Landkreis Eichsfeld;Thüringen
+EIL;EIsLeben;Landkreis Mansfeld-Südharz;Sachsen-Anhalt
+EIN;EINbeck;Landkreis Northeim;Niedersachsen
+EIS;EISenberg;Saale-Holzland-Kreis;Thüringen
+EL;EmsLand;Landkreis Emsland;Niedersachsen
+EM;EMmendingen;Landkreis Emmendingen;Baden-Württemberg
+EMD;EMDen;Stadt Emden;Niedersachsen
+EMS;EMS;Rhein-Lahn-Kreis;Rheinland-Pfalz
+EN;ENnepe;Ennepe-Ruhr-Kreis;Nordrhein-Westfalen
+ER;ERlangen;Stadt Erlangen;Bayern
+ERB;ERBach;Odenwaldkreis;Hessen
+ERH;ERlangen, Höchstadt;Landkreis Erlangen-Höchstadt;Bayern
+ERK;ERKelenz;Kreis Heinsberg;Nordrhein-Westfalen
+ERZ;ERZgebirge;Erzgebirgskreis;Sachsen
+ES;ESslingen;Landkreis Esslingen;Baden-Württemberg
+ESB;ESchenBach;Landkreis Neustadt an der Waldnaab, Landkreis Amberg-Sulzbach (B, F, G, I, O und Q 1–999), Landkreis Bayreuth (AT, BT, CT, DT, ... YT und ZT 1–99), Landkreis Nürnberger Land (N 1–999);Bayern
+ESW;ESchWege;Werra-Meißner-Kreis;Hessen
+EU;EUskirchen;Kreis Euskirchen;Nordrhein-Westfalen
+EW;EbersWalde;Landkreis Barnim;Brandenburg
+F;Frankfurt;Stadt Frankfurt am Main;Hessen
+FB;FriedBerg;Wetteraukreis;Hessen
+FD;FulDa;Landkreis Fulda;Hessen
+FDB;FrieDBerg;Landkreis Aichach-Friedberg;Bayern
+FDS;FreuDenStadt;Landkreis Freudenstadt;Baden-Württemberg
+FEU;FEUchtwangen;Landkreis Ansbach;Bayern
+FF;FrankFurt;Stadt Frankfurt (Oder);Brandenburg
+FFB;FürstenFeldBruck;Landkreis Fürstenfeldbruck;Bayern
+FG;FreiberG;Landkreis Mittelsachsen;Sachsen
+FI;FInsterwalde;Landkreis Elbe-Elster;Brandenburg
+FKB;FranKenBerg;Landkreis Waldeck-Frankenberg;Hessen
+FL;FLensburg;Stadt Flensburg;Schleswig-Holstein
+FLÖ;FLÖha;Landkreis Mittelsachsen;Sachsen
+FN;FriedrichshafeN;Bodenseekreis;Baden-Württemberg
+FO;FOrchheim;Landkreis Forchheim;Bayern
+FOR;FORst;Landkreis Spree-Neiße;Brandenburg
+FR;FReiburg;Landkreis Breisgau-Hochschwarzwald, Stadt Freiburg im Breisgau (AA–MZ 100–999 und NA–ZZ 100–9999);Baden-Württemberg
+FRG;FReyung, Grafenau;Landkreis Freyung-Grafenau;Bayern
+FRI;FRIesland;Landkreis Friesland;Niedersachsen
+FRW;FReienWalde;Landkreis Märkisch-Oderland;Brandenburg
+FS;FreiSing;Landkreis Freising;Bayern
+FT;FrankenThal;Stadt Frankenthal (Pfalz);Rheinland-Pfalz
+FTL;FreiTaL;Landkreis Sächsische Schweiz-Osterzgebirge;Sachsen
+FÜ;FÜrth;Landkreis Fürth, Stadt Fürth (AA–ZZ 100–999);Bayern
+FÜS;FÜSsen;Landkreis Ostallgäu;Bayern
+FW;FürstenWalde;Landkreis Oder-Spree;Brandenburg
+FZ;FritZlar;Schwalm-Eder-Kreis;Hessen
+G;Gera;Stadt Gera;Thüringen
+GA;GArdelegen;Altmarkkreis Salzwedel;Sachsen-Anhalt
+GAN;GANdersheim;Landkreis Northeim;Niedersachsen
+GAP;GArmisch-Partenkirchen;Landkreis Garmisch-Partenkirchen;Bayern
+GC;GlauChau;Landkreis Zwickau;Sachsen
+GD;GmünD;Ostalbkreis;Baden-Württemberg
+GDB;GaDeBusch;Landkreis Nordwestmecklenburg;Mecklenburg-Vorpommern
+GE;GElsenkirchen;Stadt Gelsenkirchen;Nordrhein-Westfalen
+GEL;GELdern;Kreis Kleve;Nordrhein-Westfalen
+GEO;GErOlzhofen;Landkreis Schweinfurt, Landkreis Haßberge (A und B 1000–9999);Bayern
+GER;GERmersheim;Landkreis Germersheim;Rheinland-Pfalz
+GF;GiFhorn;Landkreis Gifhorn;Niedersachsen
+GG;Groß-Gerau;Kreis Groß-Gerau;Hessen
+GHA;GeitHAin;Landkreis Leipzig;Sachsen
+GHC;GräfenHainiChen;Landkreis Wittenberg;Sachsen-Anhalt
+GI;GIeßen;Landkreis Gießen;Hessen
+GK;GeilenKirchen;Kreis Heinsberg;Nordrhein-Westfalen
+GL;GLadbach;Rheinisch-Bergischer Kreis;Nordrhein-Westfalen
+GLA;GLAdbeck;Kreis Recklinghausen;Nordrhein-Westfalen
+GM;GumMersbach;Oberbergischer Kreis;Nordrhein-Westfalen
+GMN;GrimMeN;Landkreis Vorpommern-Rügen ohne die Stadt Stralsund;Mecklenburg-Vorpommern
+GN;GelnhauseN;Main-Kinzig-Kreis ohne die Stadt Hanau;Hessen
+GNT;GeNThin;Landkreis Jerichower Land;Sachsen-Anhalt
+GÖ;GÖttingen;Landkreis Göttingen, Stadt Göttingen;Niedersachsen
+GOA;GOAr;Rhein-Hunsrück-Kreis;Rheinland-Pfalz
+GOH;GOarsHausen;Rhein-Lahn-Kreis;Rheinland-Pfalz
+GP;GöpPingen;Landkreis Göppingen;Baden-Württemberg
+GR;GöRlitz;Landkreis Görlitz;Sachsen
+GRA;GRAfenau;Landkreis Freyung-Grafenau;Bayern
+GRH;GRoßenHain;Landkreis Meißen;Sachsen
+GRI;GRIesbach;Landkreis Rottal-Inn (B, I, O und Q 100–999);Bayern
+GRM;GRimMa;Landkreis Leipzig;Sachsen
+GRZ;GReiZ;Landkreis Greiz;Thüringen
+GS;GoSlar;Landkreis Goslar;Niedersachsen
+GT;GüTersloh;Kreis Gütersloh;Nordrhein-Westfalen
+GTH;GoTHa;Landkreis Gotha;Thüringen
+GÜ;GÜstrow;Landkreis Rostock;Mecklenburg-Vorpommern
+GUB;GUBen;Landkreis Spree-Neiße;Brandenburg
+GUN;GUNzenhausen;Landkreis Weißenburg-Gunzenhausen;Bayern
+GV;GreVenbroich;Rhein-Kreis Neuss;Nordrhein-Westfalen
+GVM;GreVesMühlen;Landkreis Nordwestmecklenburg;Mecklenburg-Vorpommern
+GW;GreifsWald;Landkreis Vorpommern-Greifswald ohne die Stadt Greifswald;Mecklenburg-Vorpommern
+GZ;GünZburg;Landkreis Günzburg;Bayern
+H;Hannover;Region Hannover;Niedersachsen
+HA;HAgen;Stadt Hagen;Nordrhein-Westfalen
+HAB;HAmmelBurg;Landkreis Bad Kissingen;Bayern
+HAL;HALle;Stadt Halle (Saale);Sachsen-Anhalt
+HAM;HAMm;Stadt Hamm;Nordrhein-Westfalen
+HAS;HASsfurt;Landkreis Haßberge;Bayern
+HB;Hansestadt Bremen;Stadt Bremen, Senat und Bürgerschaft, Stadt Bremerhaven (A–Z 1000–9999);Bremen
+HBN;HildBurghauseN;Landkreis Hildburghausen;Thüringen
+HBS;HalBerStadt;Landkreis Harz;Sachsen-Anhalt
+HC;HainiChen;Landkreis Mittelsachsen;Sachsen
+HCH;HeCHingen;Zollernalbkreis, Landkreis Freudenstadt (YQ, QY, YV, VY und ZQ 100 bis 999);Baden-Württemberg
+HD;HeiDelberg;Stadt Heidelberg, Rhein-Neckar-Kreis (AA–ZZ 100–9999);Baden-Württemberg
+HDH;HeiDenHeim;Landkreis Heidenheim;Baden-Württemberg
+HDL;HalDensLeben;Landkreis Börde;Sachsen-Anhalt
+HE;HElmstedt;Landkreis Helmstedt;Niedersachsen
+HEB;HErsBruck;Landkreis Nürnberger Land;Bayern
+HEF;HErsFeld;Landkreis Hersfeld-Rotenburg;Hessen
+HEI;HEIde;Kreis Dithmarschen;Schleswig-Holstein
+HEL;HEssischer Landtag;Hessen, Landesregierung und Landtag;Hessen
+HER;HERne;Stadt Herne;Nordrhein-Westfalen
+HET;HETtstedt;Landkreis Mansfeld-Südharz;Sachsen-Anhalt
+HF;HerFord;Kreis Herford;Nordrhein-Westfalen
+HG;HomburG;Hochtaunuskreis;Hessen
+HGN;HaGeNow;Landkreis Ludwigslust-Parchim;Mecklenburg-Vorpommern
+HGW;Hansestadt GreifsWald;Stadt Greifswald (große kreisangehörige Stadt im Landkreis Vorpommern-Greifswald);Mecklenburg-Vorpommern
+HH;Hansestadt Hamburg;Freie und Hansestadt Hamburg, Senat und Bürgerschaft;Hamburg
+HHM;HoHenMölsen;Burgenlandkreis;Sachsen-Anhalt
+HI;HIldesheim;Landkreis Hildesheim;Niedersachsen
+HIG;HeilIGenstadt;Landkreis Eichsfeld;Thüringen
+HIP;HIlPoltstein;Landkreis Roth;Bayern
+HK;HeideKreis;Landkreis Heidekreis;Niedersachsen
+HL;Hansestadt Lübeck;Stadt Lübeck;Schleswig-Holstein
+HM;HaMeln;Landkreis Hameln-Pyrmont;Niedersachsen
+HMÜ;Hann. MÜnden;Landkreis Göttingen ohne die Stadt Göttingen;Niedersachsen
+HN;HeilbronN;Stadt Heilbronn, Landkreis Heilbronn (AA–MZ 100–9999 und NA–ZZ 100–999);Baden-Württemberg
+HO;HOf;Stadt Hof, Landkreis Hof (AA–ZZ 100–9999);Bayern
+HOG;HOfGeismar;Landkreis Kassel;Hessen
+HOH;HOfHeim;Landkreis Haßberge;Bayern
+HOL;HOLzminden;Landkreis Holzminden;Niedersachsen
+HOM;HOMburg;Saarpfalz-Kreis ohne die Stadt St. Ingbert;Saarland
+HOR;HORb;Landkreis Freudenstadt;Baden-Württemberg
+HÖS;HÖchStadt;Landkreis Erlangen-Höchstadt;Bayern
+HOT;HOhensTein;Landkreis Zwickau;Sachsen
+HP;HepPenheim;Kreis Bergstraße;Hessen
+HR;HombeRg;Schwalm-Eder-Kreis;Hessen
+HRO;Hansestadt ROstock;Stadt Rostock;Mecklenburg-Vorpommern
+HS;HeinSberg;Kreis Heinsberg;Nordrhein-Westfalen
+HSK;HochSauerlandKreis;Hochsauerlandkreis;Nordrhein-Westfalen
+HST;Hansestadt STralsund;Stadt Stralsund (große kreisangehörige Stadt im Landkreis Vorpommern-Rügen);Mecklenburg-Vorpommern
+HU;HanaU;Stadt Hanau (Sonderstatusstadt im Main-Kinzig-Kreis), Main-Kinzig-Kreis (übriges Kreisgebiet);Hessen
+HV;HaVelberg;Landkreis Stendal;Sachsen-Anhalt
+HVL;HaVelLand;Landkreis Havelland;Brandenburg
+HWI;Hansestadt WIsmar;Stadt Wismar (große kreisangehörige Stadt im Landkreis Nordwestmecklenburg);Mecklenburg-Vorpommern
+HX;HöXter;Kreis Höxter;Nordrhein-Westfalen
+HY;HoYerswerda;Landkreis Bautzen;Sachsen
+HZ;HarZ;Landkreis Harz;Sachsen-Anhalt
+IGB;InGBert;Stadt St. Ingbert (Mittelstadt im Saarpfalz-Kreis);Saarland
+IK;Ilm-Kreis;Ilm-Kreis;Thüringen
+IL;ILmenau;Ilm-Kreis;Thüringen
+ILL;ILLertissen;Landkreis Neu-Ulm;Bayern
+IN;INgolstadt;Stadt Ingolstadt;Bayern
+IZ;ItZehoe;Kreis Steinburg;Schleswig-Holstein
+J;Jena;Stadt Jena;Thüringen
+JE;JEssen;Landkreis Wittenberg;Sachsen-Anhalt
+JL;Jerichower Land;Landkreis Jerichower Land;Sachsen-Anhalt
+JÜL;JÜLich;Kreis Düren;Nordrhein-Westfalen
+K;Köln;Stadt Köln;Nordrhein-Westfalen
+KA;KArlsruhe;Landkreis Karlsruhe, Stadt Karlsruhe (AA–MZ 100–999 und NA–ZZ 100–9999);Baden-Württemberg
+KB;KorBach;Landkreis Waldeck-Frankenberg;Hessen
+KC;KronaCh;Landkreis Kronach;Bayern
+KE;KEmpten;Stadt Kempten (Allgäu);Bayern
+KEH;KElHeim;Landkreis Kelheim;Bayern
+KEL;KEhL;Ortenaukreis;Baden-Württemberg
+KEM;KEMnath;Landkreis Tirschenreuth, Landkreis Bayreuth (AT, BT, CT, DT, ... YT und ZT 1–99);Bayern
+KF;KauFbeuren;Stadt Kaufbeuren;Bayern
+KG;KissinGen;Landkreis Bad Kissingen;Bayern
+KH;KreuznacH;Landkreis Bad Kreuznach;Rheinland-Pfalz
+KI;KIel;Stadt Kiel;Schleswig-Holstein
+KIB;KIrchheimBolanden;Donnersbergkreis;Rheinland-Pfalz
+KK;Kempen, Krefeld;Kreis Viersen;Nordrhein-Westfalen
+KL;KaisersLautern;Stadt Kaiserslautern, Landkreis Kaiserslautern (AA–ZZ 100–999);Rheinland-Pfalz
+KLE;KLEve;Kreis Kleve;Nordrhein-Westfalen
+KLZ;KLötZe;Altmarkkreis Salzwedel;Sachsen-Anhalt
+KM;KaMenz;Landkreis Bautzen;Sachsen
+KN;KoNstanz;Landkreis Konstanz ohne die Gemeinde Büsingen am Hochrhein;Baden-Württemberg
+KO;KOblenz;Stadt Koblenz;Rheinland-Pfalz
+KÖN;KÖNigshofen;Landkreis Rhön-Grabfeld;Bayern
+KÖT;KÖThen;Landkreis Anhalt-Bitterfeld;Sachsen-Anhalt
+KÖZ;KÖtZting;Landkreis Cham;Bayern
+KR;KRefeld;Stadt Krefeld;Nordrhein-Westfalen
+KRU;KRUmbach;Landkreis Günzburg;Bayern
+KS;KasSel;Landkreis Kassel und Stadt Kassel;Hessen
+KT;KiTzingen;Landkreis Kitzingen;Bayern
+KU;KUlmbach;Landkreis Kulmbach;Bayern
+KÜN;KÜNzelsau;Hohenlohekreis;Baden-Württemberg
+KUS;KUSel;Landkreis Kusel;Rheinland-Pfalz
+KW;Königs Wusterhausen;Landkreis Dahme-Spreewald;Brandenburg
+KY;KYritz;Landkreis Ostprignitz-Ruppin;Brandenburg
+KYF;KYFfhäuser;Kyffhäuserkreis;Thüringen
+L;Leipzig;Sachsen;Stadt Leipzig (A–T und AA–TZ), Landkreis Leipzig (U–Z und UA–ZZ)
+LA;LAndshut;Stadt Landshut, Landkreis Landshut (AA–ZZ 100–999 und 5000–9999);Bayern
+LAN;LANdau;Landkreis Dingolfing-Landau;Bayern
+LAU;LAUf;Landkreis Nürnberger Land;Bayern
+LB;LudwigsBurg;Landkreis Ludwigsburg;Baden-Württemberg
+LBS;LoBenStein;Saale-Orla-Kreis;Thüringen
+LBZ;LüBZ;Landkreis Ludwigslust-Parchim;Mecklenburg-Vorpommern
+LC;LuCkau;Landkreis Dahme-Spreewald;Brandenburg
+LD;LanDau;Stadt Landau in der Pfalz;Rheinland-Pfalz
+LDK;Lahn-Dill-Kreis;Lahn-Dill-Kreis ohne die Stadt Wetzlar;Hessen
+LDS;Landkreis Dahme-Spreewald;Landkreis Dahme-Spreewald;Brandenburg
+LEO;LEOnberg;Landkreis Böblingen;Baden-Württemberg
+LER;LEeR;Landkreis Leer;Niedersachsen
+LEV;LEVerkusen;Stadt Leverkusen;Nordrhein-Westfalen
+LF;LauFen;Landkreis Berchtesgadener Land, Landkreis Altötting (C 1–999, E 1–500, I, J, M, O, Q und V 1–999), Landkreis Traunstein (B, F und G 1–999, DH 1–100, FZ, GH und KQ 1–999, LU 1–200, RW 1–999, TK 1–100, TS 1–999, VW 200–400 sowie WW, XX und ZZ 1–999);Bayern
+LG;LüneburG;Landkreis Lüneburg;Niedersachsen
+LH;LüdingHausen;Kreis Coesfeld, Kreis Unna;Nordrhein-Westfalen
+LI;LIndau;Landkreis Lindau (Bodensee);Bayern
+LIB;LIeBenwerda;Landkreis Elbe-Elster;Brandenburg
+LIF;LIchtenFels;Landkreis Lichtenfels;Bayern
+LIP;LIPpe;Kreis Lippe;Nordrhein-Westfalen
+LL;Landsberg am Lech;Landkreis Landsberg am Lech;Bayern
+LM;LiMburg;Landkreis Limburg-Weilburg;Hessen
+LN;LübbeN;Landkreis Dahme-Spreewald;Brandenburg
+LÖ;LÖrrach;Landkreis Lörrach;Baden-Württemberg
+LÖB;LÖBau;Landkreis Görlitz;Sachsen
+LOS;Landkreis Oder-Spre;Landkreis Oder-Spree;Brandenburg
+LP;LiPpstadt;Kreis Soest;Nordrhein-Westfalen
+LR;LahR;Ortenaukreis;Baden-Württemberg
+LRO;Landkreis ROstock;Landkreis Rostock;Mecklenburg-Vorpommern
+LSA;Land Sachsen-Anhalt;Sachsen-Anhalt, Landesregierung, Landtag und Polizei;Sachsen-Anhalt
+LSN;Landtag SachseN;Sachsen, Landesregierung und Landtag;Sachsen
+LSZ;LangenSalZa;Unstrut-Hainich-Kreis;Thüringen
+LU;LUdwigshafen;Stadt Ludwigshafen am Rhein;Rheinland-Pfalz
+LÜN;LÜNen;Kreis Unna;Nordrhein-Westfalen
+LUP;LUdwigslust, Parchim;Landkreis Ludwigslust-Parchim;Mecklenburg-Vorpommern
+LWL;LudWigsLust;Landkreis Ludwigslust-Parchim;Mecklenburg-Vorpommern
+M;München;Landkreis München, Stadt München (AA–ZZ 100–9999);Bayern
+MA;MAnnheim;Stadt Mannheim;Baden-Württemberg
+MAB;MArienBerg;Erzgebirgskreis;Sachsen
+MAI;MAInburg;Landkreis Kelheim, Landkreis Landshut (B, F, G, I, O und Q 1–9999);Bayern
+MAK;MArKtredwitz;Landkreis Wunsiedel im Fichtelgebirge;Bayern
+MAL;MALlersdorf;Landkreis Landshut (B, F, G, I, O und Q 1–9999);Bayern
+MB;MiesBach;Landkreis Miesbach;Bayern
+MC;MalChin;Landkreis Mecklenburgische Seenplatte ohne die Stadt Neubrandenburg;Mecklenburg-Vorpommern
+MD;MagDeburg;Stadt Magdeburg;Sachsen-Anhalt
+ME;MEttmann;Kreis Mettmann;Nordrhein-Westfalen
+MED;MElDorf;Kreis Dithmarschen;Schleswig-Holstein
+MEG;MElsunGen;Schwalm-Eder-Kreis;Hessen
+MEI;MEIßen;Landkreis Meißen;Sachsen
+MEK;Mittlerer ErzgebirgsKreis;Erzgebirgskreis;Sachsen
+MEL;MELle;Landkreis Osnabrück;Niedersachsen
+MER;MERseburg;Saalekreis;Sachsen-Anhalt
+MET;MEllrichstadT;Landkreis Rhön-Grabfeld;Bayern
+MG;MönchenGladbach;Stadt Mönchengladbach;Nordrhein-Westfalen
+MGH;MerGentHeim;Main-Tauber-Kreis;Baden-Württemberg
+MGN;MeininGeN;Landkreis Schmalkalden-Meiningen;Thüringen
+MH;MülHeim;Stadt Mülheim an der Ruhr;Nordrhein-Westfalen
+MHL;MüHLhausen;Unstrut-Hainich-Kreis;Thüringen
+MI;MInden;Kreis Minden-Lübbecke;Nordrhein-Westfalen
+MIL;MILtenberg;Landkreis Miltenberg;Bayern
+MK;Märkischer Kreis;Märkischer Kreis;Nordrhein-Westfalen
+MKK;Main-Kinzig-Kreis;Main-Kinzig-Kreis ohne die Stadt Hanau;Hessen
+ML;Mansfelder Land;Landkreis Mansfeld-Südharz;Sachsen-Anhalt
+MM;MemMingen;Stadt Memmingen;Bayern
+MN;MiNdelheim;Landkreis Unterallgäu;Bayern
+MO;MOers;Kreis Wesel;Nordrhein-Westfalen
+MOD;MarktOberDorf;Landkreis Ostallgäu;Bayern
+MOL;Märkisch-OderLand;Landkreis Märkisch-Oderland;Brandenburg
+MON;MONschau;Städteregion Aachen, Kreis Düren;Nordrhein-Westfalen
+MOS;MOSbach;Neckar-Odenwald-Kreis;Baden-Württemberg
+MQ;Merseburg, Querfurt;Saalekreis;Sachsen-Anhalt
+MR;MaRburg;Landkreis Marburg-Biedenkopf;Hessen
+MS;MünSter;Stadt Münster;Nordrhein-Westfalen
+MSE;Mecklenburgische SEenplatte;Landkreis Mecklenburgische Seenplatte ohne die Stadt Neubrandenburg;Mecklenburg-Vorpommern
+MSH;Mansfeld, SüdHarz;Landkreis Mansfeld-Südharz;Sachsen-Anhalt
+MSP;Main, SPessart;Landkreis Main-Spessart;Bayern
+MST;Mecklenburg-STrelitz;Landkreis Mecklenburgische Seenplatte ohne die Stadt Neubrandenburg;Mecklenburg-Vorpommern
+MTK;Main-Taunus-Kreis;Main-Taunus-Kreis;Hessen
+MTL;MuldenTaL;Landkreis Leipzig;Sachsen
+MÜ;MÜhldorf;Landkreis Mühldorf am Inn;Bayern
+MÜB;MÜnchBerg;Landkreis Hof, Landkreis Bayreuth (A–M 100–999 und N–Z 1–99);Bayern
+MÜR;MÜRitz;Landkreis Mecklenburgische Seenplatte ohne die Stadt Neubrandenburg;Mecklenburg-Vorpommern
+MVL;Mecklenburg-Vorpommerscher Landtag;Mecklenburg-Vorpommern, Landesregierung, Landtag und Polizei;Mecklenburg-Vorpommern
+MW;MittWeida;Landkreis Mittelsachsen;Sachsen
+MY;MaYen;Landkreis Mayen-Koblenz;Rheinland-Pfalz
+MYK;MaYen, Koblenz;Landkreis Mayen-Koblenz;Rheinland-Pfalz
+MZ;MainZ;Landkreis Mainz-Bingen, Stadt Mainz (AA–KY 100–9999 und LA–ZZ 100–999);Rheinland-Pfalz
+MZG;MerZiG;Landkreis Merzig-Wadern;Saarland
+N;Nürnberg;Landkreis Nürnberger Land (A–Z 1–999), Stadt Nürnberg (A–Z 1000–9999 und AA–ZZ 100–9999);Bayern
+NAB;NABburg;Landkreis Schwandorf, Landkreis Amberg-Sulzbach (B, F und G 1–999);Bayern
+NAI;NAIla;Landkreis Hof;Bayern
+NAU;NAUen;Landkreis Havelland;Brandenburg
+NB;NeuBrandenburg;Stadt Neubrandenburg (große kreisangehörige Stadt im Landkreis Mecklenburgische Seenplatte);Mecklenburg-Vorpommern
+ND;Neuburg an der Donau;Landkreis Neuburg-Schrobenhausen;Bayern
+NDH;NorDHausen;Landkreis Nordhausen;Thüringen
+NE;NEuss;Rhein-Kreis Neuss;Nordrhein-Westfalen
+NEA;NEustadt an der Aisch;Landkreis Neustadt an der Aisch-Bad Windsheim;Bayern
+NEB;NEBra;Burgenlandkreis;Sachsen-Anhalt
+NEC;NEustadt bei Coburg;Stadt Coburg und Landkreis Coburg;Bayern
+NEN;NEuNburg;Landkreis Schwandorf;Bayern
+NES;NEustadt an der Saale;Landkreis Rhön-Grabfeld;Bayern
+NEW;NEustadt an der Waldnaab;Landkreis Neustadt an der Waldnaab;Bayern
+NF;NordFriesland;Kreis Nordfriesland;Schleswig-Holstein
+NH;NeuHaus;Landkreis Sonneberg;Thüringen
+NI;NIenburg;Landkreis Nienburg/Weser;Niedersachsen
+NK;NeunKirchen;Landkreis Neunkirchen;Saarland
+NL;Niedersächsischer Landtag;Niedersachsen, Landesregierung und Landtag;Niedersachsen
+NM;NeuMarkt;Landkreis Neumarkt in der Oberpfalz;Bayern
+NMB;NauMBurg;Burgenlandkreis;Sachsen-Anhalt
+NMS;NeuMünSter;Stadt Neumünster;Schleswig-Holstein
+NÖ;NÖrdlingen;Landkreis Donau-Ries;Bayern
+NOH;NOrdHorn;Landkreis Grafschaft Bentheim;Niedersachsen
+NOL;Niederschlesische OberLausitz;Landkreis Görlitz;Sachsen
+NOM;NOrtheiM;Landkreis Northeim;Niedersachsen
+NOR;NORden;Landkreis Aurich;Niedersachsen
+NP;NeurupPin;Landkreis Ostprignitz-Ruppin;Brandenburg
+NR;Neuwied am Rhein;Landkreis Neuwied;Rheinland-Pfalz
+NRW;NordRhein-Westfalen;Nordrhein-Westfalen, Landesregierung, Landtag und Polizei;Nordrhein-Westfalen
+NT;NürTingen;Landkreis Esslingen;Baden-Württemberg
+NU;Neu-Ulm;Landkreis Neu-Ulm;Bayern
+NVP;NordVorPommern;Landkreis Vorpommern-Rügen ohne die Stadt Stralsund;Mecklenburg-Vorpommern
+NW;Neustadt an der Weinstraße;Stadt Neustadt an der Weinstraße;Rheinland-Pfalz
+NWM;NordWestMecklenburg;Landkreis Nordwestmecklenburg ohne die Stadt Wismar;Mecklenburg-Vorpommern
+NY;NieskY;Landkreis Görlitz;Sachsen
+NZ;NeustrelitZ;Landkreis Mecklenburgische Seenplatte ohne die Stadt Neubrandenburg;Mecklenburg-Vorpommern
+OA;OberAllgäu;Landkreis Oberallgäu;Bayern
+OAL;OstALlgäu;Landkreis Ostallgäu;Bayern
+OB;OBerhausen;Stadt Oberhausen;Nordrhein-Westfalen
+OBB;OBernBurg;Landkreis Miltenberg;Bayern
+OBG;OsterBurG;Landkreis Stendal;Sachsen-Anhalt
+OC;OsChersleben;Landkreis Börde;Sachsen-Anhalt
+OCH;OCHsenfurt;Landkreis Würzburg;Bayern
+OD;OlDesloe;Kreis Stormarn;Schleswig-Holstein
+OE;OlpE;Kreis Olpe;Nordrhein-Westfalen
+OF;OFfenbach;Landkreis Offenbach und Stadt Offenbach am Main;Hessen
+OG;OffenburG;Ortenaukreis;Baden-Württemberg
+OH;OstHolstein;Kreis Ostholstein;Schleswig-Holstein
+OHA;Osterode am HArz;Landkreis Göttingen;Niedersachsen
+ÖHR;ÖHRingen;Hohenlohekreis;Baden-Württemberg
+OHV;OberHaVel;Landkreis Oberhavel;Brandenburg
+OHZ;OsterHolZ;Landkreis Osterholz;Niedersachsen
+OK;OhreKreis;Landkreis Börde;Sachsen-Anhalt
+OL;OLdenburg;Landkreis Oldenburg, Stadt Oldenburg (AA–ZZ 100–999);Niedersachsen
+OP;OPladen;Stadt Leverkusen;Nordrhein-Westfalen
+OPR;OstPrignitz, Ruppin;Landkreis Ostprignitz-Ruppin;Brandenburg
+OS;OSnabrück;Stadt Osnabrück, Landkreis Osnabrück (AA–ZZ 100–999);Niedersachsen
+OSL;OberSpreewald, Lausitz;Landkreis Oberspreewald-Lausitz;Brandenburg
+OTW;OTtWeiler;Landkreis Ottweiler;Saarland
+OVI;OberVIechtach;Landkreis Schwandorf;Bayern
+OVL;OberVogtLand;Vogtlandkreis;Sachsen
+OVP;OstVorPommern;Landkreis Ostvorpommern;Mecklenburg-Vorpommern
+OZ;OschatZ;Landkreis Nordsachsen;Sachsen
+P;Potsdam;Stadt Potsdam;Brandenburg
+PA;PAssau;Stadt Passau (A–Z 1–9999), Landkreis Passau (AA–ZZ 1–999);Bayern
+PAF;PfAFfenhofen;Landkreis Pfaffenhofen an der Ilm;Bayern
+PAN;PfArrkircheN;Landkreis Rottal-Inn;Bayern
+PAR;PARsberg;Landkreis Neumarkt in der Oberpfalz, Landkreis Kelheim (Q, Y, BB und CC 1–999);Bayern
+PB;PaderBorn;Kreis Paderborn;Nordrhein-Westfalen
+PCH;ParCHim;Landkreis Ludwigslust-Parchim;Mecklenburg-Vorpommern
+PE;PEine;Landkreis Peine;Niedersachsen
+PEG;PEGnitz;Landkreis Forchheim, Landkreis Nürnberger Land (A 1–999), Landkreis Bayreuth (B–Z 1–999);Bayern
+PF;PForzheim;Enzkreis, Stadt Pforzheim (AA–MZ 100–999 und NA–ZZ 100–9999);Baden-Württemberg
+PI;PInneberg;Kreis Pinneberg;Schleswig-Holstein
+PIR;PIRna;Landkreis Sächsische Schweiz-Osterzgebirge;Sachsen
+PL;PLauen;Vogtlandkreis;Sachsen
+PLÖ;PLÖn;Kreis Plön;Schleswig-Holstein
+PM;Potsdam, Mittelmark;Landkreis Potsdam-Mittelmark;Brandenburg
+PN;PößNeck;Saale-Orla-Kreis;Thüringen
+PR;PRignitz;Landkreis Prignitz;Brandenburg
+PRÜ;PRÜm;Eifelkreis Bitburg-Prüm;Rheinland-Pfalz
+PS;PirmaSens;Stadt Pirmasens (A–Z 1–9999), Landkreis Südwestpfalz (AA–ZZ 1–999);Rheinland-Pfalz
+PW;PaseWalk;Landkreis Vorpommern-Greifswald ohne die Stadt Greifswald;Mecklenburg-Vorpommern
+PZ;PrenZlau;Landkreis Uckermark;Brandenburg
+QFT;QuerFurT;Saalekreis;Sachsen-Anhalt
+QLB;QuedLinBurg;Landkreis Harz;Sachsen-Anhalt
+R;Regensburg;Landkreis Regensburg, Stadt Regensburg (AA–MM 1–999 und MN–ZZ 1000–9999);Bayern
+RA;Württemberg;Landkreis Rastatt;Baden-Württemberg
+RC;ReiChenbach;Vogtlandkreis;Sachsen
+RD;RenDsburg;Kreis Rendsburg-Eckernförde;Schleswig-Holstein
+RDG;Ribnitz-DamGarten;Landkreis Vorpommern-Rügen ohne die Stadt Stralsund;Mecklenburg-Vorpommern
+RE;REcklinghausen;Kreis Recklinghausen;Nordrhein-Westfalen
+REG;REGen;Landkreis Regen;Bayern
+REH;REHau;Landkreis Hof, Landkreis Wunsiedel im Fichtelgebirge (A, E, F, H, J, M, N, P, R, S, V und X 1–999, AA, FF, GG, OO und ZZ 100–999 sowie AU 900–999);Bayern
+REI;REIchenhall;Landkreis Berchtesgadener Land;Bayern
+RG;Riesa, Großenhain;Landkreis Meißen;Sachsen
+RH;RotH;Landkreis Roth;Bayern
+RI;RInteln;Landkreis Schaumburg;Niedersachsen
+RID;RIeDenburg;Landkreis Kelheim;Bayern
+RIE;RIEsa;Landkreis Meißen;Sachsen
+RL;RochLitz;Landkreis Mittelsachsen;Sachsen
+RM;Röbel/Müritz;Landkreis Mecklenburgische Seenplatte ohne die Stadt Neubrandenburg;Mecklenburg-Vorpommern
+RN;RatheNow;Landkreis Havelland;Brandenburg
+RO;ROsenheim;Stadt Rosenheim, Landkreis Rosenheim (AA–ZZ 100–9999);Bayern
+ROD;RODing;Landkreis Cham, Landkreis Schwandorf (B 1–500, F 1–700, G 50–400 und I 100–1000);Bayern
+ROF;ROtenburg an der Fulda;Landkreis Hersfeld-Rotenburg;Hessen
+ROK;ROcKenhausen;Donnersbergkreis;Rheinland-Pfalz
+ROL;ROttenburg an der Laaber;Landkreis Landshut , Landkreis Kelheim (A bis Z);Bayern
+ROS;ROStock;Landkreis Rostock;Mecklenburg-Vorpommern
+ROT;ROthenburg ob der Tauber;Landkreis Ansbach;Bayern
+ROW;ROtenburg (Wümme);Landkreis Rotenburg (Wümme);Niedersachsen
+RP;Rhein-Pfalz;Rhein-Pfalz-Kreis;Rheinland-Pfalz
+RPL;Rheinland-Pfälzischer Landtag;Rheinland-Pfalz, Landesregierung, Landtag und Polizei;Rheinland-Pfalz
+RS;RemScheid;Stadt Remscheid;Nordrhein-Westfalen
+RSL;RosSLau;Stadt Dessau-Roßlau;Sachsen-Anhalt
+RT;ReuTlingen;Landkreis Reutlingen;Baden-Württemberg
+RU;RUdolstadt;Landkreis Saalfeld-Rudolstadt;Thüringen
+RÜD;RÜDesheim;Rheingau-Taunus-Kreis;Hessen
+RÜG;RÜGen;Landkreis Vorpommern-Rügen;Mecklenburg-Vorpommern
+RV;RaVensburg;Landkreis Ravensburg;Baden-Württemberg
+RW;RottWeil;Landkreis Rottweil;Baden-Württemberg
+RZ;RatZeburg;Kreis Herzogtum Lauenburg;Schleswig-Holstein
+S;Stuttgart;Stadt Stuttgart;Baden-Württemberg
+SAB;SAarBurg;Landkreis Trier-Saarburg;Rheinland-Pfalz
+SAD;SchwAnDorf;Landkreis Schwandorf;Bayern
+SAL;SAarländischer Landtag;Saarland, Landesregierung, Landtag und Polizei;Saarland
+SAN;StAdtsteiNach;Landkreis Hof (W–Z 1–999), Landkreis Kulmbach (A–R 1–9999 und JA–ZZ 1–999), Landkreis Kronach (S–V 1–9999 und AA–IZ 1–999);Bayern
+SAW;SAlzWedel;Altmarkkreis Salzwedel;Sachsen-Anhalt
+SÄK;SÄcKingen;Landkreis Säckingen;Baden-Württemberg
+SB;SaarBrücken;Regionalverband Saarbrücken ohne die Stadt Völklingen;Saarland
+SBG;StrasBurG;Landkreis Vorpommern-Greifswald;Mecklenburg-Vorpommern
+SBK;SchöneBecK;Salzlandkreis;Sachsen-Anhalt
+SC;SChwabach;Stadt Schwabach;Bayern
+SCZ;SChleiZ;Saale-Orla-Kreis;Thüringen
+SDH;SonDersHausen;Kyffhäuserkreis;Thüringen
+SDL;StenDaL;Landkreis Stendal;Sachsen-Anhalt
+SDT;SchweDT;Landkreis Uckermark;Brandenburg
+SE;SEgeberg;Kreis Segeberg;Schleswig-Holstein
+SEB;SEBnitz;Landkreis Sächsische Schweiz-Osterzgebirge;Sachsen
+SEE;SEElow;Landkreis Märkisch-Oderland;Brandenburg
+SEF;SchEinFeld;Landkreis Neustadt an der Aisch-Bad Windsheim;Bayern
+SEL;SELb;Landkreis Wunsiedel im Fichtelgebirge;Bayern
+SFB;SenFtenBerg;Landkreis Oberspreewald-Lausitz;Brandenburg
+SFT;StaßFurT;Salzlandkreis;Sachsen-Anhalt
+SG;SolinGen;Stadt Solingen;Nordrhein-Westfalen
+SGH;SanGerHausen;Landkreis Mansfeld-Südharz;Sachsen-Anhalt
+SH;Schleswig-Holstein;Schleswig-Holstein, Landesregierung, Landtag und Polizei;Schleswig-Holstein
+SHA;Schwäbisch HAll;Landkreis Schwäbisch Hall;Baden-Württemberg
+SHG;StadtHaGen;Landkreis Schaumburg;Niedersachsen
+SHK;Saale-Holzland-Kreis;Saale-Holzland-Kreis;Thüringen
+SHL;SuHL;Stadt Suhl;Thüringen
+SI;SIegen;Kreis Siegen-Wittgenstein;Nordrhein-Westfalen
+SIG;SIGmaringen;Landkreis Sigmaringen;Baden-Württemberg
+SIH;aus dem Film "Hanne";fiktiver Ort;Filmproduktion
+SIM;SIMmern;Rhein-Hunsrück-Kreis;Rheinland-Pfalz
+SK;SaaleKreis;Saalekreis;Sachsen-Anhalt
+SL;SchLeswig;Kreis Schleswig-Flensburg;Schleswig-Holstein
+SLE;SchLEiden;Kreis Düren, Kreis Euskirchen;Nordrhein-Westfalen
+SLF;SaaLFeld;Landkreis Saalfeld-Rudolstadt;Thüringen
+SLG;SauLGau;Landkreis Saulgau;Baden-Württemberg
+SLK;SalzLandKreis;Salzlandkreis;Sachsen-Anhalt
+SLN;SchmölLN;Landkreis Altenburger Land;Thüringen
+SLS;SaarLouiS;Landkreis Saarlouis;Saarland
+SLÜ;SchLÜchtern;Main-Kinzig-Kreis ohne die Stadt Hanau;Hessen
+SLZ;SaLZungen;Wartburgkreis;Thüringen
+SM;SchMalkalden;Landkreis Schmalkalden-Meiningen;Thüringen
+SMÜ;SchwabMÜnchen;Landkreis Augsburg;Bayern
+SN;SchweriN;Stadt Schwerin;Mecklenburg-Vorpommern
+SO;SOest;Kreis Soest;Nordrhein-Westfalen
+SOB;SchrOBenhausen;Landkreis Neuburg-Schrobenhausen;Bayern
+SOG;SchOnGau;Landkreis Weilheim-Schongau;Bayern
+SOK;Saale-Orla-Kreis;Saale-Orla-Kreis;Thüringen
+SÖM;SÖMmerda;Landkreis Sömmerda;Thüringen
+SON;SONneberg;Landkreis Sonneberg;Thüringen
+SP;SPeyer;Stadt Speyer;Rheinland-Pfalz
+SPB;SPremBerg;Landkreis Spree-Neiße;Brandenburg
+SPN;SPree, Neiße;Landkreis Spree-Neiße;Brandenburg
+SR;StRaubing;Stadt Straubing (A–Z 1–9999), Landkreis Straubing-Bogen (AA–ZZ 1–999);Bayern
+SRB;StRausBerg;Landkreis Märkisch-Oderland;Brandenburg
+SRO;StadtROda;Saale-Holzland-Kreis;Thüringen
+ST;STeinfurt;Kreis Steinfurt;Nordrhein-Westfalen
+STA;STArnberg;Landkreis Starnberg;Bayern
+STB;STernBerg;Landkreis Ludwigslust-Parchim;Mecklenburg-Vorpommern
+STD;STaDe;Landkreis Stade;Niedersachsen
+STE;STaffelstEin;Landkreis Lichtenfels;Bayern
+STL;STolLberg;Erzgebirgskreis;Sachsen
+STO;STOckach;Landkreis Stockach;Baden-Württemberg
+SU;SiegbUrg;Rhein-Sieg-Kreis;Nordrhein-Westfalen
+SUL;SULzbach;Landkreis Amberg-Sulzbach;Bayern
+SÜW;SÜdliche Weinstraße;Landkreis Südliche Weinstraße;Rheinland-Pfalz
+SW;SchWeinfurt;Stadt Schweinfurt, Landkreis Schweinfurt (AA–ZZ 100–9999);Bayern
+SWA;SchWAlbach;Rheingau-Taunus-Kreis;Hessen
+SY;SYke;Landkreis Diepholz;Niedersachsen
+SZ;SalZgitter;Stadt Salzgitter;Niedersachsen
+SZB;SchwarZenBerg;Erzgebirgskreis;Sachsen
+TBB;TauBerBischofsheim;Main-Tauber-Kreis;Baden-Württemberg
+TDO;Torgau, Delitzsch, Oschatz;Landkreis Nordsachsen;Sachsen
+TE;TEcklenburg;Kreis Steinfurt;Nordrhein-Westfalen
+TET;TETerow;Landkreis Rostock;Mecklenburg-Vorpommern
+TF;Teltow, Fläming;Landkreis Teltow-Fläming;Brandenburg
+TG;TorGau;Landkreis Nordsachsen;Sachsen
+THL;THüringer Landtag;Thüringen, Landesregierung und Landtag;Thüringen
+THW;Technisches HilfsWerk;Bundesanstalt Technisches Hilfswerk;bundesweit
+TIR;TIRschenreuth;Landkreis Tirschenreuth;Bayern
+TO;Torgau, Oschatz;Landkreis Nordsachsen;Sachsen
+TÖL;TÖLz;Landkreis Bad Tölz-Wolfratshausen;Bayern
+TP;TemPlin;Landkreis Uckermark;Brandenburg
+TR;TRier;Landkreis Trier-Saarburg und Stadt Trier;Rheinland-Pfalz
+TS;TraunStein;Landkreis Traunstein;Bayern
+TT;TeTtnang;Bodenseekreis;Baden-Württemberg
+TÜ;TÜbingen;Landkreis Tübingen;Baden-Württemberg
+TUT;TUTtlingen;Landkreis Tuttlingen;Baden-Württemberg
+UE;UElzen;Landkreis Uelzen;Niedersachsen
+UEM;UEckerMünde;Landkreis Vorpommern-Greifswald ohne die Stadt Greifswald;Mecklenburg-Vorpommern
+UFF;UFFenheim;Landkreis Neustadt an der Aisch-Bad Windsheim;Bayern
+UH;Unstrut, Hainich;Unstrut-Hainich-Kreis;Thüringen
+UL;ULm;Stadt Ulm, Alb-Donau-Kreis (AA–MZ 100–999 und NA–ZZ 100–9999);Baden-Württemberg
+UM;UckerMark;Landkreis Uckermark;Brandenburg
+UN;UNna;Kreis Unna;Nordrhein-Westfalen
+USI;USIngen;Hochtaunuskreis;Hessen
+ÜB;ÜBerlingen;Bodenseekreis, Landkreis Ravensburg;Baden-Württemberg
+V;Vogtland;Vogtlandkreis;Sachsen
+VAI;VAIhingen;Landkreis Ludwigsburg;Baden-Württemberg
+VB;VogelsBerg;Vogelsbergkreis;Hessen
+VEC;VEChta;Landkreis Vechta;Niedersachsen
+VER;VERden;Landkreis Verden;Niedersachsen
+VG;Vorpommern, Greifswald;Landkreis Vorpommern-Greifswald ohne die Stadt Greifswald;Mecklenburg-Vorpommern
+VIB;VIlsBiburg;Landkreis Landshut, Landkreis Rottal-Inn (B, I, O und Q 100–999);Bayern
+VIE;VIErsen;Kreis Viersen;Nordrhein-Westfalen
+VIT;VIechTach;Landkreis Regen;Bayern
+VK;VölKlingen;Stadt Völklingen (Mittelstadt im Regionalverband Saarbrücken);Saarland
+VOH;VOHenstrauß;Landkreis Neustadt an der Waldnaab;Bayern
+VR;Vorpommern, Rügen;Landkreis Vorpommern-Rügen ohne die Stadt Stralsund;Mecklenburg-Vorpommern
+VS;Villingen-Schwenningen;Schwarzwald-Baar-Kreis;Baden-Württemberg
+W;Wuppertal;Stadt Wuppertal;Nordrhein-Westfalen
+WA;WAldeck;Landkreis Waldeck-Frankenberg;Hessen
+WAF;WArendorF;Kreis Warendorf;Nordrhein-Westfalen
+WAK;WArtburgKreis;Wartburgkreis;Thüringen
+WAN;WANne;Stadt Herne;Nordrhein-Westfalen
+WAR;WARburg;Kreis Höxter;Nordrhein-Westfalen
+WAT;WATtenscheid;Stadt Bochum;Nordrhein-Westfalen
+WB;WittenBerg;Landkreis Wittenberg;Sachsen-Anhalt
+WBS;WorBiS;Landkreis Eichsfeld;Thüringen
+WDA;WerDAu;Landkreis Zwickau;Sachsen
+WE;WEimar;Stadt Weimar;Thüringen
+WEL;WEiLburg;Landkreis Limburg-Weilburg;Hessen
+WEN;WEideN;Stadt Weiden in der Oberpfalz;Bayern
+WER;WERtingen;Landkreis Dillingen an der Donau, Landkreis Augsburg (A–Z 7000–9999 und YA–YZ 1–999);Bayern
+WES;WESel;Kreis Wesel;Nordrhein-Westfalen
+WF;WolFenbüttel;Landkreis Wolfenbüttel;Niedersachsen
+WG;WanGen;Landkreis Ravensburg;Baden-Württemberg
+WHV;WilhelmsHaVen;Stadt Wilhelmshaven;Niedersachsen
+WI;WIesbaden;Stadt Wiesbaden;Hessen
+WIL;WIttLich;Landkreis Bernkastel-Wittlich;Rheinland-Pfalz
+WIN;aus der Serie "Dark";Winden (fiktiver Ort);Filmproduktion
+WIS;WISmar;Landkreis Nordwestmecklenburg;Mecklenburg-Vorpommern
+WIT;WITten;Ennepe-Ruhr-Kreis;Nordrhein-Westfalen
+WIV;aus dem Film "Hanne";fiktiver Ort;Filmproduktion
+WIZ;WItZenhausen;Werra-Meißner-Kreis;Hessen
+WK;WittstocK;Landkreis Ostprignitz-Ruppin;Brandenburg
+WL;Winsen (Luhe);Landkreis Harburg;Niedersachsen
+WLG;WoLGast;Landkreis Vorpommern-Greifswald ohne die Stadt Greifswald;Mecklenburg-Vorpommern
+WM;WeilheiM;Landkreis Weilheim-Schongau;Bayern
+WMS;WolMirStedt;Landkreis Börde;Sachsen-Anhalt
+WN;WaiblingeN;Rems-Murr-Kreis;Baden-Württemberg
+WND;WeNDel;Landkreis St. Wendel;Saarland
+WO;WOrms;Stadt Worms;Rheinland-Pfalz
+WOB;WOlfsBurg;Stadt Wolfsburg;Niedersachsen
+WOH;WOlfHagen;Landkreis Kassel;Hessen
+WOL;WOLfach;Ortenaukreis, Landkreis Freudenstadt (A bis E 9000–9999);Baden-Württemberg
+WOR;WOlfRatshausen;Landkreis Bad Tölz-Wolfratshausen, Landkreis München (F und O 10–9999), Landkreis Starnberg (B und G 10–9999);Bayern
+WOS;WOlfStein;Landkreis Freyung-Grafenau;Bayern
+WR;WernigeRode;Landkreis Harz;Sachsen-Anhalt
+WRN;WaReN;Landkreis Mecklenburgische Seenplatte ohne die Stadt Neubrandenburg;Mecklenburg-Vorpommern
+WS;WasSerburg;Landkreis Rosenheim;Bayern
+WSF;WeisSenFels;Burgenlandkreis;Sachsen-Anhalt
+WST;WesterSTede;Landkreis Ammerland;Niedersachsen
+WSW;WeisSWasser;Landkreis Görlitz;Sachsen
+WT;WaldshuT;Landkreis Waldshut;Baden-Württemberg
+WTL;WitTLage;Landkreis Osnabrück;Niedersachsen
+WTM;WitTMund;Landkreis Wittmund;Niedersachsen
+WÜ;WÜrzburg;Landkreis Würzburg, Stadt Würzburg (AA–NZ 100–9999 und OA–ZZ 100–999);Bayern
+WUG;WeißenbUrG;Landkreis Weißenburg-Gunzenhausen;Bayern
+WÜM;WaldMÜnchen (mit einem Buchstabendreher);Landkreis Cham;Bayern
+WUN;WUNsiedel;Landkreis Wunsiedel im Fichtelgebirge;Bayern
+WUR;WURzen;Landkreis Leipzig;Sachsen
+WW;WesterWald;Westerwaldkreis;Rheinland-Pfalz
+WZ;WetZlar;Stadt Wetzlar (Sonderstatusstadt im Lahn-Dill-Kreis);Hessen
+WZL;WanZLeben;Landkreis Börde;Sachsen-Anhalt
+X;willkürlich gewählt;Internationale Hauptquartiere (NATO);bundesweit
+Y;willkürlich gewählt;Bundeswehr;bundesweit
+Z;Zwickau;Landkreis Zwickau;Sachsen
+ZE;ZErbst;Landkreis Anhalt-Bitterfeld;Sachsen-Anhalt
+ZEL;ZELl;Landkreis Cochem-Zell;Rheinland-Pfalz
+ZI;ZIttau;Landkreis Görlitz;Sachsen
+ZIG;ZIeGenhain;Schwalm-Eder-Kreis;Hessen
+ZP;ZschoPau;Erzgebirgskreis;Sachsen
+ZR;ZeulenRoda;Landkreis Greiz;Thüringen
+ZW;ZWeibrücken;Stadt Zweibrücken, Landkreis Südwestpfalz (AA–ZZ 1–99);Rheinland-Pfalz
+ZZ;ZeitZ;Burgenlandkreis;Sachsen-Anhalt
