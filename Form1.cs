@@ -25,6 +25,8 @@ namespace Anzeige
 {
     public partial class Form1 : Form
     {
+        Bussgeld verstossbussgeld = new Bussgeld();
+        Dictionary<String, Bussgeld> bussgelder = new Dictionary<String, Bussgeld>();
         IronTesseract ocrreader = new IronTesseract();
         Dictionary<String,Ort>Orte = new Dictionary<String, Ort>();
         String plaque = "-aeoSs2B8O0DQCU";
@@ -53,9 +55,9 @@ namespace Anzeige
         {
             get
             {
-                String fullpath = ZZielpfad + Ort;
-                CreateDirectoryIfNotExists(fullpath);
-                fullpath = fullpath + "//" + this.Kennzeichen;
+                CreateDirectoryIfNotExists(ZZielpfad);
+                CreateDirectoryIfNotExists(ZZielpfad + Ort);
+                String fullpath = ZZielpfad + Ort + "\\" + this.Kennzeichen + "\\" + DateTime.Now.ToString("yyyyMMdd"); ;
                 CreateDirectoryIfNotExists(fullpath);
                 return fullpath;
             }
@@ -247,7 +249,7 @@ namespace Anzeige
                 string[] verstossLines = value.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (string verstossValue in verstossLines)
                 {
-                    CVerstoss.Items.Add(verstossValue.Trim());
+                    AddVerstoss(verstossValue);
                 }
             }
 
@@ -417,6 +419,7 @@ namespace Anzeige
         public void Init(Boolean verstossonly = false)
         {
             String key = "";
+            verstossbussgeld = new Bussgeld();
             List<string> allLines = new List<string>();
             allLines.AddRange(File.ReadAllLines("Data2.txt"));
             allLines.AddRange(File.ReadAllLines("Data.txt"));
@@ -427,6 +430,7 @@ namespace Anzeige
             if (!verstossonly) COrt.Items.Clear();
             CVerstossaus.Items.Clear();
             if (!verstossonly) CMarke.Items.Clear();
+            bussgelder.Clear();
             foreach (String s in lines)
             {
                 if (!verstossonly)
@@ -441,7 +445,34 @@ namespace Anzeige
                     }
                     else if (key == "<verstoss>")
                     {
-                        CVerstossaus.Items.Add(s);
+                        String[] items = s.Split('|');
+                        CVerstossaus.Items.Add(items[0]);
+                        if (items.Length>3)
+                        {
+                            Bussgeld v;
+
+                            switch (items[1])
+                            {
+                                case "parken":
+                                    v = new Bussgeld(true, false, false);
+                                    break;
+                                case "behinderung":
+                                    v = new Bussgeld(false, true, false);
+                                    break;
+                                case "gefährdung":
+                                    v = new Bussgeld(false, false, true);
+                                    break;
+                                case "x2":
+                                    v = new Bussgeld(2);
+                                    break;
+                                default:
+                                    v = new Bussgeld(Convert.ToDouble(items[1]), Convert.ToDouble(items[2]), Convert.ToDouble(items[3]));
+                                    break;
+                            }
+                            v.parken = (items[0].ToLower().Contains("parken"));
+                            v.halten = (items[0].ToLower().Contains("halten"));
+                            bussgelder.Add(items[0], v);
+                        }
                     }
                     else if (key == "<bluetooth>")
                     {
@@ -602,7 +633,7 @@ namespace Anzeige
             CVerstossaus.Items.Clear();
             foreach (String i in CVerstoss.Items)
             {
-                CVerstossaus.Items.Add(i);
+                AddVerstoss(i);
             }
             CVerstoss.Items.Clear();
             CAnzeigeText.Text = Message;
@@ -611,16 +642,47 @@ namespace Anzeige
         {
             if (CVerstoss.SelectedItem != null)
             {
+
                 CVerstossaus.Items.Add(CVerstoss.SelectedItem);
-                CVerstoss.Items.Remove(CVerstoss.SelectedItem);
+                RemoveVerstoss((String)CVerstoss.SelectedItem);
             }
             CAnzeigeText.Text = Message;
+        }
+        private void RemoveVerstoss(String verstoss)
+        {
+            CVerstoss.Items.Remove(verstoss.Trim());
+            verstossbussgeld = new Bussgeld();
+            foreach (String i in CVerstoss.Items)
+                AddBussgeld(i);
+            bussgeldrechner1.bussgeld = verstossbussgeld;
+        }
+
+        private void AddBussgeld (String verstoss)
+        {
+            Bussgeld v = bussgelder[verstoss];
+            if (v.verstoss != 0) verstossbussgeld.verstoss = Math.Min(v.verstoss, verstossbussgeld.verstoss);
+            if (v.behinderung != 0) verstossbussgeld.behinderung = Math.Min(v.behinderung, verstossbussgeld.behinderung);
+            if (v.gefaerdung != 0) verstossbussgeld.gefaerdung = Math.Min(v.gefaerdung, verstossbussgeld.gefaerdung);
+            if (v.parken) verstossbussgeld.parken = true;
+            if (v.faktor > 1) verstossbussgeld.faktor = v.faktor;
+            if (v.mitbehinderung) verstossbussgeld.mitbehinderung = v.mitbehinderung;
+            if (v.mitgefaerdung) verstossbussgeld.mitgefaerdung = v.mitgefaerdung;
+            if (v.p1 > 0) verstossbussgeld.p1 = v.p1;
+            if (v.p2 > 0) verstossbussgeld.p2 = v.p2;
+            if (v.p3 > 0) verstossbussgeld.p3 = v.p3;
+        }
+
+        private void AddVerstoss(String verstoss)
+        {
+            CVerstoss.Items.Add(verstoss.Trim());
+            AddBussgeld(verstoss);
+            bussgeldrechner1.bussgeld = verstossbussgeld;
         }
         private void CToo_Click(object sender, EventArgs e)
         {
             if (CVerstossaus.SelectedItem!=null)
             {
-                CVerstoss.Items.Add(CVerstossaus.SelectedItem);
+                AddVerstoss((String)CVerstossaus.SelectedItem);
                 CVerstossaus.Items.Remove(CVerstossaus.SelectedItem);
             }
             CAnzeigeText.Text = Message;
@@ -630,7 +692,8 @@ namespace Anzeige
             CVerstoss.Items.Clear();
             foreach (String i in CVerstossaus.Items)
             {
-                CVerstoss.Items.Add(i);
+                // CVerstoss.Items.Add(i);
+                AddVerstoss(i);
             }
             CVerstossaus.Items.Clear();
             CAnzeigeText.Text = Message;
@@ -1233,7 +1296,12 @@ namespace Anzeige
             }
             else if (CTabPages.SelectedTab == CTest)
             {
-                TestOCRFIX();
+                // TestOCRFIX();
+            }
+            else if (CTabPages.SelectedTab == CAbout)
+            {
+                AboutBox1 dlg = new AboutBox1();
+                dlg.ShowDialog();
             }
         }
         private void CAusschnitt_Click(object sender, EventArgs e)
@@ -2087,7 +2155,7 @@ namespace Anzeige
 
                     foreach (string line in lines)
                     {
-                        CVerstoss.Items.Add(line);
+                        AddVerstoss(line);
                         CVerstossaus.Items.Remove(line);
                     }
                 }

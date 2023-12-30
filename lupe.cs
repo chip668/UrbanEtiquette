@@ -14,5 +14,10 @@ namespace Anzeige
         {
             InitializeComponent();
         }
+
+        private void lupe_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

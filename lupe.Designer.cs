@@ -40,6 +40,7 @@ namespace Anzeige
             this.Name = "lupe";
             this.Text = "lupe";
             this.TransparencyKey = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.Load += new System.EventHandler(this.lupe_Load);
             this.ResumeLayout(false);
 
         }

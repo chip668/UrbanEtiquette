@@ -99,6 +99,7 @@ namespace Anzeige
             this.Controls.Add(this.CBT1);
             this.Name = "assistent";
             this.Text = "assistent";
+            this.Load += new System.EventHandler(this.assistent_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

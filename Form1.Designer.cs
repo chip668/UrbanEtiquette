@@ -32,7 +32,10 @@ namespace Anzeige
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.CAnzeige = new System.Windows.Forms.Button();
+            this.bussgeldrechner1 = new Anzeige.Bussgeldrechner();
             this.CDTMEdit = new System.Windows.Forms.DateTimePicker();
+            this.CCopy = new System.Windows.Forms.CheckBox();
             this.CAddFile = new System.Windows.Forms.CheckBox();
             this.CAddPath = new System.Windows.Forms.CheckBox();
             this.CreatePDF = new System.Windows.Forms.CheckBox();
@@ -46,7 +49,6 @@ namespace Anzeige
             this.CLoad = new System.Windows.Forms.Button();
             this.CSpeichern = new System.Windows.Forms.Button();
             this.CClip = new System.Windows.Forms.Button();
-            this.CAnzeige = new System.Windows.Forms.Button();
             this.CFiles = new System.Windows.Forms.ListBox();
             this.COrt = new System.Windows.Forms.ComboBox();
             this.CClipImage = new System.Windows.Forms.Button();
@@ -106,6 +108,7 @@ namespace Anzeige
             this.CTest = new System.Windows.Forms.TabPage();
             this.CTestText = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.CAbout = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -131,7 +134,10 @@ namespace Anzeige
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.BackColor = System.Drawing.Color.Yellow;
+            this.splitContainer1.Panel1.Controls.Add(this.CAnzeige);
+            this.splitContainer1.Panel1.Controls.Add(this.bussgeldrechner1);
             this.splitContainer1.Panel1.Controls.Add(this.CDTMEdit);
+            this.splitContainer1.Panel1.Controls.Add(this.CCopy);
             this.splitContainer1.Panel1.Controls.Add(this.CAddFile);
             this.splitContainer1.Panel1.Controls.Add(this.CAddPath);
             this.splitContainer1.Panel1.Controls.Add(this.CreatePDF);
@@ -145,7 +151,6 @@ namespace Anzeige
             this.splitContainer1.Panel1.Controls.Add(this.CLoad);
             this.splitContainer1.Panel1.Controls.Add(this.CSpeichern);
             this.splitContainer1.Panel1.Controls.Add(this.CClip);
-            this.splitContainer1.Panel1.Controls.Add(this.CAnzeige);
             this.splitContainer1.Panel1.Controls.Add(this.CFiles);
             this.splitContainer1.Panel1.Controls.Add(this.COrt);
             this.splitContainer1.Panel1.Controls.Add(this.CClipImage);
@@ -185,19 +190,53 @@ namespace Anzeige
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.CTabPages);
-            this.splitContainer1.Size = new System.Drawing.Size(1176, 876);
+            this.splitContainer1.Size = new System.Drawing.Size(1176, 970);
             this.splitContainer1.SplitterDistance = 441;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // CAnzeige
+            // 
+            this.CAnzeige.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.CAnzeige.Location = new System.Drawing.Point(204, 759);
+            this.CAnzeige.Name = "CAnzeige";
+            this.CAnzeige.Size = new System.Drawing.Size(230, 201);
+            this.CAnzeige.TabIndex = 9;
+            this.CAnzeige.Text = "anzeigen";
+            this.toolTip1.SetToolTip(this.CAnzeige, "Öffen eine Mail mit dem Verstoß");
+            this.CAnzeige.UseVisualStyleBackColor = false;
+            this.CAnzeige.Click += new System.EventHandler(this.CAnzeige_Click);
+            // 
+            // bussgeldrechner1
+            // 
+            this.bussgeldrechner1.bussgeld = null;
+            this.bussgeldrechner1.Location = new System.Drawing.Point(0, 767);
+            this.bussgeldrechner1.Name = "bussgeldrechner1";
+            this.bussgeldrechner1.Size = new System.Drawing.Size(231, 207);
+            this.bussgeldrechner1.TabIndex = 20;
             // 
             // CDTMEdit
             // 
             this.CDTMEdit.CustomFormat = "dd.MM.yyyy HH:mm";
-            this.CDTMEdit.Location = new System.Drawing.Point(95, 587);
+            this.CDTMEdit.Location = new System.Drawing.Point(95, 546);
             this.CDTMEdit.Name = "CDTMEdit";
             this.CDTMEdit.Size = new System.Drawing.Size(339, 29);
             this.CDTMEdit.TabIndex = 19;
             this.CDTMEdit.Visible = false;
             this.CDTMEdit.ValueChanged += new System.EventHandler(this.CDTMEdit_ValueChanged);
+            // 
+            // CCopy
+            // 
+            this.CCopy.AutoSize = true;
+            this.CCopy.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CCopy.Checked = true;
+            this.CCopy.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CCopy.Location = new System.Drawing.Point(2, 740);
+            this.CCopy.Name = "CCopy";
+            this.CCopy.Size = new System.Drawing.Size(131, 25);
+            this.CCopy.TabIndex = 18;
+            this.CCopy.Text = "Kopie erstellen";
+            this.CCopy.UseVisualStyleBackColor = true;
+            this.CCopy.CheckedChanged += new System.EventHandler(this.CAddFile_CheckedChanged);
             // 
             // CAddFile
             // 
@@ -205,7 +244,7 @@ namespace Anzeige
             this.CAddFile.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.CAddFile.Checked = true;
             this.CAddFile.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CAddFile.Location = new System.Drawing.Point(4, 787);
+            this.CAddFile.Location = new System.Drawing.Point(5, 716);
             this.CAddFile.Name = "CAddFile";
             this.CAddFile.Size = new System.Drawing.Size(128, 25);
             this.CAddFile.TabIndex = 18;
@@ -220,7 +259,7 @@ namespace Anzeige
             this.CAddPath.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.CAddPath.Checked = true;
             this.CAddPath.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CAddPath.Location = new System.Drawing.Point(3, 756);
+            this.CAddPath.Location = new System.Drawing.Point(6, 693);
             this.CAddPath.Name = "CAddPath";
             this.CAddPath.Size = new System.Drawing.Size(127, 25);
             this.CAddPath.TabIndex = 18;
@@ -234,7 +273,7 @@ namespace Anzeige
             this.CreatePDF.AutoSize = true;
             this.CreatePDF.BackColor = System.Drawing.Color.Transparent;
             this.CreatePDF.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.CreatePDF.Location = new System.Drawing.Point(8, 626);
+            this.CreatePDF.Location = new System.Drawing.Point(8, 585);
             this.CreatePDF.Name = "CreatePDF";
             this.CreatePDF.Size = new System.Drawing.Size(102, 25);
             this.CreatePDF.TabIndex = 17;
@@ -246,25 +285,25 @@ namespace Anzeige
             // 
             this.CFreeText.BackColor = System.Drawing.Color.White;
             this.CFreeText.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.CFreeText.Location = new System.Drawing.Point(95, 500);
+            this.CFreeText.Location = new System.Drawing.Point(95, 488);
             this.CFreeText.Multiline = true;
             this.CFreeText.Name = "CFreeText";
-            this.CFreeText.Size = new System.Drawing.Size(339, 82);
+            this.CFreeText.Size = new System.Drawing.Size(339, 53);
             this.CFreeText.TabIndex = 16;
             this.toolTip1.SetToolTip(this.CFreeText, "Hier kann eine Zussätzliche Anmerklung gemacht werden");
             // 
             // timePicker1
             // 
             this.timePicker1.BackColor = System.Drawing.Color.White;
-            this.timePicker1.Hour = 13;
-            this.timePicker1.Location = new System.Drawing.Point(318, 622);
-            this.timePicker1.Minute = 44;
+            this.timePicker1.Hour = 14;
+            this.timePicker1.Location = new System.Drawing.Point(318, 581);
+            this.timePicker1.Minute = 40;
             this.timePicker1.Name = "timePicker1";
-            this.timePicker1.Second = 14;
+            this.timePicker1.Second = 37;
             this.timePicker1.Short = true;
             this.timePicker1.Size = new System.Drawing.Size(116, 29);
             this.timePicker1.TabIndex = 15;
-            this.timePicker1.Value = new System.DateTime(2023, 12, 28, 13, 44, 14, 0);
+            this.timePicker1.Value = new System.DateTime(2023, 12, 30, 14, 40, 37, 0);
             // 
             // listBoxDevices
             // 
@@ -288,6 +327,7 @@ namespace Anzeige
             this.button3.Size = new System.Drawing.Size(35, 45);
             this.button3.TabIndex = 13;
             this.button3.Text = "🛈";
+            this.toolTip1.SetToolTip(this.button3, "Assistenten für die Anzeige starten");
             this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
@@ -308,7 +348,7 @@ namespace Anzeige
             // 
             this.CLogo.BackColor = System.Drawing.Color.White;
             this.CLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.CLogo.Location = new System.Drawing.Point(315, 165);
+            this.CLogo.Location = new System.Drawing.Point(315, 161);
             this.CLogo.Name = "CLogo";
             this.CLogo.Size = new System.Drawing.Size(119, 96);
             this.CLogo.TabIndex = 12;
@@ -364,24 +404,12 @@ namespace Anzeige
             this.CClip.UseVisualStyleBackColor = false;
             this.CClip.Click += new System.EventHandler(this.CClip_Click);
             // 
-            // CAnzeige
-            // 
-            this.CAnzeige.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.CAnzeige.Location = new System.Drawing.Point(2, 821);
-            this.CAnzeige.Name = "CAnzeige";
-            this.CAnzeige.Size = new System.Drawing.Size(432, 55);
-            this.CAnzeige.TabIndex = 9;
-            this.CAnzeige.Text = "anzeigen";
-            this.toolTip1.SetToolTip(this.CAnzeige, "Öffen eine Mail mit dem Verstoß");
-            this.CAnzeige.UseVisualStyleBackColor = false;
-            this.CAnzeige.Click += new System.EventHandler(this.CAnzeige_Click);
-            // 
             // CFiles
             // 
             this.CFiles.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CFiles.FormattingEnabled = true;
             this.CFiles.ItemHeight = 21;
-            this.CFiles.Location = new System.Drawing.Point(145, 745);
+            this.CFiles.Location = new System.Drawing.Point(145, 694);
             this.CFiles.Name = "CFiles";
             this.CFiles.Size = new System.Drawing.Size(289, 67);
             this.CFiles.TabIndex = 8;
@@ -426,6 +454,7 @@ namespace Anzeige
             this.button2.TabIndex = 6;
             this.button2.Text = "⚙";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Visible = false;
             this.button2.Click += new System.EventHandler(this.CDirOpen_Click);
             // 
             // CDirOpen
@@ -455,29 +484,31 @@ namespace Anzeige
             // CLoadVerstoss
             // 
             this.CLoadVerstoss.BackColor = System.Drawing.Color.LightGray;
-            this.CLoadVerstoss.Location = new System.Drawing.Point(399, 361);
+            this.CLoadVerstoss.Location = new System.Drawing.Point(399, 353);
             this.CLoadVerstoss.Name = "CLoadVerstoss";
             this.CLoadVerstoss.Size = new System.Drawing.Size(35, 38);
             this.CLoadVerstoss.TabIndex = 6;
             this.CLoadVerstoss.Text = "📁";
+            this.toolTip1.SetToolTip(this.CLoadVerstoss, "Merere Verstöße laden.");
             this.CLoadVerstoss.UseVisualStyleBackColor = false;
             this.CLoadVerstoss.Click += new System.EventHandler(this.CLoadVerstoss_Click);
             // 
             // CSaveVerstoss
             // 
             this.CSaveVerstoss.BackColor = System.Drawing.Color.LightGray;
-            this.CSaveVerstoss.Location = new System.Drawing.Point(365, 361);
+            this.CSaveVerstoss.Location = new System.Drawing.Point(365, 354);
             this.CSaveVerstoss.Name = "CSaveVerstoss";
             this.CSaveVerstoss.Size = new System.Drawing.Size(35, 38);
             this.CSaveVerstoss.TabIndex = 6;
             this.CSaveVerstoss.Text = "💾";
+            this.toolTip1.SetToolTip(this.CSaveVerstoss, "Verstöße speichern unter ");
             this.CSaveVerstoss.UseVisualStyleBackColor = false;
             this.CSaveVerstoss.Click += new System.EventHandler(this.CSaveVerstoss_Click);
             // 
             // Ctoall
             // 
             this.Ctoall.BackColor = System.Drawing.Color.LightGray;
-            this.Ctoall.Location = new System.Drawing.Point(204, 361);
+            this.Ctoall.Location = new System.Drawing.Point(204, 354);
             this.Ctoall.Name = "Ctoall";
             this.Ctoall.Size = new System.Drawing.Size(35, 38);
             this.Ctoall.TabIndex = 6;
@@ -489,7 +520,7 @@ namespace Anzeige
             // CToo
             // 
             this.CToo.BackColor = System.Drawing.Color.LightGray;
-            this.CToo.Location = new System.Drawing.Point(168, 361);
+            this.CToo.Location = new System.Drawing.Point(168, 354);
             this.CToo.Name = "CToo";
             this.CToo.Size = new System.Drawing.Size(35, 38);
             this.CToo.TabIndex = 6;
@@ -501,7 +532,7 @@ namespace Anzeige
             // CBackall
             // 
             this.CBackall.BackColor = System.Drawing.Color.LightGray;
-            this.CBackall.Location = new System.Drawing.Point(95, 361);
+            this.CBackall.Location = new System.Drawing.Point(95, 354);
             this.CBackall.Name = "CBackall";
             this.CBackall.Size = new System.Drawing.Size(35, 38);
             this.CBackall.TabIndex = 6;
@@ -513,7 +544,7 @@ namespace Anzeige
             // CBack
             // 
             this.CBack.BackColor = System.Drawing.Color.LightGray;
-            this.CBack.Location = new System.Drawing.Point(131, 361);
+            this.CBack.Location = new System.Drawing.Point(131, 354);
             this.CBack.Name = "CBack";
             this.CBack.Size = new System.Drawing.Size(35, 38);
             this.CBack.TabIndex = 6;
@@ -527,7 +558,7 @@ namespace Anzeige
             this.CVerstoss.BackColor = System.Drawing.Color.White;
             this.CVerstoss.FormattingEnabled = true;
             this.CVerstoss.ItemHeight = 21;
-            this.CVerstoss.Location = new System.Drawing.Point(95, 405);
+            this.CVerstoss.Location = new System.Drawing.Point(95, 395);
             this.CVerstoss.Name = "CVerstoss";
             this.CVerstoss.Size = new System.Drawing.Size(339, 88);
             this.CVerstoss.TabIndex = 5;
@@ -540,7 +571,7 @@ namespace Anzeige
             this.CVerstossaus.BackColor = System.Drawing.Color.White;
             this.CVerstossaus.FormattingEnabled = true;
             this.CVerstossaus.ItemHeight = 21;
-            this.CVerstossaus.Location = new System.Drawing.Point(95, 267);
+            this.CVerstossaus.Location = new System.Drawing.Point(95, 262);
             this.CVerstossaus.Name = "CVerstossaus";
             this.CVerstossaus.Size = new System.Drawing.Size(339, 88);
             this.CVerstossaus.TabIndex = 5;
@@ -553,7 +584,7 @@ namespace Anzeige
             this.CMarke.BackColor = System.Drawing.Color.White;
             this.CMarke.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
             this.CMarke.FormattingEnabled = true;
-            this.CMarke.Location = new System.Drawing.Point(95, 165);
+            this.CMarke.Location = new System.Drawing.Point(95, 161);
             this.CMarke.Name = "CMarke";
             this.CMarke.Size = new System.Drawing.Size(214, 113);
             this.CMarke.TabIndex = 4;
@@ -574,7 +605,7 @@ namespace Anzeige
             this.panel1.Controls.Add(this.panel4);
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.panel2);
-            this.panel1.Location = new System.Drawing.Point(2, 662);
+            this.panel1.Location = new System.Drawing.Point(2, 621);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(432, 52);
             this.panel1.TabIndex = 3;
@@ -734,7 +765,7 @@ namespace Anzeige
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(0, 494);
+            this.label11.Location = new System.Drawing.Point(0, 482);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(77, 21);
             this.label11.TabIndex = 1;
@@ -743,7 +774,7 @@ namespace Anzeige
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(0, 405);
+            this.label10.Location = new System.Drawing.Point(0, 396);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(72, 21);
             this.label10.TabIndex = 1;
@@ -761,7 +792,7 @@ namespace Anzeige
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(1, 165);
+            this.label6.Location = new System.Drawing.Point(1, 161);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(54, 21);
             this.label6.TabIndex = 1;
@@ -770,7 +801,7 @@ namespace Anzeige
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(272, 626);
+            this.label5.Location = new System.Drawing.Point(272, 585);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(45, 21);
             this.label5.TabIndex = 1;
@@ -780,7 +811,7 @@ namespace Anzeige
             // CZeit
             // 
             this.CZeit.BackColor = System.Drawing.Color.White;
-            this.CZeit.Location = new System.Drawing.Point(315, 590);
+            this.CZeit.Location = new System.Drawing.Point(315, 549);
             this.CZeit.Name = "CZeit";
             this.CZeit.Size = new System.Drawing.Size(119, 29);
             this.CZeit.TabIndex = 2;
@@ -790,7 +821,7 @@ namespace Anzeige
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(281, 590);
+            this.label9.Location = new System.Drawing.Point(281, 549);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(36, 21);
             this.label9.TabIndex = 1;
@@ -800,7 +831,7 @@ namespace Anzeige
             // 
             this.CKennzeichen.BackColor = System.Drawing.Color.White;
             this.CKennzeichen.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.CKennzeichen.Location = new System.Drawing.Point(111, 720);
+            this.CKennzeichen.Location = new System.Drawing.Point(111, 669);
             this.CKennzeichen.Name = "CKennzeichen";
             this.CKennzeichen.Size = new System.Drawing.Size(323, 22);
             this.CKennzeichen.TabIndex = 2;
@@ -809,7 +840,7 @@ namespace Anzeige
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 721);
+            this.label3.Location = new System.Drawing.Point(4, 670);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(97, 21);
             this.label3.TabIndex = 1;
@@ -818,7 +849,7 @@ namespace Anzeige
             // CDatum
             // 
             this.CDatum.BackColor = System.Drawing.Color.White;
-            this.CDatum.Location = new System.Drawing.Point(95, 590);
+            this.CDatum.Location = new System.Drawing.Point(95, 549);
             this.CDatum.Name = "CDatum";
             this.CDatum.Size = new System.Drawing.Size(180, 29);
             this.CDatum.TabIndex = 2;
@@ -829,7 +860,7 @@ namespace Anzeige
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(7, 590);
+            this.label8.Location = new System.Drawing.Point(7, 549);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(57, 21);
             this.label8.TabIndex = 1;
@@ -894,11 +925,12 @@ namespace Anzeige
             this.CTabPages.Controls.Add(this.CStadtPate);
             this.CTabPages.Controls.Add(this.CGMaps);
             this.CTabPages.Controls.Add(this.CTest);
+            this.CTabPages.Controls.Add(this.CAbout);
             this.CTabPages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CTabPages.Location = new System.Drawing.Point(0, 0);
             this.CTabPages.Name = "CTabPages";
             this.CTabPages.SelectedIndex = 0;
-            this.CTabPages.Size = new System.Drawing.Size(731, 876);
+            this.CTabPages.Size = new System.Drawing.Size(731, 970);
             this.CTabPages.TabIndex = 0;
             this.toolTip1.SetToolTip(this.CTabPages, "Öffne die Seite des Ordnungsamtes");
             this.CTabPages.SelectedIndexChanged += new System.EventHandler(this.CTabPages_SelectedIndexChanged);
@@ -911,7 +943,7 @@ namespace Anzeige
             this.CSave.Location = new System.Drawing.Point(4, 30);
             this.CSave.Name = "CSave";
             this.CSave.Padding = new System.Windows.Forms.Padding(3);
-            this.CSave.Size = new System.Drawing.Size(723, 842);
+            this.CSave.Size = new System.Drawing.Size(723, 936);
             this.CSave.TabIndex = 0;
             this.CSave.Text = "Foto";
             this.CSave.Click += new System.EventHandler(this.CFotoAnzeige_Click);
@@ -942,7 +974,7 @@ namespace Anzeige
             this.tabPage2.Controls.Add(this.CAnzeigeText);
             this.tabPage2.Location = new System.Drawing.Point(4, 30);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(723, 842);
+            this.tabPage2.Size = new System.Drawing.Size(723, 936);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Vorschau";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -955,7 +987,7 @@ namespace Anzeige
             this.CAnzeigeText.Multiline = true;
             this.CAnzeigeText.Name = "CAnzeigeText";
             this.CAnzeigeText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.CAnzeigeText.Size = new System.Drawing.Size(723, 842);
+            this.CAnzeigeText.Size = new System.Drawing.Size(723, 936);
             this.CAnzeigeText.TabIndex = 0;
             this.toolTip1.SetToolTip(this.CAnzeigeText, "Vorschau auf den Mail Text");
             // 
@@ -964,7 +996,7 @@ namespace Anzeige
             this.CWeglide.BackColor = System.Drawing.Color.Silver;
             this.CWeglide.Location = new System.Drawing.Point(4, 30);
             this.CWeglide.Name = "CWeglide";
-            this.CWeglide.Size = new System.Drawing.Size(723, 842);
+            this.CWeglide.Size = new System.Drawing.Size(723, 936);
             this.CWeglide.TabIndex = 2;
             this.CWeglide.Text = "Weg-li";
             this.toolTip1.SetToolTip(this.CWeglide, "Öffne die Wegli Seite");
@@ -975,7 +1007,7 @@ namespace Anzeige
             this.CTabPageOA.Controls.Add(this.CURL);
             this.CTabPageOA.Location = new System.Drawing.Point(4, 30);
             this.CTabPageOA.Name = "CTabPageOA";
-            this.CTabPageOA.Size = new System.Drawing.Size(723, 842);
+            this.CTabPageOA.Size = new System.Drawing.Size(723, 936);
             this.CTabPageOA.TabIndex = 3;
             this.CTabPageOA.Text = "Ordnungsamt";
             // 
@@ -992,7 +1024,7 @@ namespace Anzeige
             this.CStadtPate.BackColor = System.Drawing.Color.Silver;
             this.CStadtPate.Location = new System.Drawing.Point(4, 30);
             this.CStadtPate.Name = "CStadtPate";
-            this.CStadtPate.Size = new System.Drawing.Size(723, 842);
+            this.CStadtPate.Size = new System.Drawing.Size(723, 936);
             this.CStadtPate.TabIndex = 4;
             this.CStadtPate.Text = "Stadtpate";
             this.toolTip1.SetToolTip(this.CStadtPate, "Öffne die Seite der Stadt auf Stadtpate");
@@ -1002,7 +1034,7 @@ namespace Anzeige
             this.CGMaps.BackColor = System.Drawing.Color.Silver;
             this.CGMaps.Location = new System.Drawing.Point(4, 30);
             this.CGMaps.Name = "CGMaps";
-            this.CGMaps.Size = new System.Drawing.Size(723, 842);
+            this.CGMaps.Size = new System.Drawing.Size(723, 936);
             this.CGMaps.TabIndex = 5;
             this.CGMaps.Text = "G-Maps";
             this.toolTip1.SetToolTip(this.CGMaps, "Öffne die Position auf google maps");
@@ -1012,7 +1044,7 @@ namespace Anzeige
             this.CTest.Controls.Add(this.CTestText);
             this.CTest.Location = new System.Drawing.Point(4, 30);
             this.CTest.Name = "CTest";
-            this.CTest.Size = new System.Drawing.Size(723, 842);
+            this.CTest.Size = new System.Drawing.Size(723, 936);
             this.CTest.TabIndex = 6;
             this.CTest.Text = "Test";
             this.CTest.UseVisualStyleBackColor = true;
@@ -1024,20 +1056,29 @@ namespace Anzeige
             this.CTestText.Location = new System.Drawing.Point(0, 0);
             this.CTestText.Multiline = true;
             this.CTestText.Name = "CTestText";
-            this.CTestText.Size = new System.Drawing.Size(723, 842);
+            this.CTestText.Size = new System.Drawing.Size(723, 936);
             this.CTestText.TabIndex = 0;
             this.toolTip1.SetToolTip(this.CTestText, "Testseite");
+            // 
+            // CAbout
+            // 
+            this.CAbout.Location = new System.Drawing.Point(4, 30);
+            this.CAbout.Name = "CAbout";
+            this.CAbout.Size = new System.Drawing.Size(723, 936);
+            this.CAbout.TabIndex = 7;
+            this.CAbout.Text = "About";
+            this.CAbout.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1176, 876);
+            this.ClientSize = new System.Drawing.Size(1176, 970);
             this.Controls.Add(this.splitContainer1);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Wegeheld 2";
+            this.Text = "Urban Etiquette";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
@@ -1137,6 +1178,9 @@ namespace Anzeige
         private System.Windows.Forms.Button CLoadVerstoss;
         private System.Windows.Forms.Button CSaveVerstoss;
         private System.Windows.Forms.Button button3;
+        private Bussgeldrechner bussgeldrechner1;
+        private System.Windows.Forms.CheckBox CCopy;
+        private System.Windows.Forms.TabPage CAbout;
     }
 }
 

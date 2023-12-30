@@ -4203,45 +4203,48 @@
 <bluetooth>
 Nokia 2.3
 <verstoss>
-Parken auf dem Gehweg
-Parken auf dem Gehweg (VZ239)
-Parken auf dem Radweg/Radfahrstreifen
-Parken auf dem Radweg (VZ241)
-Parken auf dem gemeinsamen Rad und Gehweg (VZ240)
-Parken auf dem Radweg/Radfahrstreifen (VZ237)
-Parken auf Popup Radweg (VZ237)
-Parken auf temporärem Popup Radweg (VZ237)
-Parken auf dem Schutzstreifen
-Fahrzeug war leer
-Halten auf dem Gehweg 
-Halten auf dem Gehweg (VZ239)
-Halten auf dem Radweg
-Halten auf dem Schutzstreifen
-Mit Behinderung Ausweichen auf die Fahrbahn erforderlich
-Mit Behinderung Ausweichen auf die Radweg erforderlich (VZ241)
-Missbrauch Warnblinker (Vorsatztat)
-Fahrzeug auf Behinderten-Parkplatz
-Fahrzeug vor/auf einem Fußgängerüberweg
-Fahrzeug vor/auf einem Feuerwehrzufahrt
-Fahrzeug vor einem Einfahrt/Ausfahrt
-Fahrzeug vor einer Bordsteinabsenkung
-Fahrzeug in zweiter Reihe
-Fahrzeug im absoluten Halteverbot
-Fahrzeug im eingeschränkten Halteverbot
-Fahrzeug im Kreuzungsbereich
-Fahrzeug in Fußgängerzone
-Fahrzeug auf Bus-Spur oder -Route
-Fahrzeug auf Bushaltestelle
-Fahrzeug auf Sperrfläche
-Fahrzeug ohne Elektroantrieb vor Elektroladesäule
-Fahrzeug auf Grünfläche
-Eng überholen 
-Beleidigung
+Parken auf dem Gehweg|55|70,1|100,1
+Parken auf dem Gehweg (VZ239)|55|70,1|100,1
+Parken auf dem Radweg/Radfahrstreifen|55|70,1|100,1
+Parken auf dem Radweg (VZ241)|55|70,1|100,1
+Parken auf dem gemeinsamen Rad und Gehweg (VZ240)|55|70,1|100,1
+Parken auf dem Radweg/Radfahrstreifen (VZ237)|55|70,1|100,1
+Parken auf Popup Radweg (VZ237)|55|70,1|100,1
+Parken auf temporärem Popup Radweg (VZ237)|55|70,1|100,1
+Parken auf dem Schutzstreifen|55|70,1|100,1
+Fahrzeug war leer|parken|parken|parken
+Halten auf dem Gehweg |50|70|90
+Halten auf dem Gehweg (VZ239)|50|70|90
+Halten auf dem Radweg|50|70|90
+Halten auf dem Schutzstreifen|50|70|90
+Mit Behinderung Ausweichen auf die Fahrbahn erforderlich|behinderung|behinderung|behinderung
+Mit Behinderung Ausweichen auf die Radweg erforderlich (VZ241)|behinderung|behinderung|behinderung
+Mit Gefährdung|gefährdung|gefährdung|gefährdung
+Mit Unfall|gefährdung|gefährdung|gefährdung
+Missbrauch Warnblinker (Vorsatztat)|x2|x2|x2
+Fahrzeug auf Behinderten-Parkplatz|35|35|35
+Fahrzeug vor/auf einem Fußgängerüberweg|80|80|80
+Fahrzeug vor/auf einem Feuerwehrzufahrt|35|35|35
+Fahrzeug vor einem Einfahrt/Ausfahrt|10|15|30
+Fahrzeug vor einer Bordsteinabsenkung|10|15|30
+Fahrzeug in zweiter Reihe|55|70,1|100,1
+Fahrzeug im absoluten Halteverbot|20|20|35
+Fahrzeug im eingeschränkten Halteverbot|20|20|35
+Fahrzeug im Kreuzungsbereich|10|15|30
+Fahrzeug in Fußgängerzone|55|70,1|100,1
+Fahrzeug auf Bus-Spur oder -Route|55|70|100
+Fahrzeug auf Bushaltestelle|55|70,1|100,1
+Fahrzeug auf Sperrfläche|10|15|30
+Fahrzeug ohne Elektroantrieb vor Elektroladesäule|10|15|30
+Fahrzeug auf Grünfläche|55|70|100
+Eng überholen|30|80,1|100,1
+Beleidigung|2500|2500|2500
 <marke>
 Alfa Romeo
 Amazone
 Audi
 BMW
+Bus
 Chevrolet
 Citroen
 Dacia
@@ -4255,6 +4258,7 @@ Jeep
 Kia
 Land Rover
 Lieferwagen
+Linienbus
 LKW
 Mazda
 Merzedes

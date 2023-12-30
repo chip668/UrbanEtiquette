@@ -71,5 +71,10 @@ namespace Anzeige
             masterform.MasterFormExecute(command);
             SetNext(command);
         }
+
+        private void assistent_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

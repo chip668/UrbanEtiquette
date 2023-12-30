@@ -83,6 +83,16 @@ namespace Anzeige.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ue {
+            get {
+                object obj = ResourceManager.GetObject("ue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Unbenannt {
             get {
                 object obj = ResourceManager.GetObject("Unbenannt", resourceCulture);
