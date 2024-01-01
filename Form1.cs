@@ -1,30 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using IronOcr;
-using InTheHand.Net;
-using InTheHand.Net.Bluetooth;
-using InTheHand.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Drawing.Drawing2D;
-using System.Media;
-using System.Net.Mail;
-using System.Net;
-using System.Net.Mime;
 
 namespace Anzeige
 {
     public partial class Form1 : Form
     {
+        String configfile= "config.txt";
+        ErrorLogger debug = null;
         Bussgeld verstossbussgeld = new Bussgeld();
         Dictionary<String, Bussgeld> bussgelder = new Dictionary<String, Bussgeld>();
         IronTesseract ocrreader = new IronTesseract();
@@ -69,8 +61,7 @@ namespace Anzeige
             get
             {
                 String fullpath = ZZielpfad + Ort;
-                CreateDirectoryIfNotExists(fullpath);
-                fullpath = fullpath + "\\" + this.Kennzeichen;
+                fullpath = fullpath + "\\" + this.Kennzeichen + "\\" + DateTime.Now.ToString("yyyyMMdd");
                 CreateDirectoryIfNotExists(fullpath);
                 String result = "";
                 if (AddPath)
@@ -311,8 +302,6 @@ namespace Anzeige
         {
             get { return CAddFile.Checked; }
         }
-
-
         public string InitValues
         {
             get
@@ -421,7 +410,7 @@ namespace Anzeige
             String key = "";
             verstossbussgeld = new Bussgeld();
             List<string> allLines = new List<string>();
-            allLines.AddRange(File.ReadAllLines("Data2.txt"));
+            allLines.AddRange(File.ReadAllLines(configfile));
             allLines.AddRange(File.ReadAllLines("Data.txt"));
             string[] lines = allLines.ToArray();
 
@@ -534,6 +523,10 @@ namespace Anzeige
         public Form1()
         {
             InitializeComponent();
+            debug = ErrorLoggerMsgBox.Create();
+            debug.Add(new ErrorLoggerFile());
+            debug.Add(new ErrorLoggerNetMsg());
+
             Init();
             String[] lines = File.ReadAllLines("ort.txt");
 
@@ -581,26 +574,30 @@ namespace Anzeige
             PhotoMetadataExtractor data = new PhotoMetadataExtractor(fileName);
             Datum = data.Date;
             Zeit = data.Time;
-            original = (Bitmap)Bitmap.FromFile(fileName);
-            ausschnitt = original;
-            // CFoto.Image = Bitmap.FromFile(fileName);
-            CSave.BackgroundImage = ausschnitt;
-            if (!data.Valid)
+            try
             {
-                GPSLocation = data.GoogleMapsURL;
-                ShellExecute(IntPtr.Zero, "open", GPSLocation, "", "", 5);
+                original = (Bitmap)Bitmap.FromFile(fileName);
+                ausschnitt = original;
+                // CFoto.Image = Bitmap.FromFile(fileName);
+                CSave.BackgroundImage = ausschnitt;
+                if (!data.Valid)
+                {
+                    GPSLocation = data.GoogleMapsURL;
+                    ShellExecute(IntPtr.Zero, "open", GPSLocation, "", "", 5);
+                }
+                else
+                {
+                    Strasse = data.Street;
+                    HN = data.HouseNumber;
+                    PLZ = data.PostalCode;
+                    Ort = data.City;
+                    String cliptext = data.Street + " " + data.HouseNumber + "," + data.PostalCode + " " + data.City;
+                    Clipboard.SetText(cliptext);
+                    CClip_Click(this, new EventArgs());
+                }
             }
-            else
-            {
-                Strasse = data.Street;
-                HN = data.HouseNumber;
-                PLZ = data.PostalCode;
-                Ort = data.City;
-                String cliptext = data.Street + " " + data.HouseNumber + "," + data.PostalCode + " " + data.City;
-                Clipboard.SetText(cliptext);
-                CClip_Click(this, new EventArgs());
-            }
-        }
+            catch { }
+       }
         private void Form1_Load(object sender, EventArgs e)
         {
             listBoxDevices_SelectedIndexChanged(sender, e);
@@ -656,7 +653,6 @@ namespace Anzeige
                 AddBussgeld(i);
             bussgeldrechner1.bussgeld = verstossbussgeld;
         }
-
         private void AddBussgeld (String verstoss)
         {
             Bussgeld v = bussgelder[verstoss];
@@ -671,7 +667,6 @@ namespace Anzeige
             if (v.p2 > 0) verstossbussgeld.p2 = v.p2;
             if (v.p3 > 0) verstossbussgeld.p3 = v.p3;
         }
-
         private void AddVerstoss(String verstoss)
         {
             CVerstoss.Items.Add(verstoss.Trim());
@@ -934,7 +929,6 @@ namespace Anzeige
                 catch { }
             }
         }
-
         private Rectangle Transform(Rectangle bildausschnitt, Control clientControl, Rectangle ausschnitt)
         {
             return Transform(Bildausschnitt, clientControl.ClientRectangle, ausschnitt.Size);
@@ -1181,7 +1175,6 @@ namespace Anzeige
         {
             SendeEmailMitAnhaengen(empfaenger, betreff, text, anhangDateiPfade.ToArray());
         }
-
 /*
         public static void SendEmailWithAttachments(string recipient, string subject, string body, params string[] attachmentPaths)
         {
@@ -1846,7 +1839,7 @@ namespace Anzeige
                     foreach (String Bild in CFiles.Items)
                     {
                         FileInfo fi = new FileInfo(Bild);
-                        String fullfilename = FullPath + "//" + fi.Name;
+                        String fullfilename = FullPath + "\\" + fi.Name;
                         if (File.Exists(fullfilename))
                         {
                             File.Delete(fullfilename);
@@ -1948,17 +1941,14 @@ namespace Anzeige
                 }
             }
         }
-
         private void label5_Click(object sender, EventArgs e)
         {
 
         }
-
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
-
         private void CZeit_TextChanged(object sender, EventArgs e)
         {
             String[] items = CZeit.Text.Split(':');
@@ -1970,7 +1960,6 @@ namespace Anzeige
                 timePicker1.Second = Convert.ToInt32(items[2]);
             }
         }
-
         private void CreatePDF_CheckedChanged(object sender, EventArgs e)
         {
             if (CreatePDF.Checked)
@@ -1993,7 +1982,6 @@ namespace Anzeige
             else
                 PDFFilename = null;
         }
-
         private void CLupe_Click(object sender, EventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
@@ -2006,17 +1994,14 @@ namespace Anzeige
                 ShellExecute(IntPtr.Zero, "open", dlg.FileName, "", "", 5);
             }
         }
-
         private void CAddPath_CheckedChanged(object sender, EventArgs e)
         {
             CAnzeigeText.Text = Message;
         }
-
         private void CAddFile_CheckedChanged(object sender, EventArgs e)
         {
             CAnzeigeText.Text = Message;
         }
-
         static string SaveClipboardImageAsTemporaryFile()
         {
             // Überprüfen, ob die Zwischenablage ein Bild enthält
@@ -2041,7 +2026,6 @@ namespace Anzeige
                 return null;
             }
         }
-
         private void CClipImage_Click(object sender, EventArgs e)
         {
             String s = SaveClipboardImageAsTemporaryFile();
@@ -2049,11 +2033,11 @@ namespace Anzeige
             {
                 _Files.Add(s);
                 CFiles.Items.Add(s);
+                CSave.BackgroundImage = Bitmap.FromFile(s);
             }
             CAnzeigeText.Text = Message;
             this.Refresh();
         }
-
         private void CDirOpen_Click(object sender, EventArgs e)
         {
             // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
@@ -2061,20 +2045,16 @@ namespace Anzeige
 
             dlg.ShowDialog();
         }
-
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
 
         }
-
-
         private void CFiles_DragDrop(object sender, DragEventArgs e)
         {
             //target control will accept data here 
             Panel destination = (Panel)sender;
             destination.BackgroundImage = (Bitmap)e.Data.GetData(typeof(Bitmap));
         }
-
         private void CFiles_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(Bitmap)))
@@ -2086,13 +2066,11 @@ namespace Anzeige
                 e.Effect = DragDropEffects.None;
             }
         }
-
         private void CFiles_MouseDown(object sender, MouseEventArgs e)
         {
             // Panel source = (Panel)sender;
             // DoDragDrop(source.BackgroundImage, DragDropEffects.Copy);
         }
-
         private void CDatum_Click(object sender, EventArgs e)
         {
             try
@@ -2106,11 +2084,9 @@ namespace Anzeige
             CDTMEdit.Show();
 
         }
-
         private void CDatum_TextChanged(object sender, EventArgs e)
         {
         }
-
         private void CDTMEdit_ValueChanged(object sender, EventArgs e)
         {
             DateTime dateTimeValue = CDTMEdit.Value;
@@ -2118,7 +2094,6 @@ namespace Anzeige
             CZeit.Text = dateTimeValue.ToString("HH:mm");
             CDTMEdit.Hide();
         }
-
         private void CSaveVerstoss_Click(object sender, EventArgs e)
         {
             SaveFileDialog dlg = new SaveFileDialog();
@@ -2137,7 +2112,6 @@ namespace Anzeige
                 }
             }
         }
-
         private void CLoadVerstoss_Click(object sender, EventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
@@ -2161,14 +2135,12 @@ namespace Anzeige
                 }
             }
         }
-
         private void button3_Click(object sender, EventArgs e)
         {
             assistent dlg = new assistent();
             dlg.masterform = this;
             dlg.Show();
         }
-
         public void MasterFormExecute(String message)
         {
             switch (message)
@@ -2218,6 +2190,14 @@ namespace Anzeige
                     CAnzeige_Click(this, new EventArgs());
                     break;
             }
+        }
+
+        private void CText_Click(object sender, EventArgs e)
+        {
+            // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
+            EditTemplate dlg = new EditTemplate();
+
+            dlg.ShowDialog();
         }
     }
 }

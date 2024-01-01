@@ -13,96 +13,110 @@ namespace Anzeige
 {
     public partial class ConfigEditorForm : Form
     {
-        private string configFile = "Data2.txt";
+        private string configFile = "config.txt";
         private Dictionary<string, string> configValues;
+        private string _Configfile;
+        public String Configfile
+        {
+            get
+            {
+                return _Configfile;
+            }
+            set
+            {
+                _Configfile = value;
+                CreateForm();
+            }
 
+        }
         public ConfigEditorForm()
         {
             InitializeComponent();
-            configValues = ReadConfigFile(configFile);
-            DisplayConfigValues();
+            Configfile = "config.txt";
         }
 
-        private void DisplayConfigValues()
+        private void CreateForm()
         {
-            // Zeige die aktuellen Konfigurationswerte in den TextBoxen an
-            textBoxName.Text = GetValue("zname");
-            textBoxVorname.Text = GetValue("zvorname");
-            textBoxStrasse.Text = GetValue("zstrasse");
-            textBoxHausnummer.Text = GetValue("zhausnummer");
-            textBoxPLZ.Text = GetValue("zplz");
-            textBoxOrt.Text = GetValue("zort");
-            textBoxZielpfad.Text = GetValue("zielpfad");
-            textBoxOrtMail.Text = GetValue("ort_mail");
-        }
-
-        private Dictionary<string, string> ReadConfigFile(string filePath)
-        {
-            Dictionary<string, string> values = new Dictionary<string, string>();
-
-            try
+            String[] lines = File.ReadAllLines(Configfile);
+            this.splitContainer1.Panel1.Controls.Clear();
+            this.splitContainer1.Panel2.Controls.Clear();
+            int offset = 0;
+            String name = "";
+            TextBox tbx = null;
+            Label lbl = null;
+            int width = 0;
+            foreach (String ln in lines)
             {
-                string[] lines = File.ReadAllLines(filePath);
-
-                for (int i = 0; i < lines.Length; i += 2)
+                if (ln.Length> 4 && ln.Substring (0,2)== "<z" && ln.Substring(ln.Length-1, 1) == ">")
                 {
-                    string key = lines[i].Trim();
-                    string value = lines[i + 1].Trim();
-                    values[key] = value;
+                    name = (ln.Substring(2, 1).ToUpper()) + (ln.Substring(3, ln.Length - 4));
+                    tbx = new TextBox();
+                    lbl = new Label();
+                    tbx.Name = name;
+                    lbl.Name = "lbl"+name;
+                    lbl.Text = name;
+                    tbx.Top = offset;
+                    lbl.Top = offset;
+                    width = Math.Max(width, lbl.Width);
+                    this.splitContainer1.SplitterDistance = width + 15;
+                    tbx.Width = this.splitContainer1.Panel2.Width;
+                    this.splitContainer1.Panel1.Controls.Add(lbl);
+                    this.splitContainer1.Panel2.Controls.Add(tbx);
+                    offset += (tbx.Height + 3);
+                }
+                else
+                {
+                    if (tbx != null)
+                    {
+                        tbx.Text = ln;
+                    }
+                }
+            } 
+            
+            Button btnSave = new Button();
+            btnSave.Name = "btnSpeichern";
+            btnSave.Text = "Speichern";
+            btnSave.Width = 100;
+            btnSave.Height = 33;
+            btnSave.Top = this.splitContainer1.Panel2.Height - btnSave.Height - 10;
+            btnSave.Left = this.splitContainer1.Panel2.Width - btnSave.Width - 10;
+            btnSave.Click += btnSave_Click;  // Add event handler if needed
+            this.splitContainer1.Panel2.Controls.Add(btnSave);
+
+            Button btnCancel = new Button();
+            btnCancel.Name = "btnAbbrechen";
+            btnCancel.Text = "Abbrechen";
+            btnCancel.Width = 100;
+            btnCancel.Height = 33;
+            btnCancel.Top = this.splitContainer1.Panel2.Height - btnCancel.Height - 10;
+            btnCancel.Left = this.splitContainer1.Panel2.Width - 2 * btnCancel.Width - 20;  // Adjust the spacing between buttons
+            btnCancel.Click += btnCancel_Click;  // Add event handler if needed
+            this.splitContainer1.Panel2.Controls.Add(btnCancel);
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            List<String> lines = new List<String>();
+            foreach (Control i in this.splitContainer1.Panel2.Controls)
+            {
+                if (i.Name != "btnAbbrechen" && i.Name != "btnSpeichern")
+                {
+                    lines.Add("<z" + i.Name.ToLower() + ">");
+                    lines.Add(i.Text);
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Fehler beim Lesen der Konfigurationsdatei: {ex.Message}");
-            }
-
-            return values;
+            File.WriteAllLines(Configfile, lines);
+            Application.Restart();
+            Environment.Exit(0); // Optional: Schließen Sie den aktuellen Prozess
         }
 
-        private void SaveConfigFile()
+        private void ConfigEditorForm_Load(object sender, EventArgs e)
         {
-            try
-            {
-                // Aktualisiere die Werte aus den TextBoxen
-                SetValue("zname", textBoxName.Text);
-                SetValue("zvorname", textBoxVorname.Text);
-                SetValue("zstrasse", textBoxStrasse.Text);
-                SetValue("zhausnummer", textBoxHausnummer.Text);
-                SetValue("zplz", textBoxPLZ.Text);
-                SetValue("zort", textBoxOrt.Text);
-                SetValue("zielpfad", textBoxZielpfad.Text);
-                SetValue("ort_mail", textBoxOrtMail.Text);
-
-                // Schreibe die aktualisierten Werte zurück in die Datei
-                File.WriteAllLines(configFile, new List<string>(configValues.Keys));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Fehler beim Speichern der Konfigurationsdatei: {ex.Message}");
-            }
-        }
-
-        private string GetValue(string key)
-        {
-            return configValues.ContainsKey(key) ? configValues[key] : string.Empty;
-        }
-
-        private void SetValue(string key, string value)
-        {
-            if (configValues.ContainsKey(key))
-            {
-                configValues[key] = value;
-            }
-            else
-            {
-                configValues.Add(key, value);
-            }
-        }
-
-        private void buttonSave_Click(object sender, EventArgs e)
-        {
-            SaveConfigFile();
-            MessageBox.Show("Konfiguration gespeichert!");
         }
     }
 }

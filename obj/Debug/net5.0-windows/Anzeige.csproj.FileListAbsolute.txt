@@ -65,3 +65,4 @@ C:\Users\schip\source\repos\Anzeige\Anzeige\bin\Debug\net5.0-windows\Urban Etiqu
 C:\Users\schip\source\repos\Anzeige\Anzeige\obj\Debug\net5.0-windows\Urban Etiquette.dll
 C:\Users\schip\source\repos\Anzeige\Anzeige\obj\Debug\net5.0-windows\ref\Urban Etiquette.dll
 C:\Users\schip\source\repos\Anzeige\Anzeige\obj\Debug\net5.0-windows\Urban Etiquette.pdb
+C:\Users\schip\source\repos\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.EditTemplate.resources

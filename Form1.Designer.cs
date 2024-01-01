@@ -107,8 +107,9 @@ namespace Anzeige
             this.CGMaps = new System.Windows.Forms.TabPage();
             this.CTest = new System.Windows.Forms.TabPage();
             this.CTestText = new System.Windows.Forms.TextBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.CAbout = new System.Windows.Forms.TabPage();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.CText = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -154,6 +155,7 @@ namespace Anzeige
             this.splitContainer1.Panel1.Controls.Add(this.CFiles);
             this.splitContainer1.Panel1.Controls.Add(this.COrt);
             this.splitContainer1.Panel1.Controls.Add(this.CClipImage);
+            this.splitContainer1.Panel1.Controls.Add(this.CText);
             this.splitContainer1.Panel1.Controls.Add(this.button2);
             this.splitContainer1.Panel1.Controls.Add(this.CDirOpen);
             this.splitContainer1.Panel1.Controls.Add(this.CLupe);
@@ -295,15 +297,15 @@ namespace Anzeige
             // timePicker1
             // 
             this.timePicker1.BackColor = System.Drawing.Color.White;
-            this.timePicker1.Hour = 14;
+            this.timePicker1.Hour = 11;
             this.timePicker1.Location = new System.Drawing.Point(318, 581);
-            this.timePicker1.Minute = 40;
+            this.timePicker1.Minute = 11;
             this.timePicker1.Name = "timePicker1";
-            this.timePicker1.Second = 37;
+            this.timePicker1.Second = 32;
             this.timePicker1.Short = true;
             this.timePicker1.Size = new System.Drawing.Size(116, 29);
             this.timePicker1.TabIndex = 15;
-            this.timePicker1.Value = new System.DateTime(2023, 12, 30, 14, 40, 37, 0);
+            this.timePicker1.Value = new System.DateTime(2024, 1, 1, 11, 11, 32, 0);
             // 
             // listBoxDevices
             // 
@@ -322,7 +324,7 @@ namespace Anzeige
             this.button3.BackColor = System.Drawing.Color.LightGray;
             this.button3.BackgroundImage = global::Anzeige.Properties.Resources.nummer_5;
             this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button3.Location = new System.Drawing.Point(364, 5);
+            this.button3.Location = new System.Drawing.Point(333, 5);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(35, 45);
             this.button3.TabIndex = 13;
@@ -336,7 +338,7 @@ namespace Anzeige
             this.cOrtSuche.BackColor = System.Drawing.Color.LightGray;
             this.cOrtSuche.BackgroundImage = global::Anzeige.Properties.Resources.Unbenannt;
             this.cOrtSuche.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.cOrtSuche.Location = new System.Drawing.Point(328, 5);
+            this.cOrtSuche.Location = new System.Drawing.Point(299, 5);
             this.cOrtSuche.Name = "cOrtSuche";
             this.cOrtSuche.Size = new System.Drawing.Size(35, 45);
             this.cOrtSuche.TabIndex = 13;
@@ -359,7 +361,7 @@ namespace Anzeige
             // 
             this.CNew.BackColor = System.Drawing.Color.LightGray;
             this.CNew.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.CNew.Location = new System.Drawing.Point(36, 5);
+            this.CNew.Location = new System.Drawing.Point(34, 5);
             this.CNew.Name = "CNew";
             this.CNew.Size = new System.Drawing.Size(35, 45);
             this.CNew.TabIndex = 11;
@@ -371,7 +373,7 @@ namespace Anzeige
             // CLoad
             // 
             this.CLoad.BackColor = System.Drawing.Color.LightGray;
-            this.CLoad.Location = new System.Drawing.Point(138, 5);
+            this.CLoad.Location = new System.Drawing.Point(133, 5);
             this.CLoad.Name = "CLoad";
             this.CLoad.Size = new System.Drawing.Size(35, 45);
             this.CLoad.TabIndex = 10;
@@ -383,7 +385,7 @@ namespace Anzeige
             // CSpeichern
             // 
             this.CSpeichern.BackColor = System.Drawing.Color.LightGray;
-            this.CSpeichern.Location = new System.Drawing.Point(104, 5);
+            this.CSpeichern.Location = new System.Drawing.Point(100, 5);
             this.CSpeichern.Name = "CSpeichern";
             this.CSpeichern.Size = new System.Drawing.Size(35, 45);
             this.CSpeichern.TabIndex = 10;
@@ -395,7 +397,7 @@ namespace Anzeige
             // CClip
             // 
             this.CClip.BackColor = System.Drawing.Color.LightGray;
-            this.CClip.Location = new System.Drawing.Point(70, 5);
+            this.CClip.Location = new System.Drawing.Point(67, 5);
             this.CClip.Name = "CClip";
             this.CClip.Size = new System.Drawing.Size(35, 45);
             this.CClip.TabIndex = 10;
@@ -436,7 +438,7 @@ namespace Anzeige
             // CClipImage
             // 
             this.CClipImage.BackColor = System.Drawing.Color.LightGray;
-            this.CClipImage.Location = new System.Drawing.Point(218, 5);
+            this.CClipImage.Location = new System.Drawing.Point(204, 5);
             this.CClipImage.Name = "CClipImage";
             this.CClipImage.Size = new System.Drawing.Size(35, 45);
             this.CClipImage.TabIndex = 6;
@@ -448,19 +450,20 @@ namespace Anzeige
             // button2
             // 
             this.button2.BackColor = System.Drawing.Color.LightGray;
-            this.button2.Location = new System.Drawing.Point(399, 5);
+            this.button2.Location = new System.Drawing.Point(366, 5);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(35, 45);
             this.button2.TabIndex = 6;
             this.button2.Text = "⚙";
+            this.toolTip1.SetToolTip(this.button2, "Hier werden dio Daten des Anzeigenden angegeben. Sowie der Pfad auf dem Die Anzei" +
+        "ogebilder abgelegt werden.");
             this.button2.UseVisualStyleBackColor = false;
-            this.button2.Visible = false;
             this.button2.Click += new System.EventHandler(this.CDirOpen_Click);
             // 
             // CDirOpen
             // 
             this.CDirOpen.BackColor = System.Drawing.Color.LightGray;
-            this.CDirOpen.Location = new System.Drawing.Point(252, 5);
+            this.CDirOpen.Location = new System.Drawing.Point(236, 5);
             this.CDirOpen.Name = "CDirOpen";
             this.CDirOpen.Size = new System.Drawing.Size(35, 45);
             this.CDirOpen.TabIndex = 6;
@@ -472,7 +475,7 @@ namespace Anzeige
             // CLupe
             // 
             this.CLupe.BackColor = System.Drawing.Color.LightGray;
-            this.CLupe.Location = new System.Drawing.Point(184, 5);
+            this.CLupe.Location = new System.Drawing.Point(172, 5);
             this.CLupe.Name = "CLupe";
             this.CLupe.Size = new System.Drawing.Size(35, 45);
             this.CLupe.TabIndex = 6;
@@ -907,7 +910,7 @@ namespace Anzeige
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.LightGray;
-            this.button1.Location = new System.Drawing.Point(2, 5);
+            this.button1.Location = new System.Drawing.Point(1, 5);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(35, 45);
             this.button1.TabIndex = 0;
@@ -1069,6 +1072,18 @@ namespace Anzeige
             this.CAbout.Text = "About";
             this.CAbout.UseVisualStyleBackColor = true;
             // 
+            // CText
+            // 
+            this.CText.BackColor = System.Drawing.Color.LightGray;
+            this.CText.Location = new System.Drawing.Point(398, 5);
+            this.CText.Name = "CText";
+            this.CText.Size = new System.Drawing.Size(35, 45);
+            this.CText.TabIndex = 6;
+            this.CText.Text = "🗎";
+            this.toolTip1.SetToolTip(this.CText, "Textvorlage bearbeiten");
+            this.CText.UseVisualStyleBackColor = false;
+            this.CText.Click += new System.EventHandler(this.CText_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -1181,6 +1196,7 @@ namespace Anzeige
         private Bussgeldrechner bussgeldrechner1;
         private System.Windows.Forms.CheckBox CCopy;
         private System.Windows.Forms.TabPage CAbout;
+        private System.Windows.Forms.Button CText;
     }
 }
 
