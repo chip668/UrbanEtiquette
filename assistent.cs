@@ -12,7 +12,7 @@ namespace Anzeige
 {
     public partial class assistent : Form
     {
-        public Form1 masterform;
+        public Main masterform;
         public String[,] command =
         {
             { "Neu", "Haben Sie eine Videoaufzeichung oder ein Foto", "Beenden", "Foto", "Video"},

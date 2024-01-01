@@ -38,7 +38,6 @@ C:\Users\schip\source\repos\Anzeige\Anzeige\bin\Debug\net5.0-windows\runtimes\os
 C:\Users\schip\source\repos\Anzeige\Anzeige\bin\Debug\net5.0-windows\runtimes\win-x64\native\IronPdfInterop.dll
 C:\Users\schip\source\repos\Anzeige\Anzeige\bin\Debug\net5.0-windows\runtimes\win-x86\native\IronPdfInterop.dll
 C:\Users\schip\source\repos\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.csproj.AssemblyReference.cache
-C:\Users\schip\source\repos\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.Form1.resources
 C:\Users\schip\source\repos\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.Form2.resources
 C:\Users\schip\source\repos\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.lupe.resources
 C:\Users\schip\source\repos\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.Properties.Resources.resources
@@ -66,3 +65,4 @@ C:\Users\schip\source\repos\Anzeige\Anzeige\obj\Debug\net5.0-windows\Urban Etiqu
 C:\Users\schip\source\repos\Anzeige\Anzeige\obj\Debug\net5.0-windows\ref\Urban Etiquette.dll
 C:\Users\schip\source\repos\Anzeige\Anzeige\obj\Debug\net5.0-windows\Urban Etiquette.pdb
 C:\Users\schip\source\repos\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.EditTemplate.resources
+C:\Users\schip\source\repos\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.Main.resources

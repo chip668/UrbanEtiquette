@@ -41,12 +41,16 @@ namespace Anzeige
         }
         public void LogError(int errorNr, string errorText)
         {
-            LogError(errorNr, errorText, null);
+            LogError(errorNr, errorText, new String [0]);
         }
         public void LogError(int errorNr, string errorText, string[] param)
         {
             ErrorMessage message = new ErrorMessage(errorNr, errorText, param);
             LogError(message);
+        }
+        public void LogError(int errorNr, string errorText, string param)
+        {
+            ErrorMessage message = new ErrorMessage(errorNr, errorText, param.Split(','));
         }
     }
 }
