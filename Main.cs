@@ -1,26 +1,27 @@
-﻿using System;
+﻿using IronOcr;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using IronOcr;
 using System.Text.RegularExpressions;
-using System.Drawing.Drawing2D;
+using System.Windows.Forms;
+
 
 namespace Anzeige
 {
     public partial class Main : Form
     {
-        String configfile= "config.txt";
+        String configfile = "config.txt";
         ErrorLogger debug = null;
         Bussgeld verstossbussgeld = new Bussgeld();
         Dictionary<String, Bussgeld> bussgelder = new Dictionary<String, Bussgeld>();
         IronTesseract ocrreader = new IronTesseract();
-        Dictionary<String,Ort>Orte = new Dictionary<String, Ort>();
+        Dictionary<String, Ort> Orte = new Dictionary<String, Ort>();
         String plaque = "-aeoSs2B8O0DQCU";
         String numbers = "0123456789";
         String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ";
@@ -28,7 +29,7 @@ namespace Anzeige
         String spaces = " \t";
         String newline = "\r\n";
         String ortssuche = "https://www.google.com/maps/place/<strasse>+<hn>,+<plz>+<ort>";
-        List<Color> refcolor = new List<Color>(); 
+        List<Color> refcolor = new List<Color>();
         Stack<Cursor> cstack = new Stack<Cursor>();
         [DllImport("shell32.dll")]
         static extern IntPtr ShellExecute(IntPtr hwnd, string lpOperation, string lpFile, string lpParameters, string lpDirectory, int nShowCmd);
@@ -37,7 +38,7 @@ namespace Anzeige
         Point start;
         Rectangle Bildausschnitt; // clientkoordinaten
         Rectangle bmpAusschnitt;  // bitmapkoordinaten
-        String ausschnittTemp="";
+        String ausschnittTemp = "";
         WebBrowser oabrowser;
         int x0 = 0;
         int y0 = 0;
@@ -61,11 +62,11 @@ namespace Anzeige
         }
         public string Template
         {
-            get 
-            { 
-                return File.ReadAllText(TemplatePath); 
+            get
+            {
+                return File.ReadAllText(TemplatePath);
             }
-            set 
+            set
             {
                 File.WriteAllText(TemplatePath, value);
             }
@@ -152,7 +153,7 @@ namespace Anzeige
                 String[] items = COrt.Text.Split(';');
                 if (items.Length > 1)
                 {
-                    if (PLZ =="")
+                    if (PLZ == "")
                     {
                         PLZ = items[0];
                     }
@@ -280,9 +281,9 @@ namespace Anzeige
         public string ZHausnummer { get; private set; }
         public string ZZielpfad { get; private set; }
         public string GPSLocation { get; private set; }
-        public string Message 
-        { 
-            get 
+        public string Message
+        {
+            get
             {
                 String result = Template;
                 result = result.Replace("<mail>", Mail);
@@ -306,6 +307,14 @@ namespace Anzeige
                 result = result.Replace("<files>", Files);
                 result = result.Replace("<kennzeichenbild>", ausschnittTemp);
                 result = result.Replace("<pdffile>", PDFFilename);
+                result = result.Replace("<zbluetooth>", PDFFilename);
+                result = result.Replace("<zielpfad>", PDFFilename);
+                result = result.Replace("<zvorname>", PDFFilename);
+                result = result.Replace("<zsmtpserver>", PDFFilename);
+                result = result.Replace("<zsmtpport>", PDFFilename);
+                result = result.Replace("<zsendermail>", PDFFilename);
+                result = result.Replace("<zsubject>", PDFFilename);
+                result = result.Replace("<zpassword>", PDFFilename);
 
                 return result;
             }
@@ -452,7 +461,7 @@ namespace Anzeige
                     {
                         String[] items = s.Split('|');
                         CVerstossaus.Items.Add(items[0]);
-                        if (items.Length>3)
+                        if (items.Length > 3)
                         {
                             Bussgeld v;
 
@@ -533,7 +542,7 @@ namespace Anzeige
             PDFFilename = "";
             Farbe = Color.Gold.ToString();
         }
-        public string PDFFilename{ get; private set; }
+        public string PDFFilename { get; private set; }
         public Main()
         {
             InitializeComponent();
@@ -547,7 +556,7 @@ namespace Anzeige
             foreach (String ln in lines)
             {
                 Ort o = new Ort(ln);
-                if (o.OrtCode!="Ort")
+                if (o.OrtCode != "Ort")
                     Orte.Add(o.OrtCode, o);
             }
             refcolor.Clear();
@@ -610,7 +619,7 @@ namespace Anzeige
                     CClip_Click(this, new EventArgs());
                 }
             }
-            catch 
+            catch
             {
                 debug.LogError(1100, "Fehler beim öffnen der Datei", fileName);
 
@@ -678,7 +687,7 @@ namespace Anzeige
                 AddBussgeld(i);
             bussgeldrechner1.bussgeld = verstossbussgeld;
         }
-        private void AddBussgeld (String verstoss)
+        private void AddBussgeld(String verstoss)
         {
             Bussgeld v = bussgelder[verstoss];
             if (v.verstoss != 0) verstossbussgeld.verstoss = Math.Min(v.verstoss, verstossbussgeld.verstoss);
@@ -700,7 +709,7 @@ namespace Anzeige
         }
         private void CToo_Click(object sender, EventArgs e)
         {
-            if (CVerstossaus.SelectedItem!=null)
+            if (CVerstossaus.SelectedItem != null)
             {
                 AddVerstoss((String)CVerstossaus.SelectedItem);
                 CVerstossaus.Items.Remove(CVerstossaus.SelectedItem);
@@ -718,7 +727,7 @@ namespace Anzeige
             CVerstossaus.Items.Clear();
             CAnzeigeText.Text = Message;
         }
-        void setSelectedLineTip (Control ctl)
+        void setSelectedLineTip(Control ctl)
         {
             toolTip1.SetToolTip(ctl, ctl.Text);
         }
@@ -784,24 +793,24 @@ namespace Anzeige
         }
         private Boolean pruefeDaten()
         {
-            if (Files =="") { MessageBox.Show("Bitte Foto wählen"); return false; }
-            if (Datum =="") { MessageBox.Show("Datum des Vorfalls"); return false; }
-            if (Zeit =="") { MessageBox.Show("Zeit des Vorfalls"); return false; }
-            if (Ort =="") { MessageBox.Show("In welchem Ort hat der Verstoß statt gefunden"); return false; }
-            if (PLZ =="") { MessageBox.Show("Wie lautet die PLZ"); return false; }
-            if (Strasse =="") { MessageBox.Show("Auf welcher Strasse hat der Verstoß statt gefunden"); return false; }
-            if (HN =="") { MessageBox.Show("An welcher Hausnummer hat der Verstoß statt gefunden"); return false; }
-            if (Kennzeichen =="") { MessageBox.Show("Wie lautet das Kennzeichen"); return false; }
-            if (Marke =="") { MessageBox.Show("Welche Automarke hatte das Fahrzeug"); return false; }
+            if (Files == "") { MessageBox.Show("Bitte Foto wählen"); return false; }
+            if (Datum == "") { MessageBox.Show("Datum des Vorfalls"); return false; }
+            if (Zeit == "") { MessageBox.Show("Zeit des Vorfalls"); return false; }
+            if (Ort == "") { MessageBox.Show("In welchem Ort hat der Verstoß statt gefunden"); return false; }
+            if (PLZ == "") { MessageBox.Show("Wie lautet die PLZ"); return false; }
+            if (Strasse == "") { MessageBox.Show("Auf welcher Strasse hat der Verstoß statt gefunden"); return false; }
+            if (HN == "") { MessageBox.Show("An welcher Hausnummer hat der Verstoß statt gefunden"); return false; }
+            if (Kennzeichen == "") { MessageBox.Show("Wie lautet das Kennzeichen"); return false; }
+            if (Marke == "") { MessageBox.Show("Welche Automarke hatte das Fahrzeug"); return false; }
             if (Farbe == Color.Gold.ToString()) { MessageBox.Show("Welche Farbe hatte das Fahrzeug"); return false; }
-            if ((Verstoss =="") && (FreeText=="")) { MessageBox.Show("Welcher Verstoß"); return false; }
-            if (Mail =="") { MessageBox.Show("Wohin soll ich die Mail senden"); return false; }
-            if (ZName =="") { MessageBox.Show("Wie lautet dein Name"); return false; }
-            if (ZVorname =="") { MessageBox.Show("Wie lautet dein Vorname"); return false; }
-            if (ZOrt =="") { MessageBox.Show("An welchem Ort wohnst du"); return false; }
-            if (ZPLZ =="") { MessageBox.Show("Wie lautet die PLZ deines Wohnortes"); return false; }
-            if (ZStrasse =="") { MessageBox.Show("Auf welcher Strasse wohnst du"); return false; }
-            if (ZHausnummer =="") { MessageBox.Show("Wie lautet die Hausnummer deiner Wohnung"); return false; }
+            if ((Verstoss == "") && (FreeText == "")) { MessageBox.Show("Welcher Verstoß"); return false; }
+            if (Mail == "") { MessageBox.Show("Wohin soll ich die Mail senden"); return false; }
+            if (ZName == "") { MessageBox.Show("Wie lautet dein Name"); return false; }
+            if (ZVorname == "") { MessageBox.Show("Wie lautet dein Vorname"); return false; }
+            if (ZOrt == "") { MessageBox.Show("An welchem Ort wohnst du"); return false; }
+            if (ZPLZ == "") { MessageBox.Show("Wie lautet die PLZ deines Wohnortes"); return false; }
+            if (ZStrasse == "") { MessageBox.Show("Auf welcher Strasse wohnst du"); return false; }
+            if (ZHausnummer == "") { MessageBox.Show("Wie lautet die Hausnummer deiner Wohnung"); return false; }
             if (Message == "") { MessageBox.Show("Text benötigt"); return false; }
             if (AreColorsEqual(SystemColors.Control, panel1.BackColor)) { MessageBox.Show("Bitte Farbe auswählen."); return false; }
             return true;
@@ -861,9 +870,10 @@ namespace Anzeige
             if (e.Button == MouseButtons.Left)
             {
                 start = e.Location;
-            } else if (e.Button == MouseButtons.Right)
+            }
+            else if (e.Button == MouseButtons.Right)
             {
-                if (ausschnitt!=null)
+                if (ausschnitt != null)
                 {
                     Point p = Transform(e.Location, CSave.ClientRectangle, ausschnitt.Size);
                     Bitmap b = (Bitmap)CSave.BackgroundImage;
@@ -885,7 +895,7 @@ namespace Anzeige
                 }
                 else
                 {
-                    
+
                 }
             }
         }
@@ -895,7 +905,7 @@ namespace Anzeige
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (ausschnitt!=null)
+                if (ausschnitt != null)
                 {
                     try
                     {
@@ -943,7 +953,7 @@ namespace Anzeige
                             // Den Dateipfad für die geschwärzte Kopie festlegen
                             // string geschwaerzteKopiePfad = Path.GetTempFileName().Replace(".tmp", ".jpg");
                             string geschwaerzteKopiePfad = ZZielpfad + "public\\" + Guid.NewGuid().ToString() + ".jpg"; ;
-                            
+
                             // Die geschwärzte Kopie speichern
                             kopie.Save(geschwaerzteKopiePfad, ImageFormat.Jpeg);
                             // Jetzt haben Sie die geschwärzte Kopie in der Variable 'geschwaerzteKopiePfad'
@@ -970,24 +980,24 @@ namespace Anzeige
         {
             Double faktor = 1;
             Rectangle result = clientRectangle;
-            if ((Double)clientRectangle.Width/ size.Width < (Double)clientRectangle.Height / size.Height)
+            if ((Double)clientRectangle.Width / size.Width < (Double)clientRectangle.Height / size.Height)
             {
                 faktor = (Double)size.Width / clientRectangle.Width;
                 x0 = 0;
-                y0 = (clientRectangle.Height - (int)(size.Height / faktor))/2;
+                y0 = (clientRectangle.Height - (int)(size.Height / faktor)) / 2;
             }
             else
             {
                 faktor = (Double)size.Height / clientRectangle.Height;
-                x0 =( clientRectangle.Width - (int)(size.Width / faktor))/2;
+                x0 = (clientRectangle.Width - (int)(size.Width / faktor)) / 2;
                 y0 = 0;
             }
             h = (int)(size.Height / faktor);
             w = (int)(size.Width / faktor);
             bmpAusschnitt = new Rectangle(
-                (int)((Bildausschnitt.X-x0) * faktor), 
-                (int)((Bildausschnitt.Y-y0) * faktor), 
-                (int)(Bildausschnitt.Width * faktor), 
+                (int)((Bildausschnitt.X - x0) * faktor),
+                (int)((Bildausschnitt.Y - y0) * faktor),
+                (int)(Bildausschnitt.Width * faktor),
                 (int)(Bildausschnitt.Height * faktor));
 
             // Rectangle Bildausschnitt; // clientkoordinaten
@@ -1101,11 +1111,11 @@ namespace Anzeige
         {
             return rect.X >= 0 && rect.Y >= 0 && rect.Right <= bitmap.Width && rect.Bottom <= bitmap.Height;
         }
-        private void selectOrt(String ort) 
+        private void selectOrt(String ort)
         {
             {
                 String[] items = ort.Split('(');
-                ort = items[0].Trim();                
+                ort = items[0].Trim();
             }
             foreach (String i in COrt.Items)
             {
@@ -1128,9 +1138,9 @@ namespace Anzeige
         private void CClip_Click(object sender, EventArgs e)
         {
             // Oberbilker Allee 98, 40227 Düsseldorf
-            String [] items = Clipboard.GetText().Split(',');
+            String[] items = Clipboard.GetText().Split(',');
 
-            if (items.Length==2)
+            if (items.Length == 2)
             {
                 String plz = items[1].Substring(0, 6);
                 String ort = items[1].Substring(7);
@@ -1185,7 +1195,7 @@ namespace Anzeige
         }
         private void CKennzeichen_TextChanged(object sender, EventArgs e)
         {
-            if (COrt.Text =="")
+            if (COrt.Text == "")
             {
                 String ortsname;
                 CAnzeigeText.Text = Message;
@@ -1208,43 +1218,6 @@ namespace Anzeige
         {
             SendeEmailMitAnhaengen(empfaenger, betreff, text, anhangDateiPfade.ToArray());
         }
-/*
-        public static void SendEmailWithAttachments(string recipient, string subject, string body, params string[] attachmentPaths)
-        {
-            try
-            {
-                using (MailMessage mailMessage = new MailMessage())
-                {
-                    mailMessage.From = new MailAddress("your-email@example.com");
-                    mailMessage.To.Add(recipient);
-                    mailMessage.Subject = subject;
-                    mailMessage.Body = body;
-
-                    foreach (string attachmentPath in attachmentPaths)
-                    {
-                        if (System.IO.File.Exists(attachmentPath))
-                        {
-                            Attachment attachment = new Attachment(attachmentPath, MediaTypeNames.Application.Octet);
-                            mailMessage.Attachments.Add(attachment);
-                        }
-                    }
-
-                    using (SmtpClient smtpClient = new SmtpClient("your-smtp-server.com"))
-                    {
-                        smtpClient.Port = 587;
-                        smtpClient.Credentials = new NetworkCredential("your-username", "your-password");
-                        smtpClient.EnableSsl = true;
-
-                        smtpClient.Send(mailMessage);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle exceptions
-            }
-        }
-*/
         public static void SendeEmailMitAnhaengen(string empfaenger, string betreff, string text, params string[] anhangDateiPfade)
         {
             try
@@ -1253,7 +1226,7 @@ namespace Anzeige
 
                 if (anhangDateiPfade != null && anhangDateiPfade.Length > 0)
                 {
-                    
+
                     foreach (string anhangDateiPfad in anhangDateiPfade)
                     {
                         String att = anhangDateiPfad.Replace("//", "\\");
@@ -1273,11 +1246,11 @@ namespace Anzeige
         }
         private void CFotoAnzeige_Click(object sender, EventArgs e)
         {
-            
+
         }
         private void CFotoAnzeige_Resize(object sender, EventArgs e)
         {
-            if (ausschnitt!=null)
+            if (ausschnitt != null)
             {
                 Rectangle rcl = Transform(Bildausschnitt, CSave.ClientRectangle, ausschnitt.Size);
             }
@@ -1312,7 +1285,7 @@ namespace Anzeige
             }
             else if (CTabPages.SelectedTab == CGMaps)
             {
-                if (GPSLocation=="")
+                if (GPSLocation == "")
                 {
                     GPSLocation = "https://www.google.de/maps";
                 }
@@ -1329,6 +1302,8 @@ namespace Anzeige
                 AboutBox1 dlg = new AboutBox1();
                 dlg.ShowDialog();
             }
+
+
         }
         private void CAusschnitt_Click(object sender, EventArgs e)
         {
@@ -1337,7 +1312,7 @@ namespace Anzeige
         }
         public Boolean isAlNum(char c)
         {
-            return isNumeric(c)|| isAlpha(c);
+            return isNumeric(c) || isAlpha(c);
         }
         public Boolean isAlpha(char c)
         {
@@ -1346,7 +1321,7 @@ namespace Anzeige
         public Boolean isLowerAlpha(char c)
         {
             return isContent(c, lower);
-        }       
+        }
         public Boolean isNumeric(char c)
         {
             return isContent(c, numbers);
@@ -1420,7 +1395,7 @@ namespace Anzeige
         // "a — il\r\n5 D-B 2265"
         // "a\r\nf DB 2265"
         // "————\r\nA DB 2265"
-        public String TestOutput (String text)
+        public String TestOutput(String text)
         {
             return (text + " => \t:" + FixOCRText(text)).Replace("\r", "\\r").Replace("\n", "\\n") + "\r\n";
         }
@@ -1493,7 +1468,7 @@ namespace Anzeige
 
                     case 2:
                         j = i;
-                        if (isNumeric(m) && numbers.Length<4)
+                        if (isNumeric(m) && numbers.Length < 4)
                         {
                             numbers = m.ToString() + numbers;
                         }
@@ -1502,7 +1477,7 @@ namespace Anzeige
                             if (!isSpace(m)) // nur mit einem Buchstaben zu 3
                             {
                                 m = MakeNumberToChar(original, i);
-                                if (isAlpha (m))
+                                if (isAlpha(m))
                                 {
                                     letters = m.ToString() + letters;
                                     Status = 3;
@@ -1527,20 +1502,20 @@ namespace Anzeige
                                 numbers = "";
                                 letters = "";
                             }
-                            else if (isAlpha(m) && (letters.Length<3))
+                            else if (isAlpha(m) && (letters.Length < 3))
                             {
                                 letters = m.ToString() + letters;
                             }
                             else if (isSpace(m) || isPlaque(m) || (i == 0))
                             {
                                 Status = 4;
-                            } 
-                            else 
+                            }
+                            else
                             {
                                 Status = 4;
                             }
                         }
-                    break;
+                        break;
 
                     case 4:
                         {
@@ -1559,10 +1534,10 @@ namespace Anzeige
 
                     case 5:
                         {
-                            i=0;
+                            i = 0;
                         }
                         break;
-                } 
+                }
                 i--;
             }
 
@@ -1840,7 +1815,7 @@ namespace Anzeige
                 if (File.Exists(fullfilename))
                     File.Delete(fullfilename);
                 // File.Copy(Bild, fullfilename);
-                ScaleAndSaveImage  (Bild, fullfilename, 0.5);
+                ScaleAndSaveImage(Bild, fullfilename, 0.5);
                 filelist.Add(fullfilename);
             }
             if (File.Exists(fullpath + "\\Anzeige.WH2"))
@@ -2062,7 +2037,7 @@ namespace Anzeige
         private void CClipImage_Click(object sender, EventArgs e)
         {
             String s = SaveClipboardImageAsTemporaryFile();
-            if (s!=null)
+            if (s != null)
             {
                 _Files.Add(s);
                 CFiles.Items.Add(s);
@@ -2075,7 +2050,7 @@ namespace Anzeige
         {
             // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
             ShellExecute(IntPtr.Zero, "open", FullPath, "", "", 5);
-            
+
 
         }
         private void panel2_Paint(object sender, PaintEventArgs e)
@@ -2230,8 +2205,11 @@ namespace Anzeige
         {
             // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
             EditTemplate dlg = new EditTemplate();
-
+            dlg.Template = Template;
             dlg.ShowDialog();
+            Template = dlg.Template;
+            Application.Restart();
+            Environment.Exit(0); // Optional: Schließen Sie den aktuellen Prozess
         }
 
         private void CHelp_Click(object sender, EventArgs e)
@@ -2253,6 +2231,11 @@ namespace Anzeige
         }
 
         private void CTemplateFiles_SelectedValueChanged(object sender, EventArgs e)
+        {
+            CAnzeigeText.Text = Message;
+        }
+
+        private void CAnzeigeText_TextChanged(object sender, EventArgs e)
         {
             CAnzeigeText.Text = Message;
         }

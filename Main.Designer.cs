@@ -32,7 +32,6 @@ namespace Anzeige
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.CAnzeige = new System.Windows.Forms.Button();
             this.bussgeldrechner1 = new Anzeige.Bussgeldrechner();
             this.CDTMEdit = new System.Windows.Forms.DateTimePicker();
             this.CCopy = new System.Windows.Forms.CheckBox();
@@ -97,6 +96,7 @@ namespace Anzeige
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.CAnzeige = new System.Windows.Forms.Button();
             this.CTabPages = new System.Windows.Forms.TabControl();
             this.CSave = new System.Windows.Forms.TabPage();
             this.CAusschnitt = new System.Windows.Forms.PictureBox();
@@ -142,7 +142,6 @@ namespace Anzeige
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.BackColor = System.Drawing.Color.Yellow;
-            this.splitContainer1.Panel1.Controls.Add(this.CAnzeige);
             this.splitContainer1.Panel1.Controls.Add(this.bussgeldrechner1);
             this.splitContainer1.Panel1.Controls.Add(this.CDTMEdit);
             this.splitContainer1.Panel1.Controls.Add(this.CCopy);
@@ -196,6 +195,7 @@ namespace Anzeige
             this.splitContainer1.Panel1.Controls.Add(this.label2);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.button1);
+            this.splitContainer1.Panel1.Controls.Add(this.CAnzeige);
             // 
             // splitContainer1.Panel2
             // 
@@ -203,18 +203,6 @@ namespace Anzeige
             this.splitContainer1.Size = new System.Drawing.Size(1176, 970);
             this.splitContainer1.SplitterDistance = 441;
             this.splitContainer1.TabIndex = 0;
-            // 
-            // CAnzeige
-            // 
-            this.CAnzeige.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.CAnzeige.Location = new System.Drawing.Point(204, 759);
-            this.CAnzeige.Name = "CAnzeige";
-            this.CAnzeige.Size = new System.Drawing.Size(230, 201);
-            this.CAnzeige.TabIndex = 9;
-            this.CAnzeige.Text = "anzeigen";
-            this.toolTip1.SetToolTip(this.CAnzeige, "Öffen eine Mail mit dem Verstoß");
-            this.CAnzeige.UseVisualStyleBackColor = false;
-            this.CAnzeige.Click += new System.EventHandler(this.CAnzeige_Click);
             // 
             // bussgeldrechner1
             // 
@@ -305,15 +293,15 @@ namespace Anzeige
             // timePicker1
             // 
             this.timePicker1.BackColor = System.Drawing.Color.White;
-            this.timePicker1.Hour = 8;
+            this.timePicker1.Hour = 19;
             this.timePicker1.Location = new System.Drawing.Point(318, 581);
-            this.timePicker1.Minute = 31;
+            this.timePicker1.Minute = 30;
             this.timePicker1.Name = "timePicker1";
-            this.timePicker1.Second = 52;
+            this.timePicker1.Second = 4;
             this.timePicker1.Short = true;
             this.timePicker1.Size = new System.Drawing.Size(116, 29);
             this.timePicker1.TabIndex = 15;
-            this.timePicker1.Value = new System.DateTime(2024, 1, 2, 8, 31, 52, 0);
+            this.timePicker1.Value = new System.DateTime(2024, 1, 2, 19, 30, 4, 0);
             // 
             // listBoxDevices
             // 
@@ -951,6 +939,18 @@ namespace Anzeige
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // CAnzeige
+            // 
+            this.CAnzeige.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.CAnzeige.Location = new System.Drawing.Point(204, 759);
+            this.CAnzeige.Name = "CAnzeige";
+            this.CAnzeige.Size = new System.Drawing.Size(230, 201);
+            this.CAnzeige.TabIndex = 9;
+            this.CAnzeige.Text = "anzeigen";
+            this.toolTip1.SetToolTip(this.CAnzeige, "Öffen eine Mail mit dem Verstoß");
+            this.CAnzeige.UseVisualStyleBackColor = false;
+            this.CAnzeige.Click += new System.EventHandler(this.CAnzeige_Click);
+            // 
             // CTabPages
             // 
             this.CTabPages.Controls.Add(this.CSave);
@@ -1049,7 +1049,7 @@ namespace Anzeige
             // 
             // CAnzeigeText
             // 
-            this.CAnzeigeText.BackColor = System.Drawing.Color.Silver;
+            this.CAnzeigeText.BackColor = System.Drawing.SystemColors.Control;
             this.CAnzeigeText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CAnzeigeText.Location = new System.Drawing.Point(0, 0);
             this.CAnzeigeText.Multiline = true;
@@ -1057,6 +1057,7 @@ namespace Anzeige
             this.CAnzeigeText.Size = new System.Drawing.Size(723, 898);
             this.CAnzeigeText.TabIndex = 0;
             this.toolTip1.SetToolTip(this.CAnzeigeText, "Vorschau auf den Mail Text");
+            this.CAnzeigeText.TextChanged += new System.EventHandler(this.CAnzeigeText_TextChanged);
             // 
             // CWeglide
             // 

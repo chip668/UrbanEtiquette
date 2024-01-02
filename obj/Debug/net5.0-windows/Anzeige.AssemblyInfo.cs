@@ -11,8 +11,9 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("Urban Etiquette")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("GPL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyDescriptionAttribute(@"Willkommen bei UrbanEtiquette! Wir danken Ihnen herzlich für die Wahl unserer Plattform. Tauchen Sie ein in die Welt der urbanen Etikette und entdecken Sie, wie wir das städtische Leben mit Stil und Respekt gestalten. Wir freuen uns, dass Sie Teil unserer Gemeinschaft sind.")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("Urban Etiquette")]

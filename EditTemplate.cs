@@ -1,26 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Anzeige
 {
     public partial class EditTemplate : Form
     {
+        public String Template { get; set; }
         public EditTemplate()
         {
             InitializeComponent();
         }
-        
+
         private void Form3_Load(object sender, EventArgs e)
         {
-            textBox1.Text = ((Main)this.Parent).Template;
+            textBox1.Text = Template;
         }
 
         private void CTake_Click(object sender, EventArgs e)
@@ -48,9 +41,8 @@ namespace Anzeige
 
         private void CSave_Click(object sender, EventArgs e)
         {
-            ((Main)this.Parent).Template = textBox1.Text;
-            Application.Restart();
-            Environment.Exit(0); // Optional: Schließen Sie den aktuellen Prozess
+            Template = textBox1.Text;
+            this.Hide();
         }
 
         private void CAbbrechen_Click(object sender, EventArgs e)

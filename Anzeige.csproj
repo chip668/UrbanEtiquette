@@ -7,6 +7,10 @@
     <ApplicationIcon>Unbenannt.ico</ApplicationIcon>
     <AssemblyName>Urban Etiquette</AssemblyName>
     <SignAssembly>false</SignAssembly>
+    <NoWin32Manifest>true</NoWin32Manifest>
+    <Description>Willkommen bei UrbanEtiquette! Wir danken Ihnen herzlich für die Wahl unserer Plattform. Tauchen Sie ein in die Welt der urbanen Etikette und entdecken Sie, wie wir das städtische Leben mit Stil und Respekt gestalten. Wir freuen uns, dass Sie Teil unserer Gemeinschaft sind.</Description>
+    <Authors>GPL, Norbert Schippers</Authors>
+    <Company>GPL</Company>
   </PropertyGroup>
 
   <ItemGroup>

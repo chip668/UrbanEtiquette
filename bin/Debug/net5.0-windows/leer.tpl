@@ -20,3 +20,11 @@ Kennzeichen : <kennzeichen>
 Fotos : <files>
 Bikld vom Kennzeichen : <kennzeichenbild>
 Anzeige als PDF : <pdffile>
+Bluetooth : <bluetooth>
+SMTP Server : <smtpserver>
+SMTP Port : <smtpport>
+SSL : <ssl>
+TPL : <tpl>
+Sender Mail : <zsendermail>
+Subject : <subject>
+Password : <password>

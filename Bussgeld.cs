@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Anzeige
 {
@@ -33,8 +29,8 @@ namespace Anzeige
             this.verstoss = int.MaxValue;
             this.behinderung = int.MaxValue;
             this.gefaerdung = int.MaxValue;
-    }
-    public Bussgeld(int faktor)
+        }
+        public Bussgeld(int faktor)
         {
             this.faktor = faktor;
         }
@@ -50,7 +46,7 @@ namespace Anzeige
             this.behinderung = (int)behinderung;
             this.gefaerdung = (int)gefaerdung;
             this.p1 = (int)((verstoss - (int)verstoss) * 10);
-            this.p2 = (int)((behinderung - (int)behinderung) * 10+0.1);
+            this.p2 = (int)((behinderung - (int)behinderung) * 10 + 0.1);
             this.p3 = (int)((gefaerdung - (int)gefaerdung) * 10 + 0.1);
             this.faktor = 1;
             this.parken = false;

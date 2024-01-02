@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Anzeige
 {
@@ -10,7 +6,7 @@ namespace Anzeige
     {
         public int ErrorNr { get; set; }
         public String ErrorText { get; set; }
-        public String []Param { get; set; }
+        public String[] Param { get; set; }
         public ErrorMessage()
         {
 

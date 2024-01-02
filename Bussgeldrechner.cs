@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Anzeige
@@ -15,15 +8,15 @@ namespace Anzeige
         private Bussgeld _bussgeld;
         public Bussgeld bussgeld
         {
-            get 
+            get
             {
                 return _bussgeld;
 
             }
-            set 
+            set
             {
                 _bussgeld = value;
-                if (_bussgeld!=null)
+                if (_bussgeld != null)
                 {
                     double betrag = _bussgeld.verstoss;
                     C1.Text = _bussgeld.verstoss.ToString();

@@ -1,7 +1,6 @@
-﻿using System;
+﻿using ExifLib;
+using System;
 using System.IO;
-using System.Threading;
-using ExifLib;
 
 
 namespace Anzeige

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Anzeige
 {
@@ -25,7 +21,7 @@ namespace Anzeige
         public void LogError(ErrorMessage error)
         {
             String message = error.ToString();
-            ShellExecute (IntPtr.Zero, "open", "msg", $"* {message}", null, 1);
+            ShellExecute(IntPtr.Zero, "open", "msg", $"* {message}", null, 1);
             base.LogError(error);
         }
     }

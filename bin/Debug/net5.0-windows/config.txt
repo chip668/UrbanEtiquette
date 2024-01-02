@@ -13,3 +13,20 @@ Langenfeld
 <zielpfad>
 Z:\Dokumente\Anzeigen\
 <ort>;<mail>
+ort mail
+<zbluetooth>
+NI
+<zsmtpserver>
+smtp.mail.yahoo.com
+<zsmtpport>
+465 
+<zssl>
+yes
+<ztpl>
+yes
+<zsendermail>
+Schippers.Norbert@yahoo.com
+<zsubject>
+Anzeige einer Verkehrsordnungswiedrigkeit
+<zpassword>
+************

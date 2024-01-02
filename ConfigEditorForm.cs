@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Anzeige
@@ -47,13 +41,13 @@ namespace Anzeige
             int width = 0;
             foreach (String ln in lines)
             {
-                if (ln.Length> 4 && ln.Substring (0,2)== "<z" && ln.Substring(ln.Length-1, 1) == ">")
+                if (ln.Length > 4 && ln.Substring(0, 2) == "<z" && ln.Substring(ln.Length - 1, 1) == ">")
                 {
                     name = (ln.Substring(2, 1).ToUpper()) + (ln.Substring(3, ln.Length - 4));
                     tbx = new TextBox();
                     lbl = new Label();
                     tbx.Name = name;
-                    lbl.Name = "lbl"+name;
+                    lbl.Name = "lbl" + name;
                     lbl.Text = name;
                     tbx.Top = offset;
                     lbl.Top = offset;
@@ -71,8 +65,8 @@ namespace Anzeige
                         tbx.Text = ln;
                     }
                 }
-            } 
-            
+            }
+
             Button btnSave = new Button();
             btnSave.Name = "btnSpeichern";
             btnSave.Text = "Speichern";

@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Anzeige
@@ -31,9 +24,9 @@ namespace Anzeige
             InitializeComponent();
             SetForm(command, 0);
         }
-        public void SetForm (String [,] cmd, int idx)
+        public void SetForm(String[,] cmd, int idx)
         {
-            if ((0<=cmd.Length/5) && (idx < cmd.Length/5))
+            if ((0 <= cmd.Length / 5) && (idx < cmd.Length / 5))
             {
                 this.Text = cmd[idx, 0];
                 CDisplay.Text = cmd[idx, 1];
@@ -54,10 +47,10 @@ namespace Anzeige
             SetForm(command, next);
         }
 
-        public int FindIndex (String text)
+        public int FindIndex(String text)
         {
             int result = 0;
-            for(int i=0; i< command.Length/5;i++)
+            for (int i = 0; i < command.Length / 5; i++)
             {
                 if (text == command[i, 0])
                     result = i;

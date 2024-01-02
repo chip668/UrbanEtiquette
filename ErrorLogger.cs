@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Anzeige
 {
@@ -28,7 +23,7 @@ namespace Anzeige
         {
             IErrorLogger result = this.next;
             // while (result.next!=null)
-                this.next = next;
+            this.next = next;
         }
         public virtual void LogError(ErrorMessage error)
         {
@@ -41,7 +36,7 @@ namespace Anzeige
         }
         public virtual void LogError(int errorNr, string errorText)
         {
-            LogError(errorNr, errorText, new String [0]);
+            LogError(errorNr, errorText, new String[0]);
         }
         public virtual void LogError(int errorNr, string errorText, string[] param)
         {

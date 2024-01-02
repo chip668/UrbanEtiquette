@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\schip\\source\\repos\\Anzeige\\Anzeige\\Anzeige.csproj": {}
+    "C:\\Users\\schip\\source\\repos\\Anzeige\\Anzeige\\Anzeige\\Anzeige.csproj": {}
   },
   "projects": {
-    "C:\\Users\\schip\\source\\repos\\Anzeige\\Anzeige\\Anzeige.csproj": {
+    "C:\\Users\\schip\\source\\repos\\Anzeige\\Anzeige\\Anzeige\\Anzeige.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\schip\\source\\repos\\Anzeige\\Anzeige\\Anzeige.csproj",
+        "projectUniqueName": "C:\\Users\\schip\\source\\repos\\Anzeige\\Anzeige\\Anzeige\\Anzeige.csproj",
         "projectName": "Urban Etiquette",
-        "projectPath": "C:\\Users\\schip\\source\\repos\\Anzeige\\Anzeige\\Anzeige.csproj",
+        "projectPath": "C:\\Users\\schip\\source\\repos\\Anzeige\\Anzeige\\Anzeige\\Anzeige.csproj",
         "packagesPath": "C:\\Users\\schip\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\schip\\source\\repos\\Anzeige\\Anzeige\\obj\\",
+        "outputPath": "C:\\Users\\schip\\source\\repos\\Anzeige\\Anzeige\\Anzeige\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

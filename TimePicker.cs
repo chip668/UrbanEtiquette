@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Anzeige
@@ -13,7 +8,7 @@ namespace Anzeige
         public event EventHandler TimeChanged;
         public DateTime Value
         {
-            get 
+            get
             {
                 DateTime dtm = DateTime.Now;
                 return new DateTime(dtm.Year, dtm.Month, dtm.Day, Hour, Minute, Second);
@@ -83,7 +78,7 @@ namespace Anzeige
             if (numericUpDown3.Value == numericUpDown3.Maximum)
             {
                 numericUpDown2.Value++;
-            }  
+            }
             else if (numericUpDown3.Value == numericUpDown3.Minimum)
             {
                 numericUpDown2.Value--;
