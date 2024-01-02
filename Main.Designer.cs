@@ -101,6 +101,8 @@ namespace Anzeige
             this.CSave = new System.Windows.Forms.TabPage();
             this.CAusschnitt = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.CTemplateFiles = new System.Windows.Forms.ComboBox();
             this.CAnzeigeText = new System.Windows.Forms.TextBox();
             this.CWeglide = new System.Windows.Forms.TabPage();
             this.CTabPageOA = new System.Windows.Forms.TabPage();
@@ -121,6 +123,10 @@ namespace Anzeige
             this.CSave.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CAusschnitt)).BeginInit();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             this.CTabPageOA.SuspendLayout();
             this.CTest.SuspendLayout();
             this.SuspendLayout();
@@ -299,15 +305,15 @@ namespace Anzeige
             // timePicker1
             // 
             this.timePicker1.BackColor = System.Drawing.Color.White;
-            this.timePicker1.Hour = 16;
+            this.timePicker1.Hour = 8;
             this.timePicker1.Location = new System.Drawing.Point(318, 581);
-            this.timePicker1.Minute = 47;
+            this.timePicker1.Minute = 31;
             this.timePicker1.Name = "timePicker1";
-            this.timePicker1.Second = 10;
+            this.timePicker1.Second = 52;
             this.timePicker1.Short = true;
             this.timePicker1.Size = new System.Drawing.Size(116, 29);
             this.timePicker1.TabIndex = 15;
-            this.timePicker1.Value = new System.DateTime(2024, 1, 1, 16, 47, 10, 0);
+            this.timePicker1.Value = new System.DateTime(2024, 1, 2, 8, 31, 52, 0);
             // 
             // listBoxDevices
             // 
@@ -1000,13 +1006,46 @@ namespace Anzeige
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.CAnzeigeText);
+            this.tabPage2.Controls.Add(this.splitContainer2);
             this.tabPage2.Location = new System.Drawing.Point(4, 30);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Size = new System.Drawing.Size(723, 936);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Vorschau";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Cursor = System.Windows.Forms.Cursors.HSplit;
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.CTemplateFiles);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.CAnzeigeText);
+            this.splitContainer2.Size = new System.Drawing.Size(723, 936);
+            this.splitContainer2.SplitterDistance = 34;
+            this.splitContainer2.TabIndex = 1;
+            // 
+            // CTemplateFiles
+            // 
+            this.CTemplateFiles.DisplayMember = "Name";
+            this.CTemplateFiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CTemplateFiles.FormattingEnabled = true;
+            this.CTemplateFiles.Location = new System.Drawing.Point(0, 0);
+            this.CTemplateFiles.Name = "CTemplateFiles";
+            this.CTemplateFiles.Size = new System.Drawing.Size(723, 29);
+            this.CTemplateFiles.TabIndex = 0;
+            this.CTemplateFiles.Text = "anzeige.tpl";
+            this.CTemplateFiles.SelectedIndexChanged += new System.EventHandler(this.CTemplateFiles_SelectedIndexChanged);
+            this.CTemplateFiles.SelectedValueChanged += new System.EventHandler(this.CTemplateFiles_SelectedValueChanged);
             // 
             // CAnzeigeText
             // 
@@ -1015,8 +1054,7 @@ namespace Anzeige
             this.CAnzeigeText.Location = new System.Drawing.Point(0, 0);
             this.CAnzeigeText.Multiline = true;
             this.CAnzeigeText.Name = "CAnzeigeText";
-            this.CAnzeigeText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.CAnzeigeText.Size = new System.Drawing.Size(723, 936);
+            this.CAnzeigeText.Size = new System.Drawing.Size(723, 898);
             this.CAnzeigeText.TabIndex = 0;
             this.toolTip1.SetToolTip(this.CAnzeigeText, "Vorschau auf den Mail Text");
             // 
@@ -1120,7 +1158,11 @@ namespace Anzeige
             this.CSave.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.CAusschnitt)).EndInit();
             this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            this.splitContainer2.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             this.CTabPageOA.ResumeLayout(false);
             this.CTabPageOA.PerformLayout();
             this.CTest.ResumeLayout(false);
@@ -1212,6 +1254,8 @@ namespace Anzeige
         private System.Windows.Forms.TabPage CAbout;
         private System.Windows.Forms.Button CText;
         private System.Windows.Forms.Button CHelp;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.ComboBox CTemplateFiles;
     }
 }
 

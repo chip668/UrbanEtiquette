@@ -54,7 +54,23 @@ namespace Anzeige
                 return fullpath;
             }
         }
-        public string Template { get; private set; }
+        public string TemplatePath
+        {
+            get { return CTemplateFiles.Text; }
+            set { CTemplateFiles.Text = value; }
+        }
+        public string Template
+        {
+            get 
+            { 
+                return File.ReadAllText(TemplatePath); 
+            }
+            set 
+            {
+                File.WriteAllText(TemplatePath, value);
+            }
+        }
+
         public List<String> _Files = new List<String>();
         public string Files
         {
@@ -507,9 +523,7 @@ namespace Anzeige
                 {
                     CVerstossaus.Items.Add(s);
                 }
-
             }
-            Template = File.ReadAllText("mail.txt");
             CAnzeigeText.Text = Message;
             Bildausschnitt = CSave.ClientRectangle;
             oabrowser = new WebBrowser();
@@ -605,6 +619,13 @@ namespace Anzeige
         private void Form1_Load(object sender, EventArgs e)
         {
             listBoxDevices_SelectedIndexChanged(sender, e);
+            string[] templates = Directory.EnumerateFiles(Directory.GetCurrentDirectory(), "*.tpl").ToArray();
+            CTemplateFiles.Items.Clear();
+
+            foreach (String i in templates)
+                CTemplateFiles.Items.Add(new FileInfo(i));
+            CTemplateFiles.SelectedIndex = 0;
+
         }
         private void panel_Click(object sender, EventArgs e)
         {
@@ -910,13 +931,10 @@ namespace Anzeige
                         Bitmap tempausschnitt = CropRectangleFromBitmap(ausschnitt, bmpAusschnitt); ;
                         CAusschnitt.BackgroundImage = tempausschnitt;
                         CAusschnitt.Show();
-                        
                         ausschnittTemp = (AddPath) ? Path.GetTempFileName().Replace(".tmp", ".jpg") : null;
                         if (tempausschnitt != null)
                         {
                             ScaledSave(tempausschnitt, ausschnittTemp, 3);
-                            // tempausschnitt.Save(ausschnittTemp, ImageFormat.Jpeg);
-                            // Clipboard.SetText(ausschnittTemp);
 
                             // Hier wird eine Kopie der Originaldatei erstellt
                             Bitmap kopie = new Bitmap(ausschnitt);
@@ -2227,6 +2245,16 @@ namespace Anzeige
             ConfigEditorForm dlg = new ConfigEditorForm();
 
             dlg.ShowDialog();
+        }
+
+        private void CTemplateFiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CTemplateFiles_SelectedValueChanged(sender, e);
+        }
+
+        private void CTemplateFiles_SelectedValueChanged(object sender, EventArgs e)
+        {
+            CAnzeigeText.Text = Message;
         }
     }
 }

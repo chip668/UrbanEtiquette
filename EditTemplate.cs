@@ -17,10 +17,10 @@ namespace Anzeige
         {
             InitializeComponent();
         }
-
+        
         private void Form3_Load(object sender, EventArgs e)
         {
-            textBox1.Text = File.ReadAllText("mail.txt");
+            textBox1.Text = ((Main)this.Parent).Template;
         }
 
         private void CTake_Click(object sender, EventArgs e)
@@ -48,7 +48,7 @@ namespace Anzeige
 
         private void CSave_Click(object sender, EventArgs e)
         {
-            File.WriteAllText("mail.txt", textBox1.Text);
+            ((Main)this.Parent).Template = textBox1.Text;
             Application.Restart();
             Environment.Exit(0); // Optional: Schließen Sie den aktuellen Prozess
         }

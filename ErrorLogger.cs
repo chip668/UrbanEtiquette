@@ -30,25 +30,25 @@ namespace Anzeige
             // while (result.next!=null)
                 this.next = next;
         }
-        public void LogError(ErrorMessage error)
+        public virtual void LogError(ErrorMessage error)
         {
             if (next != null)
                 next.LogError(error);
         }
-        public void LogError(int errorNr)
+        public virtual void LogError(int errorNr)
         {
             LogError(errorNr, "");
         }
-        public void LogError(int errorNr, string errorText)
+        public virtual void LogError(int errorNr, string errorText)
         {
             LogError(errorNr, errorText, new String [0]);
         }
-        public void LogError(int errorNr, string errorText, string[] param)
+        public virtual void LogError(int errorNr, string errorText, string[] param)
         {
             ErrorMessage message = new ErrorMessage(errorNr, errorText, param);
             LogError(message);
         }
-        public void LogError(int errorNr, string errorText, string param)
+        public virtual void LogError(int errorNr, string errorText, string param)
         {
             ErrorMessage message = new ErrorMessage(errorNr, errorText, param.Split(','));
         }
