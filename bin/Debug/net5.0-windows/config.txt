@@ -12,8 +12,6 @@ Klopstockweg
 Langenfeld
 <zielpfad>
 Z:\Dokumente\Anzeigen\
-<ort>;<mail>
-ort mail
 <zbluetooth>
 NI
 <zsmtpserver>
@@ -30,3 +28,4 @@ Schippers.Norbert@yahoo.com
 Anzeige einer Verkehrsordnungswiedrigkeit
 <zpassword>
 ************
+<ort>;<mail>
