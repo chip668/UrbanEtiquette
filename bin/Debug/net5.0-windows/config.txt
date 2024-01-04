@@ -28,4 +28,3 @@ Schippers.Norbert@yahoo.com
 Anzeige einer Verkehrsordnungswiedrigkeit
 <zpassword>
 ************
-<ort>;<mail>

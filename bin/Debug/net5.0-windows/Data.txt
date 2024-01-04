@@ -1,3 +1,4 @@
+<ort>;<mail>
 40764;Test;Schippers.Norbert@yahoo.com;http://thewebside.de/
 78267;Aach, Hegau;gemeinde@aach.de;
 52058;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;

@@ -146,6 +146,18 @@ namespace Anzeige
                 CZeit.Text = value;
             }
         }
+        public string ZeitBis
+        {
+            get
+            {
+
+                return CZeitBis.Text;
+            }
+            set
+            {
+                CZeitBis.Text = value;
+            }
+        }
         public string Ort
         {
             get
@@ -291,6 +303,7 @@ namespace Anzeige
                 result = result.Replace("<freetext>", FreeText);
                 result = result.Replace("<datum>", Datum);
                 result = result.Replace("<zeit>", Zeit);
+                result = result.Replace("<zeitbis>", (Zeit != ZeitBis) ? " bis " + ZeitBis : "");                
                 result = result.Replace("<strasse>", Strasse);
                 result = result.Replace("<hausnummer>", HN);
                 result = result.Replace("<plz>", PLZ);
@@ -334,6 +347,7 @@ namespace Anzeige
                 return
                 "Datum=" + Datum +
                 "\nZeit=" + Zeit +
+                ((Zeit!=ZeitBis)? (" Bis" + ZeitBis):"") +
                 "\nOrt=" + Ort +
                 "\nPLZ=" + PLZ +
                 "\nStrasse=" + Strasse +
@@ -369,6 +383,9 @@ namespace Anzeige
                                 Datum = propertyValue;
                                 break;
                             case "Zeit":
+                                Zeit = propertyValue;
+                                break;
+                            case "ZeitBis":
                                 Zeit = propertyValue;
                                 break;
                             case "Ort":
@@ -878,7 +895,12 @@ namespace Anzeige
                     Point p = Transform(e.Location, CSave.ClientRectangle, ausschnitt.Size);
                     Bitmap b = (Bitmap)CSave.BackgroundImage;
                     Color c = b.GetPixel(p.X, p.Y);
+                    Color c2 = Color.Gold;
                     panel1.BackColor = c;
+                    c2 = ColorHelper.FindClosestColor(refcolor, c);
+                    //panel1.BackColor = c2;
+
+                    /*
                     Color clickcolor = c;
                     c = refcolor[0];
                     double mxdiff = double.MaxValue;
@@ -892,6 +914,7 @@ namespace Anzeige
                         }
 
                     }
+                    */
                 }
                 else
                 {
@@ -1186,6 +1209,7 @@ namespace Anzeige
             CSave.BackgroundImage = null;
             CDatum.Text = "";
             CZeit.Text = "";
+            CZeitBis.Text = "";
             CAusschnitt.Hide();
             CKennzeichen.Text = "";
             CLogo.BackgroundImage = null;
@@ -1604,6 +1628,8 @@ namespace Anzeige
             { 'P', new List<char>(){ 'P', 'R' } },
             { 'S', new List<char>(){ 'S', '5' } }
         };
+        private Color c2;
+
         private string FindOrtX(string letters)
         {
             String result = "";
@@ -1960,12 +1986,9 @@ namespace Anzeige
         private void CZeit_TextChanged(object sender, EventArgs e)
         {
             String[] items = CZeit.Text.Split(':');
-
-            if (items.Length == 3)
+            if (CZeitBis.Text == "")
             {
-                timePicker1.Hour = Convert.ToInt32(items[0]);
-                timePicker1.Minute = Convert.ToInt32(items[1]);
-                timePicker1.Second = Convert.ToInt32(items[2]);
+                CZeitBis.Text = CZeit.Text;
             }
         }
         private void CreatePDF_CheckedChanged(object sender, EventArgs e)
@@ -1979,7 +2002,7 @@ namespace Anzeige
                 pdfHelper.email = "";
                 pdfHelper.tatdatum = Datum;
                 pdfHelper.tatzeitVon = Zeit;
-                pdfHelper.tatzeitBis = Zeit;
+                pdfHelper.tatzeitBis = ZeitBis;
                 pdfHelper.tatort = $"{PLZ}  {Ort}";
                 pdfHelper.kennzeichen = Kennzeichen;
                 pdfHelper.fahrzeugtyp = this.Marke;
@@ -2039,9 +2062,11 @@ namespace Anzeige
             String s = SaveClipboardImageAsTemporaryFile();
             if (s != null)
             {
-                _Files.Add(s);
+                SelectFile(s);
                 CFiles.Items.Add(s);
-                CSave.BackgroundImage = Bitmap.FromFile(s);
+                // _Files.Add(s);
+                // CFiles.Items.Add(s);
+                // CSave.BackgroundImage = Bitmap.FromFile(s);
             }
             CAnzeigeText.Text = Message;
             this.Refresh();
@@ -2236,6 +2261,11 @@ namespace Anzeige
         }
 
         private void CAnzeigeText_TextChanged(object sender, EventArgs e)
+        {
+            CAnzeigeText.Text = Message;
+        }
+
+        private void CZeitBis_TextChanged(object sender, EventArgs e)
         {
             CAnzeigeText.Text = Message;
         }

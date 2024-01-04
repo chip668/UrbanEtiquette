@@ -6,7 +6,7 @@ Hiermit zeige ich – mit der Bitte um Weiterverfolgung durch Ihr Amt – folgen
 <verstoss>
 <freetext>
 
-<datum>, <zeit>
+<datum>, <zeit> <zeitbis>
 <strasse> <hausnummer>
 <plz> <ort>
 <marke>, <farbe>

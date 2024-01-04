@@ -39,7 +39,6 @@ namespace Anzeige
             this.CAddPath = new System.Windows.Forms.CheckBox();
             this.CreatePDF = new System.Windows.Forms.CheckBox();
             this.CFreeText = new System.Windows.Forms.TextBox();
-            this.timePicker1 = new Anzeige.TimePicker();
             this.listBoxDevices = new System.Windows.Forms.ComboBox();
             this.button3 = new System.Windows.Forms.Button();
             this.cOrtSuche = new System.Windows.Forms.Button();
@@ -84,6 +83,7 @@ namespace Anzeige
             this.label10 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.CZeitBis = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.CZeit = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -149,7 +149,6 @@ namespace Anzeige
             this.splitContainer1.Panel1.Controls.Add(this.CAddPath);
             this.splitContainer1.Panel1.Controls.Add(this.CreatePDF);
             this.splitContainer1.Panel1.Controls.Add(this.CFreeText);
-            this.splitContainer1.Panel1.Controls.Add(this.timePicker1);
             this.splitContainer1.Panel1.Controls.Add(this.listBoxDevices);
             this.splitContainer1.Panel1.Controls.Add(this.button3);
             this.splitContainer1.Panel1.Controls.Add(this.cOrtSuche);
@@ -183,6 +182,7 @@ namespace Anzeige
             this.splitContainer1.Panel1.Controls.Add(this.label10);
             this.splitContainer1.Panel1.Controls.Add(this.label7);
             this.splitContainer1.Panel1.Controls.Add(this.label6);
+            this.splitContainer1.Panel1.Controls.Add(this.CZeitBis);
             this.splitContainer1.Panel1.Controls.Add(this.label5);
             this.splitContainer1.Panel1.Controls.Add(this.CZeit);
             this.splitContainer1.Panel1.Controls.Add(this.label9);
@@ -217,7 +217,7 @@ namespace Anzeige
             this.CDTMEdit.CustomFormat = "dd.MM.yyyy HH:mm";
             this.CDTMEdit.Location = new System.Drawing.Point(95, 546);
             this.CDTMEdit.Name = "CDTMEdit";
-            this.CDTMEdit.Size = new System.Drawing.Size(339, 29);
+            this.CDTMEdit.Size = new System.Drawing.Size(180, 29);
             this.CDTMEdit.TabIndex = 19;
             this.CDTMEdit.Visible = false;
             this.CDTMEdit.ValueChanged += new System.EventHandler(this.CDTMEdit_ValueChanged);
@@ -289,19 +289,6 @@ namespace Anzeige
             this.CFreeText.Size = new System.Drawing.Size(339, 53);
             this.CFreeText.TabIndex = 16;
             this.toolTip1.SetToolTip(this.CFreeText, "Hier kann eine Zussätzliche Anmerklung gemacht werden");
-            // 
-            // timePicker1
-            // 
-            this.timePicker1.BackColor = System.Drawing.Color.White;
-            this.timePicker1.Hour = 19;
-            this.timePicker1.Location = new System.Drawing.Point(318, 581);
-            this.timePicker1.Minute = 30;
-            this.timePicker1.Name = "timePicker1";
-            this.timePicker1.Second = 4;
-            this.timePicker1.Short = true;
-            this.timePicker1.Size = new System.Drawing.Size(116, 29);
-            this.timePicker1.TabIndex = 15;
-            this.timePicker1.Value = new System.DateTime(2024, 1, 2, 19, 30, 4, 0);
             // 
             // listBoxDevices
             // 
@@ -821,15 +808,23 @@ namespace Anzeige
             this.label6.TabIndex = 1;
             this.label6.Text = "Marke";
             // 
+            // CZeitBis
+            // 
+            this.CZeitBis.BackColor = System.Drawing.Color.White;
+            this.CZeitBis.Location = new System.Drawing.Point(315, 581);
+            this.CZeitBis.Name = "CZeitBis";
+            this.CZeitBis.Size = new System.Drawing.Size(119, 29);
+            this.CZeitBis.TabIndex = 2;
+            this.CZeitBis.TextChanged += new System.EventHandler(this.CZeitBis_TextChanged);
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(272, 585);
+            this.label5.Location = new System.Drawing.Point(281, 581);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(45, 21);
+            this.label5.Size = new System.Drawing.Size(30, 21);
             this.label5.TabIndex = 1;
-            this.label5.Text = "real t";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
+            this.label5.Text = "Bis";
             // 
             // CZeit
             // 
@@ -1232,8 +1227,6 @@ namespace Anzeige
         private System.Windows.Forms.ComboBox listBoxDevices;
         private System.Windows.Forms.TabPage CTest;
         private System.Windows.Forms.TextBox CTestText;
-        private System.Windows.Forms.Label label5;
-        private TimePicker timePicker1;
         private System.Windows.Forms.TextBox CFreeText;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.CheckBox CreatePDF;
@@ -1257,6 +1250,8 @@ namespace Anzeige
         private System.Windows.Forms.Button CHelp;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.ComboBox CTemplateFiles;
+        private System.Windows.Forms.TextBox CZeitBis;
+        private System.Windows.Forms.Label label5;
     }
 }
 
