@@ -32,10 +32,12 @@ namespace Anzeige
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.CRaster = new System.Windows.Forms.NumericUpDown();
             this.bussgeldrechner1 = new Anzeige.Bussgeldrechner();
             this.CDTMEdit = new System.Windows.Forms.DateTimePicker();
             this.CCopy = new System.Windows.Forms.CheckBox();
             this.CAddFile = new System.Windows.Forms.CheckBox();
+            this.CPixeln = new System.Windows.Forms.CheckBox();
             this.CAddPath = new System.Windows.Forms.CheckBox();
             this.CreatePDF = new System.Windows.Forms.CheckBox();
             this.CFreeText = new System.Windows.Forms.TextBox();
@@ -117,6 +119,7 @@ namespace Anzeige
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CRaster)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CLogo)).BeginInit();
             this.panel1.SuspendLayout();
             this.CTabPages.SuspendLayout();
@@ -142,10 +145,12 @@ namespace Anzeige
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.BackColor = System.Drawing.Color.Yellow;
+            this.splitContainer1.Panel1.Controls.Add(this.CRaster);
             this.splitContainer1.Panel1.Controls.Add(this.bussgeldrechner1);
             this.splitContainer1.Panel1.Controls.Add(this.CDTMEdit);
             this.splitContainer1.Panel1.Controls.Add(this.CCopy);
             this.splitContainer1.Panel1.Controls.Add(this.CAddFile);
+            this.splitContainer1.Panel1.Controls.Add(this.CPixeln);
             this.splitContainer1.Panel1.Controls.Add(this.CAddPath);
             this.splitContainer1.Panel1.Controls.Add(this.CreatePDF);
             this.splitContainer1.Panel1.Controls.Add(this.CFreeText);
@@ -204,6 +209,19 @@ namespace Anzeige
             this.splitContainer1.SplitterDistance = 441;
             this.splitContainer1.TabIndex = 0;
             // 
+            // CRaster
+            // 
+            this.CRaster.Location = new System.Drawing.Point(213, 581);
+            this.CRaster.Name = "CRaster";
+            this.CRaster.Size = new System.Drawing.Size(53, 29);
+            this.CRaster.TabIndex = 21;
+            this.toolTip1.SetToolTip(this.CRaster, "Anzahl Pixel beim Verpixeln");
+            this.CRaster.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            // 
             // bussgeldrechner1
             // 
             this.bussgeldrechner1.bussgeld = null;
@@ -250,6 +268,19 @@ namespace Anzeige
             this.toolTip1.SetToolTip(this.CAddFile, "Sollen die Dateien als Anhang mit in den Mail-Text übernommen werden?");
             this.CAddFile.UseVisualStyleBackColor = true;
             this.CAddFile.CheckedChanged += new System.EventHandler(this.CAddFile_CheckedChanged);
+            // 
+            // CPixeln
+            // 
+            this.CPixeln.AutoSize = true;
+            this.CPixeln.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CPixeln.Location = new System.Drawing.Point(128, 584);
+            this.CPixeln.Name = "CPixeln";
+            this.CPixeln.Size = new System.Drawing.Size(70, 25);
+            this.CPixeln.TabIndex = 18;
+            this.CPixeln.Text = "Pixeln";
+            this.toolTip1.SetToolTip(this.CPixeln, "Verpixeln oder Kennzeichen sonst Kennzeichen auswählen");
+            this.CPixeln.UseVisualStyleBackColor = true;
+            this.CPixeln.CheckedChanged += new System.EventHandler(this.CAddPath_CheckedChanged);
             // 
             // CAddPath
             // 
@@ -937,9 +968,9 @@ namespace Anzeige
             // CAnzeige
             // 
             this.CAnzeige.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.CAnzeige.Location = new System.Drawing.Point(204, 759);
+            this.CAnzeige.Location = new System.Drawing.Point(237, 789);
             this.CAnzeige.Name = "CAnzeige";
-            this.CAnzeige.Size = new System.Drawing.Size(230, 201);
+            this.CAnzeige.Size = new System.Drawing.Size(197, 171);
             this.CAnzeige.TabIndex = 9;
             this.CAnzeige.Text = "anzeigen";
             this.toolTip1.SetToolTip(this.CAnzeige, "Öffen eine Mail mit dem Verstoß");
@@ -1148,6 +1179,7 @@ namespace Anzeige
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.CRaster)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CLogo)).EndInit();
             this.panel1.ResumeLayout(false);
             this.CTabPages.ResumeLayout(false);
@@ -1252,6 +1284,8 @@ namespace Anzeige
         private System.Windows.Forms.ComboBox CTemplateFiles;
         private System.Windows.Forms.TextBox CZeitBis;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox CPixeln;
+        private System.Windows.Forms.NumericUpDown CRaster;
     }
 }
 

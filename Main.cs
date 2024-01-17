@@ -44,6 +44,7 @@ namespace Anzeige
         int y0 = 0;
         int w = 0;
         int h = 0;
+        int cntpixel = 0;
         private String FullPath
         {
             get
@@ -810,6 +811,7 @@ namespace Anzeige
         }
         private Boolean pruefeDaten()
         {
+            if (cntpixel == 0) { if (MessageBox.Show("Müssen noch unbeteiligte verpixelt werden?", "DSGVO", MessageBoxButtons.YesNo) == DialogResult.No) { return false; } }
             if (Files == "") { MessageBox.Show("Bitte Foto wählen"); return false; }
             if (Datum == "") { MessageBox.Show("Datum des Vorfalls"); return false; }
             if (Zeit == "") { MessageBox.Show("Zeit des Vorfalls"); return false; }
@@ -942,6 +944,44 @@ namespace Anzeige
                 }
             }
         }
+
+        private void PixelOutRegion(Bitmap bitmap, Rectangle region)
+        {
+            int raster = (int)CRaster.Value;
+
+            // Stelle sicher, dass die Region innerhalb der Bitmap-Grenzen liegt
+            region.Intersect(new Rectangle(0, 0, bitmap.Width, bitmap.Height));
+            // Verpixeln der Region
+            for (int y = region.Top; y < region.Bottom; y += raster)
+            {
+                for (int x = region.Left; x < region.Right; x += raster)
+                {
+                    int r = 0;
+                    int g = 0;
+                    int b = 0;
+                    int n = raster * raster;
+                    Color c;
+                    for (int zx = 0; zx < raster; zx++)
+                    {
+                        for (int zy = 0; zy < raster; zy++)
+                        {
+                            c = bitmap.GetPixel(x + zx, y + zy);
+                            r += c.R;
+                            g += c.G;
+                            b += c.B;
+                        }
+                    }
+                    c = Color.FromArgb (r / n, g / n, b / n);
+                    for (int zx = 0; zx < raster; zx++)
+                    {
+                        for (int zy = 0; zy < raster; zy++)
+                        {
+                            bitmap.SetPixel(x + zx, y + zy, c);
+                        }
+                    }
+                }
+            }
+        }
         private void BlackOutRegion(Bitmap bitmap, Rectangle region)
         {
             using (Graphics g = Graphics.FromImage(bitmap))
@@ -969,19 +1009,32 @@ namespace Anzeige
                         {
                             ScaledSave(tempausschnitt, ausschnittTemp, 3);
 
-                            // Hier wird eine Kopie der Originaldatei erstellt
-                            Bitmap kopie = new Bitmap(ausschnitt);
-                            // Den ausgeschnittenen Bereich in der Kopie schwarz färben
-                            BlackOutRegion(kopie, bmpAusschnitt);
-                            // Den Dateipfad für die geschwärzte Kopie festlegen
-                            // string geschwaerzteKopiePfad = Path.GetTempFileName().Replace(".tmp", ".jpg");
-                            string geschwaerzteKopiePfad = ZZielpfad + "public\\" + Guid.NewGuid().ToString() + ".jpg"; ;
+                            if (!CPixeln.Checked)
+                            {
+                                // Hier wird eine Kopie der Originaldatei erstellt
+                                Bitmap kopie = new Bitmap(ausschnitt);
+                                // Den ausgeschnittenen Bereich in der Kopie schwarz färben
+                                BlackOutRegion(kopie, bmpAusschnitt);
 
-                            // Die geschwärzte Kopie speichern
-                            kopie.Save(geschwaerzteKopiePfad, ImageFormat.Jpeg);
-                            // Jetzt haben Sie die geschwärzte Kopie in der Variable 'geschwaerzteKopiePfad'
+                                // Den Dateipfad für die geschwärzte Kopie festlegen
+                                // string geschwaerzteKopiePfad = Path.GetTempFileName().Replace(".tmp", ".jpg");
+                                string geschwaerzteKopiePfad = ZZielpfad + "public\\" + Guid.NewGuid().ToString() + ".jpg"; ;
+
+                                // Die geschwärzte Kopie speichern
+                                kopie.Save(geschwaerzteKopiePfad, ImageFormat.Jpeg);
+                                // Jetzt haben Sie die geschwärzte Kopie in der Variable 'geschwaerzteKopiePfad'
+                            }
+                            else
+                            {
+                                PixelOutRegion(ausschnitt, bmpAusschnitt);
+                                CSave.BackgroundImage = ausschnitt;
+                                CSave.Refresh();
+                                Bitmap tempausschnitt2 = CropRectangleFromBitmap(ausschnitt, bmpAusschnitt); ;
+                                CAusschnitt.BackgroundImage = tempausschnitt2;
+                                CAusschnitt.Show();
+                            }
                         }
-                        if (CKennzeichen.Text == "")
+                        if (CKennzeichen.Text == "" && !CPixeln.Checked)
                         {
                             CKennzeichen.Text = ReadTextFromBitmap(tempausschnitt);
                         }
@@ -1215,6 +1268,7 @@ namespace Anzeige
             CLogo.BackgroundImage = null;
             CFreeText.Text = "";
             panel1.BackColor = Color.Gold;
+            cntpixel = 0;
             Init();
         }
         private void CKennzeichen_TextChanged(object sender, EventArgs e)
@@ -1284,6 +1338,7 @@ namespace Anzeige
         {
             setSelectedLineTip((Control)sender);
             ausschnittTemp = "";
+            cntpixel = 0;
             CAusschnitt.Hide();
         }
         private void CTabPages_SelectedIndexChanged(object sender, EventArgs e)
