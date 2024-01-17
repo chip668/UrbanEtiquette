@@ -1174,6 +1174,7 @@ namespace Anzeige
             this.Name = "Main";
             this.Text = "Urban Etiquette";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Main_KeyPress);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);

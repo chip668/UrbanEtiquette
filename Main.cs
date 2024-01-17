@@ -2324,5 +2324,10 @@ namespace Anzeige
         {
             CAnzeigeText.Text = Message;
         }
+
+        private void Main_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
     }
 }
