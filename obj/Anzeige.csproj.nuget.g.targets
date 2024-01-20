@@ -4,6 +4,8 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)system.codedom\8.0.0\buildTransitive\netcoreapp2.0\System.CodeDom.targets" Condition="Exists('$(NuGetPackageRoot)system.codedom\8.0.0\buildTransitive\netcoreapp2.0\System.CodeDom.targets')" />
+    <Import Project="$(NuGetPackageRoot)system.management\8.0.0\buildTransitive\netcoreapp2.0\System.Management.targets" Condition="Exists('$(NuGetPackageRoot)system.management\8.0.0\buildTransitive\netcoreapp2.0\System.Management.targets')" />
     <Import Project="$(NuGetPackageRoot)microsoft.extensions.logging.abstractions\6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.extensions.logging.abstractions\6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
     <Import Project="$(NuGetPackageRoot)ironsoftware.native.pdfmodel\2023.7.15762\buildTransitive\netstandard2.0\IronSoftware.Native.PdfModel.targets" Condition="Exists('$(NuGetPackageRoot)ironsoftware.native.pdfmodel\2023.7.15762\buildTransitive\netstandard2.0\IronSoftware.Native.PdfModel.targets')" />
     <Import Project="$(NuGetPackageRoot)ironocr\2023.7.28\buildTransitive\netstandard2.0\IronOcr.targets" Condition="Exists('$(NuGetPackageRoot)ironocr\2023.7.28\buildTransitive\netstandard2.0\IronOcr.targets')" />

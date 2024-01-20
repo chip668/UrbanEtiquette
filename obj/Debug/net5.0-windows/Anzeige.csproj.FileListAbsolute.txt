@@ -134,3 +134,5 @@ C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Urb
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\ref\Urban Etiquette.dll
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Urban Etiquette.pdb
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.genruntimeconfig.cache
+C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\bin\Debug\net5.0-windows\System.CodeDom.dll
+C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\bin\Debug\net5.0-windows\System.Management.dll

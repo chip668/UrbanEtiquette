@@ -21,6 +21,7 @@
     <PackageReference Include="IronOcr" Version="2023.7.28" />
     <PackageReference Include="iTextSharp" Version="5.5.13.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Management" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>

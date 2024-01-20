@@ -16,6 +16,38 @@ namespace Anzeige
 {
     public partial class Main : Form
     {
+        Double refwidth = 30;
+        private Bitmap loadedImage;
+        private Bitmap lineImage;
+        Point stop;
+        Point downhelp;
+
+        Point pleft;
+        Point pright;
+        Point paug;
+        Point pref1;
+        Point pref2;
+        Point dist1;
+        Point dist2;
+        Pen penFlucht;
+        Pen penRef;
+        Pen penDist;
+        Pen penHelp;
+
+        enum Mode
+        {
+            LEFT,
+            RIGHT,
+            AUGPUNKT,
+            REF1,
+            REF2,
+            DIST1,
+            DIST2
+        }
+        Mode mousemode;
+
+
+
         String configfile = "config.txt";
         ErrorLogger debug = null;
         Bussgeld verstossbussgeld = new Bussgeld();
@@ -652,7 +684,11 @@ namespace Anzeige
             foreach (String i in templates)
                 CTemplateFiles.Items.Add(new FileInfo(i));
             CTemplateFiles.SelectedIndex = 0;
+            splitContainer1.SplitterDistance = 440;
 
+            // Initialisieren Sie Ihre Formularkomponenten hier
+            left.Checked = true;
+            SetImage(global::Anzeige.Properties.Resources.eng);
         }
         private void panel_Click(object sender, EventArgs e)
         {
@@ -776,8 +812,11 @@ namespace Anzeige
         private void COrt_SelectedIndexChanged(object sender, EventArgs e)
         {
             String[] items = COrt.Text.Split(';');
-            selectOrt(items[1]);
-            CAnzeigeText.Text = Message;
+            if (items.Length>1)
+            {
+                selectOrt(items[1]);
+                CAnzeigeText.Text = Message;
+            }
         }
         private void CMarke_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -2328,6 +2367,318 @@ namespace Anzeige
         private void Main_KeyPress(object sender, KeyPressEventArgs e)
         {
 
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedTab == CTAbstand)
+            {
+                // ShellExecute(IntPtr.Zero, "open", @"C:\Users\schip\source\repos\BildMessen\BildMessen\bin\Debug\netcoreapp3.1\BildMessen.exe", "", "", 5);
+                splitContainer1.SplitterDistance = 160;
+                pictureBox.Visible = true;
+                pictureBox.Dock = DockStyle.Fill;
+                pictureBox.BackgroundImageLayout = ImageLayout.None;
+            }
+            else
+            {
+                splitContainer1.SplitterDistance = 440;
+                pictureBox.Visible = false;
+            }
+        }
+
+        private void openButton_Click(object sender, EventArgs e)
+        {
+            // Öffnen Sie den OpenFileDialog
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Title = "Bild auswählen";
+                openFileDialog.Filter = "Bilddateien (*.jpg, *.png)|*.jpg;*.png";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    LoadImage(openFileDialog.FileName);
+                }
+            }
+        }
+
+        private void SetImage (Bitmap bmp)
+        {
+            // global::Anzeige.Properties.Resources.eng
+            loadedImage = bmp;
+
+            pleft = new Point(0, loadedImage.Height);
+            pright = new Point(loadedImage.Width, loadedImage.Height);
+            paug = new Point(loadedImage.Width / 2, 0); ;
+            pref1 = new Point(loadedImage.Width * 3 / 5, loadedImage.Height * 3 / 4);
+            pref2 = new Point(loadedImage.Width * 4 / 5, loadedImage.Height * 3 / 4);
+            dist1 = new Point(loadedImage.Width * 4 / 9, loadedImage.Height * 4 / 5);
+            dist2 = new Point(loadedImage.Width * 5 / 9, loadedImage.Height * 4 / 5);
+
+            penFlucht = new Pen(Color.Yellow, 2.0f);
+            penRef = new Pen(Color.Blue, 2.0f);
+            penDist = new Pen(Color.Red, 2.0f);
+            penHelp = new Pen(Color.Green, 2.0f);
+
+            // Zeigen Sie das geladene Bild auf dem PictureBox-Steuerelement an
+            // pictureBox.Image = loadedImage;
+            DrawLines();
+        }
+        private void LoadImage(String filename)
+        {
+            SetImage(new Bitmap(filename));
+        }
+        /*        
+         *      Point pleft;
+                Point pright;
+                Point paug;
+                Point pref1;
+                Point pref2;
+                Pen penFlucht;
+                Pen penRef;
+        */
+
+        public void DrawLines()
+        {
+            if (loadedImage != null)
+            {
+                lineImage = (Bitmap)loadedImage.Clone();
+                Graphics graphics = Graphics.FromImage(lineImage);
+                {
+                    graphics.DrawLine(penFlucht, pleft, paug);
+                    graphics.DrawLine(penFlucht, pright, paug);
+                    graphics.DrawLine(penRef, pref1, pref2);
+                    graphics.DrawLine(penDist, dist1, dist2);
+                    // graphics.DrawLine(penHelp, stop, new Point(stop.X, 0));
+                    graphics.DrawLine(penHelp, downhelp, new Point(stop.X, 0));
+
+
+
+                    float scaleFactor = 3.0f; // Vergrößerungsfaktor
+
+                    Font largerFont = new Font(this.Font.FontFamily, this.Font.Size * scaleFactor, this.Font.Style);
+                    graphics.DrawString("Abstand: " + Distance.Text, largerFont, new SolidBrush(Color.White), new Point(20, 20));
+
+                }
+                pictureBox.Image = lineImage;
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Filter = "Bilddateien (*.jpg, *.png, *.bmp)|*.jpg;*.png;*.bmp";
+                saveFileDialog.FilterIndex = 1;
+                saveFileDialog.RestoreDirectory = true;
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    lineImage.Save(saveFileDialog.FileName);
+                }
+            }
+        }
+
+        private void Insert_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsImage())
+            {
+                try
+                {
+                    Image clipboardImage = Clipboard.GetImage();
+                    if (clipboardImage != null)
+                    {
+                        string tempFilePath = Path.GetTempFileName();
+                        clipboardImage.Save(tempFilePath);
+                        LoadImage(tempFilePath);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ein Fehler ist aufgetreten: " + ex.Message);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Die Zwischenablage enthält kein Bild.");
+            }
+        }
+
+        private void ownwidth_TextChanged(object sender, EventArgs e)
+        {
+            refwidth = Convert.ToDouble(textBox1.Text);
+            textrefresh();
+        }
+
+        private void textrefresh()
+        {
+            textBox1.Text = refwidth.ToString();
+            CalculateAndDisplayDistance();
+            // Distance.Text = Math.Round(refwidth * (double)numericUpDown1.Value, 2).ToString();
+        }
+
+        private void CalculateAndDisplayDistance()
+        {
+            // Messen Sie die Entfernung zwischen dist1 und paug
+            double distanceDist1ToAug = MeasureDistance(dist1, paug);
+
+            // Messen Sie die Entfernung zwischen ref1 und paug
+            double distanceRef1ToAug = MeasureDistance(pref1, paug);
+
+            // Berechnen Sie den Vergrößerungsfaktor basierend auf dem Strahlensatz
+            double scaleFactor = distanceRef1ToAug / distanceDist1ToAug;
+
+            // Messen Sie die Entfernung zwischen dist1 und dist2
+            double distanceDist1ToDist2 = MeasureDistance(dist1, dist2);
+
+            // Messen Sie die Entfernung zwischen ref1 und ref2
+            double distanceRef1ToRef2 = MeasureDistance(pref1, pref2);
+
+            // Berechnen Sie die relative Entfernung unter Berücksichtigung des Strahlensatzes
+            double relativeDistance = distanceDist1ToDist2 * scaleFactor * Convert.ToDouble(textBox1.Text) / distanceRef1ToRef2;
+
+            // Aktualisieren Sie das Textfeld mit dem berechneten Ergebnis
+            Distance.Text = $"{relativeDistance:F2}"; // Anpassen Sie die Formatierung nach Bedarf
+            RealDistance.Text = (relativeDistance - Convert.ToDouble(ownwidth.Text) / 2).ToString("F2");
+        }
+
+        private double MeasureDistance(Point point1, Point point2)
+        {
+            // Berechnen Sie die Entfernung zwischen point1 und point2
+            int deltaX = point2.X - point1.X;
+            int deltaY = point2.Y - point1.Y;
+
+            double distance = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+            return distance;
+        }
+        private void left_CheckedChanged(object sender, EventArgs e)
+        {
+            mousemode = Mode.LEFT;
+        }
+        private void right_CheckedChanged(object sender, EventArgs e)
+        {
+            mousemode = Mode.RIGHT;
+        }
+
+        private void Augpunkt_CheckedChanged(object sender, EventArgs e)
+        {
+            mousemode = Mode.AUGPUNKT;
+        }
+
+        private void CRef1_CheckedChanged(object sender, EventArgs e)
+        {
+            mousemode = Mode.REF1;
+        }
+
+        private void CRef2_CheckedChanged(object sender, EventArgs e)
+        {
+            mousemode = Mode.REF2;
+        }
+
+        private void CDist1_CheckedChanged(object sender, EventArgs e)
+        {
+            mousemode = Mode.DIST1;
+        }
+
+        private void CDist2_CheckedChanged(object sender, EventArgs e)
+        {
+            mousemode = Mode.DIST2;
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            refwidth = 11.25;
+            textrefresh();
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            refwidth = 22.5;
+            textrefresh();
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            refwidth = 30;
+            textrefresh();
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            refwidth = 12;
+            textrefresh();
+        }
+
+        private void pictureBox6_Click(object sender, EventArgs e)
+        {
+            refwidth = 50;
+            textrefresh();
+        }
+
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+            refwidth = 73;
+            textrefresh();
+        }
+
+        private void pictureBox7_Click(object sender, EventArgs e)
+        {
+            refwidth = 220;
+            textrefresh();
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            textrefresh();
+        }
+
+        private void pictureBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            start = new Point(e.Location.X, e.Location.Y);
+            DrawLines();
+        }
+
+        private void pictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            stop = new Point(e.Location.X, e.Location.Y);
+            if (loadedImage != null)
+                downhelp = new Point(e.Location.X, loadedImage.Height);
+            DrawLines();
+        }
+
+        private void pictureBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            switch (mousemode)
+            {
+                case Mode.LEFT:
+                    pleft = stop;
+                    // right.Checked = true;
+                    break;
+                case Mode.RIGHT:
+                    pright = stop;
+                    break;
+                case Mode.AUGPUNKT:
+                    paug = stop;
+                    break;
+                case Mode.REF1:
+                    pref1 = stop;
+                    mousemode = Mode.REF2;
+                    // CRef2.Checked = true;
+                    break;
+                case Mode.REF2:
+                    pref2 = stop;
+                    break;
+                case Mode.DIST1:
+                    dist1 = stop;
+                    // CDist2.Checked = true;
+                    dist2 = new Point(paug.X, dist1.Y);
+                    break;
+                case Mode.DIST2:
+                    dist2 = stop;
+                    CalculateAndDisplayDistance();
+                    break;
+            }
+            textrefresh();
+            DrawLines();
         }
     }
 }
