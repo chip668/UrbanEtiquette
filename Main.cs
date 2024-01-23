@@ -17,11 +17,15 @@ namespace Anzeige
     public partial class Main : Form
     {
         Double refwidth = 30;
-        private Bitmap loadedImage;
+        private Bitmap _loadedImage;
+        private Bitmap loadedImage
+        {
+            get { return ScaleImage(_loadedImage, (float)CScaleMess.Value / 100); }
+            set { _loadedImage = value; }
+        }
         private Bitmap lineImage;
         Point stop;
         Point downhelp;
-
         Point pleft;
         Point pright;
         Point paug;
@@ -33,7 +37,6 @@ namespace Anzeige
         Pen penRef;
         Pen penDist;
         Pen penHelp;
-
         enum Mode
         {
             LEFT,
@@ -45,9 +48,6 @@ namespace Anzeige
             DIST2
         }
         Mode mousemode;
-
-
-
         String configfile = "config.txt";
         ErrorLogger debug = null;
         Bussgeld verstossbussgeld = new Bussgeld();
@@ -104,7 +104,6 @@ namespace Anzeige
                 File.WriteAllText(TemplatePath, value);
             }
         }
-
         public List<String> _Files = new List<String>();
         public string Files
         {
@@ -983,7 +982,6 @@ namespace Anzeige
                 }
             }
         }
-
         private void PixelOutRegion(Bitmap bitmap, Rectangle region)
         {
             int raster = (int)CRaster.Value;
@@ -2319,7 +2317,6 @@ namespace Anzeige
                     break;
             }
         }
-
         private void CText_Click(object sender, EventArgs e)
         {
             // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
@@ -2330,12 +2327,10 @@ namespace Anzeige
             Application.Restart();
             Environment.Exit(0); // Optional: Schließen Sie den aktuellen Prozess
         }
-
         private void CHelp_Click(object sender, EventArgs e)
         {
             ShellExecute(IntPtr.Zero, "open", "hilfe.pdf", "", "", 5);
         }
-
         private void CSettings_Click(object sender, EventArgs e)
         {
             // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
@@ -2343,32 +2338,26 @@ namespace Anzeige
 
             dlg.ShowDialog();
         }
-
         private void CTemplateFiles_SelectedIndexChanged(object sender, EventArgs e)
         {
             CTemplateFiles_SelectedValueChanged(sender, e);
         }
-
         private void CTemplateFiles_SelectedValueChanged(object sender, EventArgs e)
         {
             CAnzeigeText.Text = Message;
         }
-
         private void CAnzeigeText_TextChanged(object sender, EventArgs e)
         {
             CAnzeigeText.Text = Message;
         }
-
         private void CZeitBis_TextChanged(object sender, EventArgs e)
         {
             CAnzeigeText.Text = Message;
         }
-
         private void Main_KeyPress(object sender, KeyPressEventArgs e)
         {
 
         }
-
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControl1.SelectedTab == CTAbstand)
@@ -2385,7 +2374,6 @@ namespace Anzeige
                 pictureBox.Visible = false;
             }
         }
-
         private void openButton_Click(object sender, EventArgs e)
         {
             // Öffnen Sie den OpenFileDialog
@@ -2400,7 +2388,6 @@ namespace Anzeige
                 }
             }
         }
-
         private void SetImage (Bitmap bmp)
         {
             // global::Anzeige.Properties.Resources.eng
@@ -2436,7 +2423,6 @@ namespace Anzeige
                 Pen penFlucht;
                 Pen penRef;
         */
-
         public void DrawLines()
         {
             if (loadedImage != null)
@@ -2462,7 +2448,6 @@ namespace Anzeige
                 pictureBox.Image = lineImage;
             }
         }
-
         private void button4_Click(object sender, EventArgs e)
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
@@ -2477,7 +2462,6 @@ namespace Anzeige
                 }
             }
         }
-
         private void Insert_Click(object sender, EventArgs e)
         {
             if (Clipboard.ContainsImage())
@@ -2502,20 +2486,17 @@ namespace Anzeige
                 MessageBox.Show("Die Zwischenablage enthält kein Bild.");
             }
         }
-
         private void ownwidth_TextChanged(object sender, EventArgs e)
         {
             refwidth = Convert.ToDouble(textBox1.Text);
             textrefresh();
         }
-
         private void textrefresh()
         {
             textBox1.Text = refwidth.ToString();
             CalculateAndDisplayDistance();
             // Distance.Text = Math.Round(refwidth * (double)numericUpDown1.Value, 2).ToString();
         }
-
         private void CalculateAndDisplayDistance()
         {
             // Messen Sie die Entfernung zwischen dist1 und paug
@@ -2540,7 +2521,6 @@ namespace Anzeige
             Distance.Text = $"{relativeDistance:F2}"; // Anpassen Sie die Formatierung nach Bedarf
             RealDistance.Text = (relativeDistance - Convert.ToDouble(ownwidth.Text) / 2).ToString("F2");
         }
-
         private double MeasureDistance(Point point1, Point point2)
         {
             // Berechnen Sie die Entfernung zwischen point1 und point2
@@ -2558,85 +2538,70 @@ namespace Anzeige
         {
             mousemode = Mode.RIGHT;
         }
-
         private void Augpunkt_CheckedChanged(object sender, EventArgs e)
         {
             mousemode = Mode.AUGPUNKT;
         }
-
         private void CRef1_CheckedChanged(object sender, EventArgs e)
         {
             mousemode = Mode.REF1;
         }
-
         private void CRef2_CheckedChanged(object sender, EventArgs e)
         {
             mousemode = Mode.REF2;
         }
-
         private void CDist1_CheckedChanged(object sender, EventArgs e)
         {
             mousemode = Mode.DIST1;
         }
-
         private void CDist2_CheckedChanged(object sender, EventArgs e)
         {
             mousemode = Mode.DIST2;
         }
-
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             refwidth = 11.25;
             textrefresh();
         }
-
         private void pictureBox2_Click(object sender, EventArgs e)
         {
             refwidth = 22.5;
             textrefresh();
         }
-
         private void pictureBox3_Click(object sender, EventArgs e)
         {
             refwidth = 30;
             textrefresh();
         }
-
         private void pictureBox4_Click(object sender, EventArgs e)
         {
             refwidth = 12;
             textrefresh();
         }
-
         private void pictureBox6_Click(object sender, EventArgs e)
         {
             refwidth = 50;
             textrefresh();
         }
-
         private void pictureBox5_Click(object sender, EventArgs e)
         {
             refwidth = 73;
             textrefresh();
         }
-
         private void pictureBox7_Click(object sender, EventArgs e)
         {
             refwidth = 220;
             textrefresh();
         }
-
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             textrefresh();
         }
-
         private void pictureBox_MouseDown(object sender, MouseEventArgs e)
         {
             start = new Point(e.Location.X, e.Location.Y);
             DrawLines();
         }
-
         private void pictureBox_MouseMove(object sender, MouseEventArgs e)
         {
             stop = new Point(e.Location.X, e.Location.Y);
@@ -2644,17 +2609,18 @@ namespace Anzeige
                 downhelp = new Point(e.Location.X, loadedImage.Height);
             DrawLines();
         }
-
         private void pictureBox_MouseUp(object sender, MouseEventArgs e)
         {
             switch (mousemode)
             {
                 case Mode.LEFT:
                     pleft = stop;
-                    // right.Checked = true;
+                    right.Checked = true;
+                    pright = new Point(pright.X, pleft.Y);
                     break;
                 case Mode.RIGHT:
                     pright = stop;
+                    Augpunkt.Checked = true;
                     break;
                 case Mode.AUGPUNKT:
                     paug = stop;
@@ -2662,14 +2628,15 @@ namespace Anzeige
                 case Mode.REF1:
                     pref1 = stop;
                     mousemode = Mode.REF2;
-                    // CRef2.Checked = true;
+                    CRef2.Checked = true;
+                    pref2 = new Point(pref2.X, pref1.Y);
                     break;
                 case Mode.REF2:
                     pref2 = stop;
                     break;
                 case Mode.DIST1:
                     dist1 = stop;
-                    // CDist2.Checked = true;
+                    CDist2.Checked = true;
                     dist2 = new Point(paug.X, dist1.Y);
                     break;
                 case Mode.DIST2:
@@ -2679,6 +2646,25 @@ namespace Anzeige
             }
             textrefresh();
             DrawLines();
+        }
+        private Bitmap ScaleImage(Bitmap originalImage, float scaleFactor)
+        {
+            int newWidth = (int)(originalImage.Width * scaleFactor);
+            int newHeight = (int)(originalImage.Height * scaleFactor);
+
+            Bitmap scaledImage = new Bitmap(newWidth, newHeight);
+
+            using (Graphics g = Graphics.FromImage(scaledImage))
+            {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.DrawImage(originalImage, 0, 0, newWidth, newHeight);
+            }
+
+            return scaledImage;
+        }
+        private void CScaleMess_Scroll(object sender, ScrollEventArgs e)
+        {
+            pictureBox.BackgroundImage = loadedImage;
         }
     }
 }

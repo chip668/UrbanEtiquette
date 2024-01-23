@@ -102,6 +102,7 @@ namespace Anzeige
             this.CTInfo = new System.Windows.Forms.TabPage();
             this.bussgeldrechner1 = new Anzeige.Bussgeldrechner();
             this.CTAbstand = new System.Windows.Forms.TabPage();
+            this.CScaleMess = new System.Windows.Forms.HScrollBar();
             this.Insert = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
@@ -1041,8 +1042,8 @@ namespace Anzeige
             // CTAbstand
             // 
             this.CTAbstand.BackColor = System.Drawing.Color.Yellow;
-            this.CTAbstand.BackgroundImage = global::Anzeige.Properties.Resources.abstand;
             this.CTAbstand.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.CTAbstand.Controls.Add(this.CScaleMess);
             this.CTAbstand.Controls.Add(this.Insert);
             this.CTAbstand.Controls.Add(this.button4);
             this.CTAbstand.Controls.Add(this.numericUpDown1);
@@ -1071,13 +1072,23 @@ namespace Anzeige
             this.CTAbstand.TabIndex = 2;
             this.CTAbstand.Text = "Abstand";
             // 
+            // CScaleMess
+            // 
+            this.CScaleMess.Location = new System.Drawing.Point(39, 32);
+            this.CScaleMess.Minimum = 10;
+            this.CScaleMess.Name = "CScaleMess";
+            this.CScaleMess.Size = new System.Drawing.Size(117, 31);
+            this.CScaleMess.TabIndex = 29;
+            this.CScaleMess.Value = 100;
+            this.CScaleMess.Scroll += new System.Windows.Forms.ScrollEventHandler(this.CScaleMess_Scroll);
+            // 
             // Insert
             // 
             this.Insert.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Insert.Location = new System.Drawing.Point(109, 0);
             this.Insert.Name = "Insert";
             this.Insert.Size = new System.Drawing.Size(47, 28);
-            this.Insert.TabIndex = 28;
+            this.Insert.TabIndex = 3;
             this.Insert.Text = "📋";
             this.toolTip1.SetToolTip(this.Insert, "Einfügen eines Bildes ");
             this.Insert.UseVisualStyleBackColor = true;
@@ -1089,7 +1100,7 @@ namespace Anzeige
             this.button4.Location = new System.Drawing.Point(55, 0);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(47, 28);
-            this.button4.TabIndex = 27;
+            this.button4.TabIndex = 2;
             this.button4.Text = "💾";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
@@ -1099,7 +1110,7 @@ namespace Anzeige
             this.numericUpDown1.Location = new System.Drawing.Point(0, 386);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(147, 29);
-            this.numericUpDown1.TabIndex = 26;
+            this.numericUpDown1.TabIndex = 11;
             this.numericUpDown1.Value = new decimal(new int[] {
             1,
             0,
@@ -1196,7 +1207,7 @@ namespace Anzeige
             this.RealDistance.Location = new System.Drawing.Point(1, 942);
             this.RealDistance.Name = "RealDistance";
             this.RealDistance.Size = new System.Drawing.Size(152, 50);
-            this.RealDistance.TabIndex = 18;
+            this.RealDistance.TabIndex = 17;
             this.RealDistance.Text = "0";
             // 
             // Distance
@@ -1206,7 +1217,7 @@ namespace Anzeige
             this.Distance.Location = new System.Drawing.Point(3, 907);
             this.Distance.Name = "Distance";
             this.Distance.Size = new System.Drawing.Size(152, 29);
-            this.Distance.TabIndex = 17;
+            this.Distance.TabIndex = 16;
             this.Distance.Text = "0";
             this.toolTip1.SetToolTip(this.Distance, "Berechneter Abstand");
             // 
@@ -1216,7 +1227,7 @@ namespace Anzeige
             this.ownwidth.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ownwidth.Location = new System.Drawing.Point(3, 34);
             this.ownwidth.Name = "ownwidth";
-            this.ownwidth.Size = new System.Drawing.Size(152, 29);
+            this.ownwidth.Size = new System.Drawing.Size(33, 29);
             this.ownwidth.TabIndex = 16;
             this.ownwidth.Text = "80";
             this.toolTip1.SetToolTip(this.ownwidth, "Breite Radfahrer in CM");
@@ -1228,7 +1239,7 @@ namespace Anzeige
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(152, 29);
             this.textBox1.TabIndex = 15;
-            this.textBox1.Text = "30";
+            this.textBox1.Text = "12";
             this.toolTip1.SetToolTip(this.textBox1, "Referenz breite. Hier die bekannnte breite eintragen oder ein bekanntes objekt au" +
         "swählen.");
             // 
@@ -1238,7 +1249,7 @@ namespace Anzeige
             this.CDist2.Location = new System.Drawing.Point(3, 183);
             this.CDist2.Name = "CDist2";
             this.CDist2.Size = new System.Drawing.Size(145, 25);
-            this.CDist2.TabIndex = 13;
+            this.CDist2.TabIndex = 10;
             this.CDist2.Text = "Abstand (Rechts)";
             this.toolTip1.SetToolTip(this.CDist2, "Abstand Rechts. Überholabstand oder rechts zu messende Breite.");
             this.CDist2.UseVisualStyleBackColor = true;
@@ -1250,7 +1261,7 @@ namespace Anzeige
             this.CDist1.Location = new System.Drawing.Point(3, 165);
             this.CDist1.Name = "CDist1";
             this.CDist1.Size = new System.Drawing.Size(131, 25);
-            this.CDist1.TabIndex = 12;
+            this.CDist1.TabIndex = 9;
             this.CDist1.Text = "Abstand (links)";
             this.toolTip1.SetToolTip(this.CDist1, "Abstand links. Überholabstand oder linke zu messende Breite.");
             this.CDist1.UseVisualStyleBackColor = true;
@@ -1262,7 +1273,7 @@ namespace Anzeige
             this.CRef2.Location = new System.Drawing.Point(3, 139);
             this.CRef2.Name = "CRef2";
             this.CRef2.Size = new System.Drawing.Size(116, 25);
-            this.CRef2.TabIndex = 11;
+            this.CRef2.TabIndex = 8;
             this.CRef2.Text = "Ref2(Rechts)";
             this.toolTip1.SetToolTip(this.CRef2, "Referenzbreite rechts. Auf den Rechten# Punkt einer bekannten Größe.");
             this.CRef2.UseVisualStyleBackColor = true;
@@ -1274,7 +1285,7 @@ namespace Anzeige
             this.CRef1.Location = new System.Drawing.Point(3, 121);
             this.CRef1.Name = "CRef1";
             this.CRef1.Size = new System.Drawing.Size(106, 25);
-            this.CRef1.TabIndex = 10;
+            this.CRef1.TabIndex = 7;
             this.CRef1.Text = "Ref1 (links)";
             this.toolTip1.SetToolTip(this.CRef1, "Referenzbreite links. Auf den Linken Punkt einer bekannten Größe.");
             this.CRef1.UseVisualStyleBackColor = true;
@@ -1286,7 +1297,7 @@ namespace Anzeige
             this.Augpunkt.Location = new System.Drawing.Point(3, 94);
             this.Augpunkt.Name = "Augpunkt";
             this.Augpunkt.Size = new System.Drawing.Size(96, 25);
-            this.Augpunkt.TabIndex = 9;
+            this.Augpunkt.TabIndex = 6;
             this.Augpunkt.Text = "Augpunkt";
             this.toolTip1.SetToolTip(this.Augpunkt, "Augpunkt. So ziehen das ");
             this.Augpunkt.UseVisualStyleBackColor = true;
@@ -1298,7 +1309,7 @@ namespace Anzeige
             this.right.Location = new System.Drawing.Point(3, 76);
             this.right.Name = "right";
             this.right.Size = new System.Drawing.Size(74, 25);
-            this.right.TabIndex = 8;
+            this.right.TabIndex = 5;
             this.right.Text = "Rechts";
             this.toolTip1.SetToolTip(this.right, "Rechter Fluchtpunkt. Auf einen Punkt auf der Fluchtlinie rechts setzen.");
             this.right.UseVisualStyleBackColor = true;
@@ -1311,7 +1322,7 @@ namespace Anzeige
             this.left.Location = new System.Drawing.Point(3, 58);
             this.left.Name = "left";
             this.left.Size = new System.Drawing.Size(60, 25);
-            this.left.TabIndex = 14;
+            this.left.TabIndex = 4;
             this.left.TabStop = true;
             this.left.Text = "links";
             this.toolTip1.SetToolTip(this.left, "Linker Fluchtpunkt. Auf einen Punkt auf der Fluchtlinie links setzen.");
@@ -1324,15 +1335,15 @@ namespace Anzeige
             this.openButton.Location = new System.Drawing.Point(1, 0);
             this.openButton.Name = "openButton";
             this.openButton.Size = new System.Drawing.Size(47, 28);
-            this.openButton.TabIndex = 7;
+            this.openButton.TabIndex = 1;
             this.openButton.Text = "📂";
             this.openButton.UseVisualStyleBackColor = true;
             this.openButton.Click += new System.EventHandler(this.openButton_Click);
             // 
             // pictureBox
             // 
-            this.pictureBox.BackgroundImage = global::Anzeige.Properties.Resources.eng;
-            this.pictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox.BackgroundImage = global::Anzeige.Properties.Resources.abstand;
+            this.pictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox.Location = new System.Drawing.Point(570, 31);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(159, 94);
@@ -1704,6 +1715,7 @@ namespace Anzeige
         private System.Windows.Forms.RadioButton left;
         private System.Windows.Forms.Button openButton;
         private System.Windows.Forms.PictureBox pictureBox;
+        private System.Windows.Forms.HScrollBar CScaleMess;
     }
 }
 
