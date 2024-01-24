@@ -671,7 +671,6 @@ namespace Anzeige
             catch
             {
                 debug.LogError(1100, "Fehler beim öffnen der Datei", fileName);
-
             }
         }
         private void Form1_Load(object sender, EventArgs e)
@@ -849,7 +848,7 @@ namespace Anzeige
         }
         private Boolean pruefeDaten()
         {
-            if (cntpixel == 0) { if (MessageBox.Show("Müssen noch unbeteiligte verpixelt werden?", "DSGVO", MessageBoxButtons.YesNo) == DialogResult.No) { return false; } }
+            if (cntpixel == 0) { if (MessageBox.Show("Müssen noch unbeteiligte verpixelt werden?", "DSGVO", MessageBoxButtons.YesNo) == DialogResult.Yes) { return false; } }
             if (Files == "") { MessageBox.Show("Bitte Foto wählen"); return false; }
             if (Datum == "") { MessageBox.Show("Datum des Vorfalls"); return false; }
             if (Zeit == "") { MessageBox.Show("Zeit des Vorfalls"); return false; }
@@ -1044,6 +1043,7 @@ namespace Anzeige
                         ausschnittTemp = (AddPath) ? Path.GetTempFileName().Replace(".tmp", ".jpg") : null;
                         if (tempausschnitt != null)
                         {
+                            // COCRPicture.BackgroundImage = ConvertToBlackAndWhite(tempausschnitt);
                             ScaledSave(tempausschnitt, ausschnittTemp, 3);
 
                             if (!CPixeln.Checked)
@@ -1069,6 +1069,25 @@ namespace Anzeige
                                 Bitmap tempausschnitt2 = CropRectangleFromBitmap(ausschnitt, bmpAusschnitt); ;
                                 CAusschnitt.BackgroundImage = tempausschnitt2;
                                 CAusschnitt.Show();
+                            }
+                        }
+                        Bitmap bmp = (Bitmap)CAusschnitt.BackgroundImage;
+                        if (bmp!=null)
+                        {
+                            if (bmp.Width * bmp.Height < 400000)
+                            {
+                                for (int th = 0; th < 256; th += 16)
+                                {
+                                    bmp = ConvertToBlackAndWhite((Bitmap)CAusschnitt.BackgroundImage, (int)th);
+                                    String text = ReadTextFromBitmap((Bitmap)COCRPicture.BackgroundImage);
+                                    String[] s = text.Split(' ');
+                                    if (s.Length == 3 && CKennzeichen.Text == "")
+                                    {
+                                        CKennzeichen.Text = text;
+                                        COCRPicture.BackgroundImage = bmp;
+                                    }
+                                    COCRPicture.Refresh();
+                                }
                             }
                         }
                         if (CKennzeichen.Text == "" && !CPixeln.Checked)
@@ -1673,24 +1692,28 @@ namespace Anzeige
         private Ort FindOrtObjekt(string letters)
         {
             Ort result = null;
-            String key = "";
-            int i = 1;
-            while (result == null)
+            if (letters.Length > 0)
             {
-                key = letters.Substring(0, i);
-                try
+                String key = "";
+                int i = 1;
+                while (result == null)
                 {
-                    result = Orte[key];
+                    key = letters.Substring(0, i);
+                    try
+                    {
+                        result = Orte[key];
+                    }
+                    catch (Exception e)
+                    {
+                    }
                 }
-                catch (Exception e)
-                {
-                }
-            }
 
-            if (result.OrtCode.Length == 0)
-            {
-                // hier die orte Suchen die nicht namentlich zu finden sind sondern
-                // mit ähnlichen Buchstaben zu binden sind.
+                if (result.OrtCode.Length == 0)
+                {
+                    // hier die orte Suchen die nicht namentlich zu finden sind sondern
+                    // mit ähnlichen Buchstaben zu binden sind.
+                }
+
             }
             return result;
         }
@@ -1882,21 +1905,40 @@ namespace Anzeige
         }
         public string ReadTextFromBitmap(Bitmap image)
         {
-            String original = ocrreader.Read(image).Text;
-            return FixOCRText(original);
-        }
-        public Bitmap ConvertToBlackAndWhite(Bitmap originalBitmap)
-        {
-            Bitmap bwBitmap = new Bitmap(originalBitmap.Width, originalBitmap.Height);
-            for (int x = 0; x < originalBitmap.Width; x++)
+            if (image!=null)
             {
-                for (int y = 0; y < originalBitmap.Height; y++)
+                String original = ocrreader.Read(image).Text;
+                return FixOCRText(original);
+            }
+            return "";
+        }
+        public Bitmap ConvertToBlackAndWhite(Bitmap originalBitmap, int threshold)
+        {
+            Bitmap bwBitmap = null;
+            if (originalBitmap!=null)
+            {
+                bwBitmap = new Bitmap(originalBitmap.Width, originalBitmap.Height);
+
+                for (int x = 0; x < originalBitmap.Width; x++)
                 {
-                    Color originalColor = originalBitmap.GetPixel(x, y);
-                    int grayValue = (int)(originalColor.R * 0.3 + originalColor.G * 0.59 + originalColor.B * 0.11);
-                    Color newColor = Color.FromArgb(grayValue, grayValue, grayValue);
-                    bwBitmap.SetPixel(x, y, newColor);
+                    for (int y = 0; y < originalBitmap.Height; y++)
+                    {
+                        Color originalColor = originalBitmap.GetPixel(x, y);
+
+                        // Durchschnitt der RGB-Werte berechnen
+                        int averageColor = (originalColor.R + originalColor.G + originalColor.B) / 3;
+
+                        // Schwellenwert für die Konvertierung festlegen (z.B., 128 für einen einfachen Mittelwert)
+                        // int threshold = 128;
+
+                        // Schwarz oder Weiß basierend auf dem Schwellenwert setzen
+                        Color bwColor = (averageColor > threshold) ? Color.White : Color.Black;
+
+                        // Pixel im Schwarzweiß-Bitmap setzen
+                        bwBitmap.SetPixel(x, y, bwColor);
+                    }
                 }
+
             }
             return bwBitmap;
         }
@@ -2071,10 +2113,6 @@ namespace Anzeige
         {
 
         }
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
         private void CZeit_TextChanged(object sender, EventArgs e)
         {
             String[] items = CZeit.Text.Split(':');
@@ -2148,20 +2186,6 @@ namespace Anzeige
             {
                 return null;
             }
-        }
-        private void CClipImage_Click(object sender, EventArgs e)
-        {
-            String s = SaveClipboardImageAsTemporaryFile();
-            if (s != null)
-            {
-                SelectFile(s);
-                CFiles.Items.Add(s);
-                // _Files.Add(s);
-                // CFiles.Items.Add(s);
-                // CSave.BackgroundImage = Bitmap.FromFile(s);
-            }
-            CAnzeigeText.Text = Message;
-            this.Refresh();
         }
         private void CDirOpen_Click(object sender, EventArgs e)
         {
@@ -2665,6 +2689,54 @@ namespace Anzeige
         private void CScaleMess_Scroll(object sender, ScrollEventArgs e)
         {
             pictureBox.BackgroundImage = loadedImage;
+        }
+
+        private void CClipImage_Click(object sender, EventArgs e)
+        {
+            String s = SaveClipboardImageAsTemporaryFile();
+            if (s != null)
+            {
+                SelectFile(s);
+                CFiles.Items.Add(s);
+                // _Files.Add(s);
+                // CFiles.Items.Add(s);
+                // CSave.BackgroundImage = Bitmap.FromFile(s);
+            }
+            CAnzeigeText.Text = Message;
+            this.Refresh();
+        }
+
+        private Bitmap CreateSegmentBitmap(Bitmap sourceBitmap, int top, int bottom, int left, int right)
+        {
+            int segmentWidth = right - left + 1;
+            int segmentHeight = bottom - top + 1;
+
+            Rectangle segmentRect = new Rectangle(left, top, segmentWidth, segmentHeight);
+            Bitmap segmentBitmap = sourceBitmap.Clone(segmentRect, sourceBitmap.PixelFormat);
+
+            return segmentBitmap;
+        }
+
+        private void COCR_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void textBox1_TextChanged_1(object sender, EventArgs e)
+        {
+            refwidth = Convert.ToDouble(textBox1.Text);
+            textrefresh();
+        }
+
+        private void pictureBox8_Click(object sender, EventArgs e)
+        {
+            refwidth = 50;
+            textrefresh();
+        }
+
+        private void pictureBox9_Click(object sender, EventArgs e)
+        {
+            refwidth = 100;
+            textrefresh();
         }
     }
 }

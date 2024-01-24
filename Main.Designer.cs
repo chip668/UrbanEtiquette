@@ -34,6 +34,7 @@ namespace Anzeige
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.CTAnzeige = new System.Windows.Forms.TabPage();
+            this.COCRPicture = new System.Windows.Forms.PictureBox();
             this.CVerstossaus = new System.Windows.Forms.ListBox();
             this.CRaster = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
@@ -95,6 +96,7 @@ namespace Anzeige
             this.CVerstoss = new System.Windows.Forms.ListBox();
             this.CLoadVerstoss = new System.Windows.Forms.Button();
             this.CBack = new System.Windows.Forms.Button();
+            this.CClipImage = new System.Windows.Forms.Button();
             this.CSaveVerstoss = new System.Windows.Forms.Button();
             this.CBackall = new System.Windows.Forms.Button();
             this.Ctoall = new System.Windows.Forms.Button();
@@ -107,6 +109,8 @@ namespace Anzeige
             this.button4 = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.pictureBox9 = new System.Windows.Forms.PictureBox();
+            this.pictureBox8 = new System.Windows.Forms.PictureBox();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
@@ -148,6 +152,7 @@ namespace Anzeige
             this.splitContainer1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.CTAnzeige.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.COCRPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CRaster)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CLogo)).BeginInit();
             this.panel1.SuspendLayout();
@@ -155,6 +160,8 @@ namespace Anzeige
             this.CTAbstand.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -211,6 +218,7 @@ namespace Anzeige
             // CTAnzeige
             // 
             this.CTAnzeige.BackColor = System.Drawing.Color.Yellow;
+            this.CTAnzeige.Controls.Add(this.COCRPicture);
             this.CTAnzeige.Controls.Add(this.CVerstossaus);
             this.CTAnzeige.Controls.Add(this.CRaster);
             this.CTAnzeige.Controls.Add(this.button1);
@@ -261,6 +269,7 @@ namespace Anzeige
             this.CTAnzeige.Controls.Add(this.CVerstoss);
             this.CTAnzeige.Controls.Add(this.CLoadVerstoss);
             this.CTAnzeige.Controls.Add(this.CBack);
+            this.CTAnzeige.Controls.Add(this.CClipImage);
             this.CTAnzeige.Controls.Add(this.CSaveVerstoss);
             this.CTAnzeige.Controls.Add(this.CBackall);
             this.CTAnzeige.Controls.Add(this.Ctoall);
@@ -271,6 +280,15 @@ namespace Anzeige
             this.CTAnzeige.Size = new System.Drawing.Size(432, 996);
             this.CTAnzeige.TabIndex = 0;
             this.CTAnzeige.Text = "Anzeige";
+            // 
+            // COCRPicture
+            // 
+            this.COCRPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.COCRPicture.Location = new System.Drawing.Point(4, 680);
+            this.COCRPicture.Name = "COCRPicture";
+            this.COCRPicture.Size = new System.Drawing.Size(425, 101);
+            this.COCRPicture.TabIndex = 22;
+            this.COCRPicture.TabStop = false;
             // 
             // CVerstossaus
             // 
@@ -313,9 +331,9 @@ namespace Anzeige
             // CAnzeige
             // 
             this.CAnzeige.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.CAnzeige.Location = new System.Drawing.Point(3, 772);
+            this.CAnzeige.Location = new System.Drawing.Point(0, 889);
             this.CAnzeige.Name = "CAnzeige";
-            this.CAnzeige.Size = new System.Drawing.Size(420, 158);
+            this.CAnzeige.Size = new System.Drawing.Size(420, 100);
             this.CAnzeige.TabIndex = 9;
             this.CAnzeige.Text = "anzeigen";
             this.toolTip1.SetToolTip(this.CAnzeige, "Öffen eine Mail mit dem Verstoß");
@@ -347,7 +365,7 @@ namespace Anzeige
             this.CCopy.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.CCopy.Checked = true;
             this.CCopy.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CCopy.Location = new System.Drawing.Point(-3, 741);
+            this.CCopy.Location = new System.Drawing.Point(-6, 858);
             this.CCopy.Name = "CCopy";
             this.CCopy.Size = new System.Drawing.Size(131, 25);
             this.CCopy.TabIndex = 18;
@@ -370,7 +388,7 @@ namespace Anzeige
             this.CAddFile.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.CAddFile.Checked = true;
             this.CAddFile.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CAddFile.Location = new System.Drawing.Point(0, 717);
+            this.CAddFile.Location = new System.Drawing.Point(-3, 834);
             this.CAddFile.Name = "CAddFile";
             this.CAddFile.Size = new System.Drawing.Size(128, 25);
             this.CAddFile.TabIndex = 18;
@@ -418,7 +436,7 @@ namespace Anzeige
             this.CAddPath.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.CAddPath.Checked = true;
             this.CAddPath.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CAddPath.Location = new System.Drawing.Point(1, 694);
+            this.CAddPath.Location = new System.Drawing.Point(-2, 811);
             this.CAddPath.Name = "CAddPath";
             this.CAddPath.Size = new System.Drawing.Size(127, 25);
             this.CAddPath.TabIndex = 18;
@@ -474,7 +492,7 @@ namespace Anzeige
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(-1, 671);
+            this.label3.Location = new System.Drawing.Point(-4, 788);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(97, 21);
             this.label3.TabIndex = 1;
@@ -496,16 +514,16 @@ namespace Anzeige
             // 
             this.CKennzeichen.BackColor = System.Drawing.Color.White;
             this.CKennzeichen.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.CKennzeichen.Location = new System.Drawing.Point(106, 670);
+            this.CKennzeichen.Location = new System.Drawing.Point(103, 787);
             this.CKennzeichen.Name = "CKennzeichen";
-            this.CKennzeichen.Size = new System.Drawing.Size(323, 22);
+            this.CKennzeichen.Size = new System.Drawing.Size(326, 22);
             this.CKennzeichen.TabIndex = 2;
             this.CKennzeichen.TextChanged += new System.EventHandler(this.CKennzeichen_TextChanged);
             // 
             // button3
             // 
             this.button3.BackColor = System.Drawing.Color.LightGray;
-            this.button3.BackgroundImage = global::Anzeige.Properties.Resources.nummer_5;
+            this.button3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button3.BackgroundImage")));
             this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button3.Location = new System.Drawing.Point(305, 6);
             this.button3.Name = "button3";
@@ -528,7 +546,7 @@ namespace Anzeige
             // cOrtSuche
             // 
             this.cOrtSuche.BackColor = System.Drawing.Color.LightGray;
-            this.cOrtSuche.BackgroundImage = global::Anzeige.Properties.Resources.Unbenannt;
+            this.cOrtSuche.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("cOrtSuche.BackgroundImage")));
             this.cOrtSuche.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.cOrtSuche.Location = new System.Drawing.Point(273, 6);
             this.cOrtSuche.Name = "cOrtSuche";
@@ -658,7 +676,7 @@ namespace Anzeige
             this.CFiles.BackColor = System.Drawing.Color.WhiteSmoke;
             this.CFiles.FormattingEnabled = true;
             this.CFiles.ItemHeight = 21;
-            this.CFiles.Location = new System.Drawing.Point(140, 695);
+            this.CFiles.Location = new System.Drawing.Point(137, 812);
             this.CFiles.Name = "CFiles";
             this.CFiles.Size = new System.Drawing.Size(289, 67);
             this.CFiles.TabIndex = 8;
@@ -914,7 +932,7 @@ namespace Anzeige
             // CDirOpen
             // 
             this.CDirOpen.BackColor = System.Drawing.Color.LightGray;
-            this.CDirOpen.Location = new System.Drawing.Point(217, 6);
+            this.CDirOpen.Location = new System.Drawing.Point(203, 8);
             this.CDirOpen.Name = "CDirOpen";
             this.CDirOpen.Size = new System.Drawing.Size(33, 40);
             this.CDirOpen.TabIndex = 6;
@@ -971,6 +989,18 @@ namespace Anzeige
             this.toolTip1.SetToolTip(this.CBack, "Ausgewählten Verstoß übernehmen");
             this.CBack.UseVisualStyleBackColor = false;
             this.CBack.Click += new System.EventHandler(this.CBack_Click);
+            // 
+            // CClipImage
+            // 
+            this.CClipImage.BackColor = System.Drawing.Color.LightGray;
+            this.CClipImage.Location = new System.Drawing.Point(237, 8);
+            this.CClipImage.Name = "CClipImage";
+            this.CClipImage.Size = new System.Drawing.Size(33, 40);
+            this.CClipImage.TabIndex = 6;
+            this.CClipImage.Text = "🖼";
+            this.toolTip1.SetToolTip(this.CClipImage, "Bild aus der Zwischenablage ienfügen");
+            this.CClipImage.UseVisualStyleBackColor = false;
+            this.CClipImage.Click += new System.EventHandler(this.CClipImage_Click);
             // 
             // CSaveVerstoss
             // 
@@ -1048,6 +1078,8 @@ namespace Anzeige
             this.CTAbstand.Controls.Add(this.button4);
             this.CTAbstand.Controls.Add(this.numericUpDown1);
             this.CTAbstand.Controls.Add(this.pictureBox6);
+            this.CTAbstand.Controls.Add(this.pictureBox9);
+            this.CTAbstand.Controls.Add(this.pictureBox8);
             this.CTAbstand.Controls.Add(this.pictureBox7);
             this.CTAbstand.Controls.Add(this.pictureBox5);
             this.CTAbstand.Controls.Add(this.pictureBox4);
@@ -1107,7 +1139,7 @@ namespace Anzeige
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(0, 386);
+            this.numericUpDown1.Location = new System.Drawing.Point(0, 313);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(147, 29);
             this.numericUpDown1.TabIndex = 11;
@@ -1120,23 +1152,45 @@ namespace Anzeige
             // 
             // pictureBox6
             // 
-            this.pictureBox6.BackgroundImage = global::Anzeige.Properties.Resources._50;
+            this.pictureBox6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox6.BackgroundImage")));
             this.pictureBox6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox6.Location = new System.Drawing.Point(0, 606);
+            this.pictureBox6.Location = new System.Drawing.Point(0, 439);
             this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(147, 82);
+            this.pictureBox6.Size = new System.Drawing.Size(99, 59);
             this.pictureBox6.TabIndex = 24;
             this.pictureBox6.TabStop = false;
             this.toolTip1.SetToolTip(this.pictureBox6, "Bekanntes Objekt auswählen um die Referenzbreite zu bestimmen.");
             this.pictureBox6.Click += new System.EventHandler(this.pictureBox6_Click);
             // 
+            // pictureBox9
+            // 
+            this.pictureBox9.BackgroundImage = global::Anzeige.Properties.Resources.z2;
+            this.pictureBox9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox9.Location = new System.Drawing.Point(0, 621);
+            this.pictureBox9.Name = "pictureBox9";
+            this.pictureBox9.Size = new System.Drawing.Size(99, 59);
+            this.pictureBox9.TabIndex = 23;
+            this.pictureBox9.TabStop = false;
+            this.pictureBox9.Click += new System.EventHandler(this.pictureBox9_Click);
+            // 
+            // pictureBox8
+            // 
+            this.pictureBox8.BackgroundImage = global::Anzeige.Properties.Resources.z1;
+            this.pictureBox8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox8.Location = new System.Drawing.Point(-1, 556);
+            this.pictureBox8.Name = "pictureBox8";
+            this.pictureBox8.Size = new System.Drawing.Size(99, 59);
+            this.pictureBox8.TabIndex = 23;
+            this.pictureBox8.TabStop = false;
+            this.pictureBox8.Click += new System.EventHandler(this.pictureBox8_Click);
+            // 
             // pictureBox7
             // 
-            this.pictureBox7.BackgroundImage = global::Anzeige.Properties.Resources._220;
+            this.pictureBox7.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox7.BackgroundImage")));
             this.pictureBox7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox7.Location = new System.Drawing.Point(0, 782);
+            this.pictureBox7.Location = new System.Drawing.Point(0, 491);
             this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(147, 82);
+            this.pictureBox7.Size = new System.Drawing.Size(99, 59);
             this.pictureBox7.TabIndex = 23;
             this.pictureBox7.TabStop = false;
             this.toolTip1.SetToolTip(this.pictureBox7, "Bekanntes Objekt auswählen um die Referenzbreite zu bestimmen.");
@@ -1144,11 +1198,11 @@ namespace Anzeige
             // 
             // pictureBox5
             // 
-            this.pictureBox5.BackgroundImage = global::Anzeige.Properties.Resources._73;
+            this.pictureBox5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox5.BackgroundImage")));
             this.pictureBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBox5.Location = new System.Drawing.Point(0, 694);
             this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(147, 82);
+            this.pictureBox5.Size = new System.Drawing.Size(99, 59);
             this.pictureBox5.TabIndex = 22;
             this.pictureBox5.TabStop = false;
             this.toolTip1.SetToolTip(this.pictureBox5, "Bekanntes Objekt auswählen um die Referenzbreite zu bestimmen.");
@@ -1156,11 +1210,11 @@ namespace Anzeige
             // 
             // pictureBox4
             // 
-            this.pictureBox4.BackgroundImage = global::Anzeige.Properties.Resources._12;
+            this.pictureBox4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox4.BackgroundImage")));
             this.pictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox4.Location = new System.Drawing.Point(0, 518);
+            this.pictureBox4.Location = new System.Drawing.Point(0, 387);
             this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(147, 82);
+            this.pictureBox4.Size = new System.Drawing.Size(99, 59);
             this.pictureBox4.TabIndex = 21;
             this.pictureBox4.TabStop = false;
             this.toolTip1.SetToolTip(this.pictureBox4, "Bekanntes Objekt auswählen um die Referenzbreite zu bestimmen.");
@@ -1168,11 +1222,11 @@ namespace Anzeige
             // 
             // pictureBox3
             // 
-            this.pictureBox3.BackgroundImage = global::Anzeige.Properties.Resources._30cm;
+            this.pictureBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.BackgroundImage")));
             this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox3.Location = new System.Drawing.Point(0, 430);
+            this.pictureBox3.Location = new System.Drawing.Point(0, 335);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(147, 82);
+            this.pictureBox3.Size = new System.Drawing.Size(99, 59);
             this.pictureBox3.TabIndex = 20;
             this.pictureBox3.TabStop = false;
             this.toolTip1.SetToolTip(this.pictureBox3, "Bekanntes Objekt auswählen um die Referenzbreite zu bestimmen.");
@@ -1180,22 +1234,22 @@ namespace Anzeige
             // 
             // pictureBox2
             // 
-            this.pictureBox2.BackgroundImage = global::Anzeige.Properties.Resources._22_5;
+            this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox2.Location = new System.Drawing.Point(0, 297);
+            this.pictureBox2.Location = new System.Drawing.Point(0, 261);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(147, 82);
+            this.pictureBox2.Size = new System.Drawing.Size(99, 59);
             this.pictureBox2.TabIndex = 19;
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BackgroundImage = global::Anzeige.Properties.Resources._11_25;
+            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBox1.Location = new System.Drawing.Point(0, 209);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(147, 82);
+            this.pictureBox1.Size = new System.Drawing.Size(99, 59);
             this.pictureBox1.TabIndex = 25;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -1242,6 +1296,7 @@ namespace Anzeige
             this.textBox1.Text = "12";
             this.toolTip1.SetToolTip(this.textBox1, "Referenz breite. Hier die bekannnte breite eintragen oder ein bekanntes objekt au" +
         "swählen.");
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged_1);
             // 
             // CDist2
             // 
@@ -1342,8 +1397,9 @@ namespace Anzeige
             // 
             // pictureBox
             // 
-            this.pictureBox.BackgroundImage = global::Anzeige.Properties.Resources.abstand;
+            this.pictureBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox.BackgroundImage")));
             this.pictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox.Cursor = System.Windows.Forms.Cursors.Cross;
             this.pictureBox.Location = new System.Drawing.Point(570, 31);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(159, 94);
@@ -1559,6 +1615,7 @@ namespace Anzeige
             this.tabControl1.ResumeLayout(false);
             this.CTAnzeige.ResumeLayout(false);
             this.CTAnzeige.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.COCRPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CRaster)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CLogo)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -1567,6 +1624,8 @@ namespace Anzeige
             this.CTAbstand.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
@@ -1716,6 +1775,10 @@ namespace Anzeige
         private System.Windows.Forms.Button openButton;
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.HScrollBar CScaleMess;
+        private System.Windows.Forms.Button CClipImage;
+        private System.Windows.Forms.PictureBox COCRPicture;
+        private System.Windows.Forms.PictureBox pictureBox9;
+        private System.Windows.Forms.PictureBox pictureBox8;
     }
 }
 
