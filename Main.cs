@@ -9,13 +9,17 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
+
+
 
 
 namespace Anzeige
 {
     public partial class Main : Form
     {
+        // Abstandsmessung 
         Double refwidth = 30;
         private Bitmap _loadedImage;
         private Bitmap loadedImage
@@ -48,6 +52,8 @@ namespace Anzeige
             DIST2
         }
         Mode mousemode;
+
+        // Falschparker
         String configfile = "config.txt";
         ErrorLogger debug = null;
         Bussgeld verstossbussgeld = new Bussgeld();
@@ -592,8 +598,16 @@ namespace Anzeige
             Farbe = Color.Gold.ToString();
         }
         public string PDFFilename { get; private set; }
+        AboutBox1 aboutdlg = null;
+        /// <summary>
+        /// Startroutine der Anwendung
+        /// </summary>
         public Main()
         {
+            aboutdlg = new AboutBox1();
+            aboutdlg.Show();
+            aboutdlg.Refresh();
+            Thread.Sleep(2000);
             InitializeComponent();
             debug = ErrorLoggerMsgBox.Create();
             debug.Add(new ErrorLoggerFile());
@@ -614,7 +628,12 @@ namespace Anzeige
                 refcolor.Add(i.BackColor);
             }
         }
-        private void button1_Click(object sender, EventArgs e)
+        /// <summary>
+        /// lade Bilder für eine Anzeige
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CLoadPic_Click(object sender, EventArgs e)
         {
             CNew_Click(sender, e);
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -641,6 +660,14 @@ namespace Anzeige
             }
             CAnzeigeText.Text = Message;
         }
+        /// <summary>
+        /// Wählt aus der Bildeliste das aktuelle Bild und 
+        /// setzt alle Attribute für das ausgewählte bild 
+        /// Wenn Geordaten vorhandn sind werden diese auf 
+        /// google maps angezeigt. Hier kann dann  ort und 
+        /// Strasse kopiert werden.
+        /// </summary>
+        /// <param name="fileName"></param>
         private void SelectFile(string fileName)
         {
             PhotoMetadataExtractor data = new PhotoMetadataExtractor(fileName);
@@ -655,7 +682,10 @@ namespace Anzeige
                 if (!data.Valid)
                 {
                     GPSLocation = data.GoogleMapsURL;
-                    ShellExecute(IntPtr.Zero, "open", GPSLocation, "", "", 5);
+                    if (GPSLocation!=null)
+                        ShellExecute(IntPtr.Zero, "open", GPSLocation, "", "", 5);
+                    else
+                        ShellExecute(IntPtr.Zero, "open", ortssuche, "", "", 5);
                 }
                 else
                 {
@@ -673,6 +703,11 @@ namespace Anzeige
                 debug.LogError(1100, "Fehler beim öffnen der Datei", fileName);
             }
         }
+        /// <summary>
+        /// Initialisierungen der Anwendung
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
             listBoxDevices_SelectedIndexChanged(sender, e);
@@ -687,7 +722,13 @@ namespace Anzeige
             // Initialisieren Sie Ihre Formularkomponenten hier
             left.Checked = true;
             SetImage(global::Anzeige.Properties.Resources.eng);
+            aboutdlg.Hide();
         }
+        /// <summary>
+        /// Farbe auswählen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void panel_Click(object sender, EventArgs e)
         {
             Panel psender = ((Panel)sender);
@@ -711,6 +752,11 @@ namespace Anzeige
             psender.BorderStyle = BorderStyle.Fixed3D;
             panel1.BorderStyle = BorderStyle.Fixed3D;
         }
+        /// <summary>
+        /// Alle Verstöße hinzu fügen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CBackall_Click(object sender, EventArgs e)
         {
             CVerstossaus.Items.Clear();
@@ -1397,6 +1443,7 @@ namespace Anzeige
             cntpixel = 0;
             CAusschnitt.Hide();
         }
+
         private void CTabPages_SelectedIndexChanged(object sender, EventArgs e)
         {
             CStadtPate.Controls.Clear();
@@ -1437,8 +1484,6 @@ namespace Anzeige
                 AboutBox1 dlg = new AboutBox1();
                 dlg.ShowDialog();
             }
-
-
         }
         private void CAusschnitt_Click(object sender, EventArgs e)
         {
@@ -1912,6 +1957,13 @@ namespace Anzeige
             }
             return "";
         }
+        /// <summary>
+        /// Bild/Bitmap in ein Schwarzweiß bitmap verwandeln (nicht grau)
+        /// threshold gibt dabe den Grenzwert an.
+        /// </summary>
+        /// <param name="originalBitmap"></param>
+        /// <param name="threshold"></param>
+        /// <returns></returns>
         public Bitmap ConvertToBlackAndWhite(Bitmap originalBitmap, int threshold)
         {
             Bitmap bwBitmap = null;
@@ -2303,7 +2355,7 @@ namespace Anzeige
                     break;
 
                 case "Foto":
-                    button1_Click(this, new EventArgs());
+                    CLoadPic_Click(this, new EventArgs());
                     break;
 
                 case "Video":
@@ -2377,10 +2429,6 @@ namespace Anzeige
         private void CZeitBis_TextChanged(object sender, EventArgs e)
         {
             CAnzeigeText.Text = Message;
-        }
-        private void Main_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
         }
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -2690,7 +2738,6 @@ namespace Anzeige
         {
             pictureBox.BackgroundImage = loadedImage;
         }
-
         private void CClipImage_Click(object sender, EventArgs e)
         {
             String s = SaveClipboardImageAsTemporaryFile();
@@ -2705,7 +2752,6 @@ namespace Anzeige
             CAnzeigeText.Text = Message;
             this.Refresh();
         }
-
         private Bitmap CreateSegmentBitmap(Bitmap sourceBitmap, int top, int bottom, int left, int right)
         {
             int segmentWidth = right - left + 1;
@@ -2716,27 +2762,51 @@ namespace Anzeige
 
             return segmentBitmap;
         }
-
         private void COCR_Click(object sender, EventArgs e)
         {
         }
-
         private void textBox1_TextChanged_1(object sender, EventArgs e)
         {
             refwidth = Convert.ToDouble(textBox1.Text);
             textrefresh();
         }
-
         private void pictureBox8_Click(object sender, EventArgs e)
         {
             refwidth = 50;
             textrefresh();
         }
-
         private void pictureBox9_Click(object sender, EventArgs e)
         {
             refwidth = 100;
             textrefresh();
+        }
+        KeyEventArgs ed = null;
+        private void Main_KeyDown(object sender, KeyEventArgs e)
+        {
+            ed = e;
+        }
+        private void Main_KeyPress(object sender, KeyPressEventArgs e)
+        {
+           switch ((int)e.KeyChar)
+            {
+                case 22:
+                    CClipImage_Click(sender, new EventArgs());
+                    break;
+
+                case 3:
+                    if (CFiles.SelectedItem!=null)
+                    {
+                        Clipboard.SetText(CFiles.SelectedItem.ToString());
+                    }
+                    break;
+
+                case 9:
+                    if (CFiles.SelectedItem != null)
+                    {
+                        Clipboard.SetImage(CSave.BackgroundImage);
+                    }
+                    break;
+            }
         }
     }
 }

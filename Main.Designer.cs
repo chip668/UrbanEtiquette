@@ -37,7 +37,7 @@ namespace Anzeige
             this.COCRPicture = new System.Windows.Forms.PictureBox();
             this.CVerstossaus = new System.Windows.Forms.ListBox();
             this.CRaster = new System.Windows.Forms.NumericUpDown();
-            this.button1 = new System.Windows.Forms.Button();
+            this.CLoadPic = new System.Windows.Forms.Button();
             this.CAnzeige = new System.Windows.Forms.Button();
             this.CDTMEdit = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
@@ -221,7 +221,7 @@ namespace Anzeige
             this.CTAnzeige.Controls.Add(this.COCRPicture);
             this.CTAnzeige.Controls.Add(this.CVerstossaus);
             this.CTAnzeige.Controls.Add(this.CRaster);
-            this.CTAnzeige.Controls.Add(this.button1);
+            this.CTAnzeige.Controls.Add(this.CLoadPic);
             this.CTAnzeige.Controls.Add(this.CAnzeige);
             this.CTAnzeige.Controls.Add(this.CDTMEdit);
             this.CTAnzeige.Controls.Add(this.label1);
@@ -316,17 +316,17 @@ namespace Anzeige
             0,
             0});
             // 
-            // button1
+            // CLoadPic
             // 
-            this.button1.BackColor = System.Drawing.Color.LightGray;
-            this.button1.Location = new System.Drawing.Point(-4, 6);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(33, 40);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "🖼";
-            this.toolTip1.SetToolTip(this.button1, "Hier anklicken um die Fotos für die Anzeige aus zu wählen.");
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.CLoadPic.BackColor = System.Drawing.Color.LightGray;
+            this.CLoadPic.Location = new System.Drawing.Point(-4, 6);
+            this.CLoadPic.Name = "CLoadPic";
+            this.CLoadPic.Size = new System.Drawing.Size(33, 40);
+            this.CLoadPic.TabIndex = 0;
+            this.CLoadPic.Text = "🖼";
+            this.toolTip1.SetToolTip(this.CLoadPic, "Hier anklicken um die Fotos für die Anzeige aus zu wählen.");
+            this.CLoadPic.UseVisualStyleBackColor = false;
+            this.CLoadPic.Click += new System.EventHandler(this.CLoadPic_Click);
             // 
             // CAnzeige
             // 
@@ -1604,9 +1604,11 @@ namespace Anzeige
             this.Controls.Add(this.splitContainer1);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "Main";
             this.Text = "Urban Etiquette";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Main_KeyDown);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Main_KeyPress);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -1653,7 +1655,7 @@ namespace Anzeige
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button CLoadPic;
         private System.Windows.Forms.TabPage CSave;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel12;
