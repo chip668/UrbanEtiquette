@@ -21,6 +21,8 @@ namespace Anzeige
     {
         // Abstandsmessung 
         Double refwidth = 30;
+        float scaleFactor = 3.0f; // Vergrößerungsfaktor
+        // private String currentfilename;
         private Bitmap _loadedImage;
         private Bitmap loadedImage
         {
@@ -679,6 +681,7 @@ namespace Anzeige
                 ausschnitt = original;
                 // CFoto.Image = Bitmap.FromFile(fileName);
                 CSave.BackgroundImage = ausschnitt;
+                // currentfilename = fileName;
                 if (!data.Valid)
                 {
                     GPSLocation = data.GoogleMapsURL;
@@ -1110,11 +1113,13 @@ namespace Anzeige
                             else
                             {
                                 PixelOutRegion(ausschnitt, bmpAusschnitt);
+                                //original
                                 CSave.BackgroundImage = ausschnitt;
                                 CSave.Refresh();
                                 Bitmap tempausschnitt2 = CropRectangleFromBitmap(ausschnitt, bmpAusschnitt); ;
                                 CAusschnitt.BackgroundImage = tempausschnitt2;
                                 CAusschnitt.Show();
+                                // original.Save(currentfilename);
                             }
                         }
                         Bitmap bmp = (Bitmap)CAusschnitt.BackgroundImage;
@@ -2508,13 +2513,8 @@ namespace Anzeige
                     graphics.DrawLine(penDist, dist1, dist2);
                     // graphics.DrawLine(penHelp, stop, new Point(stop.X, 0));
                     graphics.DrawLine(penHelp, downhelp, new Point(stop.X, 0));
-
-
-
-                    float scaleFactor = 3.0f; // Vergrößerungsfaktor
-
                     Font largerFont = new Font(this.Font.FontFamily, this.Font.Size * scaleFactor, this.Font.Style);
-                    graphics.DrawString("Abstand: " + Distance.Text, largerFont, new SolidBrush(Color.White), new Point(20, 20));
+                    graphics.DrawString("Distanz: " + Distance.Text, largerFont, new SolidBrush(Color.White), new Point(20, 20));
 
                 }
                 pictureBox.Image = lineImage;
@@ -2530,10 +2530,36 @@ namespace Anzeige
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    lineImage.Save(saveFileDialog.FileName);
+                    // Kopie der Bitmap erstellen
+                    Bitmap copiedImage = new Bitmap(lineImage);
+
+                    // Abstand unten links einfügen
+                    using (Graphics g = Graphics.FromImage(copiedImage))
+                    {
+                        // Hier wird der Abstand unter Verwendung von RealDistance.Text eingefügt.
+                        float distance;
+                        if (float.TryParse(RealDistance.Text, out distance))
+                        {
+                            // Setzen Sie hier die gewünschten Werte für X und Y ein.
+                            float x = 10; // Beispiel: 10 Pixel von links
+                            float y = copiedImage.Height - distance - 50; // Beispiel: 10 Pixel von unten abzüglich des Abstands
+
+                            // Text zeichnen
+                            Font largerFont = new Font(this.Font.FontFamily, this.Font.Size * scaleFactor, this.Font.Style);
+                            g.DrawString("Abstand: " + RealDistance.Text, largerFont, new SolidBrush(Color.White), x, y);
+
+                            // vertical lines 
+                            Pen greenPen = new Pen(Color.Green, 1);
+                            g.DrawLine(greenPen, dist1, new Point(dist1.X, 0));
+                            g.DrawLine(greenPen, dist2, new Point(dist2.X, 0));
+                        }
+                    }
+                    // Bitmap speichern
+                    copiedImage.Save(saveFileDialog.FileName);
                 }
             }
         }
+
         private void Insert_Click(object sender, EventArgs e)
         {
             if (Clipboard.ContainsImage())
@@ -2807,6 +2833,18 @@ namespace Anzeige
                     }
                     break;
             }
+        }
+
+        private void pictureBox11_Click(object sender, EventArgs e)
+        {
+            refwidth = 12;
+            textrefresh();
+        }
+
+        private void pictureBox10_Click(object sender, EventArgs e)
+        {
+            refwidth = 50;
+            textrefresh();
         }
     }
 }

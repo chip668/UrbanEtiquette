@@ -123,6 +123,16 @@ namespace Anzeige.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _340 {
+            get {
+                object obj = ResourceManager.GetObject("340", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap _50 {
             get {
                 object obj = ResourceManager.GetObject("50", resourceCulture);
@@ -166,6 +176,16 @@ namespace Anzeige.Properties {
         internal static System.Drawing.Bitmap eng {
             get {
                 object obj = ResourceManager.GetObject("eng", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap hl {
+            get {
+                object obj = ResourceManager.GetObject("hl", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
