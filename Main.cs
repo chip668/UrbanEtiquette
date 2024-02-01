@@ -1,4 +1,5 @@
 ﻿using IronOcr;
+using IronOcr;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -2516,6 +2517,15 @@ namespace Anzeige
                     Font largerFont = new Font(this.Font.FontFamily, this.Font.Size * scaleFactor, this.Font.Style);
                     graphics.DrawString("Distanz: " + Distance.Text, largerFont, new SolidBrush(Color.White), new Point(20, 20));
 
+                    // Gespiegelte Linie zeichnen
+                    float f1 = (float)Convert.ToDecimal(RealDistance.Text);
+                    float f2 = (float)Convert.ToDecimal(Distance.Text);
+                    if (f2!=0)
+                    {
+                        float lamba = 1 -(f1/f2);
+                        graphics.DrawLine(penDist, paug.X, paug.Y, dist2.X - lamba * (dist2.X - dist1.X), dist1.Y);
+                        graphics.DrawLine(penDist, paug.X, paug.Y, dist2.X + (lamba) * (dist2.X - dist1.X), dist1.Y);
+                    }
                 }
                 pictureBox.Image = lineImage;
             }
