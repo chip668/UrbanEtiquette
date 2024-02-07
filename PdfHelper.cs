@@ -22,6 +22,7 @@ namespace Anzeige
         public string kennzeichen;
         public string fahrzeugtyp;
         public string tatvorwurf;
+        public string ort;
 
         public string ErstellePDF()
         {
@@ -42,6 +43,25 @@ namespace Anzeige
 
             return tempPdfFileName;
         }
+        private string ErsetzePlatzhalter(string htmlContent)
+        {
+            htmlContent = htmlContent.Replace("{anrede}", anrede)
+                                     .Replace("{nameVorname}", nameVorname)
+                                     .Replace("{anschrift}", anschrift)
+                                     .Replace("{telefon}", telefon)
+                                     .Replace("{email}", email)
+                                     .Replace("{tatdatum}", tatdatum)
+                                     .Replace("{tatzeitVon}", tatzeitVon)
+                                     .Replace("{tatzeitBis}", tatzeitBis)
+                                     .Replace("{tatort}", tatort)
+                                     .Replace("{kennzeichen}", kennzeichen)
+                                     .Replace("{fahrzeugtyp}", fahrzeugtyp)
+                                     .Replace("{tatvorwurf}", tatvorwurf)
+                                     .Replace("{ort}", ort);
+
+            return htmlContent;
+        }
+
         public string ErstelleLEVPDF()
         {
             // Erstellen Sie einen temporären Dateinamen für die PDF-Datei
@@ -57,7 +77,7 @@ namespace Anzeige
 
             // Ihr Text mit HTML-Tags für die Fettformatierung
             string text = $@"
-            <b>Stadt Leverkusen</b><div style='text-align: right;'>Anzeige einer Verkehrsordnungswidrigkeit<br></div>
+            <b>Stadt Leverkusen</b><div style='text-align: right;'><b>Anzeige einer Verkehrsordnungswidrigkeit</b><br></div>
             < br>
             <b>Fachbereich Ordnung und Straßenverkehr</b><br>
             Zentrale Bußgeldstelle<br>
@@ -108,6 +128,12 @@ namespace Anzeige
             <b>nur vom Fachbereich Ordnung und Straßenverkehr auszufüllen:</b><br>
             Aktenzeichen: _____________________<br>
             Tatkennziffer:_____________________ <div style='text-align: right;'>Betrag EUR:<br>_____________________<br></div>";
+            String filename = ort + ".htm";
+            if (File.Exists(filename))
+            {
+                text = File.ReadAllText(filename);
+                text = ErsetzePlatzhalter(text);
+            }
 
             // Verwenden Sie HTML-Parser, um den formatierten Text in das PDF-Dokument einzufügen
             using (var sr = new StringReader(text))

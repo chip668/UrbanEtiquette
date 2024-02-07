@@ -333,7 +333,10 @@ namespace Anzeige
         public string ZStrasse { get; private set; }
         public string ZHausnummer { get; private set; }
         public string ZZielpfad { get; private set; }
+        public string ZEMail { get; private set; }
+        public string ZPhone { get; private set; }
         public string GPSLocation { get; private set; }
+
         public string Message
         {
             get
@@ -581,6 +584,14 @@ namespace Anzeige
                     else if (key == "<zielpfad>")
                     {
                         ZZielpfad = s;
+                    }
+                    else if (key == "<zemail>")
+                    {
+                        ZEMail = s;
+                    }
+                    else if (key == "<zphone>")
+                    {
+                        ZPhone = s;
                     }
                     else
                     {
@@ -1078,7 +1089,9 @@ namespace Anzeige
                 }
             }
         }
-        private void CFoto_MouseUp(object sender, MouseEventArgs e)
+
+
+        private void CFoto_MouseUp_Old(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -1156,6 +1169,102 @@ namespace Anzeige
                 catch { }
             }
         }
+
+        // ...
+
+        private void CFoto_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                try
+                {
+                    if (ausschnitt != null)
+                    {
+                        Rectangle rcl = Transform(Bildausschnitt, CSave.ClientRectangle, ausschnitt.Size);
+                        Bitmap tempausschnitt = CropRectangleFromBitmap(ausschnitt, bmpAusschnitt);
+                        CAusschnitt.BackgroundImage = tempausschnitt;
+                        CAusschnitt.Show();
+                        ausschnittTemp = (AddPath) ? Path.GetTempFileName().Replace(".tmp", ".jpg") : null;
+                        if (tempausschnitt != null)
+                        {
+                            ScaledSave(tempausschnitt, ausschnittTemp, 3);
+
+                            if (!CPixeln.Checked)
+                            {
+                                Bitmap kopie = new Bitmap(ausschnitt);
+                                BlackOutRegion(kopie, bmpAusschnitt);
+
+                                // Den Dateipfad für die geschwärzte Kopie festlegen
+                                string geschwaerzteKopiePfad = ZZielpfad + "public\\" + Guid.NewGuid().ToString() + ".jpg";
+
+                                // Graphics-Objekt für das Zeichnen auf der Kopie erstellen
+                                using (Graphics g = Graphics.FromImage(kopie))
+                                {
+                                    // Schriftart und Pinsel für den Text festlegen
+                                    Font font = new Font("Arial", 24);
+                                    SolidBrush brush = new SolidBrush(Color.White);
+
+                                    if (bussgeldrechner1.bussgeld != null)
+                                    {
+                                        Bussgeld bussgeld = bussgeldrechner1.bussgeld;
+                                        int y0 = kopie.Height - 280;
+                                        g.DrawString($"Parken: {(bussgeld.parken ? "ja" : "nein")}", font, brush, 10, y0); y0 += 40;
+                                        g.DrawString($"Halten: {(bussgeld.halten ? "ja" : "nein")}", font, brush, 10, y0); y0 += 40;
+                                        g.DrawString($"Mit Behinderung: {(bussgeld.mitbehinderung ? "ja" : "nein")}", font, brush, 10, y0); y0 += 40;
+                                        g.DrawString($"Mit Gefährdung: {(bussgeld.mitgefaerdung ? "ja" : "nein")}", font, brush, 10, y0); y0 += 40;
+                                        g.DrawString($"Verdopplung: {(bussgeld.faktor == 2 ? "ja" : "nein")}", font, brush, 10, y0); y0 += 40;
+                                        g.DrawString($"Bußgeld: {bussgeld.Betrag:C2}", font, brush, 10, y0); y0 += 40;
+                                    }
+                                }
+
+                                // Die geschwärzte Kopie speichern
+                                kopie.Save(geschwaerzteKopiePfad, ImageFormat.Jpeg);
+
+                                // Kopie freigeben und zerstören
+                                kopie.Dispose();
+                            }
+                            else
+                            {
+                                PixelOutRegion(ausschnitt, bmpAusschnitt);
+                                CSave.BackgroundImage = ausschnitt;
+                                CSave.Refresh();
+                                Bitmap tempausschnitt2 = CropRectangleFromBitmap(ausschnitt, bmpAusschnitt);
+                                CAusschnitt.BackgroundImage = tempausschnitt2;
+                                CAusschnitt.Show();
+                            }
+                        }
+                        Bitmap bmp = (Bitmap)CAusschnitt.BackgroundImage;
+                        if (bmp != null && bmp.Width * bmp.Height < 400000)
+                        {
+                            for (int th = 0; th < 256; th += 16)
+                            {
+                                bmp = ConvertToBlackAndWhite((Bitmap)CAusschnitt.BackgroundImage, (int)th);
+                                String text = ReadTextFromBitmap((Bitmap)COCRPicture.BackgroundImage);
+                                String[] s = text.Split(' ');
+                                if (s.Length == 3 && CKennzeichen.Text == "")
+                                {
+                                    CKennzeichen.Text = text;
+                                    COCRPicture.BackgroundImage = bmp;
+                                }
+                                COCRPicture.Refresh();
+                            }
+                        }
+                        if (CKennzeichen.Text == "" && !CPixeln.Checked)
+                        {
+                            CKennzeichen.Text = ReadTextFromBitmap(tempausschnitt);
+                        }
+                        CAusschnitt.Refresh();
+                    }
+                    else
+                    {
+                        debug.LogError(1100, "Bitte zuerst ein Bild wählen.");
+                    }
+                }
+                catch { }
+            }
+        }
+
+
         private Rectangle Transform(Rectangle bildausschnitt, Control clientControl, Rectangle ausschnitt)
         {
             return Transform(Bildausschnitt, clientControl.ClientRectangle, ausschnitt.Size);
@@ -1458,8 +1567,29 @@ namespace Anzeige
             CGMaps.Controls.Clear();
             if (CTabPages.SelectedTab == CTabPageOA)
             {
-                oabrowser.Navigate(URL);
-                CTabPageOA.Controls.Add(oabrowser);
+                if (URL.Length < 1)
+                {
+
+                }
+                else if (URL == "{pdf}")
+                {
+                    CreatePDF.Checked = false;
+                    CreatePDF.Checked = true;
+
+                    if (PDFFilename != "")
+                    {
+                        ShellExecute(IntPtr.Zero, "open", PDFFilename, "", "", 5);
+                    }
+                }
+                else if (URL.Substring(0, 1) == "@")
+                {
+                    ShellExecute(IntPtr.Zero, "open", URL.Substring(1), "", "", 5);
+                }
+                else
+                {
+                    oabrowser.Navigate(URL);
+                    CTabPageOA.Controls.Add(oabrowser);
+                }
             }
             else if (CTabPages.SelectedTab == CStadtPate)
             {
@@ -2186,15 +2316,16 @@ namespace Anzeige
                 PdfHelper pdfHelper = new PdfHelper();
                 pdfHelper.nameVorname = $"{ZName}, {ZVorname}";
                 pdfHelper.anschrift = $"{ZPLZ} {ZOrt} {ZStrasse} {ZHausnummer}";
-                pdfHelper.telefon = "";
-                pdfHelper.email = "";
+                pdfHelper.telefon = $"{ZPhone}";
+                pdfHelper.email = $"{ZEMail}";
                 pdfHelper.tatdatum = Datum;
                 pdfHelper.tatzeitVon = Zeit;
                 pdfHelper.tatzeitBis = ZeitBis;
                 pdfHelper.tatort = $"{PLZ}  {Ort}";
                 pdfHelper.kennzeichen = Kennzeichen;
+                pdfHelper.ort = $"{Ort}";
                 pdfHelper.fahrzeugtyp = this.Marke;
-                pdfHelper.tatvorwurf = this.Verstoss;
+                pdfHelper.tatvorwurf = this.Verstoss.Replace ("\r\n", "<br>");
                 PDFFilename = pdfHelper.ErstelleLEVPDF();
                 Clipboard.SetText(PDFFilename);
             }

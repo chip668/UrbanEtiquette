@@ -415,6 +415,8 @@ namespace Anzeige
             // 
             this.CPixeln.AutoSize = true;
             this.CPixeln.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CPixeln.Checked = true;
+            this.CPixeln.CheckState = System.Windows.Forms.CheckState.Checked;
             this.CPixeln.Location = new System.Drawing.Point(123, 585);
             this.CPixeln.Name = "CPixeln";
             this.CPixeln.Size = new System.Drawing.Size(70, 25);

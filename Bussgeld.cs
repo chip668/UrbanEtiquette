@@ -19,7 +19,22 @@ namespace Anzeige
             get { return !parken; }
             set { parken = !value; }
         }
+        public Double Betrag
+        {
+            get 
+            {
+                Double betrag = this.verstoss;
 
+                if (this.mitbehinderung)
+                    betrag = this.behinderung;
+                if (this.mitgefaerdung)
+                    betrag = this.gefaerdung;
+                betrag *= this.faktor;
+                betrag += 28.50;
+
+                return betrag;
+            }
+        }
         public Bussgeld()
         {
             this.faktor = 1;
