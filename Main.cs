@@ -86,6 +86,19 @@ namespace Anzeige
         int w = 0;
         int h = 0;
         int cntpixel = 0;
+        private PictureBox _selectedRef;
+        public  PictureBox selectedRef
+        {
+            get { return _selectedRef; }
+            set 
+            { 
+                _selectedRef = value;
+                _selectedRef.Parent.Refresh();
+            }
+        }
+
+
+
         private String FullPath
         {
             get
@@ -737,6 +750,8 @@ namespace Anzeige
             // Initialisieren Sie Ihre Formularkomponenten hier
             left.Checked = true;
             SetImage(global::Anzeige.Properties.Resources.eng);
+            selectedRef = pictureBox4;
+            selectedRef.Parent.Paint += Parent_Paint;
             aboutdlg.Hide();
         }
         /// <summary>
@@ -1034,9 +1049,12 @@ namespace Anzeige
                     {
                         Point p = Transform(e.Location, CSave.ClientRectangle, ausschnitt.Size);
                         Bitmap b = (Bitmap)CSave.BackgroundImage;
-                        Color c = b.GetPixel(p.X, p.Y);
-                        this.Text = "Wegeheld 2 |" + ToRGB(c) + " | " + ToRGB(panel1.BackColor);
-                        Bildausschnitt = new Rectangle(start, new Size(e.X - start.X, e.Y - start.Y));
+                        if (b!=null)
+                        {
+                            Color c = b.GetPixel(p.X, p.Y);
+                            this.Text = "Wegeheld 2 |" + ToRGB(c) + " | " + ToRGB(panel1.BackColor);
+                            Bildausschnitt = new Rectangle(start, new Size(e.X - start.X, e.Y - start.Y));
+                        }
                     }
                     catch { }
                 }
@@ -2478,6 +2496,13 @@ namespace Anzeige
         {
             assistent dlg = new assistent();
             dlg.masterform = this;
+            this.StartPosition = FormStartPosition.Manual;
+            this.Location = Screen.AllScreens[0].WorkingArea.Location;
+            this.Width = Screen.AllScreens[0].WorkingArea.Width - dlg.Width;
+
+            // Hier setzen wir die Position des zweiten Fensters auf der rechten Seite des Desktops.
+            dlg.StartPosition = FormStartPosition.Manual;
+            dlg.Location = new Point(this.Left + this.Width, this.Top);
             dlg.Show();
         }
         public void MasterFormExecute(String message)
@@ -2649,14 +2674,18 @@ namespace Anzeige
                     graphics.DrawString("Distanz: " + Distance.Text, largerFont, new SolidBrush(Color.White), new Point(20, 20));
 
                     // Gespiegelte Linie zeichnen
-                    float f1 = (float)Convert.ToDecimal(RealDistance.Text);
-                    float f2 = (float)Convert.ToDecimal(Distance.Text);
-                    if (f2!=0)
+                    try
                     {
-                        float lamba = 1 -(f1/f2);
-                        graphics.DrawLine(penDist, paug.X, paug.Y, dist2.X - lamba * (dist2.X - dist1.X), dist1.Y);
-                        graphics.DrawLine(penDist, paug.X, paug.Y, dist2.X + (lamba) * (dist2.X - dist1.X), dist1.Y);
+                        float f1 = (float)Convert.ToDecimal(RealDistance.Text);
+                        float f2 = (float)Convert.ToDecimal(Distance.Text);
+                        if (f2 != 0)
+                        {
+                            float lamba = 1 - (f1 / f2);
+                            graphics.DrawLine(penDist, paug.X, paug.Y, dist2.X - lamba * (dist2.X - dist1.X), dist1.Y);
+                            graphics.DrawLine(penDist, paug.X, paug.Y, dist2.X + (lamba) * (dist2.X - dist1.X), dist1.Y);
+                        }
                     }
+                    catch { }
                 }
                 pictureBox.Image = lineImage;
             }
@@ -2800,36 +2829,43 @@ namespace Anzeige
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             refwidth = 11.25;
+            selectedRef = pictureBox1;
             textrefresh();
         }
         private void pictureBox2_Click(object sender, EventArgs e)
         {
             refwidth = 22.5;
+            selectedRef = pictureBox2;
             textrefresh();
         }
         private void pictureBox3_Click(object sender, EventArgs e)
         {
             refwidth = 30;
+            selectedRef = pictureBox3;
             textrefresh();
         }
         private void pictureBox4_Click(object sender, EventArgs e)
         {
             refwidth = 12;
+            selectedRef = pictureBox4;
             textrefresh();
         }
         private void pictureBox6_Click(object sender, EventArgs e)
         {
             refwidth = 50;
+            selectedRef = pictureBox6;
             textrefresh();
         }
         private void pictureBox5_Click(object sender, EventArgs e)
         {
             refwidth = 73;
+            selectedRef = pictureBox5;
             textrefresh();
         }
         private void pictureBox7_Click(object sender, EventArgs e)
         {
             refwidth = 220;
+            selectedRef = pictureBox7;
             textrefresh();
         }
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
@@ -2940,17 +2976,26 @@ namespace Anzeige
         private void pictureBox8_Click(object sender, EventArgs e)
         {
             refwidth = 50;
+            selectedRef = pictureBox8;
             textrefresh();
         }
         private void pictureBox9_Click(object sender, EventArgs e)
         {
             refwidth = 100;
+            selectedRef = pictureBox9;
             textrefresh();
         }
         KeyEventArgs ed = null;
         private void Main_KeyDown(object sender, KeyEventArgs e)
         {
-            ed = e;
+            if (e.KeyCode == Keys.F1 && !e.Shift && !e.Control && !e.Alt)
+            {
+                CHelp_Click(sender, new EventArgs());
+            }
+            else
+            {
+                ed = e;
+            }
         }
         private void Main_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -2979,13 +3024,47 @@ namespace Anzeige
         private void pictureBox11_Click(object sender, EventArgs e)
         {
             refwidth = 12;
+            selectedRef = pictureBox11;
             textrefresh();
         }
 
         private void pictureBox10_Click(object sender, EventArgs e)
         {
             refwidth = 50;
+            selectedRef = pictureBox10;
             textrefresh();
+        }
+
+        private void CTAnzeige_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void Parent_Paint_rect(object sender, PaintEventArgs e)
+        {
+            if (_selectedRef != null)
+            {
+                // Zeichnen Sie einen roten Rahmen um das ausgewählte Steuerelement im Elternsteuerelement
+                using (Pen pen = new Pen(Color.Red, 5))
+                {
+                    Rectangle rect = _selectedRef.Bounds;
+                    rect.Location = _selectedRef.Parent.PointToClient(_selectedRef.Parent.PointToScreen(rect.Location));
+                    e.Graphics.DrawRectangle(pen, rect);
+                }
+            }
+        }
+        private void Parent_Paint(object sender, PaintEventArgs e)
+        {
+            if (_selectedRef != null)
+            {
+                // Zeichnen Sie einen roten Rahmen um das ausgewählte Steuerelement im Elternsteuerelement
+                using (Pen pen = new Pen(Color.Orange, 5))
+                {
+                    Rectangle rect = _selectedRef.Bounds;
+                    rect.Location = _selectedRef.Parent.PointToClient(_selectedRef.Parent.PointToScreen(rect.Location));
+                    e.Graphics.DrawLine(pen, rect.Left-2, rect.Top, rect.Left-2, rect.Bottom); // Linke Seite
+                    e.Graphics.DrawLine(pen, rect.Right+1, rect.Top, rect.Right+1, rect.Bottom); // Rechte Seite
+                }
+            }
         }
     }
 }

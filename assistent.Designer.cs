@@ -39,7 +39,7 @@ namespace Anzeige
             // 
             // CBT1
             // 
-            this.CBT1.Location = new System.Drawing.Point(336, 120);
+            this.CBT1.Location = new System.Drawing.Point(4, 167);
             this.CBT1.Name = "CBT1";
             this.CBT1.Size = new System.Drawing.Size(93, 38);
             this.CBT1.TabIndex = 1;
@@ -59,7 +59,7 @@ namespace Anzeige
             // 
             // CBT2
             // 
-            this.CBT2.Location = new System.Drawing.Point(435, 120);
+            this.CBT2.Location = new System.Drawing.Point(103, 167);
             this.CBT2.Name = "CBT2";
             this.CBT2.Size = new System.Drawing.Size(93, 38);
             this.CBT2.TabIndex = 1;
@@ -69,7 +69,7 @@ namespace Anzeige
             // 
             // CBT3
             // 
-            this.CBT3.Location = new System.Drawing.Point(534, 120);
+            this.CBT3.Location = new System.Drawing.Point(202, 167);
             this.CBT3.Name = "CBT3";
             this.CBT3.Size = new System.Drawing.Size(93, 38);
             this.CBT3.TabIndex = 1;
@@ -81,7 +81,7 @@ namespace Anzeige
             // 
             this.pictureBox1.BackgroundImage = global::Anzeige.Properties.Resources.nummer_5;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Location = new System.Drawing.Point(521, 8);
+            this.pictureBox1.Location = new System.Drawing.Point(409, 112);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(106, 93);
             this.pictureBox1.TabIndex = 3;
@@ -91,7 +91,7 @@ namespace Anzeige
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 170);
+            this.ClientSize = new System.Drawing.Size(518, 208);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.CDisplay);
             this.Controls.Add(this.CBT3);
