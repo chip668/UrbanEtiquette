@@ -57,7 +57,6 @@ namespace Anzeige
         Mode mousemode;
         // Falschparker
         String configfile = "config.txt";
-        ErrorLogger debug = null;
         Bussgeld verstossbussgeld = new Bussgeld();
         Dictionary<String, Bussgeld> bussgelder = new Dictionary<String, Bussgeld>();
         IronTesseract ocrreader = new IronTesseract();
@@ -631,9 +630,6 @@ namespace Anzeige
             aboutdlg.Refresh();
             Thread.Sleep(2000);
             InitializeComponent();
-            debug = ErrorLoggerMsgBox.Create();
-            debug.Add(new ErrorLoggerFile());
-            debug.Add(new ErrorLoggerNetMsg());
 
             Init();
             String[] lines = File.ReadAllLines("ort.txt");
@@ -723,7 +719,6 @@ namespace Anzeige
             }
             catch
             {
-                debug.LogError(1100, "Fehler beim öffnen der Datei", fileName);
             }
         }
         /// <summary>
@@ -1174,7 +1169,6 @@ namespace Anzeige
                     }
                     else
                     {
-                        debug.LogError(1100, "Bitte zuerst ein Bild wählen.");
                     }
                 }
                 catch { }
@@ -1265,7 +1259,6 @@ namespace Anzeige
                     }
                     else
                     {
-                        debug.LogError(1100, "Bitte zuerst ein Bild wählen.");
                     }
                 }
                 catch { }

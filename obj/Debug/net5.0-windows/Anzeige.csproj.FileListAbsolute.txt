@@ -119,8 +119,6 @@ C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anz
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.Bussgeldrechner.resources
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.ConfigEditorForm.resources
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.EditTemplate.resources
-C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.Form2.resources
-C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.lupe.resources
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.Main.resources
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.Properties.Resources.resources
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.TimePicker.resources

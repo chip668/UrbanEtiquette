@@ -13,19 +13,10 @@
     <Compile Update="ConfigEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="ConfigurationForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Form2.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="EditTemplate.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="lupe.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="TimePicker.cs">

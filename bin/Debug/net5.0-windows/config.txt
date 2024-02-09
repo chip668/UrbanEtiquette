@@ -1,19 +1,19 @@
 <zname>
-Schippers
+xxxxxxxx
 <zvorname>
-Norbert
+xxxxxxxxxxxx
 <zstrasse>
-Klopstockweg
+xxxxxxxxxxxxxx
 <zhausnummer>
-4
+xxxxx
 <zplz>
-40764
+xxxxxxxxxxxxxxxx
 <zort>
-Langenfeld
+xxxxxxxxxxxxxxxxx
 <zemail>
-schippersnorbert908@gmail.com
+xxxxxxxxxxxxxxxxxxxxxx
 <zphone>
-+49 2173 1619422
+xxxxxxxxxxxxxxxxxxxx
 <zielpfad>
 Z:\Dokumente\Anzeigen\
 <zbluetooth>
