@@ -37,7 +37,6 @@ namespace Anzeige
             this.CVerstossaus = new System.Windows.Forms.ListBox();
             this.CRaster = new System.Windows.Forms.NumericUpDown();
             this.CLoadPic = new System.Windows.Forms.Button();
-            this.CNextAnzeige = new System.Windows.Forms.Button();
             this.CAnzeige = new System.Windows.Forms.Button();
             this.CDTMEdit = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
@@ -150,8 +149,6 @@ namespace Anzeige
             this.CAbout = new System.Windows.Forms.TabPage();
             this.CPolice = new System.Windows.Forms.TabPage();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.CStackBack = new System.Windows.Forms.Button();
-            this.CStackFwd = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -229,9 +226,6 @@ namespace Anzeige
             this.CTAnzeige.Controls.Add(this.CVerstossaus);
             this.CTAnzeige.Controls.Add(this.CRaster);
             this.CTAnzeige.Controls.Add(this.CLoadPic);
-            this.CTAnzeige.Controls.Add(this.CStackFwd);
-            this.CTAnzeige.Controls.Add(this.CStackBack);
-            this.CTAnzeige.Controls.Add(this.CNextAnzeige);
             this.CTAnzeige.Controls.Add(this.CAnzeige);
             this.CTAnzeige.Controls.Add(this.CDTMEdit);
             this.CTAnzeige.Controls.Add(this.label1);
@@ -331,23 +325,12 @@ namespace Anzeige
             this.CLoadPic.UseVisualStyleBackColor = false;
             this.CLoadPic.Click += new System.EventHandler(this.CLoadPic_Click);
             // 
-            // CNextAnzeige
-            // 
-            this.CNextAnzeige.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.CNextAnzeige.Location = new System.Drawing.Point(214, 944);
-            this.CNextAnzeige.Name = "CNextAnzeige";
-            this.CNextAnzeige.Size = new System.Drawing.Size(215, 45);
-            this.CNextAnzeige.TabIndex = 18;
-            this.CNextAnzeige.Text = "nächste";
-            this.CNextAnzeige.UseVisualStyleBackColor = false;
-            this.CNextAnzeige.Click += new System.EventHandler(this.CNextAnzeige_Click);
-            // 
             // CAnzeige
             // 
             this.CAnzeige.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.CAnzeige.Location = new System.Drawing.Point(0, 889);
             this.CAnzeige.Name = "CAnzeige";
-            this.CAnzeige.Size = new System.Drawing.Size(208, 100);
+            this.CAnzeige.Size = new System.Drawing.Size(429, 100);
             this.CAnzeige.TabIndex = 17;
             this.CAnzeige.Text = "anzeigen";
             this.toolTip1.SetToolTip(this.CAnzeige, "Öffen eine Mail mit dem Verstoß");
@@ -1692,30 +1675,6 @@ namespace Anzeige
             this.CPolice.Text = "Polizei";
             this.CPolice.UseVisualStyleBackColor = true;
             // 
-            // CStackBack
-            // 
-            this.CStackBack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.CStackBack.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.CStackBack.Location = new System.Drawing.Point(214, 893);
-            this.CStackBack.Name = "CStackBack";
-            this.CStackBack.Size = new System.Drawing.Size(108, 45);
-            this.CStackBack.TabIndex = 18;
-            this.CStackBack.Text = "⬱";
-            this.CStackBack.UseVisualStyleBackColor = false;
-            this.CStackBack.Click += new System.EventHandler(this.CStackBack_Click);
-            // 
-            // CStackFwd
-            // 
-            this.CStackFwd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.CStackFwd.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.CStackFwd.Location = new System.Drawing.Point(321, 893);
-            this.CStackFwd.Name = "CStackFwd";
-            this.CStackFwd.Size = new System.Drawing.Size(108, 45);
-            this.CStackFwd.TabIndex = 18;
-            this.CStackFwd.Text = "⇶";
-            this.CStackFwd.UseVisualStyleBackColor = false;
-            this.CStackFwd.Click += new System.EventHandler(this.CStackFwd_Click);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -1906,9 +1865,6 @@ namespace Anzeige
         private System.Windows.Forms.PictureBox pictureBox10;
         private System.Windows.Forms.PictureBox COCRPicture;
         private System.Windows.Forms.TabPage CPolice;
-        private System.Windows.Forms.Button CNextAnzeige;
-        private System.Windows.Forms.Button CStackFwd;
-        private System.Windows.Forms.Button CStackBack;
     }
 }
 

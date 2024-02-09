@@ -20,8 +20,6 @@ namespace Anzeige
 {
     public partial class Main : Form
     {
-        AnzeigeClass currentAnzeige = null;
-        List<AnzeigeClass> allAnzeigen = new List<AnzeigeClass>();
         // Abstandsmessung 
         Double refwidth = 30;
         float scaleFactor = 3.0f; // Vergrößerungsfaktor
@@ -3057,63 +3055,7 @@ namespace Anzeige
         }
         private void CNextAnzeige_Click(object sender, EventArgs e)
         {
-            currentAnzeige = new AnzeigeClass();
-            currentAnzeige.SetAnzeigeClass(cntpixel, Files, Datum, Zeit, Ort, PLZ,
-                Strasse, HN, Kennzeichen, Marke, Farbe,
-                Verstoss, FreeText, Mail, ZName, ZVorname,
-                ZOrt, ZPLZ, ZStrasse, ZHausnummer, Message);
-            allAnzeigen.Add(currentAnzeige);
             CNew_Click(sender, e);
-        }
-        private void SetAnzeige (AnzeigeClass anzeige)
-        {
-            cntpixel = anzeige.cntpixel;
-            Files = anzeige.Files;
-            Datum = anzeige.Datum;
-            Zeit = anzeige.Zeit;
-            Ort = anzeige.Ort;
-            PLZ = anzeige.PLZ;
-            Strasse = anzeige.Strasse;
-            HN = anzeige.HN;
-            Kennzeichen = anzeige.Kennzeichen;
-            Marke = anzeige.Marke;
-            Farbe = anzeige.Farbe;
-            Verstoss = anzeige.Verstoss;
-            FreeText = anzeige.FreeText;
-            Mail = anzeige.Mail;
-            ZName = anzeige.ZName;
-            ZVorname = anzeige.ZVorname;
-            ZOrt = anzeige.ZOrt;
-            ZPLZ = anzeige.ZPLZ;
-            ZStrasse = anzeige.ZStrasse;
-            ZHausnummer = anzeige.ZHausnummer;
-            // Message = anzeige.Message;
-            this.Refresh();
-        }
-
-
-        private int FindAnzeigeNext (AnzeigeClass anzeige)
-        {
-            for(int i=0; i< allAnzeigen.Count; i++)
-            {
-                if (allAnzeigen[i] == currentAnzeige)
-                    return i;
-            }
-            return -1;
-        }
-        private void CStackBack_Click(object sender, EventArgs e)
-        {
-            int pos = FindAnzeigeNext(currentAnzeige)-1;
-            if (pos>-1)
-                SetAnzeige(allAnzeigen[pos]);
-        }
-
-        private void CStackFwd_Click(object sender, EventArgs e)
-        {
-            int pos = FindAnzeigeNext(currentAnzeige) + 1;
-            if (pos > 0)
-                SetAnzeige(allAnzeigen[pos]);
-
         }
     }
 }
