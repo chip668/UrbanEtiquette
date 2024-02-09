@@ -20,6 +20,8 @@ namespace Anzeige
 {
     public partial class Main : Form
     {
+        AnzeigeClass currentAnzeige = null;
+        List<AnzeigeClass> allAnzeigen = new List<AnzeigeClass>();
         // Abstandsmessung 
         Double refwidth = 30;
         float scaleFactor = 3.0f; // Vergrößerungsfaktor
@@ -1619,6 +1621,11 @@ namespace Anzeige
                 oabrowser.Navigate("https://weg-li.de".Replace("<ort>", Ort));
                 CWeglide.Controls.Add(oabrowser);
             }
+            else if (CTabPages.SelectedTab == CPolice)
+            {
+                oabrowser.Navigate("https://www.google.com/search?q=polizei+<ort>".Replace("<ort>", Ort));
+                CPolice.Controls.Add(oabrowser);
+            }
             else if (CTabPages.SelectedTab == CGMaps)
             {
                 if (GPSLocation == "")
@@ -3066,5 +3073,18 @@ namespace Anzeige
                 }
             }
         }
+
+
+        private void CNextAnzeige_Click(object sender, EventArgs e)
+        {
+            currentAnzeige = new AnzeigeClass();
+            currentAnzeige.SetAnzeigeClass(cntpixel, Files, Datum, Zeit, Ort, PLZ,
+                Strasse, HN, Kennzeichen, Marke, Farbe,
+                Verstoss, FreeText, Mail, ZName, ZVorname,
+                ZOrt, ZPLZ, ZStrasse, ZHausnummer, Message);
+            allAnzeigen.Add(currentAnzeige);
+            CNew_Click(sender, e);
+        }
+
     }
 }

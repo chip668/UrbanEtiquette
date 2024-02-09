@@ -3,17 +3,17 @@ Schippers
 <zvorname>
 Norbert
 <zstrasse>
-xxxxxxxxxxxxxxxxxxx
+Klopstockweg
 <zhausnummer>
-xxx
+4
 <zplz>
-xxxxx
+40764
 <zort>
-xxxxxxxxx
+Langenfeld
 <zemail>
-xxxxxxxxxxxxxxxxxxxx
+schippersnorbert908@gmail.com
 <zphone>
-xxxxxxxxxxxxxxxxxx
++49 2173 1619422
 <zielpfad>
 Z:\Dokumente\Anzeigen\
 <zbluetooth>

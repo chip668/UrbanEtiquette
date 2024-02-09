@@ -37,6 +37,7 @@ namespace Anzeige
             this.CVerstossaus = new System.Windows.Forms.ListBox();
             this.CRaster = new System.Windows.Forms.NumericUpDown();
             this.CLoadPic = new System.Windows.Forms.Button();
+            this.CNextAnzeige = new System.Windows.Forms.Button();
             this.CAnzeige = new System.Windows.Forms.Button();
             this.CDTMEdit = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
@@ -147,6 +148,7 @@ namespace Anzeige
             this.CTest = new System.Windows.Forms.TabPage();
             this.CTestText = new System.Windows.Forms.TextBox();
             this.CAbout = new System.Windows.Forms.TabPage();
+            this.CPolice = new System.Windows.Forms.TabPage();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -225,6 +227,7 @@ namespace Anzeige
             this.CTAnzeige.Controls.Add(this.CVerstossaus);
             this.CTAnzeige.Controls.Add(this.CRaster);
             this.CTAnzeige.Controls.Add(this.CLoadPic);
+            this.CTAnzeige.Controls.Add(this.CNextAnzeige);
             this.CTAnzeige.Controls.Add(this.CAnzeige);
             this.CTAnzeige.Controls.Add(this.CDTMEdit);
             this.CTAnzeige.Controls.Add(this.label1);
@@ -293,7 +296,7 @@ namespace Anzeige
             this.CVerstossaus.Location = new System.Drawing.Point(90, 263);
             this.CVerstossaus.Name = "CVerstossaus";
             this.CVerstossaus.Size = new System.Drawing.Size(339, 88);
-            this.CVerstossaus.TabIndex = 5;
+            this.CVerstossaus.TabIndex = 9;
             this.toolTip1.SetToolTip(this.CVerstossaus, "Hier ist eine Liste der möglichen Verstöße");
             this.CVerstossaus.SelectedIndexChanged += new System.EventHandler(this.CVerstossaus_SelectedIndexChanged);
             this.CVerstossaus.DoubleClick += new System.EventHandler(this.CVerstossaus_DoubleClick);
@@ -304,6 +307,7 @@ namespace Anzeige
             this.CRaster.Name = "CRaster";
             this.CRaster.Size = new System.Drawing.Size(44, 29);
             this.CRaster.TabIndex = 21;
+            this.CRaster.TabStop = false;
             this.toolTip1.SetToolTip(this.CRaster, "Anzahl Pixel beim Verpixeln");
             this.CRaster.Value = new decimal(new int[] {
             20,
@@ -323,13 +327,24 @@ namespace Anzeige
             this.CLoadPic.UseVisualStyleBackColor = false;
             this.CLoadPic.Click += new System.EventHandler(this.CLoadPic_Click);
             // 
+            // CNextAnzeige
+            // 
+            this.CNextAnzeige.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.CNextAnzeige.Location = new System.Drawing.Point(214, 889);
+            this.CNextAnzeige.Name = "CNextAnzeige";
+            this.CNextAnzeige.Size = new System.Drawing.Size(215, 100);
+            this.CNextAnzeige.TabIndex = 18;
+            this.CNextAnzeige.Text = "nächste";
+            this.CNextAnzeige.UseVisualStyleBackColor = false;
+            this.CNextAnzeige.Click += new System.EventHandler(this.CNextAnzeige_Click);
+            // 
             // CAnzeige
             // 
             this.CAnzeige.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.CAnzeige.Location = new System.Drawing.Point(0, 889);
             this.CAnzeige.Name = "CAnzeige";
-            this.CAnzeige.Size = new System.Drawing.Size(429, 100);
-            this.CAnzeige.TabIndex = 9;
+            this.CAnzeige.Size = new System.Drawing.Size(208, 100);
+            this.CAnzeige.TabIndex = 17;
             this.CAnzeige.Text = "anzeigen";
             this.toolTip1.SetToolTip(this.CAnzeige, "Öffen eine Mail mit dem Verstoß");
             this.CAnzeige.UseVisualStyleBackColor = false;
@@ -341,7 +356,7 @@ namespace Anzeige
             this.CDTMEdit.Location = new System.Drawing.Point(90, 584);
             this.CDTMEdit.Name = "CDTMEdit";
             this.CDTMEdit.Size = new System.Drawing.Size(180, 29);
-            this.CDTMEdit.TabIndex = 19;
+            this.CDTMEdit.TabIndex = 12;
             this.CDTMEdit.Visible = false;
             this.CDTMEdit.ValueChanged += new System.EventHandler(this.CDTMEdit_ValueChanged);
             // 
@@ -364,6 +379,7 @@ namespace Anzeige
             this.CCopy.Name = "CCopy";
             this.CCopy.Size = new System.Drawing.Size(131, 25);
             this.CCopy.TabIndex = 18;
+            this.CCopy.TabStop = false;
             this.CCopy.Text = "Kopie erstellen";
             this.CCopy.UseVisualStyleBackColor = true;
             this.CCopy.CheckedChanged += new System.EventHandler(this.CAddFile_CheckedChanged);
@@ -387,6 +403,7 @@ namespace Anzeige
             this.CAddFile.Name = "CAddFile";
             this.CAddFile.Size = new System.Drawing.Size(128, 25);
             this.CAddFile.TabIndex = 18;
+            this.CAddFile.TabStop = false;
             this.CAddFile.Text = "Datei Anfügen";
             this.toolTip1.SetToolTip(this.CAddFile, "Sollen die Dateien als Anhang mit in den Mail-Text übernommen werden?");
             this.CAddFile.UseVisualStyleBackColor = true;
@@ -398,7 +415,8 @@ namespace Anzeige
             this.CStrasse.Location = new System.Drawing.Point(90, 127);
             this.CStrasse.Name = "CStrasse";
             this.CStrasse.Size = new System.Drawing.Size(257, 29);
-            this.CStrasse.TabIndex = 2;
+            this.CStrasse.TabIndex = 5;
+            this.CStrasse.TabStop = false;
             this.toolTip1.SetToolTip(this.CStrasse, "Strasse des Verstoßes");
             this.CStrasse.TextChanged += new System.EventHandler(this.CStrasse_TextChanged);
             // 
@@ -423,7 +441,8 @@ namespace Anzeige
             this.CPLZ.Location = new System.Drawing.Point(90, 92);
             this.CPLZ.Name = "CPLZ";
             this.CPLZ.Size = new System.Drawing.Size(83, 29);
-            this.CPLZ.TabIndex = 2;
+            this.CPLZ.TabIndex = 3;
+            this.CPLZ.TabStop = false;
             this.toolTip1.SetToolTip(this.CPLZ, "PLZ des Verstoßes");
             this.CPLZ.TextChanged += new System.EventHandler(this.CPLZ_TextChanged);
             // 
@@ -437,6 +456,7 @@ namespace Anzeige
             this.CAddPath.Name = "CAddPath";
             this.CAddPath.Size = new System.Drawing.Size(127, 25);
             this.CAddPath.TabIndex = 18;
+            this.CAddPath.TabStop = false;
             this.CAddPath.Text = "Pfad Anfügen ";
             this.toolTip1.SetToolTip(this.CAddPath, "Sollen die Bildpfade mit in den Mail-Text übernommen werden.");
             this.CAddPath.UseVisualStyleBackColor = true;
@@ -460,6 +480,7 @@ namespace Anzeige
             this.CreatePDF.Name = "CreatePDF";
             this.CreatePDF.Size = new System.Drawing.Size(93, 25);
             this.CreatePDF.TabIndex = 17;
+            this.CreatePDF.TabStop = false;
             this.CreatePDF.Text = "Formular";
             this.CreatePDF.UseVisualStyleBackColor = false;
             this.CreatePDF.CheckedChanged += new System.EventHandler(this.CreatePDF_CheckedChanged);
@@ -483,7 +504,8 @@ namespace Anzeige
             this.CFreeText.Multiline = true;
             this.CFreeText.Name = "CFreeText";
             this.CFreeText.Size = new System.Drawing.Size(339, 88);
-            this.CFreeText.TabIndex = 16;
+            this.CFreeText.TabIndex = 11;
+            this.CFreeText.TabStop = false;
             this.toolTip1.SetToolTip(this.CFreeText, "Hier kann eine Zussätzliche Anmerklung gemacht werden");
             // 
             // label3
@@ -502,7 +524,8 @@ namespace Anzeige
             this.listBoxDevices.Location = new System.Drawing.Point(319, 57);
             this.listBoxDevices.Name = "listBoxDevices";
             this.listBoxDevices.Size = new System.Drawing.Size(110, 29);
-            this.listBoxDevices.TabIndex = 14;
+            this.listBoxDevices.TabIndex = 2;
+            this.listBoxDevices.TabStop = false;
             this.toolTip1.SetToolTip(this.listBoxDevices, "Gerät mit dem fotografiert wurde");
             this.listBoxDevices.SelectedIndexChanged += new System.EventHandler(this.listBoxDevices_SelectedIndexChanged);
             this.listBoxDevices.SelectedValueChanged += new System.EventHandler(this.listBoxDevices_SelectedValueChanged);
@@ -514,7 +537,7 @@ namespace Anzeige
             this.CKennzeichen.Location = new System.Drawing.Point(103, 712);
             this.CKennzeichen.Name = "CKennzeichen";
             this.CKennzeichen.Size = new System.Drawing.Size(326, 22);
-            this.CKennzeichen.TabIndex = 2;
+            this.CKennzeichen.TabIndex = 15;
             this.CKennzeichen.TextChanged += new System.EventHandler(this.CKennzeichen_TextChanged);
             // 
             // button3
@@ -526,6 +549,7 @@ namespace Anzeige
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(33, 40);
             this.button3.TabIndex = 13;
+            this.button3.TabStop = false;
             this.button3.Text = "🛈";
             this.toolTip1.SetToolTip(this.button3, "Assistenten für die Anzeige starten");
             this.button3.UseVisualStyleBackColor = false;
@@ -549,6 +573,7 @@ namespace Anzeige
             this.cOrtSuche.Name = "cOrtSuche";
             this.cOrtSuche.Size = new System.Drawing.Size(33, 40);
             this.cOrtSuche.TabIndex = 13;
+            this.cOrtSuche.TabStop = false;
             this.toolTip1.SetToolTip(this.cOrtSuche, "Aktuelle Position auf Google Maps öffnen");
             this.cOrtSuche.UseVisualStyleBackColor = false;
             this.cOrtSuche.Click += new System.EventHandler(this.cOrtSuche_Click);
@@ -559,7 +584,8 @@ namespace Anzeige
             this.CZeit.Location = new System.Drawing.Point(310, 584);
             this.CZeit.Name = "CZeit";
             this.CZeit.Size = new System.Drawing.Size(119, 29);
-            this.CZeit.TabIndex = 2;
+            this.CZeit.TabIndex = 13;
+            this.CZeit.TabStop = false;
             this.toolTip1.SetToolTip(this.CZeit, "Zeit des Verstoßes");
             this.CZeit.TextChanged += new System.EventHandler(this.CZeit_TextChanged);
             // 
@@ -590,7 +616,8 @@ namespace Anzeige
             this.CNew.Location = new System.Drawing.Point(27, 6);
             this.CNew.Name = "CNew";
             this.CNew.Size = new System.Drawing.Size(33, 40);
-            this.CNew.TabIndex = 11;
+            this.CNew.TabIndex = 0;
+            this.CNew.TabStop = false;
             this.CNew.Text = "🗎";
             this.toolTip1.SetToolTip(this.CNew, "Hier anklicken um alle Daten zu löschen  und eine neue Anzeige zu erstellen.");
             this.CNew.UseVisualStyleBackColor = false;
@@ -602,7 +629,8 @@ namespace Anzeige
             this.CZeitBis.Location = new System.Drawing.Point(310, 619);
             this.CZeitBis.Name = "CZeitBis";
             this.CZeitBis.Size = new System.Drawing.Size(119, 29);
-            this.CZeitBis.TabIndex = 2;
+            this.CZeitBis.TabIndex = 14;
+            this.CZeitBis.TabStop = false;
             this.CZeitBis.TextChanged += new System.EventHandler(this.CZeitBis_TextChanged);
             // 
             // CLoad
@@ -612,6 +640,7 @@ namespace Anzeige
             this.CLoad.Name = "CLoad";
             this.CLoad.Size = new System.Drawing.Size(33, 40);
             this.CLoad.TabIndex = 10;
+            this.CLoad.TabStop = false;
             this.CLoad.Text = "📁";
             this.toolTip1.SetToolTip(this.CLoad, "Vorherige Anzeige laden.");
             this.CLoad.UseVisualStyleBackColor = false;
@@ -633,6 +662,7 @@ namespace Anzeige
             this.CSpeichern.Name = "CSpeichern";
             this.CSpeichern.Size = new System.Drawing.Size(33, 40);
             this.CSpeichern.TabIndex = 10;
+            this.CSpeichern.TabStop = false;
             this.CSpeichern.Text = "💾";
             this.toolTip1.SetToolTip(this.CSpeichern, "Speichern der aktuellen Anzeige");
             this.CSpeichern.UseVisualStyleBackColor = false;
@@ -653,7 +683,7 @@ namespace Anzeige
             this.CClip.Location = new System.Drawing.Point(58, 6);
             this.CClip.Name = "CClip";
             this.CClip.Size = new System.Drawing.Size(33, 40);
-            this.CClip.TabIndex = 10;
+            this.CClip.TabIndex = 1;
             this.CClip.Text = "📋";
             this.toolTip1.SetToolTip(this.CClip, "Hier anklicken um die Sadresse aus google Maps zu übernehmen");
             this.CClip.UseVisualStyleBackColor = false;
@@ -676,7 +706,8 @@ namespace Anzeige
             this.CFiles.Location = new System.Drawing.Point(131, 753);
             this.CFiles.Name = "CFiles";
             this.CFiles.Size = new System.Drawing.Size(298, 130);
-            this.CFiles.TabIndex = 8;
+            this.CFiles.TabIndex = 16;
+            this.CFiles.TabStop = false;
             this.toolTip1.SetToolTip(this.CFiles, "Fotos als Beweismittel");
             this.CFiles.SelectedIndexChanged += new System.EventHandler(this.CFiles_SelectedIndexChanged);
             this.CFiles.DragDrop += new System.Windows.Forms.DragEventHandler(this.CFiles_DragDrop);
@@ -697,11 +728,13 @@ namespace Anzeige
             // 
             this.COrt.BackColor = System.Drawing.Color.White;
             this.COrt.FormattingEnabled = true;
+            this.COrt.ItemHeight = 21;
             this.COrt.Location = new System.Drawing.Point(179, 92);
             this.COrt.Name = "COrt";
             this.COrt.Size = new System.Drawing.Size(250, 29);
             this.COrt.Sorted = true;
             this.COrt.TabIndex = 7;
+            this.COrt.TabStop = false;
             this.toolTip1.SetToolTip(this.COrt, "Ort des Verstoßes");
             this.COrt.SelectedIndexChanged += new System.EventHandler(this.COrt_SelectedIndexChanged);
             this.COrt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.COrt_KeyPress);
@@ -712,7 +745,8 @@ namespace Anzeige
             this.CHN.Location = new System.Drawing.Point(353, 127);
             this.CHN.Name = "CHN";
             this.CHN.Size = new System.Drawing.Size(76, 29);
-            this.CHN.TabIndex = 2;
+            this.CHN.TabIndex = 6;
+            this.CHN.TabStop = false;
             this.toolTip1.SetToolTip(this.CHN, "Hausnummer an dem der Verstoß stattgefunden hat");
             this.CHN.TextChanged += new System.EventHandler(this.CHN_TextChanged);
             // 
@@ -732,6 +766,7 @@ namespace Anzeige
             this.CHelp.Name = "CHelp";
             this.CHelp.Size = new System.Drawing.Size(33, 40);
             this.CHelp.TabIndex = 6;
+            this.CHelp.TabStop = false;
             this.CHelp.Text = "?";
             this.toolTip1.SetToolTip(this.CHelp, "Hilfe anzeigen");
             this.CHelp.UseVisualStyleBackColor = false;
@@ -743,7 +778,8 @@ namespace Anzeige
             this.CMail.Location = new System.Drawing.Point(90, 57);
             this.CMail.Name = "CMail";
             this.CMail.Size = new System.Drawing.Size(223, 29);
-            this.CMail.TabIndex = 2;
+            this.CMail.TabIndex = 1;
+            this.CMail.TabStop = false;
             this.toolTip1.SetToolTip(this.CMail, "Hier wird die Mailadresse des Ordnungsamte eingetragen");
             this.CMail.TextChanged += new System.EventHandler(this.CMail_TextChanged);
             // 
@@ -754,6 +790,7 @@ namespace Anzeige
             this.CText.Name = "CText";
             this.CText.Size = new System.Drawing.Size(33, 40);
             this.CText.TabIndex = 6;
+            this.CText.TabStop = false;
             this.CText.Text = "🗎";
             this.toolTip1.SetToolTip(this.CText, "Textvorlage bearbeiten");
             this.CText.UseVisualStyleBackColor = false;
@@ -776,7 +813,8 @@ namespace Anzeige
             this.panel1.Location = new System.Drawing.Point(-3, 654);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(432, 52);
-            this.panel1.TabIndex = 3;
+            this.panel1.TabIndex = 13;
+            this.panel1.TabStop = true;
             this.toolTip1.SetToolTip(this.panel1, "Bitte Farbe des KFZ wählen");
             // 
             // panel12
@@ -908,6 +946,7 @@ namespace Anzeige
             this.CSettings.Name = "CSettings";
             this.CSettings.Size = new System.Drawing.Size(33, 40);
             this.CSettings.TabIndex = 6;
+            this.CSettings.TabStop = false;
             this.CSettings.Text = "⚙";
             this.toolTip1.SetToolTip(this.CSettings, "Hier werden dio Daten des Anzeigenden angegeben. Sowie der Pfad auf dem Die Anzei" +
         "ogebilder abgelegt werden.");
@@ -922,7 +961,9 @@ namespace Anzeige
             this.CMarke.Location = new System.Drawing.Point(90, 162);
             this.CMarke.Name = "CMarke";
             this.CMarke.Size = new System.Drawing.Size(214, 113);
-            this.CMarke.TabIndex = 4;
+            this.CMarke.Sorted = true;
+            this.CMarke.TabIndex = 7;
+            this.CMarke.TabStop = false;
             this.toolTip1.SetToolTip(this.CMarke, "Marke des KFZ (Auswählen oder eingeben)");
             this.CMarke.SelectedIndexChanged += new System.EventHandler(this.CMarke_SelectedIndexChanged);
             // 
@@ -933,6 +974,7 @@ namespace Anzeige
             this.CDirOpen.Name = "CDirOpen";
             this.CDirOpen.Size = new System.Drawing.Size(33, 40);
             this.CDirOpen.TabIndex = 6;
+            this.CDirOpen.TabStop = false;
             this.CDirOpen.Text = "📁";
             this.toolTip1.SetToolTip(this.CDirOpen, "Ordner öffnen");
             this.CDirOpen.UseVisualStyleBackColor = false;
@@ -945,6 +987,7 @@ namespace Anzeige
             this.CLupe.Name = "CLupe";
             this.CLupe.Size = new System.Drawing.Size(33, 40);
             this.CLupe.TabIndex = 6;
+            this.CLupe.TabStop = false;
             this.CLupe.Text = "🎥";
             this.toolTip1.SetToolTip(this.CLupe, "Video öffen ");
             this.CLupe.UseVisualStyleBackColor = false;
@@ -958,7 +1001,8 @@ namespace Anzeige
             this.CVerstoss.Location = new System.Drawing.Point(90, 396);
             this.CVerstoss.Name = "CVerstoss";
             this.CVerstoss.Size = new System.Drawing.Size(339, 88);
-            this.CVerstoss.TabIndex = 5;
+            this.CVerstoss.TabIndex = 10;
+            this.CVerstoss.TabStop = false;
             this.toolTip1.SetToolTip(this.CVerstoss, "Liste der ausgewählten Verstöße");
             this.CVerstoss.SelectedIndexChanged += new System.EventHandler(this.CVerstoss_SelectedIndexChanged);
             this.CVerstoss.DoubleClick += new System.EventHandler(this.CVerstoss_DoubleClick);
@@ -970,6 +1014,7 @@ namespace Anzeige
             this.CLoadVerstoss.Name = "CLoadVerstoss";
             this.CLoadVerstoss.Size = new System.Drawing.Size(35, 38);
             this.CLoadVerstoss.TabIndex = 6;
+            this.CLoadVerstoss.TabStop = false;
             this.CLoadVerstoss.Text = "📁";
             this.toolTip1.SetToolTip(this.CLoadVerstoss, "Merere Verstöße laden.");
             this.CLoadVerstoss.UseVisualStyleBackColor = false;
@@ -982,6 +1027,7 @@ namespace Anzeige
             this.CBack.Name = "CBack";
             this.CBack.Size = new System.Drawing.Size(35, 38);
             this.CBack.TabIndex = 6;
+            this.CBack.TabStop = false;
             this.CBack.Text = "🠗";
             this.toolTip1.SetToolTip(this.CBack, "Ausgewählten Verstoß übernehmen");
             this.CBack.UseVisualStyleBackColor = false;
@@ -994,6 +1040,7 @@ namespace Anzeige
             this.CClipImage.Name = "CClipImage";
             this.CClipImage.Size = new System.Drawing.Size(33, 40);
             this.CClipImage.TabIndex = 6;
+            this.CClipImage.TabStop = false;
             this.CClipImage.Text = "🖼";
             this.toolTip1.SetToolTip(this.CClipImage, "Bild aus der Zwischenablage ienfügen");
             this.CClipImage.UseVisualStyleBackColor = false;
@@ -1006,6 +1053,7 @@ namespace Anzeige
             this.CSaveVerstoss.Name = "CSaveVerstoss";
             this.CSaveVerstoss.Size = new System.Drawing.Size(35, 38);
             this.CSaveVerstoss.TabIndex = 6;
+            this.CSaveVerstoss.TabStop = false;
             this.CSaveVerstoss.Text = "💾";
             this.toolTip1.SetToolTip(this.CSaveVerstoss, "Verstöße speichern unter ");
             this.CSaveVerstoss.UseVisualStyleBackColor = false;
@@ -1018,6 +1066,7 @@ namespace Anzeige
             this.CBackall.Name = "CBackall";
             this.CBackall.Size = new System.Drawing.Size(35, 38);
             this.CBackall.TabIndex = 6;
+            this.CBackall.TabStop = false;
             this.CBackall.Text = "⇊";
             this.toolTip1.SetToolTip(this.CBackall, "Alle Verstöße löschen");
             this.CBackall.UseVisualStyleBackColor = false;
@@ -1030,6 +1079,7 @@ namespace Anzeige
             this.Ctoall.Name = "Ctoall";
             this.Ctoall.Size = new System.Drawing.Size(35, 38);
             this.Ctoall.TabIndex = 6;
+            this.Ctoall.TabStop = false;
             this.Ctoall.Text = "⇈";
             this.toolTip1.SetToolTip(this.Ctoall, "Alle Verstöße übernehmen");
             this.Ctoall.UseVisualStyleBackColor = false;
@@ -1042,6 +1092,7 @@ namespace Anzeige
             this.CToo.Name = "CToo";
             this.CToo.Size = new System.Drawing.Size(35, 38);
             this.CToo.TabIndex = 6;
+            this.CToo.TabStop = false;
             this.CToo.Text = "↑";
             this.toolTip1.SetToolTip(this.CToo, "Ausgewählten Verstoß übernehmen");
             this.CToo.UseVisualStyleBackColor = false;
@@ -1441,6 +1492,7 @@ namespace Anzeige
             this.CTabPages.Controls.Add(this.CGMaps);
             this.CTabPages.Controls.Add(this.CTest);
             this.CTabPages.Controls.Add(this.CAbout);
+            this.CTabPages.Controls.Add(this.CPolice);
             this.CTabPages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CTabPages.Location = new System.Drawing.Point(0, 0);
             this.CTabPages.Name = "CTabPages";
@@ -1626,6 +1678,15 @@ namespace Anzeige
             this.CAbout.TabIndex = 7;
             this.CAbout.Text = "About";
             this.CAbout.UseVisualStyleBackColor = true;
+            // 
+            // CPolice
+            // 
+            this.CPolice.Location = new System.Drawing.Point(4, 30);
+            this.CPolice.Name = "CPolice";
+            this.CPolice.Size = new System.Drawing.Size(724, 996);
+            this.CPolice.TabIndex = 8;
+            this.CPolice.Text = "Polizei";
+            this.CPolice.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
@@ -1816,6 +1877,8 @@ namespace Anzeige
         private System.Windows.Forms.PictureBox pictureBox11;
         private System.Windows.Forms.PictureBox pictureBox10;
         private System.Windows.Forms.PictureBox COCRPicture;
+        private System.Windows.Forms.TabPage CPolice;
+        private System.Windows.Forms.Button CNextAnzeige;
     }
 }
 
