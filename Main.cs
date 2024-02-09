@@ -57,7 +57,6 @@ namespace Anzeige
             DIST2
         }
         Mode mousemode;
-
         // Falschparker
         String configfile = "config.txt";
         ErrorLogger debug = null;
@@ -98,9 +97,6 @@ namespace Anzeige
                 _selectedRef.Parent.Refresh();
             }
         }
-
-
-
         private String FullPath
         {
             get
@@ -351,7 +347,6 @@ namespace Anzeige
         public string ZEMail { get; private set; }
         public string ZPhone { get; private set; }
         public string GPSLocation { get; private set; }
-
         public string Message
         {
             get
@@ -1109,8 +1104,6 @@ namespace Anzeige
                 }
             }
         }
-
-
         private void CFoto_MouseUp_Old(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -1189,9 +1182,6 @@ namespace Anzeige
                 catch { }
             }
         }
-
-        // ...
-
         private void CFoto_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -1283,8 +1273,6 @@ namespace Anzeige
                 catch { }
             }
         }
-
-
         private Rectangle Transform(Rectangle bildausschnitt, Control clientControl, Rectangle ausschnitt)
         {
             return Transform(Bildausschnitt, clientControl.ClientRectangle, ausschnitt.Size);
@@ -1578,7 +1566,6 @@ namespace Anzeige
             cntpixel = 0;
             CAusschnitt.Hide();
         }
-
         private void CTabPages_SelectedIndexChanged(object sender, EventArgs e)
         {
             CStadtPate.Controls.Clear();
@@ -1950,7 +1937,6 @@ namespace Anzeige
             { 'S', new List<char>(){ 'S', '5' } }
         };
         private Color c2;
-
         private string FindOrtX(string letters)
         {
             String result = "";
@@ -2736,7 +2722,6 @@ namespace Anzeige
                 }
             }
         }
-
         private void Insert_Click(object sender, EventArgs e)
         {
             if (Clipboard.ContainsImage())
@@ -3027,21 +3012,18 @@ namespace Anzeige
                     break;
             }
         }
-
         private void pictureBox11_Click(object sender, EventArgs e)
         {
             refwidth = 12;
             selectedRef = pictureBox11;
             textrefresh();
         }
-
         private void pictureBox10_Click(object sender, EventArgs e)
         {
             refwidth = 50;
             selectedRef = pictureBox10;
             textrefresh();
         }
-
         private void CTAnzeige_Click(object sender, EventArgs e)
         {
 
@@ -3073,8 +3055,6 @@ namespace Anzeige
                 }
             }
         }
-
-
         private void CNextAnzeige_Click(object sender, EventArgs e)
         {
             currentAnzeige = new AnzeigeClass();
@@ -3085,6 +3065,55 @@ namespace Anzeige
             allAnzeigen.Add(currentAnzeige);
             CNew_Click(sender, e);
         }
+        private void SetAnzeige (AnzeigeClass anzeige)
+        {
+            cntpixel = anzeige.cntpixel;
+            Files = anzeige.Files;
+            Datum = anzeige.Datum;
+            Zeit = anzeige.Zeit;
+            Ort = anzeige.Ort;
+            PLZ = anzeige.PLZ;
+            Strasse = anzeige.Strasse;
+            HN = anzeige.HN;
+            Kennzeichen = anzeige.Kennzeichen;
+            Marke = anzeige.Marke;
+            Farbe = anzeige.Farbe;
+            Verstoss = anzeige.Verstoss;
+            FreeText = anzeige.FreeText;
+            Mail = anzeige.Mail;
+            ZName = anzeige.ZName;
+            ZVorname = anzeige.ZVorname;
+            ZOrt = anzeige.ZOrt;
+            ZPLZ = anzeige.ZPLZ;
+            ZStrasse = anzeige.ZStrasse;
+            ZHausnummer = anzeige.ZHausnummer;
+            // Message = anzeige.Message;
+            this.Refresh();
+        }
 
+
+        private int FindAnzeigeNext (AnzeigeClass anzeige)
+        {
+            for(int i=0; i< allAnzeigen.Count; i++)
+            {
+                if (allAnzeigen[i] == currentAnzeige)
+                    return i;
+            }
+            return -1;
+        }
+        private void CStackBack_Click(object sender, EventArgs e)
+        {
+            int pos = FindAnzeigeNext(currentAnzeige)-1;
+            if (pos>-1)
+                SetAnzeige(allAnzeigen[pos]);
+        }
+
+        private void CStackFwd_Click(object sender, EventArgs e)
+        {
+            int pos = FindAnzeigeNext(currentAnzeige) + 1;
+            if (pos > 0)
+                SetAnzeige(allAnzeigen[pos]);
+
+        }
     }
 }
