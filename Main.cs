@@ -1,5 +1,4 @@
 ﻿using IronOcr;
-using IronOcr;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -654,9 +653,11 @@ namespace Anzeige
         private void CLoadPic_Click(object sender, EventArgs e)
         {
             CNew_Click(sender, e);
+            CreateDirectoryIfNotExists(ZZielpfad + "Download");
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = true;
             openFileDialog.InitialDirectory = ZZielpfad + "Download";
+
             // ShellExecute(IntPtr.Zero, "open", openFileDialog.InitialDirectory, "", "", 5);
             // Filter für verschiedene Bilddateitypen festlegen
             openFileDialog.Filter = "JPEG-Bilder (*.jpg, *.jpeg)|*.jpg;*.jpeg|" +
@@ -695,6 +696,7 @@ namespace Anzeige
             {
                 original = (Bitmap)Bitmap.FromFile(fileName);
                 ausschnitt = original;
+                // ausschnitt = ScaleImage(original, CSave.Width, CSave.Height);
                 // CFoto.Image = Bitmap.FromFile(fileName);
                 CSave.BackgroundImage = ausschnitt;
                 // currentfilename = fileName;
@@ -721,6 +723,61 @@ namespace Anzeige
             {
             }
         }
+        private void SelectFile_new(string fileName)
+        {
+            PhotoMetadataExtractor data = new PhotoMetadataExtractor(fileName);
+            Datum = data.Date;
+            Zeit = data.Time;
+
+            try
+            {
+                original = (Bitmap)Bitmap.FromFile(fileName);
+
+                // Scale the image to fit in CSave
+
+                CSave.BackgroundImage = ausschnitt;
+
+                // Restliche Logik bleibt unverändert...
+
+            }
+            catch
+            {
+                // Fehlerbehandlung
+            }
+        }
+
+        private Bitmap ScaleImage(Bitmap image, int maxWidth, int maxHeight)
+        {
+            // Berechnen Sie das Seitenverhältnis des Bildes
+            float aspectRatio = (float)image.Width / image.Height;
+
+            // Berechnen Sie die neuen Abmessungen basierend auf dem Seitenverhältnis und den maximalen Dimensionen
+            int newWidth = maxWidth;
+            int newHeight = (int)(newWidth / aspectRatio);
+
+            if (newHeight > maxHeight)
+            {
+                // Wenn die Höhe nach der Skalierung größer als die maximale Höhe ist, passen Sie die Höhe entsprechend an
+                newHeight = maxHeight;
+                newWidth = (int)(newHeight * aspectRatio);
+            }
+
+            // Erstellen Sie ein neues Bitmap-Objekt mit den skalierten Abmessungen
+            Bitmap scaledImage = new Bitmap(newWidth, newHeight);
+
+            // Erstellen Sie eine Grafik vom skalierten Bild
+            using (Graphics g = Graphics.FromImage(scaledImage))
+            {
+                // Setzen Sie die Interpolation auf hohe Qualität für eine bessere Skalierung
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+
+                // Zeichnen Sie das skalierte Bild
+                g.DrawImage(image, 0, 0, newWidth, newHeight);
+            }
+
+            return scaledImage;
+        }
+
         /// <summary>
         /// Initialisierungen der Anwendung
         /// </summary>
@@ -1124,8 +1181,8 @@ namespace Anzeige
 
                                 // Den Dateipfad für die geschwärzte Kopie festlegen
                                 // string geschwaerzteKopiePfad = Path.GetTempFileName().Replace(".tmp", ".jpg");
+                                CreateDirectoryIfNotExists(ZZielpfad + "public\\");
                                 string geschwaerzteKopiePfad = ZZielpfad + "public\\" + Guid.NewGuid().ToString() + ".jpg"; ;
-
                                 // Die geschwärzte Kopie speichern
                                 kopie.Save(geschwaerzteKopiePfad, ImageFormat.Jpeg);
                                 // Jetzt haben Sie die geschwärzte Kopie in der Variable 'geschwaerzteKopiePfad'
@@ -1180,8 +1237,11 @@ namespace Anzeige
             {
                 try
                 {
+                    cstack.Push(this.Cursor);
+                    this.Cursor = Cursors.WaitCursor;
                     if (ausschnitt != null)
                     {
+
                         Rectangle rcl = Transform(Bildausschnitt, CSave.ClientRectangle, ausschnitt.Size);
                         Bitmap tempausschnitt = CropRectangleFromBitmap(ausschnitt, bmpAusschnitt);
                         CAusschnitt.BackgroundImage = tempausschnitt;
@@ -1262,6 +1322,7 @@ namespace Anzeige
                     }
                 }
                 catch { }
+                cstack.Pop();
             }
         }
         private Rectangle Transform(Rectangle bildausschnitt, Control clientControl, Rectangle ausschnitt)
@@ -2340,7 +2401,7 @@ namespace Anzeige
             dlg.Filter = "Video Files|*.mp4;*.avi;*.mkv|All Files|*.*";
             dlg.Title = "Select a Video File";
             dlg.InitialDirectory = ZZielpfad + "Download";
-
+            CreateDirectoryIfNotExists(ZZielpfad + "Download");
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 ShellExecute(IntPtr.Zero, "open", dlg.FileName, "", "", 5);
@@ -2630,7 +2691,10 @@ namespace Anzeige
         }
         private void LoadImage(String filename)
         {
-            SetImage(new Bitmap(filename));
+            Bitmap temp = new Bitmap(filename);
+            temp = ScaleImage(temp, pictureBox.Width, pictureBox.Height);
+
+            SetImage(temp);
         }
         /*        
          *      Point pleft;
