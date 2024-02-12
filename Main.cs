@@ -505,6 +505,8 @@ namespace Anzeige
             allLines.AddRange(File.ReadAllLines(configfile));
             allLines.AddRange(File.ReadAllLines("Data.txt"));
             string[] lines = allLines.ToArray();
+            CDataList.Items.Clear();
+            CDataList.Items.AddRange(lines);
 
             // String[] lines = File.ReadAllLines("Data.txt");
 
@@ -800,6 +802,8 @@ namespace Anzeige
             selectedRef = pictureBox4;
             selectedRef.Parent.Paint += Parent_Paint;
             aboutdlg.Hide();
+            // edit_Adress1.Dock = DockStyle.Fill;
+            // edit_Line1.Dock = DockStyle.Fill;
         }
         /// <summary>
         /// Farbe auswählen
@@ -1610,6 +1614,11 @@ namespace Anzeige
                 Rectangle rcl = Transform(Bildausschnitt, CSave.ClientRectangle, ausschnitt.Size);
             }
             CAusschnitt.Height = CSave.Height / 2;
+            edit_Line1.Location = new Point(0, 0);
+            edit_Line1.Size = CSave.Size;
+            edit_Adress1.Location = new Point(0, 0);
+            edit_Adress1.Size = CSave.Size;
+
         }
         private void CFiles_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -3113,6 +3122,43 @@ namespace Anzeige
         private void CNextAnzeige_Click(object sender, EventArgs e)
         {
             CNew_Click(sender, e);
+        }
+
+        private void CDataList_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void CDataList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int idx = CDataList.SelectedIndex;
+            int pos = idx - 1;
+            while ((pos > -1) && (((String)CDataList.Items[pos])).Substring(0, 1) != "<")
+                pos--;
+            if (pos >-1)
+            {
+                String s = (String)CDataList.Items[pos];
+                String s0 = (String)CDataList.Items[idx];
+                if (s0.Substring(0, 1) != "<")
+                {
+                    switch (s)
+                    {
+                        case "<ort>;<mail>":
+                            edit_Line1.Visible = false;
+                            edit_Adress1.Line = s0;
+                            edit_Adress1.Dock = DockStyle.Fill;
+                            edit_Adress1.Visible = true;
+                            break;
+
+                        default:
+                            edit_Adress1.Visible = false;
+                            edit_Line1.Caption = s;
+                            edit_Line1.Text = s0;
+                            edit_Line1.Dock = DockStyle.Fill;
+                            edit_Line1.Visible = true;
+                            break;
+                    }
+                }
+            }
         }
     }
 }

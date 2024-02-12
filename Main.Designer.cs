@@ -130,9 +130,13 @@ namespace Anzeige
             this.right = new System.Windows.Forms.RadioButton();
             this.left = new System.Windows.Forms.RadioButton();
             this.openButton = new System.Windows.Forms.Button();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.CAdressen = new System.Windows.Forms.TabPage();
+            this.CDataList = new System.Windows.Forms.ListBox();
             this.CTabPages = new System.Windows.Forms.TabControl();
             this.CSave = new System.Windows.Forms.TabPage();
+            this.edit_Adress1 = new Anzeige.Edit_Adress();
+            this.edit_Line1 = new Anzeige.Edit_Line();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
             this.COCRPicture = new System.Windows.Forms.PictureBox();
             this.CAusschnitt = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -172,9 +176,10 @@ namespace Anzeige
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            this.CAdressen.SuspendLayout();
             this.CTabPages.SuspendLayout();
             this.CSave.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.COCRPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CAusschnitt)).BeginInit();
             this.tabPage2.SuspendLayout();
@@ -201,7 +206,6 @@ namespace Anzeige
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.pictureBox);
             this.splitContainer1.Panel2.Controls.Add(this.CTabPages);
             this.splitContainer1.Size = new System.Drawing.Size(1176, 1030);
             this.splitContainer1.SplitterDistance = 440;
@@ -212,6 +216,7 @@ namespace Anzeige
             this.tabControl1.Controls.Add(this.CTAnzeige);
             this.tabControl1.Controls.Add(this.CTInfo);
             this.tabControl1.Controls.Add(this.CTAbstand);
+            this.tabControl1.Controls.Add(this.CAdressen);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -1454,20 +1459,26 @@ namespace Anzeige
             this.openButton.UseVisualStyleBackColor = true;
             this.openButton.Click += new System.EventHandler(this.openButton_Click);
             // 
-            // pictureBox
+            // CAdressen
             // 
-            this.pictureBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox.BackgroundImage")));
-            this.pictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.pictureBox.Location = new System.Drawing.Point(570, 31);
-            this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(159, 94);
-            this.pictureBox.TabIndex = 1;
-            this.pictureBox.TabStop = false;
-            this.pictureBox.Visible = false;
-            this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
-            this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseMove);
-            this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
+            this.CAdressen.BackColor = System.Drawing.Color.Yellow;
+            this.CAdressen.Controls.Add(this.CDataList);
+            this.CAdressen.Location = new System.Drawing.Point(4, 30);
+            this.CAdressen.Name = "CAdressen";
+            this.CAdressen.Size = new System.Drawing.Size(432, 996);
+            this.CAdressen.TabIndex = 3;
+            this.CAdressen.Text = "Daten";
+            // 
+            // CDataList
+            // 
+            this.CDataList.FormattingEnabled = true;
+            this.CDataList.ItemHeight = 21;
+            this.CDataList.Location = new System.Drawing.Point(4, 4);
+            this.CDataList.Name = "CDataList";
+            this.CDataList.Size = new System.Drawing.Size(425, 508);
+            this.CDataList.TabIndex = 0;
+            this.CDataList.Click += new System.EventHandler(this.CDataList_Click);
+            this.CDataList.SelectedIndexChanged += new System.EventHandler(this.CDataList_SelectedIndexChanged);
             // 
             // CTabPages
             // 
@@ -1493,6 +1504,9 @@ namespace Anzeige
             // 
             this.CSave.BackColor = System.Drawing.Color.Silver;
             this.CSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.CSave.Controls.Add(this.edit_Adress1);
+            this.CSave.Controls.Add(this.edit_Line1);
+            this.CSave.Controls.Add(this.pictureBox);
             this.CSave.Controls.Add(this.COCRPicture);
             this.CSave.Controls.Add(this.CAusschnitt);
             this.CSave.Location = new System.Drawing.Point(4, 30);
@@ -1510,11 +1524,44 @@ namespace Anzeige
             this.CSave.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CFoto_MouseUp);
             this.CSave.Resize += new System.EventHandler(this.CFotoAnzeige_Resize);
             // 
+            // edit_Adress1
+            // 
+            this.edit_Adress1.Line = ";;;;about:blank";
+            this.edit_Adress1.Location = new System.Drawing.Point(59, 343);
+            this.edit_Adress1.Name = "edit_Adress1";
+            this.edit_Adress1.Size = new System.Drawing.Size(261, 161);
+            this.edit_Adress1.TabIndex = 5;
+            this.edit_Adress1.Visible = false;
+            // 
+            // edit_Line1
+            // 
+            this.edit_Line1.Caption = "Caption";
+            this.edit_Line1.Location = new System.Drawing.Point(362, 343);
+            this.edit_Line1.Name = "edit_Line1";
+            this.edit_Line1.Size = new System.Drawing.Size(174, 136);
+            this.edit_Line1.TabIndex = 4;
+            this.edit_Line1.Visible = false;
+            // 
+            // pictureBox
+            // 
+            this.pictureBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox.BackgroundImage")));
+            this.pictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.pictureBox.Location = new System.Drawing.Point(562, 8);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(159, 94);
+            this.pictureBox.TabIndex = 1;
+            this.pictureBox.TabStop = false;
+            this.pictureBox.Visible = false;
+            this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
+            this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseMove);
+            this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
+            // 
             // COCRPicture
             // 
-            this.COCRPicture.Location = new System.Drawing.Point(248, 440);
+            this.COCRPicture.Location = new System.Drawing.Point(3, 3);
             this.COCRPicture.Name = "COCRPicture";
-            this.COCRPicture.Size = new System.Drawing.Size(228, 116);
+            this.COCRPicture.Size = new System.Drawing.Size(80, 41);
             this.COCRPicture.TabIndex = 3;
             this.COCRPicture.TabStop = false;
             this.COCRPicture.Visible = false;
@@ -1526,7 +1573,7 @@ namespace Anzeige
             this.CAusschnitt.Dock = System.Windows.Forms.DockStyle.Top;
             this.CAusschnitt.Location = new System.Drawing.Point(3, 3);
             this.CAusschnitt.Name = "CAusschnitt";
-            this.CAusschnitt.Size = new System.Drawing.Size(718, 255);
+            this.CAusschnitt.Size = new System.Drawing.Size(718, 300);
             this.CAusschnitt.TabIndex = 0;
             this.CAusschnitt.TabStop = false;
             this.toolTip1.SetToolTip(this.CAusschnitt, "Foto des Verstoßes");
@@ -1714,9 +1761,10 @@ namespace Anzeige
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            this.CAdressen.ResumeLayout(false);
             this.CTabPages.ResumeLayout(false);
             this.CSave.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.COCRPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CAusschnitt)).EndInit();
             this.tabPage2.ResumeLayout(false);
@@ -1865,6 +1913,10 @@ namespace Anzeige
         private System.Windows.Forms.PictureBox pictureBox10;
         private System.Windows.Forms.PictureBox COCRPicture;
         private System.Windows.Forms.TabPage CPolice;
+        private System.Windows.Forms.TabPage CAdressen;
+        private System.Windows.Forms.ListBox CDataList;
+        private Edit_Line edit_Line1;
+        private Edit_Adress edit_Adress1;
     }
 }
 
