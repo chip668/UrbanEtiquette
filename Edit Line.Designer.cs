@@ -51,6 +51,7 @@ namespace Anzeige
             this.CText.Name = "CText";
             this.CText.Size = new System.Drawing.Size(856, 29);
             this.CText.TabIndex = 1;
+            this.CText.TextChanged += new System.EventHandler(this.CText_TextChanged);
             // 
             // Edit_Line
             // 

@@ -1,66 +1,66 @@
 <ort>;<mail>
-40764;Test;Schippers.Norbert@yahoo.com;http://thewebside.de/;https://www.google.com/search?client=firefox-b-d&q=Test+verkehrsm%C3%A4ngel+melden
-78267;Aach, Hegau;gemeinde@aach.de;https://www.google.com/search?q=Aach, Hegau+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Aach, Hegau+verkehrsm%C3%A4ngel+melden
-52058;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Aachen+verkehrsm%C3%A4ngel+melden
-52062;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Aachen+verkehrsm%C3%A4ngel+melden
-52064;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Aachen+verkehrsm%C3%A4ngel+melden
-52066;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Aachen+verkehrsm%C3%A4ngel+melden
-52068;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Aachen+verkehrsm%C3%A4ngel+melden
-52070;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Aachen+verkehrsm%C3%A4ngel+melden
-52072;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Aachen+verkehrsm%C3%A4ngel+melden
-52074;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Aachen+verkehrsm%C3%A4ngel+melden
-52076;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Aachen+verkehrsm%C3%A4ngel+melden
-52078;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Aachen+verkehrsm%C3%A4ngel+melden
-52080;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Aachen+verkehrsm%C3%A4ngel+melden
-73430;Aalen;bussgeldstelle@aalen.de;https://www.google.com/search?q=Aalen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Aalen+verkehrsm%C3%A4ngel+melden
-65326;Aarbergen;info@aarbergen.de;https://www.google.com/search?q=Aarbergen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Aarbergen+verkehrsm%C3%A4ngel+melden
-91183;Abenberg, Mittelfr;rwerzinger@wcs-systeme.de;https://www.google.com/search?q=Abenberg, Mittelfr+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Abenberg, Mittelfr+verkehrsm%C3%A4ngel+melden
-93326;Abensberg, Hallertau;stadt@abensberg.de;https://www.google.com/search?q=Abensberg, Hallertau+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Abensberg, Hallertau+verkehrsm%C3%A4ngel+melden
-73453;Abtsgmünd;info@abtsgmuend.de;https://www.google.com/search?q=Abtsgmünd+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Abtsgmünd+verkehrsm%C3%A4ngel+melden
-69518;Abtsteinach;gemeinde@abtsteinach.de;https://www.google.com/search?q=Abtsteinach+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Abtsteinach+verkehrsm%C3%A4ngel+melden
-77855;Achern;oeffentliche-ordnung@achern.de;https://www.google.com/search?q=Achern+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Achern+verkehrsm%C3%A4ngel+melden
-28832;Achim (Landkreis Verden);stadt@achim.de;https://www.google.com/search?q=Achim (Landkreis Verden)+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Achim (Landkreis Verden)+verkehrsm%C3%A4ngel+melden
-88480;Achstetten;info@achstetten.de;https://www.google.com/search?q=Achstetten+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Achstetten+verkehrsm%C3%A4ngel+melden
-37139;Adelebsen;flecken@adelebsen.de;https://www.google.com/search?q=Adelebsen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Adelebsen+verkehrsm%C3%A4ngel+melden
-73486;Adelmannsfelden;gemeinde@adelmannsfelden.de;https://www.google.com/search?q=Adelmannsfelden+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Adelmannsfelden+verkehrsm%C3%A4ngel+melden
-91325;Adelsdorf;verkehrswesen@adelsdorf.de;https://www.google.com/search?q=Adelsdorf+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Adelsdorf+verkehrsm%C3%A4ngel+melden
-74740;Adelsheim;jochen.berger@adelsheim.de;https://www.google.com/search?q=Adelsheim+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Adelsheim+verkehrsm%C3%A4ngel+melden
-53518;Adenau;vgadenau@adenau.de;https://www.google.com/search?q=Adenau+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Adenau+verkehrsm%C3%A4ngel+melden
-21365;Adendorf;adendorf@t-online.de;https://www.google.com/search?q=Adendorf+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Adendorf+verkehrsm%C3%A4ngel+melden
-31855;Aerzen;bussgeldstelle@hameln-pyrmont.de;https://www.google.com/search?q=Aerzen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Aerzen+verkehrsm%C3%A4ngel+melden
-86444;Affing;gemeinde@affing.de;https://www.google.com/search?q=Affing+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Affing+verkehrsm%C3%A4ngel+melden
-74858;Aglasterhausen;michael.kraus@aglasterhausen.de;https://www.google.com/search?q=Aglasterhausen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Aglasterhausen+verkehrsm%C3%A4ngel+melden
-48683;Ahaus;info@ahaus.de;https://www.google.com/search?q=Ahaus+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Ahaus+verkehrsm%C3%A4ngel+melden
-59227;Ahlen;kortem@stadt.ahlen.de;https://www.google.com/search?q=Ahlen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Ahlen+verkehrsm%C3%A4ngel+melden
-59229;Ahlen;kortem@stadt.ahlen.de;https://www.google.com/search?q=Ahlen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Ahlen+verkehrsm%C3%A4ngel+melden
-34292;Ahnatal;info@ahnatal.de;https://www.google.com/search?q=Ahnatal+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Ahnatal+verkehrsm%C3%A4ngel+melden
-96482;Ahorn (Landkreis Coburg);martin.finzel@gemeinde-ahorn.de;https://www.google.com/search?q=Ahorn (Landkreis Coburg)+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Ahorn (Landkreis Coburg)+verkehrsm%C3%A4ngel+melden
-95491;Ahorntal;poststelle@ahorntal.bayern.de;https://www.google.com/search?q=Ahorntal+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Ahorntal+verkehrsm%C3%A4ngel+melden
-23623;Ahrensbök;info@ahrensboek.de;https://www.google.com/search?q=Ahrensbök+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Ahrensbök+verkehrsm%C3%A4ngel+melden
-22925;Ahrensburg;owi-verkehrsaufsicht@ahrensburg.de;https://www.google.com/search?q=Ahrensburg+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Ahrensburg+verkehrsm%C3%A4ngel+melden
-22926;Ahrensburg;owi-verkehrsaufsicht@ahrensburg.de;https://www.google.com/search?q=Ahrensburg+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Ahrensburg+verkehrsm%C3%A4ngel+melden
-86551;Aichach;rathaus@aichach.de;https://www.google.com/search?q=Aichach+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Aichach+verkehrsm%C3%A4ngel+melden
-72631;Aichtal;stadt@aichtal.de;https://www.google.com/search?q=Aichtal+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Aichtal+verkehrsm%C3%A4ngel+melden
-71134;Aidlingen;poststelle@aidlingen.de;https://www.google.com/search?q=Aidlingen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Aidlingen+verkehrsm%C3%A4ngel+melden
-83404;Ainring;gerold.leukert@ainring.de;https://www.google.com/search?q=Ainring+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Ainring+verkehrsm%C3%A4ngel+melden
-72458;Albstadt;herbert.deschler@albstadtwerke.de;https://www.google.com/search?q=Albstadt+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Albstadt+verkehrsm%C3%A4ngel+melden
-52457;Aldenhoven;gemeinde@aldenhoven.de;https://www.google.com/search?q=Aldenhoven+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Aldenhoven+verkehrsm%C3%A4ngel+melden
-31061;Alfeld (Leine);info@stadt.alfeld.de;https://www.google.com/search?q=Alfeld (Leine)+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Alfeld (Leine)+verkehrsm%C3%A4ngel+melden
-53347;Alfter;rathaus@alfter.de;https://www.google.com/search?q=Alfter+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Alfter+verkehrsm%C3%A4ngel+melden
-31191;Algermissen;gemeinde@algermissen.de;https://www.google.com/search?q=Algermissen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Algermissen+verkehrsm%C3%A4ngel+melden
-78476;Allensbach;monika.riester@allensbach.de;https://www.google.com/search?q=Allensbach+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Allensbach+verkehrsm%C3%A4ngel+melden
-90584;Allersberg;liegenschaften@allersberg.de;https://www.google.com/search?q=Allersberg+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Allersberg+verkehrsm%C3%A4ngel+melden
-46519;Alpen;info@alpen.de;https://www.google.com/search?q=Alpen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Alpen+verkehrsm%C3%A4ngel+melden
-52477;Alsdorf;stadt.alsdorf@mail.aachen.de;https://www.google.com/search?q=Alsdorf+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Alsdorf+verkehrsm%C3%A4ngel+melden
-36304;Alsfeld;info@stadt.alsfeld.de;https://www.google.com/search?q=Alsfeld+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Alsfeld+verkehrsm%C3%A4ngel+melden
-90518;Altdorf bei Nürnberg;stadt.altdorf@lau-net.de;https://www.google.com/search?q=Altdorf bei Nürnberg+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Altdorf bei Nürnberg+verkehrsm%C3%A4ngel+melden
-58762;Altena;post@altena.de;https://www.google.com/search?q=Altena+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Altena+verkehrsm%C3%A4ngel+melden
-33184;Altenbeken;info@altenbeken.de;https://www.google.com/search?q=Altenbeken+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Altenbeken+verkehrsm%C3%A4ngel+melden
-24161;Altenholz;gemeinde@altenholz.de;https://www.google.com/search?q=Altenholz+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Altenholz+verkehrsm%C3%A4ngel+melden
-63674;Altenstadt;fichtl@altenstadt.de;https://www.google.com/search?q=Altenstadt+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Altenstadt+verkehrsm%C3%A4ngel+melden
-72213;Altensteig;info@altenstieg.de;https://www.google.com/search?q=Altensteig+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Altensteig+verkehrsm%C3%A4ngel+melden
-17087;Altentreptow;altentreptow@t-online.de;https://www.google.com/search?q=Altentreptow+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Altentreptow+verkehrsm%C3%A4ngel+melden
-84503;Altötting;wolfgang.karl@altoetting.de;https://www.google.com/search?q=Altötting+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Altötting+verkehrsm%C3%A4ngel+melden
+40764;Test;Schippers.Norbert@yahoo.com;http://thewebside.de/;https://www.gefahrenstellen.de/
+78267;Aach, Hegau;gemeinde@aach.de;https://www.google.com/search?q=Aach, Hegau+ordnungsamt;https://www.aach.de/de/Rathaus/BuergerserviceA-Z/Dienstleistung?view=publish&item=service&id=1674
+52058;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://maengelmelder.aachen.de/
+52062;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://maengelmelder.aachen.de/
+52064;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://maengelmelder.aachen.de/
+52066;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://maengelmelder.aachen.de/
+52068;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://maengelmelder.aachen.de/
+52070;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://maengelmelder.aachen.de/
+52072;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://maengelmelder.aachen.de/
+52074;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://maengelmelder.aachen.de/
+52076;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://maengelmelder.aachen.de/
+52078;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://maengelmelder.aachen.de/
+52080;Aachen;fb32-120ruhenderverkehr@mail.aachen.de;https://www.google.com/search?q=Aachen+ordnungsamt;https://maengelmelder.aachen.de/
+73430;Aalen;bussgeldstelle@aalen.de;https://www.google.com/search?q=Aalen+ordnungsamt;https://www.aalen.de/digitaler-schadensmelder-ihr-draht-zur-stadtverwaltung.178778.htm
+65326;Aarbergen;info@aarbergen.de;https://www.google.com/search?q=Aarbergen+ordnungsamt;https://www.aarbergen.de/rathaus/service/
+91183;Abenberg, Mittelfr;rwerzinger@wcs-systeme.de;https://www.google.com/search?q=Abenberg, Mittelfr+ordnungsamt;https://www.abenberg.de/de/buerger/rathaus/virtueller-buergerservice
+93326;Abensberg, Hallertau;stadt@abensberg.de;https://www.google.com/search?q=Abensberg, Hallertau+ordnungsamt;https://www.abensberg.de/buergerservice/rathaus/rechtsamt
+73453;Abtsgmünd;info@abtsgmuend.de;https://www.google.com/search?q=Abtsgmünd+ordnungsamt;https://www.abtsgmuend.de/rathaus-service/buergerservice/schadensmeldung
+69518;Abtsteinach;gemeinde@abtsteinach.de;https://www.google.com/search?q=Abtsteinach+ordnungsamt;https://www.mängelmelder.de/
+77855;Achern;oeffentliche-ordnung@achern.de;https://www.google.com/search?q=Achern+ordnungsamt;https://www.achern.de/de/Rathaus/Schadensmeldung
+28832;Achim (Landkreis Verden);stadt@achim.de;https://www.google.com/search?q=Achim (Landkreis Verden)+ordnungsamt;https://www.landkreis-verden.de/portal/seiten/fachdienst-32-ordnung-und-verkehr-901000035-20600.html
+88480;Achstetten;info@achstetten.de;https://www.google.com/search?q=Achstetten+ordnungsamt;https://www.achstetten.de/startseite
+37139;Adelebsen;flecken@adelebsen.de;https://www.google.com/search?q=Adelebsen+ordnungsamt;https://www.adelebsen.de/seite/427667/schadensmeldung.html
+73486;Adelmannsfelden;gemeinde@adelmannsfelden.de;https://www.google.com/search?q=Adelmannsfelden+ordnungsamt;https://www.adelmannsfelden.de/de/verwaltung/schadensmeldung
+91325;Adelsdorf;verkehrswesen@adelsdorf.de;https://www.google.com/search?q=Adelsdorf+ordnungsamt;https://www.adelsdorf.de/rathaus-buergerservice/online-dienste/schadensmelder
+74740;Adelsheim;jochen.berger@adelsheim.de;https://www.google.com/search?q=Adelsheim+ordnungsamt;https://www.adelsheim.de/buergerservice/formulare.html
+53518;Adenau;vgadenau@adenau.de;https://www.google.com/search?q=Adenau+ordnungsamt;https://www.adenau.de/
+21365;Adendorf;adendorf@t-online.de;https://www.google.com/search?q=Adendorf+ordnungsamt;https://service.adendorf.de/buergerservice/dienstleistungen/schaeden-im-strassenbereich-und-an-bruecken-meldung-900000176-0.html?myMedium=1
+31855;Aerzen;bussgeldstelle@hameln-pyrmont.de;https://www.google.com/search?q=Aerzen+ordnungsamt;https://service.aerzen.de/buergerservice/dienstleistungen/schaeden-im-strassenbereich-und-an-bruecken-meldung-900000218-0.html?myMedium=1
+86444;Affing;gemeinde@affing.de;https://www.google.com/search?q=Affing+ordnungsamt;https://affing.de/Schadensmeldung-Online.o344.html?id=344
+74858;Aglasterhausen;michael.kraus@aglasterhausen.de;https://www.google.com/search?q=Aglasterhausen+ordnungsamt;https://www.aglasterhausen.de/rathaus-service/buergerservice/lebenslagen?tx_hwservicebw2_hwservicebw2lebenslagenfe%5Baction%5D=show&tx_hwservicebw2_hwservicebw2lebenslagenfe%5Bcontroller%5D=LebenslagenFrontend&tx_hwservicebw2_hwservicebw2lebenslagenfe%5Bid%5D=5000138&cHash=a5c5342e3e56251b6f26f4a778eb6189
+48683;Ahaus;info@ahaus.de;https://www.google.com/search?q=Ahaus+ordnungsamt;https://www.stadt-ahaus.de/de/beteiligung-politik/buergerbeteiligungen/sagsuns-ahaus.php
+59227;Ahlen;kortem@stadt.ahlen.de;https://www.google.com/search?q=Ahlen+ordnungsamt;https://www.ahlen.de/strasse-und-mobilitaet/strassenverkehr
+59229;Ahlen;kortem@stadt.ahlen.de;https://www.google.com/search?q=Ahlen+ordnungsamt;https://www.ahlen.de/strasse-und-mobilitaet/strassenverkehr
+34292;Ahnatal;info@ahnatal.de;https://www.google.com/search?q=Ahnatal+ordnungsamt;https://www.ahnatal.de/politik-verwaltung/gemeindeverwaltung
+96482;Ahorn (Landkreis Coburg);martin.finzel@gemeinde-ahorn.de;https://www.google.com/search?q=Ahorn (Landkreis Coburg)+ordnungsamt;https://www.ahorn.de/verwaltung-politik/rathaus/aemter-zustaendigkeiten/
+95491;Ahorntal;poststelle@ahorntal.bayern.de;https://www.google.com/search?q=Ahorntal+ordnungsamt;https://ahorntal.de/rathaus/service/schadensmelder/
+23623;Ahrensbök;info@ahrensboek.de;https://www.google.com/search?q=Ahrensbök+ordnungsamt;https://www.ahrensboek.de/Aktuelles-und-Service/Formulare-/-Schadensmeldungen.htm/Seiten/Schadensmeldungen.html?
+22925;Ahrensburg;owi-verkehrsaufsicht@ahrensburg.de;https://www.google.com/search?q=Ahrensburg+ordnungsamt;https://www.ahrensburg.de/Straßen-Rad-und-Gehwegschäden-melden.php?object=tx,2603.11&ModID=10&FID=57.626.1
+22926;Ahrensburg;owi-verkehrsaufsicht@ahrensburg.de;https://www.google.com/search?q=Ahrensburg+ordnungsamt;https://www.ahrensburg.de/Straßen-Rad-und-Gehwegschäden-melden.php?object=tx,2603.11&ModID=10&FID=57.626.1
+86551;Aichach;rathaus@aichach.de;https://www.google.com/search?q=Aichach+ordnungsamt;https://www.aichach.de/Bürger/Aktuelles-Services/Ihre-Anliegen-A-Z/Formulare-Bauamt/index.php?ModID=9&object=tx|2653.1&FID=2653.417.1&NavID=2653.182&La=1
+72631;Aichtal;stadt@aichtal.de;https://www.google.com/search?q=Aichtal+ordnungsamt;https://www.aichtal.de/rathaus-service/buergerservice/anregungen-schadensmeldung
+71134;Aidlingen;poststelle@aidlingen.de;https://www.google.com/search?q=Aidlingen+ordnungsamt;https://www.aidlingen.de/rathaus/buergerservice/schadensmeldung
+83404;Ainring;gerold.leukert@ainring.de;https://www.google.com/search?q=Ainring+ordnungsamt;https://www.ainring.de/rathaus-online
+72458;Albstadt;herbert.deschler@albstadtwerke.de;https://www.google.com/search?q=Albstadt+ordnungsamt;https://www.albstadt.de/Mängelmeldesystem
+52457;Aldenhoven;gemeinde@aldenhoven.de;https://www.google.com/search?q=Aldenhoven+ordnungsamt;https://aldenhoven.de/vv/produkte/bauverwaltung/verkehrentwicklungsplanung.php
+31061;Alfeld (Leine);info@stadt.alfeld.de;https://www.google.com/search?q=Alfeld (Leine)+ordnungsamt;https://www.alfeld.de/buergerservice/was-erledige-ich-wo/formulare
+53347;Alfter;rathaus@alfter.de;https://www.google.com/search?q=Alfter+ordnungsamt;https://www.alfter.de/kontakt/kontakt-und-maengelmeldungen/
+31191;Algermissen;gemeinde@algermissen.de;https://www.google.com/search?q=Algermissen+ordnungsamt;https://www.algermissen.de/Bauen-Wirtschaft/Meldung-von-Schäden
+78476;Allensbach;monika.riester@allensbach.de;https://www.google.com/search?q=Allensbach+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Allensbach+verkehrsmängel+melden
+90584;Allersberg;liegenschaften@allersberg.de;https://www.google.com/search?q=Allersberg+ordnungsamt;https://www.allersberg.de/service/
+46519;Alpen;info@alpen.de;https://www.google.com/search?q=Alpen+ordnungsamt;https://www.alpen.de/de/dienstleistungen/verkehrssicherung-verkehrslenkung/
+52477;Alsdorf;stadt.alsdorf@mail.aachen.de;https://www.google.com/search?q=Alsdorf+ordnungsamt;https://alsdorf.de/web/cms/front_content.php?idcat=508
+36304;Alsfeld;info@stadt.alsfeld.de;https://www.google.com/search?q=Alsfeld+ordnungsamt;https://www.alsfeld.de/leben/sicherheit-sauberkeit/maengelmelder/
+90518;Altdorf bei Nürnberg;stadt.altdorf@lau-net.de;https://www.google.com/search?q=Altdorf bei Nürnberg+ordnungsamt;https://www.altdorf.de/formular/de/stadt/036:32/c_3/Anregungen_und_Maengelmeldung.html
+58762;Altena;post@altena.de;https://www.google.com/search?q=Altena+ordnungsamt;https://www.altena-notbetrieb.de/
+33184;Altenbeken;info@altenbeken.de;https://www.google.com/search?q=Altenbeken+ordnungsamt;https://www.altenbeken.de/de/gemeinde/rathaus-online/buergerservice/formulare.php
+24161;Altenholz;gemeinde@altenholz.de;https://www.google.com/search?q=Altenholz+ordnungsamt;https://www.altenholz.de/index.php?option=com_content&view=article&id=792:mangelmeldung&catid=17&Itemid=172
+63674;Altenstadt;fichtl@altenstadt.de;https://www.google.com/search?q=Altenstadt+ordnungsamt;https://www.altenstadt.de/rathaus/maengelmeldung/
+72213;Altensteig;info@altenstieg.de;https://www.google.com/search?q=Altensteig+ordnungsamt;https://www.altensteig.de/de/Rathaus/Buergerservice/Hilfe-in-Lebenslagen/Lebenslage?view=publish&item=situation&id=868
+17087;Altentreptow;altentreptow@t-online.de;https://www.google.com/search?q=Altentreptow+ordnungsamt;https://www.altentreptow.de/index.php?object=tx,2973.2&ModID=10&FID=2973.520.1
+84503;Altötting;wolfgang.karl@altoetting.de;https://www.google.com/search?q=Altötting+ordnungsamt;https://www.altoetting.de/rathaus/stadtverwaltung/abteilung-iiia-tiefbau/verkehr/
 63755;Alzenau;alzenau@alzenau.de;https://www.google.com/search?q=Alzenau+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Alzenau+verkehrsm%C3%A4ngel+melden
 55232;Alzey;information@alzey.de;https://www.google.com/search?q=Alzey+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Alzey+verkehrsm%C3%A4ngel+melden
 92224;Amberg;werner.weiss@amberg.de;https://www.google.com/search?q=Amberg+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Amberg+verkehrsm%C3%A4ngel+melden
@@ -775,52 +775,52 @@
 52353;Düren;fremdanzeigen@dueren.de;https://www.google.com/search?q=Düren+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Düren+verkehrsm%C3%A4ngel+melden
 52355;Düren;fremdanzeigen@dueren.de;https://www.google.com/search?q=Düren+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Düren+verkehrsm%C3%A4ngel+melden
 76441;Durmesheim;info@durmersheim.de;https://www.google.com/search?q=Durmesheim+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Durmesheim+verkehrsm%C3%A4ngel+melden
-40xxx;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40211;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40212;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40213;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40215;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40217;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40219;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40221;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40223;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40225;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40227;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40229;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40231;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40233;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40235;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40237;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40239;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40468;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40470;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40472;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40474;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40476;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40477;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40479;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40489;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40545;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40547;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40549;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40589;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40591;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40593;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40595;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40597;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40599;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40625;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40627;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-40629;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.google.com/search?client=firefox-b-d&q=Düsseldorf+verkehrsm%C3%A4ngel+melden
-69412;Eberbach;stadt@eberbach.de;https://www.google.com/search?q=Eberbach+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Eberbach+verkehrsm%C3%A4ngel+melden
-73065;Ebersbach a. d. Fils;neumann@ebersbach.de;https://www.google.com/search?q=Ebersbach a. d. Fils+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Ebersbach a. d. Fils+verkehrsm%C3%A4ngel+melden
-16225;Eberswalde;ordnungsamt@eberswalde.de;https://www.google.com/search?q=Eberswalde+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Eberswalde+verkehrsm%C3%A4ngel+melden
-29574;Ebstorf;samtgemeinde_ebstorf@t-online.de;https://www.google.com/search?q=Ebstorf+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Ebstorf+verkehrsm%C3%A4ngel+melden
-85386;Eching;robert.jung@eching.de;https://www.google.com/search?q=Eching+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Eching+verkehrsm%C3%A4ngel+melden
-90542;Eckental;info@eckental.de;https://www.google.com/search?q=Eckental+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Eckental+verkehrsm%C3%A4ngel+melden
-24340;Eckernförde;stadt@eckernfoerde.de;https://www.google.com/search?q=Eckernförde+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Eckernförde+verkehrsm%C3%A4ngel+melden
-31234;Edemissen;info.rathaus@edemissen.de;https://www.google.com/search?q=Edemissen+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Edemissen+verkehrsm%C3%A4ngel+melden
-67480;Edenkoben;frank.reischmann@vg-edenkoben.de;https://www.google.com/search?q=Edenkoben+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Edenkoben+verkehrsm%C3%A4ngel+melden
+40xxx;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40211;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40212;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40213;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40215;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40217;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40219;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40221;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40223;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40225;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40227;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40229;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40231;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40233;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40235;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40237;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40239;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40468;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40470;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40472;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40474;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40476;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40477;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40479;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40489;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40545;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40547;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40549;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40589;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40591;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40593;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40595;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40597;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40599;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40625;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40627;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+40629;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige;https://www.duesseldorf.de/verkehrsmanagement/service/maengel-melden
+69412;Eberbach;stadt@eberbach.de;https://www.google.com/search?q=Eberbach+ordnungsamt;https://www.eberbach.de/pb/-/265229/schadensmeldung---strassenschaden-melden/vbid2123
+73065;Ebersbach a. d. Fils;neumann@ebersbach.de;https://www.google.com/search?q=Ebersbach a. d. Fils+ordnungsamt;https://www.ebersbach.de/hinweisgeber.html
+16225;Eberswalde;ordnungsamt@eberswalde.de;https://www.google.com/search?q=Eberswalde+ordnungsamt;https://www.eberswalde.de/start/rathaus-ortsrecht/rathaus-von-a-z/anliegen/strassenunterhaltung-und-instandsetzung
+29574;Ebstorf;samtgemeinde_ebstorf@t-online.de;https://www.google.com/search?q=Ebstorf+ordnungsamt;https://www.bevensen-ebstorf.de/home/buergerservice/wir-sind-fuer-sie-da/buergerbuero.aspx
+85386;Eching;robert.jung@eching.de;https://www.google.com/search?q=Eching+ordnungsamt;https://www.eching.de/Schadensmeldung-online.n221.html
+90542;Eckental;info@eckental.de;https://www.google.com/search?q=Eckental+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Eckental+verkehrsmängel+melden
+24340;Eckernförde;stadt@eckernfoerde.de;https://www.google.com/search?q=Eckernförde+ordnungsamt;https://www.eckernfoerde.de/Für-die-Bürger/Service/Mängelmelder/
+31234;Edemissen;info.rathaus@edemissen.de;https://www.google.com/search?q=Edemissen+ordnungsamt;https://www.edemissen.de/index.php/2018-04-17-06-08-01/mängelmeldung
+67480;Edenkoben;frank.reischmann@vg-edenkoben.de;https://www.google.com/search?q=Edenkoben+ordnungsamt;https://www.edenkoben.de/meldungen/
 34295;Edermünde;blum@gemeinde.edermuende.de;https://www.google.com/search?q=Edermünde+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Edermünde+verkehrsm%C3%A4ngel+melden
 34549;Edertal;gemeinde@edertal.de;https://www.google.com/search?q=Edertal+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Edertal+verkehrsm%C3%A4ngel+melden
 26188;Edewecht;mauritz@edewecht.de;https://www.google.com/search?q=Edewecht+ordnungsamt;https://www.google.com/search?client=firefox-b-d&q=Edewecht+verkehrsm%C3%A4ngel+melden
@@ -4240,6 +4240,37 @@ Fahrzeug ohne Elektroantrieb vor Elektroladesäule|10|15|30
 Fahrzeug auf Grünfläche|55|70|100
 Eng überholen|30|80,1|100,1
 Beleidigung|2500|2500|2500
+=====  Mängelliste ======================= 
+Schlaglöcher, Holperstrecke
+Radweg zu schmal
+Schild, Pfosten, Laterne steht im Weg
+Versetzte Gatter überflüssig/hinderlich
+Glasscherben, starke Verschmutzung
+Mit Anhänger, Liegerad nicht befahrbar, weil
+Bordstein zu hoch
+Bordsteinabsenkung zu schmal
+Baustelle ohne Radwegführung
+Fehlende/schlechte Fahrradständer
+Sicherheitsmängel
+Konflikt mit Fußgängern, weil
+Konflikt mit Kfz, weil
+Kreuzender Radweg für Autofahrer nicht erkennbar / Autofahrer mißachten Vorfahrt
+Querungsmöglichkeit fehlt
+Ungesichertes Radwegende
+Unklare Radwegführung
+Radweg oft zugeparkt
+Autoverkehr zu schnell
+Ampeln und Beschilderungen
+Grünphase zu kurz
+Wartezeit zu lang
+Bedarfsampel reagiert zu langsam
+Ampel für Radfahrer nicht abgestimmt
+Induktionsschleife reagiert nicht
+Ampel überflüssig
+Radwegausschilderung schlecht, falsch
+Sackgasse ohne Hinweis auf weiterführenden Radweg
+Einbahnstraße/Radweg in Gegenrichtung freigeben
+Radfahren auf der Straße erlauben
 <marke>
 Alfa Romeo
 Amazone

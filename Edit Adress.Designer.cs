@@ -48,6 +48,7 @@ namespace Anzeige
             this.CPLZ.Name = "CPLZ";
             this.CPLZ.Size = new System.Drawing.Size(856, 46);
             this.CPLZ.TabIndex = 3;
+            this.CPLZ.TextChanged += new System.EventHandler(this.TextChanged);
             // 
             // CPLZLbl
             // 
@@ -77,6 +78,7 @@ namespace Anzeige
             this.COrt.Name = "COrt";
             this.COrt.Size = new System.Drawing.Size(856, 46);
             this.COrt.TabIndex = 3;
+            this.COrt.TextChanged += new System.EventHandler(this.TextChanged);
             // 
             // CMailLbl
             // 
@@ -95,6 +97,7 @@ namespace Anzeige
             this.CMail.Name = "CMail";
             this.CMail.Size = new System.Drawing.Size(856, 46);
             this.CMail.TabIndex = 3;
+            this.CMail.TextChanged += new System.EventHandler(this.TextChanged);
             // 
             // CWebLbl
             // 
@@ -113,6 +116,7 @@ namespace Anzeige
             this.CWeb.Name = "CWeb";
             this.CWeb.Size = new System.Drawing.Size(856, 46);
             this.CWeb.TabIndex = 3;
+            this.CWeb.TextChanged += new System.EventHandler(this.TextChanged);
             // 
             // CGoogleLbl
             // 

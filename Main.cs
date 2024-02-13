@@ -506,7 +506,7 @@ namespace Anzeige
             allLines.AddRange(File.ReadAllLines("Data.txt"));
             string[] lines = allLines.ToArray();
             CDataList.Items.Clear();
-            CDataList.Items.AddRange(lines);
+            CDataList.Items.AddRange(File.ReadAllLines("Data.txt"));
 
             // String[] lines = File.ReadAllLines("Data.txt");
 
@@ -549,7 +549,15 @@ namespace Anzeige
                                     v = new Bussgeld(2);
                                     break;
                                 default:
-                                    v = new Bussgeld(Convert.ToDouble(items[1]), Convert.ToDouble(items[2]), Convert.ToDouble(items[3]));
+                                    if (items.Length > 1)
+                                    {
+                                        v = new Bussgeld(Convert.ToDouble(items[1]), Convert.ToDouble(items[2]), Convert.ToDouble(items[3]));
+                                    }
+                                    else
+                                    {
+                                        v = new Bussgeld(false, false, false);
+                                        break;
+                                    }
                                     break;
                             }
                             v.parken = (items[0].ToLower().Contains("parken"));
@@ -868,17 +876,21 @@ namespace Anzeige
         }
         private void AddBussgeld(String verstoss)
         {
-            Bussgeld v = bussgelder[verstoss];
-            if (v.verstoss != 0) verstossbussgeld.verstoss = Math.Min(v.verstoss, verstossbussgeld.verstoss);
-            if (v.behinderung != 0) verstossbussgeld.behinderung = Math.Min(v.behinderung, verstossbussgeld.behinderung);
-            if (v.gefaerdung != 0) verstossbussgeld.gefaerdung = Math.Min(v.gefaerdung, verstossbussgeld.gefaerdung);
-            if (v.parken) verstossbussgeld.parken = true;
-            if (v.faktor > 1) verstossbussgeld.faktor = v.faktor;
-            if (v.mitbehinderung) verstossbussgeld.mitbehinderung = v.mitbehinderung;
-            if (v.mitgefaerdung) verstossbussgeld.mitgefaerdung = v.mitgefaerdung;
-            if (v.p1 > 0) verstossbussgeld.p1 = v.p1;
-            if (v.p2 > 0) verstossbussgeld.p2 = v.p2;
-            if (v.p3 > 0) verstossbussgeld.p3 = v.p3;
+            try
+            {
+                Bussgeld v = bussgelder[verstoss];
+                if (v.verstoss != 0) verstossbussgeld.verstoss = Math.Min(v.verstoss, verstossbussgeld.verstoss);
+                if (v.behinderung != 0) verstossbussgeld.behinderung = Math.Min(v.behinderung, verstossbussgeld.behinderung);
+                if (v.gefaerdung != 0) verstossbussgeld.gefaerdung = Math.Min(v.gefaerdung, verstossbussgeld.gefaerdung);
+                if (v.parken) verstossbussgeld.parken = true;
+                if (v.faktor > 1) verstossbussgeld.faktor = v.faktor;
+                if (v.mitbehinderung) verstossbussgeld.mitbehinderung = v.mitbehinderung;
+                if (v.mitgefaerdung) verstossbussgeld.mitgefaerdung = v.mitgefaerdung;
+                if (v.p1 > 0) verstossbussgeld.p1 = v.p1;
+                if (v.p2 > 0) verstossbussgeld.p2 = v.p2;
+                if (v.p3 > 0) verstossbussgeld.p3 = v.p3;
+            }
+            catch { }
         }
         private void AddVerstoss(String verstoss)
         {
@@ -2381,25 +2393,34 @@ namespace Anzeige
                 CZeitBis.Text = CZeit.Text;
             }
         }
+
+        private String CreatePDFFile(String template = null)
+        {
+            PdfHelper pdfHelper = new PdfHelper();
+            pdfHelper.nameVorname = $"{ZName}, {ZVorname}";
+            pdfHelper.anschrift = $"{ZPLZ} {ZOrt} {ZStrasse} {ZHausnummer}";
+            pdfHelper.telefon = $"{ZPhone}";
+            pdfHelper.email = $"{ZEMail}";
+            pdfHelper.tatdatum = Datum;
+            pdfHelper.tatzeitVon = Zeit;
+            pdfHelper.tatzeitBis = ZeitBis;
+            pdfHelper.tatort = $"{PLZ}  {Ort}";
+            pdfHelper.kennzeichen = Kennzeichen;
+            pdfHelper.ort = $"{Ort}";
+            pdfHelper.fahrzeugtyp = this.Marke;
+            pdfHelper.tatvorwurf = this.Verstoss.Replace("\r\n", "<br>");
+            if (template != null)
+                pdfHelper.template = template;
+            PDFFilename = pdfHelper.ErstelleLEVPDF();
+            Clipboard.SetText(PDFFilename);
+            return PDFFilename;
+        }
+
         private void CreatePDF_CheckedChanged(object sender, EventArgs e)
         {
             if (CreatePDF.Checked)
             {
-                PdfHelper pdfHelper = new PdfHelper();
-                pdfHelper.nameVorname = $"{ZName}, {ZVorname}";
-                pdfHelper.anschrift = $"{ZPLZ} {ZOrt} {ZStrasse} {ZHausnummer}";
-                pdfHelper.telefon = $"{ZPhone}";
-                pdfHelper.email = $"{ZEMail}";
-                pdfHelper.tatdatum = Datum;
-                pdfHelper.tatzeitVon = Zeit;
-                pdfHelper.tatzeitBis = ZeitBis;
-                pdfHelper.tatort = $"{PLZ}  {Ort}";
-                pdfHelper.kennzeichen = Kennzeichen;
-                pdfHelper.ort = $"{Ort}";
-                pdfHelper.fahrzeugtyp = this.Marke;
-                pdfHelper.tatvorwurf = this.Verstoss.Replace ("\r\n", "<br>");
-                PDFFilename = pdfHelper.ErstelleLEVPDF();
-                Clipboard.SetText(PDFFilename);
+                CreatePDFFile();
             }
             else
                 PDFFilename = null;
@@ -2648,6 +2669,8 @@ namespace Anzeige
         }
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            edit_Adress1.Hide();
+            edit_Line1.Hide();
             if (tabControl1.SelectedTab == CTAbstand)
             {
                 // ShellExecute(IntPtr.Zero, "open", @"C:\Users\schip\source\repos\BildMessen\BildMessen\bin\Debug\netcoreapp3.1\BildMessen.exe", "", "", 5);
@@ -3058,14 +3081,22 @@ namespace Anzeige
            switch ((int)e.KeyChar)
             {
                 case 22:
-                    CClipImage_Click(sender, new EventArgs());
+                    if (tabControl1.SelectedTab == CTAbstand)
+                    {
+                        Insert_Click(sender, new EventArgs());
+                    }
+                    else
+                    {
+                        CClipImage_Click(sender, new EventArgs());
+                    }
                     break;
 
                 case 3:
-                    if (CFiles.SelectedItem!=null)
-                    {
-                        Clipboard.SetText(CFiles.SelectedItem.ToString());
-                    }
+                        if (CFiles.SelectedItem != null)
+                        {
+                            Clipboard.SetText(CFiles.SelectedItem.ToString());
+                        }
+
                     break;
 
                 case 9:
@@ -3157,6 +3188,61 @@ namespace Anzeige
                             edit_Line1.Visible = true;
                             break;
                     }
+                }
+            }
+        }
+
+
+        private void edit_Adress1_Changed(object sender, EventArgs e)
+        {
+            if (CDataList.SelectedIndex != -1)
+            {
+               CDataList.Items[CDataList.SelectedIndex] = edit_Adress1.Line;
+            }
+        }
+
+        private void edit_Line1_Changed(object sender, EventArgs e)
+        {
+            if (CDataList.SelectedIndex != -1)
+            {
+                CDataList.Items[CDataList.SelectedIndex] = edit_Line1.Text;
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (!File.Exists("Data.txt") || MessageBox.Show("Die Datei existiert bereits. Möchten Sie sie überschreiben?", "Bestätigung", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                if (File.Exists("Data.bak"))
+                    File.Delete("Data.bak");
+                if (File.Exists("Data.txt"))
+                    File.Move("Data.txt", "Data.bak");
+                // CDataList.Items.Cast<object>().ToList().ForEach(item => File.WriteAllText("ComboBoxData.txt", item.ToString() + Environment.NewLine));
+                File.AppendAllText("Data.txt", string.Join(Environment.NewLine, CDataList.Items.Cast<object>().Select(item => item.ToString())));
+
+                Application.Restart();
+                Environment.Exit(0); // Optional: Schließen Sie den aktuellen Prozess
+            }
+        }
+
+        private void CSchaden_Click(object sender, EventArgs e)
+        {
+
+            if (COrt.SelectedItem!=null)
+            {
+                String[] items = ((String)COrt.SelectedItem).Split(';');
+                if (items.Length > 4)
+                {
+                    PdfHelper pdfHelper = new PdfHelper();
+                    CreatePDFFile("Mangel");
+                    // PDFFilename = pdfHelper.ErstelleLEVPDF();
+                    ShellExecute(IntPtr.Zero, "open", items[4], "", "", 5);
+                    Clipboard.SetText(PDFFilename);
+                    ShellExecute(IntPtr.Zero, "open", PDFFilename, "", "", 5);
                 }
             }
         }

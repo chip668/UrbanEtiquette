@@ -37,6 +37,7 @@ namespace Anzeige
             this.CVerstossaus = new System.Windows.Forms.ListBox();
             this.CRaster = new System.Windows.Forms.NumericUpDown();
             this.CLoadPic = new System.Windows.Forms.Button();
+            this.CSchaden = new System.Windows.Forms.Button();
             this.CAnzeige = new System.Windows.Forms.Button();
             this.CDTMEdit = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
@@ -131,6 +132,8 @@ namespace Anzeige
             this.left = new System.Windows.Forms.RadioButton();
             this.openButton = new System.Windows.Forms.Button();
             this.CAdressen = new System.Windows.Forms.TabPage();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.CDataList = new System.Windows.Forms.ListBox();
             this.CTabPages = new System.Windows.Forms.TabControl();
             this.CSave = new System.Windows.Forms.TabPage();
@@ -231,6 +234,7 @@ namespace Anzeige
             this.CTAnzeige.Controls.Add(this.CVerstossaus);
             this.CTAnzeige.Controls.Add(this.CRaster);
             this.CTAnzeige.Controls.Add(this.CLoadPic);
+            this.CTAnzeige.Controls.Add(this.CSchaden);
             this.CTAnzeige.Controls.Add(this.CAnzeige);
             this.CTAnzeige.Controls.Add(this.CDTMEdit);
             this.CTAnzeige.Controls.Add(this.label1);
@@ -330,12 +334,23 @@ namespace Anzeige
             this.CLoadPic.UseVisualStyleBackColor = false;
             this.CLoadPic.Click += new System.EventHandler(this.CLoadPic_Click);
             // 
+            // CSchaden
+            // 
+            this.CSchaden.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.CSchaden.Location = new System.Drawing.Point(218, 890);
+            this.CSchaden.Name = "CSchaden";
+            this.CSchaden.Size = new System.Drawing.Size(211, 100);
+            this.CSchaden.TabIndex = 17;
+            this.CSchaden.Text = "Schaden melden";
+            this.CSchaden.UseVisualStyleBackColor = false;
+            this.CSchaden.Click += new System.EventHandler(this.CSchaden_Click);
+            // 
             // CAnzeige
             // 
             this.CAnzeige.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.CAnzeige.Location = new System.Drawing.Point(0, 889);
             this.CAnzeige.Name = "CAnzeige";
-            this.CAnzeige.Size = new System.Drawing.Size(429, 100);
+            this.CAnzeige.Size = new System.Drawing.Size(211, 100);
             this.CAnzeige.TabIndex = 17;
             this.CAnzeige.Text = "anzeigen";
             this.toolTip1.SetToolTip(this.CAnzeige, "Öffen eine Mail mit dem Verstoß");
@@ -1462,6 +1477,8 @@ namespace Anzeige
             // CAdressen
             // 
             this.CAdressen.BackColor = System.Drawing.Color.Yellow;
+            this.CAdressen.Controls.Add(this.button5);
+            this.CAdressen.Controls.Add(this.button1);
             this.CAdressen.Controls.Add(this.CDataList);
             this.CAdressen.Location = new System.Drawing.Point(4, 30);
             this.CAdressen.Name = "CAdressen";
@@ -1469,13 +1486,33 @@ namespace Anzeige
             this.CAdressen.TabIndex = 3;
             this.CAdressen.Text = "Daten";
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(217, 959);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(212, 29);
+            this.button5.TabIndex = 1;
+            this.button5.Text = "Laden";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(4, 959);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(212, 29);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "Speichern";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // CDataList
             // 
             this.CDataList.FormattingEnabled = true;
             this.CDataList.ItemHeight = 21;
             this.CDataList.Location = new System.Drawing.Point(4, 4);
             this.CDataList.Name = "CDataList";
-            this.CDataList.Size = new System.Drawing.Size(425, 508);
+            this.CDataList.Size = new System.Drawing.Size(425, 949);
             this.CDataList.TabIndex = 0;
             this.CDataList.Click += new System.EventHandler(this.CDataList_Click);
             this.CDataList.SelectedIndexChanged += new System.EventHandler(this.CDataList_SelectedIndexChanged);
@@ -1532,6 +1569,7 @@ namespace Anzeige
             this.edit_Adress1.Size = new System.Drawing.Size(261, 161);
             this.edit_Adress1.TabIndex = 5;
             this.edit_Adress1.Visible = false;
+            this.edit_Adress1.Changed += new System.EventHandler(this.edit_Adress1_Changed);
             // 
             // edit_Line1
             // 
@@ -1541,6 +1579,7 @@ namespace Anzeige
             this.edit_Line1.Size = new System.Drawing.Size(174, 136);
             this.edit_Line1.TabIndex = 4;
             this.edit_Line1.Visible = false;
+            this.edit_Line1.Changed += new System.EventHandler(this.edit_Line1_Changed);
             // 
             // pictureBox
             // 
@@ -1917,6 +1956,9 @@ namespace Anzeige
         private System.Windows.Forms.ListBox CDataList;
         private Edit_Line edit_Line1;
         private Edit_Adress edit_Adress1;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button CSchaden;
     }
 }
 

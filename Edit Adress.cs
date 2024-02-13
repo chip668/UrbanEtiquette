@@ -12,30 +12,49 @@ namespace Anzeige
 {
     public partial class Edit_Adress : UserControl
     {
+        public event EventHandler Changed;
+        protected virtual void OnChanged(EventArgs e)
+        {
+            Changed?.Invoke(this, e);
+        }
+
         WebBrowser w = null;
+        public Boolean splitting = false; // Prevent from setting Editcontrol while updating 
         public String Line
         {
             get { return CPLZ.Text + ";" + COrt.Text + ";" + CMail.Text + ";" + CWeb.Text + ";" + CGoogle.Text; }
             set 
             {
                 String[] items = value.Split(';');
-                if (items.Length > 0)
-                    CPLZ.Text = items[0];
+                String prev = Line;
 
-                if (items.Length > 1)
-                    COrt.Text = items[1];
-
-                if (items.Length > 2)
-                    CMail.Text = items[2];
-
-                if (items.Length > 3)
-                    CWeb.Text = items[3];
-
-                if (items.Length > 4)
+                if (!splitting)
                 {
-                    CGoogle.Text = items[4];
-                    CreateBrowser();
-                    w.Navigate(CGoogle.Text);
+                    splitting = true;
+                    if (items.Length > 0)
+                        CPLZ.Text = items[0];
+
+                    if (items.Length > 1)
+                        COrt.Text = items[1];
+
+                    if (items.Length > 2)
+                        CMail.Text = items[2];
+
+                    if (items.Length > 3)
+                        CWeb.Text = items[3];
+
+                    if (items.Length > 4)
+                    {
+                        CGoogle.Text = items[4];
+                        CreateBrowser();
+                        try
+                        {
+                            w.Navigate(CGoogle.Text);
+                        }
+                        catch { }
+                    }
+                    OnChanged(EventArgs.Empty);
+                    splitting = false;
                 }
             }
         }
@@ -87,6 +106,7 @@ namespace Anzeige
         {
             if (w!=null)
                 w.Navigate(CGoogle.Text);
+            TextChanged(sender, e);
         }
         private void CreateBrowser()
         {
@@ -102,6 +122,11 @@ namespace Anzeige
                 w.Height = this.Height - w.Top;
                 w.Visible = true;
             }
+        }
+
+        private void TextChanged(object sender, EventArgs e)
+        {
+            Line = Line;
         }
     }
 }

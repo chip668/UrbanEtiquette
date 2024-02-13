@@ -22,7 +22,17 @@ namespace Anzeige
         public string kennzeichen;
         public string fahrzeugtyp;
         public string tatvorwurf;
-        public string ort;
+        private string _ort;
+        public string ort
+        {
+            get { return _ort; }
+            set 
+            { 
+                _ort = value;
+                template = ort;
+            }
+        }
+        public string template;
 
         public string ErstellePDF()
         {
@@ -128,7 +138,7 @@ namespace Anzeige
             <b>nur vom Fachbereich Ordnung und Straßenverkehr auszufüllen:</b><br>
             Aktenzeichen: _____________________<br>
             Tatkennziffer:_____________________ <div style='text-align: right;'>Betrag EUR:<br>_____________________<br></div>";
-            String filename = ort + ".htm";
+            String filename = template + ".htm";
             if (File.Exists(filename))
             {
                 text = File.ReadAllText(filename);
