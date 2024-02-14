@@ -10,6 +10,9 @@ using System.Drawing;
 
 namespace Anzeige
 {
+    /// <summary>
+    /// Hilfsklasse zur Berechnung ähnlicher Farben.
+    /// </summary>
     public static class ColorHelper
     {
         public static Color FindClosestColor(List<Color> refcolor, Color clickcolor)

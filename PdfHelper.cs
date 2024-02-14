@@ -3,11 +3,14 @@ using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
 using System;
 using System.IO;
-
+using System.Text;
+using System.IO;
 
 namespace Anzeige
 {
-
+    /// <summary>
+    /// Hilfsklasse um aus einer HTML Vorlage und zugehörigen Daten neine PDF Datei zu erzeugen
+    /// </summary>
     public class PdfHelper
     {
         public string anrede = "Herr";
@@ -33,7 +36,33 @@ namespace Anzeige
             }
         }
         public string template;
+        public string[] files = null;
+        public string htmlCode
+        {
+            get
+            {
+                if (files != null)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    foreach (string file in files)
+                    {
+                        FileInfo fi = new FileInfo(file);
+                        // string imageHtml = $"<a href=\"{fi.Name}\" target=\"_blank\"><img src=\"{fi.Name}\" alt=\"{fi.FullName}\"></a>";
+                        string imageHtml = $"            <img src=\"{fi.FullName}\" alt=\"{fi.Name}\">";
+                        sb.AppendLine(imageHtml);
+                    }
+                    return sb.ToString();
+                }
 
+                // Falls keine Dateien vorhanden sind
+                return "Keine Dateien vorhanden.";
+            }
+        }
+
+        /// <summary>
+        /// ERzeuigt die PDF Datei
+        /// </summary>
+        /// <returns></returns>
         public string ErstellePDF()
         {
             // Erstellen Sie einen temporären Dateinamen für die PDF-Datei
@@ -67,7 +96,9 @@ namespace Anzeige
                                      .Replace("{kennzeichen}", kennzeichen)
                                      .Replace("{fahrzeugtyp}", fahrzeugtyp)
                                      .Replace("{tatvorwurf}", tatvorwurf)
-                                     .Replace("{ort}", ort);
+                                     .Replace("{ort}", ort)
+                                     .Replace("{bilder}", htmlCode)
+                                     ;
 
             return htmlContent;
         }
@@ -160,13 +191,22 @@ namespace Anzeige
 
             return tempPdfFileName;
         }
-
+        /// <summary>
+        /// SWetzt Text
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="text"></param>
         private void FügeTextZurPDFHinzu(Document doc, string text)
         {
             Paragraph paragraph = new Paragraph(text, FontFactory.GetFont(FontFactory.HELVETICA, 12));
             doc.Add(paragraph);
         }
-
+        /// <summary>
+        /// Setzt Text Fett
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="text"></param>
+        /// <param name="font"></param>
         private void FügeFettTextZurPDFHinzu(Document doc, string text, Font font)
         {
             Paragraph paragraph = new Paragraph();

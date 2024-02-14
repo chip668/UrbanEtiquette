@@ -3,9 +3,15 @@ using System.Windows.Forms;
 
 namespace Anzeige
 {
+    /// <summary>
+    /// Asssisen
+    /// </summary>
     public partial class assistent : Form
     {
         public Main masterform;
+        /// <summary>
+        /// List der Funktionen die der Assistent mit Anzeigetext ausführt
+        /// </summary>
         public String[,] command =
         {
             { "Neu", "Haben Sie eine Videoaufzeichung oder ein Foto", "Beenden", "Foto", "Video"},

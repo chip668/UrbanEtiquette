@@ -3,6 +3,9 @@ using System.Windows.Forms;
 
 namespace Anzeige
 {
+    /// <summary>
+    /// busgeld Control
+    /// </summary>
     public partial class Bussgeldrechner : UserControl
     {
         private Bussgeld _bussgeld;
@@ -50,7 +53,6 @@ namespace Anzeige
         {
             InitializeComponent();
         }
-
         private void label3_Click(object sender, EventArgs e)
         {
 

@@ -2,6 +2,9 @@
 
 namespace Anzeige
 {
+    /// <summary>
+    /// Datenklasse Busgeld
+    /// </summary>
     public class Bussgeld
     {
         public int verstoss;

@@ -1,5 +1,8 @@
 ﻿namespace Anzeige
 {
+    /// <summary>
+    /// Datenklasse für Orte
+    /// </summary>
     public class Ort
     {
         public string OrtCode { get; private set; }
