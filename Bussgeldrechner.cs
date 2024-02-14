@@ -8,6 +8,7 @@ namespace Anzeige
     /// </summary>
     public partial class Bussgeldrechner : UserControl
     {
+
         private Bussgeld _bussgeld;
         public Bussgeld bussgeld
         {
@@ -55,7 +56,6 @@ namespace Anzeige
         }
         private void label3_Click(object sender, EventArgs e)
         {
-
         }
     }
 }

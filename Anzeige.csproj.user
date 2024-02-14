@@ -25,6 +25,9 @@
     <Compile Update="EditTemplate.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="SmallToolbox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="TimePicker.cs">
       <SubType>UserControl</SubType>
     </Compile>

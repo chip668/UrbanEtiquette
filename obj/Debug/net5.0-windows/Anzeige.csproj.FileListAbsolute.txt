@@ -136,3 +136,4 @@ C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\bin\Debug\net5.0-windows\Sys
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\bin\Debug\net5.0-windows\System.Management.dll
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.Edit_Line.resources
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.Edit_Adress.resources
+C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.SmallToolbox.resources

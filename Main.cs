@@ -698,7 +698,6 @@ namespace Anzeige
                     }
                     else if (key == "<bluetooth>")
                     {
-                        listBoxDevices.Text = s;
                     }
                     else if (key == "<marke>")
                     {
@@ -800,6 +799,8 @@ namespace Anzeige
             aboutdlg.Refresh();
             Thread.Sleep(2000);
             InitializeComponent();
+            CKennzeichen.GotFocus += CKennzeichen_GotFocus;
+            CKennzeichen.LostFocus += CKennzeichen_LostFocus;
 
             Init();
             String[] lines = File.ReadAllLines("ort.txt");
@@ -815,40 +816,6 @@ namespace Anzeige
             {
                 refcolor.Add(i.BackColor);
             }
-        }
-        /// <summary>
-        /// lade Bilder für eine Anzeige
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CLoadPic_Click(object sender, EventArgs e)
-        {
-            CNew_Click(sender, e);
-            CreateDirectoryIfNotExists(ZZielpfad + "Download");
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Multiselect = true;
-            openFileDialog.InitialDirectory = ZZielpfad + "Download";
-
-            // ShellExecute(IntPtr.Zero, "open", openFileDialog.InitialDirectory, "", "", 5);
-            // Filter für verschiedene Bilddateitypen festlegen
-            openFileDialog.Filter = "JPEG-Bilder (*.jpg, *.jpeg)|*.jpg;*.jpeg|" +
-                                    "PNG-Bilder (*.png)|*.png|" +
-                                    "GIF-Bilder (*.gif)|*.gif|" +
-                                    "BMP-Bilder (*.bmp)|*.bmp|" +
-                                    "TIFF-Bilder (*.tiff)|*.tiff|" +
-                                    "TIFF-Bilder (*.tif)|*.tif|" +
-                                    "Alle Dateien (*.*)|*.*";
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                CFiles.Items.Clear();
-                foreach (string fileName in openFileDialog.FileNames)
-                {
-                    SelectFile(fileName);
-                    CFiles.Items.Add(fileName);
-                }
-            }
-            CAnzeigeText.Text = Message;
         }
         /// <summary>
         /// Wählt aus der Bildeliste das aktuelle Bild und 
@@ -1578,7 +1545,18 @@ namespace Anzeige
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            UseLogo = false;
+            smallToolbox1.AddButtons(new string[] { "🗎", "🖼", "📋" });
+            smallToolbox2.AddButtons(new string[] { "💾", "📁", "🎥", "📁", "🖼" });
+            smallToolbox3.AddButtons(new string[] { "⌖", "👷", "⚙", "🗎", "🛈" });
+            smallToolbox4.AddButtons(new string[] { "💾", "📁" });
+            smallToolbox5.AddButtons(new string[] { "⇊", "🠗", "↑", "⇈" });
+            
+            smallToolbox2.OpenMode = false;
+            smallToolbox3.OpenMode = false;
+            smallToolbox5.OpenMode = false;
+
+
+            UseLogo = true;
             listBoxDevices_SelectedIndexChanged(sender, e);
             string[] templates = Directory.EnumerateFiles(Directory.GetCurrentDirectory(), "*.tpl").ToArray();
             CTemplateFiles.Items.Clear();
@@ -1658,46 +1636,6 @@ namespace Anzeige
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CBackall_Click(object sender, EventArgs e)
-        {
-            CVerstossaus.Items.Clear();
-            foreach (String i in CVerstoss.Items)
-            {
-                AddVerstoss(i);
-            }
-            CVerstoss.Items.Clear();
-            CAnzeigeText.Text = Message;
-        }
-        private void CBack_Click(object sender, EventArgs e)
-        {
-            if (CVerstoss.SelectedItem != null)
-            {
-
-                CVerstossaus.Items.Add(CVerstoss.SelectedItem);
-                RemoveVerstoss((String)CVerstoss.SelectedItem);
-            }
-            CAnzeigeText.Text = Message;
-        }
-        private void CToo_Click(object sender, EventArgs e)
-        {
-            if (CVerstossaus.SelectedItem != null)
-            {
-                AddVerstoss((String)CVerstossaus.SelectedItem);
-                CVerstossaus.Items.Remove(CVerstossaus.SelectedItem);
-            }
-            CAnzeigeText.Text = Message;
-        }
-        private void Ctoall_Click(object sender, EventArgs e)
-        {
-            CVerstoss.Items.Clear();
-            foreach (String i in CVerstossaus.Items)
-            {
-                // CVerstoss.Items.Add(i);
-                AddVerstoss(i);
-            }
-            CVerstossaus.Items.Clear();
-            CAnzeigeText.Text = Message;
-        }
         private void CVerstossaus_DoubleClick(object sender, EventArgs e)
         {
             CToo_Click(sender, e);
@@ -2042,65 +1980,9 @@ namespace Anzeige
         {
             return rect.X >= 0 && rect.Y >= 0 && rect.Right <= bitmap.Width && rect.Bottom <= bitmap.Height;
         }
-        private void CClip_Click(object sender, EventArgs e)
-        {
-            // Oberbilker Allee 98, 40227 Düsseldorf
-            String[] items = Clipboard.GetText().Split(',');
-
-            if (items.Length == 2)
-            {
-                String plz = items[1].Substring(0, 6);
-                String ort = items[1].Substring(7);
-                selectOrt(ort);
-                string fullAddress = items[0];
-                string street = string.Empty;
-                string houseNumber = string.Empty;
-
-
-
-                // Suche nach dem letzten Leerzeichen, um die Hausnummer zu trennen
-                int lastSpaceIndex = fullAddress.LastIndexOf(' ');
-                if (lastSpaceIndex != -1 && lastSpaceIndex < fullAddress.Length - 1)
-                {
-                    street = fullAddress.Substring(0, lastSpaceIndex).Trim();
-                    houseNumber = fullAddress.Substring(lastSpaceIndex + 1).Trim();
-                }
-                else
-                {
-                    // Wenn kein Leerzeichen gefunden wurde, verwenden wir die gesamte Eingabe als Straße
-                    street = fullAddress.Trim();
-                }
-                CPLZ.Text = plz;
-                CStrasse.Text = street;
-                CHN.Text = houseNumber;
-                CMail.Text = Mail;
-                // CTabPages.SelectedTab = CTabPageOA;
-            }
-        }
         private void CFiles_DoubleClick(object sender, EventArgs e)
         {
             SelectFile(CFiles.Text);
-        }
-        private void CNew_Click(object sender, EventArgs e)
-        {
-            ausschnittTemp = "";
-            CStrasse.Text = "";
-            CHN.Text = "";
-            CMarke.Text = "";
-            CVerstoss.Items.Clear();
-            CFiles.Items.Clear();
-            panel_Click(panel4, e);
-            CSave.BackgroundImage = null;
-            CDatum.Text = "";
-            CZeit.Text = "";
-            CZeitBis.Text = "";
-            CAusschnitt.Hide();
-            CKennzeichen.Text = "";
-            CLogo.BackgroundImage = null;
-            CFreeText.Text = "";
-            panel1.BackColor = Color.Gold;
-            cntpixel = 0;
-            Init();
         }
         private void CKennzeichen_TextChanged(object sender, EventArgs e)
         {
@@ -2683,20 +2565,6 @@ namespace Anzeige
         {
             CSave.Cursor = cstack.Pop();
         }
-        // public string Ort
-        // public string PLZ
-        // public string Strasse
-        // public string HN
-        private void cOrtSuche_Click(object sender, EventArgs e)
-        {
-            String url = ortssuche;
-            url = url.Replace("<strasse>", Strasse);
-            url = url.Replace("<hn>", HN);
-            url = url.Replace("<plz>", PLZ);
-            url = url.Replace("<ort>", Ort);
-            // ortssuche
-            ShellExecute(IntPtr.Zero, "open", url, "", "", 5);
-        }
         private void label5_Click(object sender, EventArgs e)
         {
 
@@ -2718,18 +2586,6 @@ namespace Anzeige
             else
                 PDFFilename = null;
         }
-        private void CLupe_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "Video Files|*.mp4;*.avi;*.mkv|All Files|*.*";
-            dlg.Title = "Select a Video File";
-            dlg.InitialDirectory = ZZielpfad + "Download";
-            CreateDirectoryIfNotExists(ZZielpfad + "Download");
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                ShellExecute(IntPtr.Zero, "open", dlg.FileName, "", "", 5);
-            }
-        }
         private void CAddPath_CheckedChanged(object sender, EventArgs e)
         {
             CAnzeigeText.Text = Message;
@@ -2737,13 +2593,6 @@ namespace Anzeige
         private void CAddFile_CheckedChanged(object sender, EventArgs e)
         {
             CAnzeigeText.Text = Message;
-        }
-        private void CDirOpen_Click(object sender, EventArgs e)
-        {
-            // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
-            ShellExecute(IntPtr.Zero, "open", FullPath, "", "", 5);
-
-
         }
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
@@ -2794,61 +2643,6 @@ namespace Anzeige
             CZeit.Text = dateTimeValue.ToString("HH:mm");
             CDTMEdit.Hide();
         }
-        private void CSaveVerstoss_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog dlg = new SaveFileDialog();
-
-            // Legen Sie die Eigenschaften des Dialogs fest
-            dlg.Filter = "Textdatei|*.txt|Alle Dateien|*.*";
-            dlg.Title = "Textdatei speichern";
-            dlg.DefaultExt = "txt";
-            dlg.InitialDirectory = Environment.CurrentDirectory + "\\Default";
-
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                if (!string.IsNullOrEmpty(dlg.FileName))
-                {
-                    File.WriteAllLines(dlg.FileName, CVerstoss.Items.Cast<object>().Select(item => item.ToString()));
-                }
-            }
-        }
-        private void CLoadVerstoss_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "Textdatei|*.txt|Alle Dateien|*.*";
-            dlg.Title = "Textdatei öffnen";
-            dlg.DefaultExt = "txt";
-            dlg.InitialDirectory = Environment.CurrentDirectory + "\\Default";
-
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                if (!string.IsNullOrEmpty(dlg.FileName))
-                {
-                    string[] lines = File.ReadAllLines(dlg.FileName);
-                    CVerstoss.Items.Clear();
-                    Init();
-
-                    foreach (string line in lines)
-                    {
-                        AddVerstoss(line);
-                        CVerstossaus.Items.Remove(line);
-                    }
-                }
-            }
-        }
-        private void button3_Click(object sender, EventArgs e)
-        {
-            assistent dlg = new assistent();
-            dlg.masterform = this;
-            this.StartPosition = FormStartPosition.Manual;
-            this.Location = Screen.AllScreens[0].WorkingArea.Location;
-            this.Width = Screen.AllScreens[0].WorkingArea.Width - dlg.Width;
-
-            // Hier setzen wir die Position des zweiten Fensters auf der rechten Seite des Desktops.
-            dlg.StartPosition = FormStartPosition.Manual;
-            dlg.Location = new Point(this.Left + this.Width, this.Top);
-            dlg.Show();
-        }
         public void MasterFormExecute(String message)
         {
             switch (message)
@@ -2898,27 +2692,6 @@ namespace Anzeige
                     CAnzeige_Click(this, new EventArgs());
                     break;
             }
-        }
-        private void CText_Click(object sender, EventArgs e)
-        {
-            // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
-            EditTemplate dlg = new EditTemplate();
-            dlg.Template = Template;
-            dlg.ShowDialog();
-            Template = dlg.Template;
-            Application.Restart();
-            Environment.Exit(0); // Optional: Schließen Sie den aktuellen Prozess
-        }
-        private void CHelp_Click(object sender, EventArgs e)
-        {
-            ShellExecute(IntPtr.Zero, "open", "hilfe.pdf", "", "", 5);
-        }
-        private void CSettings_Click(object sender, EventArgs e)
-        {
-            // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
-            ConfigEditorForm dlg = new ConfigEditorForm();
-
-            dlg.ShowDialog();
         }
         private void CTemplateFiles_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -3247,20 +3020,6 @@ namespace Anzeige
         {
             pictureBox.BackgroundImage = loadedImage;
         }
-        private void CClipImage_Click(object sender, EventArgs e)
-        {
-            String s = SaveClipboardImageAsTemporaryFile();
-            if (s != null)
-            {
-                SelectFile(s);
-                CFiles.Items.Add(s);
-                // _Files.Add(s);
-                // CFiles.Items.Add(s);
-                // CSave.BackgroundImage = Bitmap.FromFile(s);
-            }
-            CAnzeigeText.Text = Message;
-            this.Refresh();
-        }
         private Bitmap CreateSegmentBitmap(Bitmap sourceBitmap, int top, int bottom, int left, int right)
         {
             int segmentWidth = right - left + 1;
@@ -3465,22 +3224,440 @@ namespace Anzeige
                 }
             }
         }
-        private void CLoad_Click(object sender, EventArgs e)
+        private void CKennzeichen_GotFocus(object sender, EventArgs e)
         {
+            CPixeln.Checked = false;
+        }
+        private void CKennzeichen_LostFocus(object sender, EventArgs e)
+        {
+            CPixeln.Checked = true;
+        }
+        private void smallToolbox1_ClickTool(object sender, SmallToolbox.ClickToolEventArgs e)
+        {
+            switch (e.ButtonIndex)
+            {
+                case 0:
+                    {
+                        ausschnittTemp = "";
+                        CStrasse.Text = "";
+                        CHN.Text = "";
+                        CMarke.Text = "";
+                        CVerstoss.Items.Clear();
+                        CFiles.Items.Clear();
+                        panel_Click(panel4, e);
+                        CSave.BackgroundImage = null;
+                        CDatum.Text = "";
+                        CZeit.Text = "";
+                        CZeitBis.Text = "";
+                        CAusschnitt.Hide();
+                        CKennzeichen.Text = "";
+                        CLogo.BackgroundImage = null;
+                        CFreeText.Text = "";
+                        panel1.BackColor = Color.Gold;
+                        cntpixel = 0;
+                        CPixeln.Checked = true;
+                        Init();
+                    }
+                    break;
+                case 1:
+                    {
+                        CNew_Click(sender, new SmallToolbox.ClickToolEventArgs(0, "user"));
+                        CreateDirectoryIfNotExists(ZZielpfad + "Download");
+                        OpenFileDialog openFileDialog = new OpenFileDialog();
+                        openFileDialog.Multiselect = true;
+                        openFileDialog.InitialDirectory = ZZielpfad + "Download";
+
+                        // ShellExecute(IntPtr.Zero, "open", openFileDialog.InitialDirectory, "", "", 5);
+                        // Filter für verschiedene Bilddateitypen festlegen
+                        openFileDialog.Filter = "JPEG-Bilder (*.jpg, *.jpeg)|*.jpg;*.jpeg|" +
+                                                "PNG-Bilder (*.png)|*.png|" +
+                                                "GIF-Bilder (*.gif)|*.gif|" +
+                                                "BMP-Bilder (*.bmp)|*.bmp|" +
+                                                "TIFF-Bilder (*.tiff)|*.tiff|" +
+                                                "TIFF-Bilder (*.tif)|*.tif|" +
+                                                "Alle Dateien (*.*)|*.*";
+
+                        if (openFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            CFiles.Items.Clear();
+                            foreach (string fileName in openFileDialog.FileNames)
+                            {
+                                SelectFile(fileName);
+                                CFiles.Items.Add(fileName);
+                            }
+                        }
+                        CAnzeigeText.Text = Message;
+                    }
+                    break;
+                case 2:
+                    {
+                        // Oberbilker Allee 98, 40227 Düsseldorf
+                        String[] items = Clipboard.GetText().Split(',');
+
+                        if (items.Length == 2)
+                        {
+                            String plz = items[1].Substring(0, 6);
+                            String ort = items[1].Substring(7);
+                            selectOrt(ort);
+                            string fullAddress = items[0];
+                            string street = string.Empty;
+                            string houseNumber = string.Empty;
+
+
+
+                            // Suche nach dem letzten Leerzeichen, um die Hausnummer zu trennen
+                            int lastSpaceIndex = fullAddress.LastIndexOf(' ');
+                            if (lastSpaceIndex != -1 && lastSpaceIndex < fullAddress.Length - 1)
+                            {
+                                street = fullAddress.Substring(0, lastSpaceIndex).Trim();
+                                houseNumber = fullAddress.Substring(lastSpaceIndex + 1).Trim();
+                            }
+                            else
+                            {
+                                // Wenn kein Leerzeichen gefunden wurde, verwenden wir die gesamte Eingabe als Straße
+                                street = fullAddress.Trim();
+                            }
+                            CPLZ.Text = plz;
+                            CStrasse.Text = street;
+                            CHN.Text = houseNumber;
+                            CMail.Text = Mail;
+                            // CTabPages.SelectedTab = CTabPageOA;
+                        }
+                    }
+                    break;
+            }
+        }
+        private void smallToolbox2_ClickTool(object sender, SmallToolbox.ClickToolEventArgs e)
+        {
+            switch (e.ButtonIndex)
+            {
+                case 0:
+                    {
+                        // CTabPages.SelectedIndex = 2;
+                        String fullpath = ZZielpfad + Ort;
+                        CreateDirectoryIfNotExists(fullpath);
+                        fullpath = fullpath + "\\" + this.Kennzeichen;
+                        CreateDirectoryIfNotExists(fullpath);
+                        List<String> filelist = new List<String>();
+                        foreach (String Bild in CFiles.Items)
+                        {
+                            FileInfo fi = new FileInfo(Bild);
+                            String fullfilename = fullpath + "\\" + fi.Name;
+                            if (File.Exists(fullfilename))
+                                File.Delete(fullfilename);
+                            // File.Copy(Bild, fullfilename);
+                            ScaleAndSaveImage(Bild, fullfilename, 0.5);
+                            filelist.Add(fullfilename);
+                        }
+                        if (File.Exists(fullpath + "\\Anzeige.WH2"))
+                        {
+                            File.Delete(fullpath + "\\Anzeige.WH2");
+                        }
+                        File.WriteAllText(fullpath + "\\Anzeige.WH2", InitValues);
+
+                    }
+                    break;
+                case 1:
+                    {
+                        OpenFileDialog openFileDialog = new OpenFileDialog();
+                        openFileDialog.Filter = "WH2-Dateien|*.WH2|Alle Dateien|*.*";
+                        openFileDialog.InitialDirectory = ZZielpfad;
+                        if (openFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            try
+                            {
+                                string selectedFilePath = openFileDialog.FileName;
+
+                                InitValues = File.ReadAllText(selectedFilePath);
+                            }
+                            catch (Exception ex)
+                            {
+                            }
+                        }
+
+                    }
+                    break;
+                case 2:
+                    {
+                        OpenFileDialog dlg = new OpenFileDialog();
+                        dlg.Filter = "Video Files|*.mp4;*.avi;*.mkv|All Files|*.*";
+                        dlg.Title = "Select a Video File";
+                        dlg.InitialDirectory = ZZielpfad + "Download";
+                        CreateDirectoryIfNotExists(ZZielpfad + "Download");
+                        if (dlg.ShowDialog() == DialogResult.OK)
+                        {
+                            ShellExecute(IntPtr.Zero, "open", dlg.FileName, "", "", 5);
+                        }
+
+                    }
+                    break;
+                case 3:
+                    {
+                        // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
+                        ShellExecute(IntPtr.Zero, "open", FullPath, "", "", 5);
+                    }
+                    break;
+                case 4:
+                    {
+                        String s = SaveClipboardImageAsTemporaryFile();
+                        if (s != null)
+                        {
+                            SelectFile(s);
+                            CFiles.Items.Add(s);
+                            // _Files.Add(s);
+                            // CFiles.Items.Add(s);
+                            // CSave.BackgroundImage = Bitmap.FromFile(s);
+                        }
+                        CAnzeigeText.Text = Message;
+                        this.Refresh();
+                    }
+                    break;
+            }
+        }
+        private void smallToolbox3_ClickTool(object sender, SmallToolbox.ClickToolEventArgs e)
+        {
+            switch (e.ButtonIndex)
+            {
+                case 0:
+                    {
+                        String url = ortssuche;
+                        url = url.Replace("<strasse>", Strasse);
+                        url = url.Replace("<hn>", HN);
+                        url = url.Replace("<plz>", PLZ);
+                        url = url.Replace("<ort>", Ort);
+                        // ortssuche
+                        ShellExecute(IntPtr.Zero, "open", url, "", "", 5);
+                    }
+                    break;
+                case 1:
+                    {
+                        assistent dlg = new assistent();
+                        dlg.masterform = this;
+                        this.StartPosition = FormStartPosition.Manual;
+                        this.Location = Screen.AllScreens[0].WorkingArea.Location;
+                        this.Width = Screen.AllScreens[0].WorkingArea.Width - dlg.Width;
+
+                        // Hier setzen wir die Position des zweiten Fensters auf der rechten Seite des Desktops.
+                        dlg.StartPosition = FormStartPosition.Manual;
+                        dlg.Location = new Point(this.Left + this.Width, this.Top);
+                        dlg.Show();
+                    }
+                    break;
+                case 2:
+                    {
+                        // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
+                        ConfigEditorForm dlg = new ConfigEditorForm();
+                        dlg.ShowDialog();
+                    }
+                    break;
+                case 3:
+                    {
+                        // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
+                        EditTemplate dlg = new EditTemplate();
+                        dlg.Template = Template;
+                        dlg.ShowDialog();
+                        Template = dlg.Template;
+                        Application.Restart();
+                        Environment.Exit(0); // Optional: Schließen Sie den aktuellen Prozess
+                    }
+                    break;
+                case 4:
+                    {
+                        ShellExecute(IntPtr.Zero, "open", "hilfe.pdf", "", "", 5);
+                    }
+                    break;
+            }
+        }
+        private void smallToolbox4_ClickTool(object sender, SmallToolbox.ClickToolEventArgs e)
+        {
+            switch (e.ButtonIndex)
+            {
+                case 0:
+                    {
+                        SaveFileDialog dlg = new SaveFileDialog();
+
+                        // Legen Sie die Eigenschaften des Dialogs fest
+                        dlg.Filter = "Textdatei|*.txt|Alle Dateien|*.*";
+                        dlg.Title = "Textdatei speichern";
+                        dlg.DefaultExt = "txt";
+                        dlg.InitialDirectory = Environment.CurrentDirectory + "\\Default";
+
+                        if (dlg.ShowDialog() == DialogResult.OK)
+                        {
+                            if (!string.IsNullOrEmpty(dlg.FileName))
+                            {
+                                File.WriteAllLines(dlg.FileName, CVerstoss.Items.Cast<object>().Select(item => item.ToString()));
+                            }
+                        }
+                    }
+                    break;
+                case 1:
+                    {
+                        OpenFileDialog dlg = new OpenFileDialog();
+                        dlg.Filter = "Textdatei|*.txt|Alle Dateien|*.*";
+                        dlg.Title = "Textdatei öffnen";
+                        dlg.DefaultExt = "txt";
+                        dlg.InitialDirectory = Environment.CurrentDirectory + "\\Default";
+
+                        if (dlg.ShowDialog() == DialogResult.OK)
+                        {
+                            if (!string.IsNullOrEmpty(dlg.FileName))
+                            {
+                                string[] lines = File.ReadAllLines(dlg.FileName);
+                                CVerstoss.Items.Clear();
+                                Init();
+
+                                foreach (string line in lines)
+                                {
+                                    AddVerstoss(line);
+                                    CVerstossaus.Items.Remove(line);
+                                }
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+        private void smallToolbox5_ClickTool(object sender, SmallToolbox.ClickToolEventArgs e)
+        {
+            switch (e.ButtonIndex)
+            {
+                case 0:
+                    {
+                        CVerstossaus.Items.Clear();
+                        foreach (String i in CVerstoss.Items)
+                        {
+                            AddVerstoss(i);
+                        }
+                        CVerstoss.Items.Clear();
+                        CAnzeigeText.Text = Message;
+                    }
+                    break;
+                case 1:
+                    {
+                        if (CVerstoss.SelectedItem != null)
+                        {
+
+                            CVerstossaus.Items.Add(CVerstoss.SelectedItem);
+                            RemoveVerstoss((String)CVerstoss.SelectedItem);
+                        }
+                        CAnzeigeText.Text = Message;
+                    }
+                    break;
+                case 2:
+                    {
+                        if (CVerstossaus.SelectedItem != null)
+                        {
+                            AddVerstoss((String)CVerstossaus.SelectedItem);
+                            CVerstossaus.Items.Remove(CVerstossaus.SelectedItem);
+                        }
+                        CAnzeigeText.Text = Message;
+                    }
+                    break;
+                case 3:
+                    {
+                        CVerstoss.Items.Clear();
+                        foreach (String i in CVerstossaus.Items)
+                        {
+                            // CVerstoss.Items.Add(i);
+                            AddVerstoss(i);
+                        }
+                        CVerstossaus.Items.Clear();
+                        CAnzeigeText.Text = Message;
+                    }
+                    break;
+            }
+        }
+        /// Obsolet
+        private void CNew_Click(object sender, EventArgs e)
+        {
+            ausschnittTemp = "";
+            CStrasse.Text = "";
+            CHN.Text = "";
+            CMarke.Text = "";
+            CVerstoss.Items.Clear();
+            CFiles.Items.Clear();
+            panel_Click(panel4, e);
+            CSave.BackgroundImage = null;
+            CDatum.Text = "";
+            CZeit.Text = "";
+            CZeitBis.Text = "";
+            CAusschnitt.Hide();
+            CKennzeichen.Text = "";
+            CLogo.BackgroundImage = null;
+            CFreeText.Text = "";
+            panel1.BackColor = Color.Gold;
+            cntpixel = 0;
+            CPixeln.Checked = true;
+            Init();
+        }
+        /// <summary>
+        /// lade Bilder für eine Anzeige
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CLoadPic_Click(object sender, EventArgs e)
+        {
+            CNew_Click(sender, e);
+            CreateDirectoryIfNotExists(ZZielpfad + "Download");
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "WH2-Dateien|*.WH2|Alle Dateien|*.*";
-            openFileDialog.InitialDirectory = ZZielpfad;
+            openFileDialog.Multiselect = true;
+            openFileDialog.InitialDirectory = ZZielpfad + "Download";
+
+            // ShellExecute(IntPtr.Zero, "open", openFileDialog.InitialDirectory, "", "", 5);
+            // Filter für verschiedene Bilddateitypen festlegen
+            openFileDialog.Filter = "JPEG-Bilder (*.jpg, *.jpeg)|*.jpg;*.jpeg|" +
+                                    "PNG-Bilder (*.png)|*.png|" +
+                                    "GIF-Bilder (*.gif)|*.gif|" +
+                                    "BMP-Bilder (*.bmp)|*.bmp|" +
+                                    "TIFF-Bilder (*.tiff)|*.tiff|" +
+                                    "TIFF-Bilder (*.tif)|*.tif|" +
+                                    "Alle Dateien (*.*)|*.*";
+
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                try
+                CFiles.Items.Clear();
+                foreach (string fileName in openFileDialog.FileNames)
                 {
-                    string selectedFilePath = openFileDialog.FileName;
+                    SelectFile(fileName);
+                    CFiles.Items.Add(fileName);
+                }
+            }
+            CAnzeigeText.Text = Message;
+        }
+        private void CClip_Click(object sender, EventArgs e)
+        {
+            // Oberbilker Allee 98, 40227 Düsseldorf
+            String[] items = Clipboard.GetText().Split(',');
 
-                    InitValues = File.ReadAllText(selectedFilePath);
-                }
-                catch (Exception ex)
+            if (items.Length == 2)
+            {
+                String plz = items[1].Substring(0, 6);
+                String ort = items[1].Substring(7);
+                selectOrt(ort);
+                string fullAddress = items[0];
+                string street = string.Empty;
+                string houseNumber = string.Empty;
+
+
+
+                // Suche nach dem letzten Leerzeichen, um die Hausnummer zu trennen
+                int lastSpaceIndex = fullAddress.LastIndexOf(' ');
+                if (lastSpaceIndex != -1 && lastSpaceIndex < fullAddress.Length - 1)
                 {
+                    street = fullAddress.Substring(0, lastSpaceIndex).Trim();
+                    houseNumber = fullAddress.Substring(lastSpaceIndex + 1).Trim();
                 }
+                else
+                {
+                    // Wenn kein Leerzeichen gefunden wurde, verwenden wir die gesamte Eingabe als Straße
+                    street = fullAddress.Trim();
+                }
+                CPLZ.Text = plz;
+                CStrasse.Text = street;
+                CHN.Text = houseNumber;
+                CMail.Text = Mail;
+                // CTabPages.SelectedTab = CTabPageOA;
             }
         }
         private void CSpeichern_Click(object sender, EventArgs e)
@@ -3506,6 +3683,185 @@ namespace Anzeige
                 File.Delete(fullpath + "\\Anzeige.WH2");
             }
             File.WriteAllText(fullpath + "\\Anzeige.WH2", InitValues);
+        }
+        private void CLoad_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "WH2-Dateien|*.WH2|Alle Dateien|*.*";
+            openFileDialog.InitialDirectory = ZZielpfad;
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string selectedFilePath = openFileDialog.FileName;
+
+                    InitValues = File.ReadAllText(selectedFilePath);
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+        }
+        private void CLupe_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "Video Files|*.mp4;*.avi;*.mkv|All Files|*.*";
+            dlg.Title = "Select a Video File";
+            dlg.InitialDirectory = ZZielpfad + "Download";
+            CreateDirectoryIfNotExists(ZZielpfad + "Download");
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                ShellExecute(IntPtr.Zero, "open", dlg.FileName, "", "", 5);
+            }
+        }
+        private void CDirOpen_Click(object sender, EventArgs e)
+        {
+            // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
+            ShellExecute(IntPtr.Zero, "open", FullPath, "", "", 5);
+        }
+        private void CClipImage_Click(object sender, EventArgs e)
+        {
+            String s = SaveClipboardImageAsTemporaryFile();
+            if (s != null)
+            {
+                SelectFile(s);
+                CFiles.Items.Add(s);
+                // _Files.Add(s);
+                // CFiles.Items.Add(s);
+                // CSave.BackgroundImage = Bitmap.FromFile(s);
+            }
+            CAnzeigeText.Text = Message;
+            this.Refresh();
+        }
+        // public string Ort
+        // public string PLZ
+        // public string Strasse
+        // public string HN
+        private void cOrtSuche_Click(object sender, EventArgs e)
+        {
+            String url = ortssuche;
+            url = url.Replace("<strasse>", Strasse);
+            url = url.Replace("<hn>", HN);
+            url = url.Replace("<plz>", PLZ);
+            url = url.Replace("<ort>", Ort);
+            // ortssuche
+            ShellExecute(IntPtr.Zero, "open", url, "", "", 5);
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            assistent dlg = new assistent();
+            dlg.masterform = this;
+            this.StartPosition = FormStartPosition.Manual;
+            this.Location = Screen.AllScreens[0].WorkingArea.Location;
+            this.Width = Screen.AllScreens[0].WorkingArea.Width - dlg.Width;
+
+            // Hier setzen wir die Position des zweiten Fensters auf der rechten Seite des Desktops.
+            dlg.StartPosition = FormStartPosition.Manual;
+            dlg.Location = new Point(this.Left + this.Width, this.Top);
+            dlg.Show();
+        }
+        private void CSettings_Click(object sender, EventArgs e)
+        {
+            // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
+            ConfigEditorForm dlg = new ConfigEditorForm();
+
+            dlg.ShowDialog();
+        }
+        private void CText_Click(object sender, EventArgs e)
+        {
+            // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
+            EditTemplate dlg = new EditTemplate();
+            dlg.Template = Template;
+            dlg.ShowDialog();
+            Template = dlg.Template;
+            Application.Restart();
+            Environment.Exit(0); // Optional: Schließen Sie den aktuellen Prozess
+        }
+        private void CHelp_Click(object sender, EventArgs e)
+        {
+            ShellExecute(IntPtr.Zero, "open", "hilfe.pdf", "", "", 5);
+        }
+        private void CSaveVerstoss_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+
+            // Legen Sie die Eigenschaften des Dialogs fest
+            dlg.Filter = "Textdatei|*.txt|Alle Dateien|*.*";
+            dlg.Title = "Textdatei speichern";
+            dlg.DefaultExt = "txt";
+            dlg.InitialDirectory = Environment.CurrentDirectory + "\\Default";
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                if (!string.IsNullOrEmpty(dlg.FileName))
+                {
+                    File.WriteAllLines(dlg.FileName, CVerstoss.Items.Cast<object>().Select(item => item.ToString()));
+                }
+            }
+        }
+        private void CLoadVerstoss_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "Textdatei|*.txt|Alle Dateien|*.*";
+            dlg.Title = "Textdatei öffnen";
+            dlg.DefaultExt = "txt";
+            dlg.InitialDirectory = Environment.CurrentDirectory + "\\Default";
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                if (!string.IsNullOrEmpty(dlg.FileName))
+                {
+                    string[] lines = File.ReadAllLines(dlg.FileName);
+                    CVerstoss.Items.Clear();
+                    Init();
+
+                    foreach (string line in lines)
+                    {
+                        AddVerstoss(line);
+                        CVerstossaus.Items.Remove(line);
+                    }
+                }
+            }
+        }
+        private void CBackall_Click(object sender, EventArgs e)
+        {
+            CVerstossaus.Items.Clear();
+            foreach (String i in CVerstoss.Items)
+            {
+                AddVerstoss(i);
+            }
+            CVerstoss.Items.Clear();
+            CAnzeigeText.Text = Message;
+        }
+        private void CBack_Click(object sender, EventArgs e)
+        {
+            if (CVerstoss.SelectedItem != null)
+            {
+
+                CVerstossaus.Items.Add(CVerstoss.SelectedItem);
+                RemoveVerstoss((String)CVerstoss.SelectedItem);
+            }
+            CAnzeigeText.Text = Message;
+        }
+        private void CToo_Click(object sender, EventArgs e)
+        {
+            if (CVerstossaus.SelectedItem != null)
+            {
+                AddVerstoss((String)CVerstossaus.SelectedItem);
+                CVerstossaus.Items.Remove(CVerstossaus.SelectedItem);
+            }
+            CAnzeigeText.Text = Message;
+        }
+        private void Ctoall_Click(object sender, EventArgs e)
+        {
+            CVerstoss.Items.Clear();
+            foreach (String i in CVerstossaus.Items)
+            {
+                // CVerstoss.Items.Add(i);
+                AddVerstoss(i);
+            }
+            CVerstossaus.Items.Clear();
+            CAnzeigeText.Text = Message;
         }
     }
 }
