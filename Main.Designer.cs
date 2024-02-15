@@ -296,7 +296,10 @@ namespace Anzeige
             this.smallToolbox5.OpenMode = true;
             this.smallToolbox5.Size = new System.Drawing.Size(20, 39);
             this.smallToolbox5.TabIndex = 6;
+            this.toolTip1.SetToolTip(this.smallToolbox5, ".");
             this.smallToolbox5.ClickTool += new System.EventHandler<Anzeige.SmallToolbox.ClickToolEventArgs>(this.smallToolbox5_ClickTool);
+            this.smallToolbox5.EnterTool += new System.EventHandler<Anzeige.SmallToolbox.ClickToolEventArgs>(this.smallToolbox_EnterTool);
+            this.smallToolbox5.LeaveTool += new System.EventHandler<Anzeige.SmallToolbox.ClickToolEventArgs>(this.smallToolbox_LeaveTool);
             // 
             // smallToolbox2
             // 
@@ -308,7 +311,10 @@ namespace Anzeige
             this.smallToolbox2.OpenMode = true;
             this.smallToolbox2.Size = new System.Drawing.Size(20, 39);
             this.smallToolbox2.TabIndex = 6;
+            this.toolTip1.SetToolTip(this.smallToolbox2, ".");
             this.smallToolbox2.ClickTool += new System.EventHandler<Anzeige.SmallToolbox.ClickToolEventArgs>(this.smallToolbox2_ClickTool);
+            this.smallToolbox2.EnterTool += new System.EventHandler<Anzeige.SmallToolbox.ClickToolEventArgs>(this.smallToolbox_EnterTool);
+            this.smallToolbox2.LeaveTool += new System.EventHandler<Anzeige.SmallToolbox.ClickToolEventArgs>(this.smallToolbox_LeaveTool);
             // 
             // CVerstossaus
             // 
@@ -334,7 +340,10 @@ namespace Anzeige
             this.smallToolbox4.OpenMode = true;
             this.smallToolbox4.Size = new System.Drawing.Size(20, 39);
             this.smallToolbox4.TabIndex = 6;
+            this.toolTip1.SetToolTip(this.smallToolbox4, ".");
             this.smallToolbox4.ClickTool += new System.EventHandler<Anzeige.SmallToolbox.ClickToolEventArgs>(this.smallToolbox4_ClickTool);
+            this.smallToolbox4.EnterTool += new System.EventHandler<Anzeige.SmallToolbox.ClickToolEventArgs>(this.smallToolbox_EnterTool);
+            this.smallToolbox4.LeaveTool += new System.EventHandler<Anzeige.SmallToolbox.ClickToolEventArgs>(this.smallToolbox_LeaveTool);
             // 
             // smallToolbox3
             // 
@@ -346,7 +355,10 @@ namespace Anzeige
             this.smallToolbox3.OpenMode = true;
             this.smallToolbox3.Size = new System.Drawing.Size(20, 39);
             this.smallToolbox3.TabIndex = 6;
+            this.toolTip1.SetToolTip(this.smallToolbox3, ".");
             this.smallToolbox3.ClickTool += new System.EventHandler<Anzeige.SmallToolbox.ClickToolEventArgs>(this.smallToolbox3_ClickTool);
+            this.smallToolbox3.EnterTool += new System.EventHandler<Anzeige.SmallToolbox.ClickToolEventArgs>(this.smallToolbox_EnterTool);
+            this.smallToolbox3.LeaveTool += new System.EventHandler<Anzeige.SmallToolbox.ClickToolEventArgs>(this.smallToolbox_LeaveTool);
             // 
             // smallToolbox1
             // 
@@ -358,7 +370,10 @@ namespace Anzeige
             this.smallToolbox1.OpenMode = true;
             this.smallToolbox1.Size = new System.Drawing.Size(22, 39);
             this.smallToolbox1.TabIndex = 6;
+            this.toolTip1.SetToolTip(this.smallToolbox1, ".");
             this.smallToolbox1.ClickTool += new System.EventHandler<Anzeige.SmallToolbox.ClickToolEventArgs>(this.smallToolbox1_ClickTool);
+            this.smallToolbox1.EnterTool += new System.EventHandler<Anzeige.SmallToolbox.ClickToolEventArgs>(this.smallToolbox_EnterTool);
+            this.smallToolbox1.LeaveTool += new System.EventHandler<Anzeige.SmallToolbox.ClickToolEventArgs>(this.smallToolbox_LeaveTool);
             // 
             // CRaster
             // 
@@ -744,6 +759,7 @@ namespace Anzeige
             this.panel1.TabIndex = 13;
             this.panel1.TabStop = true;
             this.toolTip1.SetToolTip(this.panel1, "Bitte Farbe des KFZ wählen");
+            this.panel1.Click += new System.EventHandler(this.panel_ClickBack);
             // 
             // panel12
             // 
@@ -1333,6 +1349,7 @@ namespace Anzeige
             // CSave
             // 
             this.CSave.BackColor = System.Drawing.Color.Silver;
+            this.CSave.BackgroundImage = global::Anzeige.Properties.Resources.urban;
             this.CSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.CSave.Controls.Add(this.panel13);
             this.CSave.Controls.Add(this.edit_Adress1);
@@ -1376,9 +1393,9 @@ namespace Anzeige
             this.panel13.Controls.Add(this.CToo);
             this.panel13.Controls.Add(this.Ctoall);
             this.panel13.Controls.Add(this.CBack);
-            this.panel13.Location = new System.Drawing.Point(21, 317);
+            this.panel13.Location = new System.Drawing.Point(504, 932);
             this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(42, 55);
+            this.panel13.Size = new System.Drawing.Size(548, 273);
             this.panel13.TabIndex = 7;
             this.panel13.Visible = false;
             // 
@@ -1412,7 +1429,7 @@ namespace Anzeige
             // CLoadPic
             // 
             this.CLoadPic.BackColor = System.Drawing.Color.LightGray;
-            this.CLoadPic.Location = new System.Drawing.Point(33, 3);
+            this.CLoadPic.Location = new System.Drawing.Point(38, 0);
             this.CLoadPic.Name = "CLoadPic";
             this.CLoadPic.Size = new System.Drawing.Size(33, 40);
             this.CLoadPic.TabIndex = 0;

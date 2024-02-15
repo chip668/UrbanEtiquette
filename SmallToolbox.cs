@@ -17,15 +17,21 @@ namespace Anzeige
         {
             public int ButtonIndex { get; }
             public string ButtonText { get; }
+            public string toolTipText { get; }
+            public Button s{ get; set; }
 
-            public ClickToolEventArgs(int buttonIndex, string buttonText)
+            public ClickToolEventArgs(int buttonIndex, string buttonText, string toolTipText)
             {
-                ButtonIndex = buttonIndex;
-                ButtonText = buttonText;
+                this.ButtonIndex = buttonIndex;
+                this.ButtonText = buttonText;
+                this.toolTipText = toolTipText;
+                this.s = null;
             }
         }
-
+        List<String> tooltip = new List<String>();
         public event EventHandler<ClickToolEventArgs> ClickTool;
+        public event EventHandler<ClickToolEventArgs> EnterTool;
+        public event EventHandler<ClickToolEventArgs> LeaveTool;
 
         int n { get; set; }
         int _width = 20;
@@ -74,10 +80,15 @@ namespace Anzeige
         {
             OpenMode = !OpenMode;
         }
-        public void AddButtons(String []buttons)
+        public void AddButtons(String []buttons, String[] tooltips)
         {
             foreach (String bt in buttons)
+            {
+                this.tooltip.Add(tooltips[n]);
                 AddButton(bt);
+            }
+
+
             OpenMode = true;
         }
         public void AddButton(String button)
@@ -91,13 +102,24 @@ namespace Anzeige
             bt.Size = new Size(33, 40);
             width = bt.Left + bt.Width;
             bt.Click += CTButton_Click;
+            bt.MouseEnter += CTButton_MouseEnter;
+            bt.MouseLeave += CTButton_MouseLeave;
         }
 
         protected virtual void OnClickTool(ClickToolEventArgs e)
         {
             ClickTool?.Invoke(this, e);
         }
+        protected virtual void OnEnterTool(ClickToolEventArgs e)
+        {
+            EnterTool?.Invoke(this, e);
+        }
+        protected virtual void OnLeaveTool(ClickToolEventArgs e)
+        {
+            LeaveTool?.Invoke(this, e);
+        }
 
+        
         private void CTButton_Click(object sender, EventArgs e)
         {
             Button clickedButton = sender as Button;
@@ -107,7 +129,39 @@ namespace Anzeige
                 string buttonText = clickedButton.Text;
 
                 // Hier wird das ClickTool-Ereignis ausgelöst
-                OnClickTool(new ClickToolEventArgs(buttonIndex, buttonText));
+                OnClickTool(new ClickToolEventArgs(buttonIndex, buttonText, ""));
+            }
+        }
+        private void CTButton_MouseEnter(object sender, EventArgs e)
+        {
+            Button clickedButton = sender as Button;
+            int n = (int)clickedButton.Tag; 
+            if (clickedButton != null)
+            {
+                int buttonIndex = (int)clickedButton.Tag;
+                string buttonText = clickedButton.Text;
+                string tooltipText = tooltip[n];
+
+                // Hier wird das ClickTool-Ereignis ausgelöst
+                SmallToolbox.ClickToolEventArgs ex = new ClickToolEventArgs(buttonIndex, buttonText, tooltipText);
+                ex.s = clickedButton;
+                OnEnterTool(ex);
+            }
+        }
+        private void CTButton_MouseLeave(object sender, EventArgs e)
+        {
+            Button clickedButton = sender as Button;
+            int n = (int)clickedButton.Tag;
+            if (clickedButton != null)
+            {
+                int buttonIndex = (int)clickedButton.Tag;
+                string buttonText = clickedButton.Text;
+                string tooltipText = tooltip[n];
+
+                // Hier wird das ClickTool-Ereignis ausgelöst
+                SmallToolbox.ClickToolEventArgs ex = new ClickToolEventArgs(buttonIndex, buttonText, tooltipText);
+                ex.s = clickedButton;
+                OnLeaveTool(ex);
             }
         }
     }

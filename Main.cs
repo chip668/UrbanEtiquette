@@ -633,6 +633,14 @@ namespace Anzeige
             String key = "";
             verstossbussgeld = new Bussgeld();
             List<string> allLines = new List<string>();
+            if (!File.Exists (configfile))
+            {
+                string configfileept = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.ept");
+                MessageBox.Show("Sie müssen zunächst ihre ladungsfähige Anschrift eingeben damit sie als Zeuge des Vorfalls geladen werden können. Bitte beachten : Anzeigen sind nicht anonym möglich. " + configfileept);
+                File.Move(configfileept, configfile);
+                ShellExecute(IntPtr.Zero, "open", configfile, "", "", 5);
+                Environment.Exit(0);
+            }
             allLines.AddRange(File.ReadAllLines(configfile));
             allLines.AddRange(File.ReadAllLines("Data.txt"));
             string[] lines = allLines.ToArray();
@@ -1545,11 +1553,11 @@ namespace Anzeige
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            smallToolbox1.AddButtons(new string[] { "🗎", "🖼", "📋" });
-            smallToolbox2.AddButtons(new string[] { "💾", "📁", "🎥", "📁", "🖼" });
-            smallToolbox3.AddButtons(new string[] { "⌖", "👷", "⚙", "🗎", "🛈" });
-            smallToolbox4.AddButtons(new string[] { "💾", "📁" });
-            smallToolbox5.AddButtons(new string[] { "⇊", "🠗", "↑", "⇈" });
+            smallToolbox1.AddButtons(new string[] { "🗎", "🖼", "📋" }, new string[] { "Neue Anzeige", "Bilder laden", "Adresse einfügen" });
+            smallToolbox2.AddButtons(new string[] { "💾", "📁", "🎥", "📁", "🖼" }, new string[] { "Speichern der aktuellen Anzeige", "Anzeige laden", "Video auswählen", "Ordner öffnen", "Bild aus der Zwischenablage einfügen" });
+            smallToolbox3.AddButtons(new string[] { "⌖", "👷", "⚙", "🗎", "🛈" }, new string[] { "Adresse mbei Google anzeigen", "Assistent", "Einstellung", "Textvorlage bearbeiten", "Hilfe" });
+            smallToolbox4.AddButtons(new string[] { "💾", "📁" }, new string[] { "Anzeigeart speichern", "Anzeigeart laden" });
+            smallToolbox5.AddButtons(new string[] { "⇊", "🠗", "↑", "⇈" }, new string[] { "Alles Verstöße anzeigen", "Verstoß anzeigen", "Verstoß nicht anzeigen", "Keine Verstöße anzeigen" });
             
             smallToolbox2.OpenMode = false;
             smallToolbox3.OpenMode = false;
@@ -1570,7 +1578,7 @@ namespace Anzeige
             left.Checked = true;
             SetImage(global::Anzeige.Properties.Resources.eng);
             selectedRef = pictureBox4;
-            selectedRef.Parent.Paint += Parent_Paint;
+            // selectedRef.Parent.Paint += Parent_Paint;
             aboutdlg.Hide();
             // edit_Adress1.Dock = DockStyle.Fill;
             // edit_Line1.Dock = DockStyle.Fill;
@@ -2065,30 +2073,33 @@ namespace Anzeige
             CTabPageOA.Controls.Clear();
             CWeglide.Controls.Clear();
             CGMaps.Controls.Clear();
-            if (CTabPages.SelectedTab == CTabPageOA)
+            if (URL != null)
             {
-                if (URL.Length < 1)
+                if (CTabPages.SelectedTab == CTabPageOA)
                 {
-
-                }
-                else if (URL == "{pdf}")
-                {
-                    CreatePDF.Checked = false;
-                    CreatePDF.Checked = true;
-
-                    if (PDFFilename != "")
+                    if (URL.Length < 1)
                     {
-                        ShellExecute(IntPtr.Zero, "open", PDFFilename, "", "", 5);
+
                     }
-                }
-                else if (URL.Substring(0, 1) == "@")
-                {
-                    ShellExecute(IntPtr.Zero, "open", URL.Substring(1), "", "", 5);
-                }
-                else
-                {
-                    oabrowser.Navigate(URL);
-                    CTabPageOA.Controls.Add(oabrowser);
+                    else if (URL == "{pdf}")
+                    {
+                        CreatePDF.Checked = false;
+                        CreatePDF.Checked = true;
+
+                        if (PDFFilename != "")
+                        {
+                            ShellExecute(IntPtr.Zero, "open", PDFFilename, "", "", 5);
+                        }
+                    }
+                    else if (URL.Substring(0, 1) == "@")
+                    {
+                        ShellExecute(IntPtr.Zero, "open", URL.Substring(1), "", "", 5);
+                    }
+                    else
+                    {
+                        oabrowser.Navigate(URL);
+                        CTabPageOA.Controls.Add(oabrowser);
+                    }
                 }
             }
             else if (CTabPages.SelectedTab == CStadtPate)
@@ -3108,33 +3119,6 @@ namespace Anzeige
         {
 
         }
-        private void Parent_Paint_rect(object sender, PaintEventArgs e)
-        {
-            if (_selectedRef != null)
-            {
-                // Zeichnen Sie einen roten Rahmen um das ausgewählte Steuerelement im Elternsteuerelement
-                using (Pen pen = new Pen(Color.Red, 5))
-                {
-                    Rectangle rect = _selectedRef.Bounds;
-                    rect.Location = _selectedRef.Parent.PointToClient(_selectedRef.Parent.PointToScreen(rect.Location));
-                    e.Graphics.DrawRectangle(pen, rect);
-                }
-            }
-        }
-        private void Parent_Paint(object sender, PaintEventArgs e)
-        {
-            if (_selectedRef != null)
-            {
-                // Zeichnen Sie einen roten Rahmen um das ausgewählte Steuerelement im Elternsteuerelement
-                using (Pen pen = new Pen(Color.Orange, 5))
-                {
-                    Rectangle rect = _selectedRef.Bounds;
-                    rect.Location = _selectedRef.Parent.PointToClient(_selectedRef.Parent.PointToScreen(rect.Location));
-                    e.Graphics.DrawLine(pen, rect.Left-2, rect.Top, rect.Left-2, rect.Bottom); // Linke Seite
-                    e.Graphics.DrawLine(pen, rect.Right+1, rect.Top, rect.Right+1, rect.Bottom); // Rechte Seite
-                }
-            }
-        }
         private void CNextAnzeige_Click(object sender, EventArgs e)
         {
             CNew_Click(sender, e);
@@ -3261,7 +3245,7 @@ namespace Anzeige
                     break;
                 case 1:
                     {
-                        CNew_Click(sender, new SmallToolbox.ClickToolEventArgs(0, "user"));
+                        CNew_Click(sender, new SmallToolbox.ClickToolEventArgs(0, "user", ""));
                         CreateDirectoryIfNotExists(ZZielpfad + "Download");
                         OpenFileDialog openFileDialog = new OpenFileDialog();
                         openFileDialog.Multiselect = true;
@@ -3568,6 +3552,22 @@ namespace Anzeige
                     break;
             }
         }
+        private void smallToolbox_EnterTool(object sender, SmallToolbox.ClickToolEventArgs e)
+        {
+            SmallToolbox s = (SmallToolbox)sender;
+            toolTip1.SetToolTip(e.s, e.toolTipText);
+            toolTip1.Show(e.toolTipText, s);
+            toolTip1.ShowAlways = true; 
+        }
+        private void smallToolbox_LeaveTool(object sender, SmallToolbox.ClickToolEventArgs e)
+        {
+            SmallToolbox s = (SmallToolbox)sender;
+            toolTip1.SetToolTip(e.s, "");
+            toolTip1.Hide(s);
+            toolTip1.ShowAlways = false;
+        }
+
+
         /// Obsolet
         private void CNew_Click(object sender, EventArgs e)
         {
@@ -3862,6 +3862,23 @@ namespace Anzeige
             }
             CVerstossaus.Items.Clear();
             CAnzeigeText.Text = Message;
+        }
+
+        private void panel_ClickBack(object sender, EventArgs e)
+        {
+            panel1.BackColor = Color.Gold;
+            panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel3.BorderStyle = BorderStyle.FixedSingle;
+            panel4.BorderStyle = BorderStyle.FixedSingle;
+            panel5.BorderStyle = BorderStyle.FixedSingle;
+            panel6.BorderStyle = BorderStyle.FixedSingle;
+            panel7.BorderStyle = BorderStyle.FixedSingle;
+            panel8.BorderStyle = BorderStyle.FixedSingle;
+            panel9.BorderStyle = BorderStyle.FixedSingle;
+            panel10.BorderStyle = BorderStyle.FixedSingle;
+            panel11.BorderStyle = BorderStyle.FixedSingle;
+            panel12.BorderStyle = BorderStyle.FixedSingle;
         }
     }
 }

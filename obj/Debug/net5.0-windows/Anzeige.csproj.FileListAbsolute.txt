@@ -113,7 +113,6 @@ C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\bin\Debug\net5.0-windows\run
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\bin\Debug\net5.0-windows\runtimes\osx-x64\native\IronPdfInterop.dylib
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\bin\Debug\net5.0-windows\runtimes\win-x64\native\IronPdfInterop.dll
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\bin\Debug\net5.0-windows\runtimes\win-x86\native\IronPdfInterop.dll
-C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.csproj.AssemblyReference.cache
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.AboutBox1.resources
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.assistent.resources
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.Bussgeldrechner.resources
@@ -137,3 +136,4 @@ C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\bin\Debug\net5.0-windows\Sys
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.Edit_Line.resources
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.Edit_Adress.resources
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.SmallToolbox.resources
+C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.csproj.AssemblyReference.cache
