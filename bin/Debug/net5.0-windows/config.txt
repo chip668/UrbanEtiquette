@@ -1,21 +1,21 @@
 <zname>
-xxxxxxxx
+dein Nachname
 <zvorname>
-xxxxxxxxxxxx
+Dein Vorname
 <zstrasse>
-xxxxxxxxxxxxxx
+Deine Strasse
 <zhausnummer>
-xxxxx
+Deine Hausnummer
 <zplz>
-xxxxxxxxxxxxxxxx
+Deine PLZ
 <zort>
-xxxxxxxxxxxxxxxxx
+Dein Ort
 <zemail>
-xxxxxxxxxxxxxxxxxxxxxx
+Deine Mailadresse
 <zphone>
-xxxxxxxxxxxxxxxxxxxx
+Deine Telefonnummer
 <zielpfad>
-Z:\Dokumente\Anzeigen\
+C:\Anzeigen\
 <zbluetooth>
 NI
 <zsmtpserver>
@@ -27,7 +27,7 @@ yes
 <ztpl>
 yes
 <zsendermail>
-Schippers.Norbert@yahoo.com
+Deine Mailadresse
 <zsubject>
 Anzeige einer Verkehrsordnungswiedrigkeit
 <zpassword>

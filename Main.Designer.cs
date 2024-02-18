@@ -116,12 +116,17 @@ namespace Anzeige
             this.right = new System.Windows.Forms.RadioButton();
             this.left = new System.Windows.Forms.RadioButton();
             this.openButton = new System.Windows.Forms.Button();
+            this.CTAbstandSerie = new System.Windows.Forms.TabPage();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.CFilelist = new System.Windows.Forms.ListBox();
+            this.CContent = new System.Windows.Forms.ListBox();
             this.CAdressen = new System.Windows.Forms.TabPage();
             this.button5 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.CDataList = new System.Windows.Forms.ListBox();
             this.CTabPages = new System.Windows.Forms.TabControl();
             this.CSave = new System.Windows.Forms.TabPage();
+            this.abstandsmeter1 = new Anzeige.Abstandsmeter();
             this.panel13 = new System.Windows.Forms.Panel();
             this.CNew = new System.Windows.Forms.Button();
             this.CClipImage = new System.Windows.Forms.Button();
@@ -157,6 +162,7 @@ namespace Anzeige
             this.CStadtPate = new System.Windows.Forms.TabPage();
             this.CGMaps = new System.Windows.Forms.TabPage();
             this.CTest = new System.Windows.Forms.TabPage();
+            this.button6 = new System.Windows.Forms.Button();
             this.CTestText = new System.Windows.Forms.TextBox();
             this.CAbout = new System.Windows.Forms.TabPage();
             this.CPolice = new System.Windows.Forms.TabPage();
@@ -184,6 +190,11 @@ namespace Anzeige
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.CTAbstandSerie.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
+            this.splitContainer3.Panel1.SuspendLayout();
+            this.splitContainer3.Panel2.SuspendLayout();
+            this.splitContainer3.SuspendLayout();
             this.CAdressen.SuspendLayout();
             this.CTabPages.SuspendLayout();
             this.CSave.SuspendLayout();
@@ -205,12 +216,13 @@ namespace Anzeige
             this.splitContainer1.Cursor = System.Windows.Forms.Cursors.VSplit;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.BackColor = System.Drawing.Color.Yellow;
+            this.splitContainer1.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.splitContainer1.Panel1.Controls.Add(this.tabControl1);
             // 
             // splitContainer1.Panel2
@@ -225,8 +237,8 @@ namespace Anzeige
             this.tabControl1.Controls.Add(this.CTAnzeige);
             this.tabControl1.Controls.Add(this.CTInfo);
             this.tabControl1.Controls.Add(this.CTAbstand);
+            this.tabControl1.Controls.Add(this.CTAbstandSerie);
             this.tabControl1.Controls.Add(this.CAdressen);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -236,7 +248,7 @@ namespace Anzeige
             // 
             // CTAnzeige
             // 
-            this.CTAnzeige.BackColor = System.Drawing.Color.Yellow;
+            this.CTAnzeige.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.CTAnzeige.Controls.Add(this.smallToolbox5);
             this.CTAnzeige.Controls.Add(this.smallToolbox2);
             this.CTAnzeige.Controls.Add(this.CVerstossaus);
@@ -288,7 +300,7 @@ namespace Anzeige
             // 
             // smallToolbox5
             // 
-            this.smallToolbox5.BackColor = System.Drawing.Color.Yellow;
+            this.smallToolbox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.smallToolbox5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("smallToolbox5.BackgroundImage")));
             this.smallToolbox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.smallToolbox5.Location = new System.Drawing.Point(2, 333);
@@ -303,7 +315,7 @@ namespace Anzeige
             // 
             // smallToolbox2
             // 
-            this.smallToolbox2.BackColor = System.Drawing.Color.Yellow;
+            this.smallToolbox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.smallToolbox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("smallToolbox2.BackgroundImage")));
             this.smallToolbox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.smallToolbox2.Location = new System.Drawing.Point(126, 8);
@@ -318,7 +330,7 @@ namespace Anzeige
             // 
             // CVerstossaus
             // 
-            this.CVerstossaus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.CVerstossaus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.CVerstossaus.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.CVerstossaus.FormattingEnabled = true;
             this.CVerstossaus.ItemHeight = 21;
@@ -332,7 +344,7 @@ namespace Anzeige
             // 
             // smallToolbox4
             // 
-            this.smallToolbox4.BackColor = System.Drawing.Color.Yellow;
+            this.smallToolbox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.smallToolbox4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("smallToolbox4.BackgroundImage")));
             this.smallToolbox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.smallToolbox4.Location = new System.Drawing.Point(344, 8);
@@ -347,7 +359,7 @@ namespace Anzeige
             // 
             // smallToolbox3
             // 
-            this.smallToolbox3.BackColor = System.Drawing.Color.Yellow;
+            this.smallToolbox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.smallToolbox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("smallToolbox3.BackgroundImage")));
             this.smallToolbox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.smallToolbox3.Location = new System.Drawing.Point(152, 8);
@@ -362,7 +374,7 @@ namespace Anzeige
             // 
             // smallToolbox1
             // 
-            this.smallToolbox1.BackColor = System.Drawing.Color.Yellow;
+            this.smallToolbox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.smallToolbox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("smallToolbox1.BackgroundImage")));
             this.smallToolbox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.smallToolbox1.Location = new System.Drawing.Point(1, 8);
@@ -377,6 +389,7 @@ namespace Anzeige
             // 
             // CRaster
             // 
+            this.CRaster.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.CRaster.Location = new System.Drawing.Point(229, 615);
             this.CRaster.Name = "CRaster";
             this.CRaster.Size = new System.Drawing.Size(44, 29);
@@ -414,12 +427,13 @@ namespace Anzeige
             // 
             // CDTMEdit
             // 
-            this.CDTMEdit.CalendarMonthBackground = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.CDTMEdit.CalendarMonthBackground = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.CDTMEdit.CustomFormat = "dd.MM.yyyy HH:mm";
             this.CDTMEdit.Location = new System.Drawing.Point(90, 578);
             this.CDTMEdit.Name = "CDTMEdit";
             this.CDTMEdit.Size = new System.Drawing.Size(180, 29);
             this.CDTMEdit.TabIndex = 12;
+            this.toolTip1.SetToolTip(this.CDTMEdit, "Datum des Verstoßes");
             this.CDTMEdit.Visible = false;
             this.CDTMEdit.ValueChanged += new System.EventHandler(this.CDTMEdit_ValueChanged);
             // 
@@ -474,7 +488,7 @@ namespace Anzeige
             // 
             // CStrasse
             // 
-            this.CStrasse.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.CStrasse.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.CStrasse.Location = new System.Drawing.Point(90, 127);
             this.CStrasse.Name = "CStrasse";
             this.CStrasse.Size = new System.Drawing.Size(257, 29);
@@ -500,7 +514,7 @@ namespace Anzeige
             // 
             // CPLZ
             // 
-            this.CPLZ.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.CPLZ.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.CPLZ.Location = new System.Drawing.Point(90, 92);
             this.CPLZ.Name = "CPLZ";
             this.CPLZ.Size = new System.Drawing.Size(83, 29);
@@ -545,6 +559,7 @@ namespace Anzeige
             this.CreatePDF.TabIndex = 17;
             this.CreatePDF.TabStop = false;
             this.CreatePDF.Text = "Formular";
+            this.toolTip1.SetToolTip(this.CreatePDF, "Soll zusätzlich ein PDF Formular ausgegeben werden");
             this.CreatePDF.UseVisualStyleBackColor = false;
             this.CreatePDF.CheckedChanged += new System.EventHandler(this.CreatePDF_CheckedChanged);
             // 
@@ -561,7 +576,7 @@ namespace Anzeige
             // 
             // CFreeText
             // 
-            this.CFreeText.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.CFreeText.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.CFreeText.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.CFreeText.Location = new System.Drawing.Point(90, 487);
             this.CFreeText.Multiline = true;
@@ -582,7 +597,7 @@ namespace Anzeige
             // 
             // CKennzeichen
             // 
-            this.CKennzeichen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.CKennzeichen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.CKennzeichen.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.CKennzeichen.Location = new System.Drawing.Point(103, 684);
             this.CKennzeichen.Name = "CKennzeichen";
@@ -601,18 +616,18 @@ namespace Anzeige
             // 
             // CZeit
             // 
-            this.CZeit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.CZeit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.CZeit.Location = new System.Drawing.Point(310, 578);
             this.CZeit.Name = "CZeit";
             this.CZeit.Size = new System.Drawing.Size(119, 29);
             this.CZeit.TabIndex = 13;
             this.CZeit.TabStop = false;
-            this.toolTip1.SetToolTip(this.CZeit, "Zeit des Verstoßes");
+            this.toolTip1.SetToolTip(this.CZeit, "Zeit des Verstoßes (von)");
             this.CZeit.TextChanged += new System.EventHandler(this.CZeit_TextChanged);
             // 
             // CLogo
             // 
-            this.CLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.CLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.CLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.CLogo.Location = new System.Drawing.Point(310, 162);
             this.CLogo.Name = "CLogo";
@@ -632,12 +647,13 @@ namespace Anzeige
             // 
             // CZeitBis
             // 
-            this.CZeitBis.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.CZeitBis.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.CZeitBis.Location = new System.Drawing.Point(310, 615);
             this.CZeitBis.Name = "CZeitBis";
             this.CZeitBis.Size = new System.Drawing.Size(119, 29);
             this.CZeitBis.TabIndex = 14;
             this.CZeitBis.TabStop = false;
+            this.toolTip1.SetToolTip(this.CZeitBis, "Zeit des Verstoßes (bis)");
             this.CZeitBis.TextChanged += new System.EventHandler(this.CZeitBis_TextChanged);
             // 
             // label6
@@ -669,7 +685,7 @@ namespace Anzeige
             // 
             // CFiles
             // 
-            this.CFiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.CFiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.CFiles.FormattingEnabled = true;
             this.CFiles.ItemHeight = 21;
             this.CFiles.Location = new System.Drawing.Point(131, 713);
@@ -695,7 +711,7 @@ namespace Anzeige
             // 
             // COrt
             // 
-            this.COrt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.COrt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.COrt.FormattingEnabled = true;
             this.COrt.ItemHeight = 21;
             this.COrt.Location = new System.Drawing.Point(179, 92);
@@ -710,7 +726,7 @@ namespace Anzeige
             // 
             // CHN
             // 
-            this.CHN.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.CHN.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.CHN.Location = new System.Drawing.Point(353, 127);
             this.CHN.Name = "CHN";
             this.CHN.Size = new System.Drawing.Size(76, 29);
@@ -730,7 +746,7 @@ namespace Anzeige
             // 
             // CMail
             // 
-            this.CMail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.CMail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.CMail.Location = new System.Drawing.Point(90, 57);
             this.CMail.Name = "CMail";
             this.CMail.Size = new System.Drawing.Size(339, 29);
@@ -807,7 +823,7 @@ namespace Anzeige
             // 
             // panel8
             // 
-            this.panel8.BackColor = System.Drawing.Color.Yellow;
+            this.panel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.panel8.Location = new System.Drawing.Point(178, 1);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(28, 32);
@@ -885,7 +901,7 @@ namespace Anzeige
             // 
             // CMarke
             // 
-            this.CMarke.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.CMarke.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.CMarke.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
             this.CMarke.FormattingEnabled = true;
             this.CMarke.Location = new System.Drawing.Point(90, 162);
@@ -899,7 +915,7 @@ namespace Anzeige
             // 
             // CVerstoss
             // 
-            this.CVerstoss.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.CVerstoss.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.CVerstoss.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.CVerstoss.FormattingEnabled = true;
             this.CVerstoss.ItemHeight = 21;
@@ -914,7 +930,7 @@ namespace Anzeige
             // 
             // CTInfo
             // 
-            this.CTInfo.BackColor = System.Drawing.Color.Yellow;
+            this.CTInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.CTInfo.Controls.Add(this.bussgeldrechner1);
             this.CTInfo.Location = new System.Drawing.Point(4, 30);
             this.CTInfo.Name = "CTInfo";
@@ -925,6 +941,7 @@ namespace Anzeige
             // 
             // bussgeldrechner1
             // 
+            this.bussgeldrechner1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.bussgeldrechner1.bussgeld = null;
             this.bussgeldrechner1.Location = new System.Drawing.Point(-1, 3);
             this.bussgeldrechner1.Name = "bussgeldrechner1";
@@ -933,7 +950,7 @@ namespace Anzeige
             // 
             // CTAbstand
             // 
-            this.CTAbstand.BackColor = System.Drawing.Color.Yellow;
+            this.CTAbstand.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.CTAbstand.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.CTAbstand.Controls.Add(this.CScaleMess);
             this.CTAbstand.Controls.Add(this.Insert);
@@ -980,6 +997,7 @@ namespace Anzeige
             // 
             // Insert
             // 
+            this.Insert.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.Insert.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Insert.Location = new System.Drawing.Point(109, 0);
             this.Insert.Name = "Insert";
@@ -987,23 +1005,24 @@ namespace Anzeige
             this.Insert.TabIndex = 3;
             this.Insert.Text = "📋";
             this.toolTip1.SetToolTip(this.Insert, "Einfügen eines Bildes ");
-            this.Insert.UseVisualStyleBackColor = true;
+            this.Insert.UseVisualStyleBackColor = false;
             this.Insert.Click += new System.EventHandler(this.Insert_Click);
             // 
             // button4
             // 
+            this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.button4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.button4.Location = new System.Drawing.Point(55, 0);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(47, 28);
             this.button4.TabIndex = 2;
             this.button4.Text = "💾";
-            this.button4.UseVisualStyleBackColor = true;
+            this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.numericUpDown1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.numericUpDown1.Location = new System.Drawing.Point(12, 313);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(135, 29);
@@ -1143,6 +1162,7 @@ namespace Anzeige
             // 
             // RealDistance
             // 
+            this.RealDistance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.RealDistance.Enabled = false;
             this.RealDistance.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.RealDistance.Location = new System.Drawing.Point(1, 942);
@@ -1153,6 +1173,7 @@ namespace Anzeige
             // 
             // Distance
             // 
+            this.Distance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.Distance.Enabled = false;
             this.Distance.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Distance.Location = new System.Drawing.Point(3, 907);
@@ -1164,7 +1185,7 @@ namespace Anzeige
             // 
             // ownwidth
             // 
-            this.ownwidth.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.ownwidth.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.ownwidth.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ownwidth.Location = new System.Drawing.Point(3, 34);
             this.ownwidth.Name = "ownwidth";
@@ -1176,6 +1197,7 @@ namespace Anzeige
             // 
             // textBox1
             // 
+            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.textBox1.Location = new System.Drawing.Point(3, 872);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(152, 29);
@@ -1273,18 +1295,70 @@ namespace Anzeige
             // 
             // openButton
             // 
+            this.openButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.openButton.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.openButton.Location = new System.Drawing.Point(1, 0);
             this.openButton.Name = "openButton";
             this.openButton.Size = new System.Drawing.Size(47, 28);
             this.openButton.TabIndex = 1;
             this.openButton.Text = "📂";
-            this.openButton.UseVisualStyleBackColor = true;
+            this.openButton.UseVisualStyleBackColor = false;
             this.openButton.Click += new System.EventHandler(this.openButton_Click);
+            // 
+            // CTAbstandSerie
+            // 
+            this.CTAbstandSerie.Controls.Add(this.splitContainer3);
+            this.CTAbstandSerie.Location = new System.Drawing.Point(4, 30);
+            this.CTAbstandSerie.Name = "CTAbstandSerie";
+            this.CTAbstandSerie.Size = new System.Drawing.Size(432, 996);
+            this.CTAbstandSerie.TabIndex = 4;
+            this.CTAbstandSerie.Text = "Sensor";
+            this.CTAbstandSerie.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer3
+            // 
+            this.splitContainer3.Cursor = System.Windows.Forms.Cursors.HSplit;
+            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer3.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer3.Name = "splitContainer3";
+            this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer3.Panel1
+            // 
+            this.splitContainer3.Panel1.Controls.Add(this.CFilelist);
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.Controls.Add(this.CContent);
+            this.splitContainer3.Size = new System.Drawing.Size(432, 996);
+            this.splitContainer3.SplitterDistance = 269;
+            this.splitContainer3.TabIndex = 0;
+            // 
+            // CFilelist
+            // 
+            this.CFilelist.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CFilelist.FormattingEnabled = true;
+            this.CFilelist.ItemHeight = 21;
+            this.CFilelist.Location = new System.Drawing.Point(0, 0);
+            this.CFilelist.Name = "CFilelist";
+            this.CFilelist.Size = new System.Drawing.Size(432, 269);
+            this.CFilelist.TabIndex = 0;
+            this.CFilelist.SelectedIndexChanged += new System.EventHandler(this.CFilelist_SelectedIndexChanged);
+            // 
+            // CContent
+            // 
+            this.CContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CContent.FormattingEnabled = true;
+            this.CContent.ItemHeight = 21;
+            this.CContent.Location = new System.Drawing.Point(0, 0);
+            this.CContent.Name = "CContent";
+            this.CContent.Size = new System.Drawing.Size(432, 723);
+            this.CContent.TabIndex = 0;
+            this.CContent.SelectedIndexChanged += new System.EventHandler(this.CContent_SelectedIndexChanged);
             // 
             // CAdressen
             // 
-            this.CAdressen.BackColor = System.Drawing.Color.Yellow;
+            this.CAdressen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.CAdressen.Controls.Add(this.button5);
             this.CAdressen.Controls.Add(this.button1);
             this.CAdressen.Controls.Add(this.CDataList);
@@ -1316,7 +1390,7 @@ namespace Anzeige
             // 
             // CDataList
             // 
-            this.CDataList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.CDataList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.CDataList.FormattingEnabled = true;
             this.CDataList.ItemHeight = 21;
             this.CDataList.Location = new System.Drawing.Point(4, 4);
@@ -1348,14 +1422,15 @@ namespace Anzeige
             // 
             // CSave
             // 
-            this.CSave.BackColor = System.Drawing.Color.Silver;
-            this.CSave.BackgroundImage = global::Anzeige.Properties.Resources.urban;
+            this.CSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.CSave.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("CSave.BackgroundImage")));
             this.CSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.CSave.Controls.Add(this.COCRPicture);
+            this.CSave.Controls.Add(this.abstandsmeter1);
             this.CSave.Controls.Add(this.panel13);
             this.CSave.Controls.Add(this.edit_Adress1);
             this.CSave.Controls.Add(this.edit_Line1);
             this.CSave.Controls.Add(this.pictureBox);
-            this.CSave.Controls.Add(this.COCRPicture);
             this.CSave.Controls.Add(this.CAusschnitt);
             this.CSave.Location = new System.Drawing.Point(4, 30);
             this.CSave.Name = "CSave";
@@ -1371,6 +1446,21 @@ namespace Anzeige
             this.CSave.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CFoto_MouseMove);
             this.CSave.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CFoto_MouseUp);
             this.CSave.Resize += new System.EventHandler(this.CFotoAnzeige_Resize);
+            // 
+            // abstandsmeter1
+            // 
+            this.abstandsmeter1.Abstand = 30;
+            this.abstandsmeter1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("abstandsmeter1.BackgroundImage")));
+            this.abstandsmeter1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.abstandsmeter1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.abstandsmeter1.Line = "0,0,0,0,0,";
+            this.abstandsmeter1.Location = new System.Drawing.Point(3, 3);
+            this.abstandsmeter1.Name = "abstandsmeter1";
+            this.abstandsmeter1.Size = new System.Drawing.Size(480, 500);
+            this.abstandsmeter1.TabIndex = 8;
+            this.abstandsmeter1.Visible = false;
+            this.abstandsmeter1.Load += new System.EventHandler(this.abstandsmeter1_Load);
+            this.abstandsmeter1.Click += new System.EventHandler(this.abstandsmeter1_Click);
             // 
             // panel13
             // 
@@ -1393,9 +1483,9 @@ namespace Anzeige
             this.panel13.Controls.Add(this.CToo);
             this.panel13.Controls.Add(this.Ctoall);
             this.panel13.Controls.Add(this.CBack);
-            this.panel13.Location = new System.Drawing.Point(504, 932);
+            this.panel13.Location = new System.Drawing.Point(433, 926);
             this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(548, 273);
+            this.panel13.Size = new System.Drawing.Size(69, 62);
             this.panel13.TabIndex = 7;
             this.panel13.Visible = false;
             // 
@@ -1671,7 +1761,7 @@ namespace Anzeige
             // 
             // pictureBox
             // 
-            this.pictureBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox.BackgroundImage")));
+            this.pictureBox.BackgroundImage = global::Anzeige.Properties.Resources.abstand;
             this.pictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox.Cursor = System.Windows.Forms.Cursors.Cross;
             this.pictureBox.Location = new System.Drawing.Point(562, 8);
@@ -1686,6 +1776,7 @@ namespace Anzeige
             // 
             // COCRPicture
             // 
+            this.COCRPicture.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.COCRPicture.Location = new System.Drawing.Point(3, 3);
             this.COCRPicture.Name = "COCRPicture";
             this.COCRPicture.Size = new System.Drawing.Size(80, 41);
@@ -1695,7 +1786,7 @@ namespace Anzeige
             // 
             // CAusschnitt
             // 
-            this.CAusschnitt.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.CAusschnitt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.CAusschnitt.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.CAusschnitt.Dock = System.Windows.Forms.DockStyle.Top;
             this.CAusschnitt.Location = new System.Drawing.Point(3, 3);
@@ -1709,13 +1800,13 @@ namespace Anzeige
             // 
             // tabPage2
             // 
+            this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.tabPage2.Controls.Add(this.splitContainer2);
             this.tabPage2.Location = new System.Drawing.Point(4, 30);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Size = new System.Drawing.Size(724, 996);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Vorschau";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // splitContainer2
             // 
@@ -1752,7 +1843,7 @@ namespace Anzeige
             // 
             // CAnzeigeText
             // 
-            this.CAnzeigeText.BackColor = System.Drawing.SystemColors.Control;
+            this.CAnzeigeText.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.CAnzeigeText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CAnzeigeText.Location = new System.Drawing.Point(0, 0);
             this.CAnzeigeText.Multiline = true;
@@ -1764,7 +1855,7 @@ namespace Anzeige
             // 
             // CWeglide
             // 
-            this.CWeglide.BackColor = System.Drawing.Color.Silver;
+            this.CWeglide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.CWeglide.Location = new System.Drawing.Point(4, 30);
             this.CWeglide.Name = "CWeglide";
             this.CWeglide.Size = new System.Drawing.Size(724, 996);
@@ -1774,7 +1865,7 @@ namespace Anzeige
             // 
             // CTabPageOA
             // 
-            this.CTabPageOA.BackColor = System.Drawing.Color.Silver;
+            this.CTabPageOA.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.CTabPageOA.Controls.Add(this.CURL);
             this.CTabPageOA.Location = new System.Drawing.Point(4, 30);
             this.CTabPageOA.Name = "CTabPageOA";
@@ -1792,7 +1883,7 @@ namespace Anzeige
             // 
             // CStadtPate
             // 
-            this.CStadtPate.BackColor = System.Drawing.Color.Silver;
+            this.CStadtPate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.CStadtPate.Location = new System.Drawing.Point(4, 30);
             this.CStadtPate.Name = "CStadtPate";
             this.CStadtPate.Size = new System.Drawing.Size(724, 996);
@@ -1802,7 +1893,7 @@ namespace Anzeige
             // 
             // CGMaps
             // 
-            this.CGMaps.BackColor = System.Drawing.Color.Silver;
+            this.CGMaps.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.CGMaps.Location = new System.Drawing.Point(4, 30);
             this.CGMaps.Name = "CGMaps";
             this.CGMaps.Size = new System.Drawing.Size(724, 996);
@@ -1812,17 +1903,28 @@ namespace Anzeige
             // 
             // CTest
             // 
+            this.CTest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.CTest.Controls.Add(this.button6);
             this.CTest.Controls.Add(this.CTestText);
             this.CTest.Location = new System.Drawing.Point(4, 30);
             this.CTest.Name = "CTest";
             this.CTest.Size = new System.Drawing.Size(724, 996);
             this.CTest.TabIndex = 6;
             this.CTest.Text = "Test";
-            this.CTest.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(85, 108);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(110, 65);
+            this.button6.TabIndex = 1;
+            this.button6.Text = "button6";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // CTestText
             // 
-            this.CTestText.BackColor = System.Drawing.Color.Silver;
+            this.CTestText.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.CTestText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CTestText.Location = new System.Drawing.Point(0, 0);
             this.CTestText.Multiline = true;
@@ -1833,26 +1935,27 @@ namespace Anzeige
             // 
             // CAbout
             // 
+            this.CAbout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.CAbout.Location = new System.Drawing.Point(4, 30);
             this.CAbout.Name = "CAbout";
             this.CAbout.Size = new System.Drawing.Size(724, 996);
             this.CAbout.TabIndex = 7;
             this.CAbout.Text = "About";
-            this.CAbout.UseVisualStyleBackColor = true;
             // 
             // CPolice
             // 
+            this.CPolice.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.CPolice.Location = new System.Drawing.Point(4, 30);
             this.CPolice.Name = "CPolice";
             this.CPolice.Size = new System.Drawing.Size(724, 996);
             this.CPolice.TabIndex = 8;
             this.CPolice.Text = "Polizei";
-            this.CPolice.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(1176, 1030);
             this.Controls.Add(this.splitContainer1);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -1888,6 +1991,11 @@ namespace Anzeige
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.CTAbstandSerie.ResumeLayout(false);
+            this.splitContainer3.Panel1.ResumeLayout(false);
+            this.splitContainer3.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
+            this.splitContainer3.ResumeLayout(false);
             this.CAdressen.ResumeLayout(false);
             this.CTabPages.ResumeLayout(false);
             this.CSave.ResumeLayout(false);
@@ -2053,6 +2161,12 @@ namespace Anzeige
         private System.Windows.Forms.Panel panel13;
         private SmallToolbox smallToolbox4;
         private SmallToolbox smallToolbox5;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.TabPage CTAbstandSerie;
+        private System.Windows.Forms.SplitContainer splitContainer3;
+        private System.Windows.Forms.ListBox CFilelist;
+        private System.Windows.Forms.ListBox CContent;
+        private Abstandsmeter abstandsmeter1;
     }
 }
 

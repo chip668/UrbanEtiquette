@@ -46,7 +46,7 @@ namespace Anzeige
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.button1);
-            this.splitContainer1.Size = new System.Drawing.Size(583, 538);
+            this.splitContainer1.Size = new System.Drawing.Size(583, 1060);
             this.splitContainer1.SplitterDistance = 168;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -64,7 +64,7 @@ namespace Anzeige
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(583, 538);
+            this.ClientSize = new System.Drawing.Size(583, 1060);
             this.Controls.Add(this.splitContainer1);
             this.Name = "ConfigEditorForm";
             this.Text = "ConfigEditorForm";

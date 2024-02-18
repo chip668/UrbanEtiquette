@@ -7,7 +7,7 @@ namespace Anzeige
 {
     public partial class ConfigEditorForm : Form
     {
-        private string configFile = "config.txt";
+        // private string configFile = "config.txt";
         private Dictionary<string, string> configValues;
         private string _Configfile;
         public String Configfile
@@ -72,8 +72,8 @@ namespace Anzeige
             btnSave.Text = "Speichern";
             btnSave.Width = 100;
             btnSave.Height = 33;
-            btnSave.Top = this.splitContainer1.Panel2.Height - btnSave.Height - 10;
-            btnSave.Left = this.splitContainer1.Panel2.Width - btnSave.Width - 10;
+            btnSave.Top = offset - 10;
+            btnSave.Left = 0;
             btnSave.Click += btnSave_Click;  // Add event handler if needed
             this.splitContainer1.Panel2.Controls.Add(btnSave);
 
@@ -82,10 +82,12 @@ namespace Anzeige
             btnCancel.Text = "Abbrechen";
             btnCancel.Width = 100;
             btnCancel.Height = 33;
-            btnCancel.Top = this.splitContainer1.Panel2.Height - btnCancel.Height - 10;
-            btnCancel.Left = this.splitContainer1.Panel2.Width - 2 * btnCancel.Width - 20;  // Adjust the spacing between buttons
+            btnCancel.Top = offset - 10;
+            btnCancel.Left = btnSave.Width+10;  // Adjust the spacing between buttons
             btnCancel.Click += btnCancel_Click;  // Add event handler if needed
             this.splitContainer1.Panel2.Controls.Add(btnCancel);
+
+            this.Height = btnCancel.Top + btnCancel.Height + 100;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -104,6 +106,8 @@ namespace Anzeige
                     lines.Add(i.Text);
                 }
             }
+            if (File.Exists(Configfile))
+                File.Delete(Configfile);
             File.WriteAllLines(Configfile, lines);
             Application.Restart();
             Environment.Exit(0); // Optional: Schließen Sie den aktuellen Prozess

@@ -13,8 +13,6 @@ using System.Threading;
 using System.Windows.Forms;
 
 
-
-
 namespace Anzeige
 {
     public partial class Main : Form
@@ -72,7 +70,22 @@ namespace Anzeige
         /// <summary>
         /// Enthält Ladungsfähige Anschift
         /// </summary>
-        String configfile = "config.txt";
+        // String configfile = "config.txt";
+        String _configfile = "config.txt";
+        String configfile
+        {
+            get 
+            {
+                String path = Application.LocalUserAppDataPath.ToString();
+                _configfile = path + "\\config.txt";
+                if (!File.Exists(_configfile))
+                    File.Copy("config.txt", _configfile);
+                return _configfile;
+            }
+        }
+        
+
+
         /// <summary>
         /// Bußgeldklasse berechnet das vorraussichtliche Bußgeld
         /// </summary>
@@ -633,14 +646,16 @@ namespace Anzeige
             String key = "";
             verstossbussgeld = new Bussgeld();
             List<string> allLines = new List<string>();
-            if (!File.Exists (configfile))
-            {
-                string configfileept = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.ept");
-                MessageBox.Show("Sie müssen zunächst ihre ladungsfähige Anschrift eingeben damit sie als Zeuge des Vorfalls geladen werden können. Bitte beachten : Anzeigen sind nicht anonym möglich. " + configfileept);
-                File.Move(configfileept, configfile);
-                ShellExecute(IntPtr.Zero, "open", configfile, "", "", 5);
-                Environment.Exit(0);
-            }
+            // if (!File.Exists (configfile))
+            // {
+            //     string configfileept = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.ept");
+            //     MessageBox.Show("Sie müssen zunächst ihre ladungsfähige Anschrift eingeben damit sie als Zeuge des Vorfalls geladen werden können. Bitte beachten : Anzeigen sind nicht anonym möglich. " + configfileept);
+            //     File.Move(configfileept, configfile);
+            //     ShellExecute(IntPtr.Zero, "open", configfile, "", "", 5);
+            //     Environment.Exit(0);
+            // }
+
+
             allLines.AddRange(File.ReadAllLines(configfile));
             allLines.AddRange(File.ReadAllLines("Data.txt"));
             string[] lines = allLines.ToArray();
@@ -764,6 +779,11 @@ namespace Anzeige
             oabrowser.ScriptErrorsSuppressed = true;
             PDFFilename = "";
             Farbe = Color.Gold.ToString();
+            if (ZName == "dein Nachname")
+            {
+                SmallToolbox.ClickToolEventArgs ex = new SmallToolbox.ClickToolEventArgs(2, "", "");
+                smallToolbox3_ClickTool(this, ex);
+            }
         }
         public string PDFFilename { get; private set; }
         public bool UseLogo { get; private set; }
@@ -2073,9 +2093,10 @@ namespace Anzeige
             CTabPageOA.Controls.Clear();
             CWeglide.Controls.Clear();
             CGMaps.Controls.Clear();
-            if (URL != null)
+
+            if (CTabPages.SelectedTab == CTabPageOA)
             {
-                if (CTabPages.SelectedTab == CTabPageOA)
+                if (URL != null)
                 {
                     if (URL.Length < 1)
                     {
@@ -2722,6 +2743,7 @@ namespace Anzeige
         }
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            abstandsmeter1.Visible = false;
             edit_Adress1.Hide();
             edit_Line1.Hide();
             if (tabControl1.SelectedTab == CTAbstand)
@@ -2731,6 +2753,14 @@ namespace Anzeige
                 pictureBox.Visible = true;
                 pictureBox.Dock = DockStyle.Fill;
                 pictureBox.BackgroundImageLayout = ImageLayout.None;
+                abstandsmeter1.Visible = true;
+            }
+            else if (tabControl1.SelectedTab == CTAbstandSerie)
+            {
+                CFilelist.Items.Clear();
+                CFilelist.Items.AddRange(Directory.GetFiles(ZZielpfad + "AMK", "*.log"));
+                abstandsmeter1.Visible = true;
+                // CContent
             }
             else
             {
@@ -2749,6 +2779,8 @@ namespace Anzeige
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     LoadImage(openFileDialog.FileName);
+                    left.Checked = true;
+
                 }
             }
         }
@@ -2832,6 +2864,7 @@ namespace Anzeige
                         string tempFilePath = Path.GetTempFileName();
                         clipboardImage.Save(tempFilePath);
                         LoadImage(tempFilePath);
+                        left.Checked = true;
                     }
                 }
                 catch (Exception ex)
@@ -2878,6 +2911,7 @@ namespace Anzeige
             // Aktualisieren Sie das Textfeld mit dem berechneten Ergebnis
             Distance.Text = $"{relativeDistance:F2}"; // Anpassen Sie die Formatierung nach Bedarf
             RealDistance.Text = (relativeDistance - Convert.ToDouble(ownwidth.Text) / 2).ToString("F2");
+            abstandsmeter1.Abstand = (int)(relativeDistance - Convert.ToDouble(ownwidth.Text) / 2);
         }
         private double MeasureDistance(Point point1, Point point2)
         {
@@ -3066,6 +3100,10 @@ namespace Anzeige
             if (e.KeyCode == Keys.F1 && !e.Shift && !e.Control && !e.Alt)
             {
                 CHelp_Click(sender, new EventArgs());
+            }
+            else if ((e.KeyCode == Keys.F1 && e.Shift && !e.Control && !e.Alt))
+            {
+                ShellExecute(IntPtr.Zero, "open", "kurzanleitung.pdf", "", "", 5);
             }
             else
             {
@@ -3431,6 +3469,7 @@ namespace Anzeige
                     {
                         // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
                         ConfigEditorForm dlg = new ConfigEditorForm();
+                        dlg.Configfile = configfile;
                         dlg.ShowDialog();
                     }
                     break;
@@ -3464,7 +3503,8 @@ namespace Anzeige
                         dlg.Filter = "Textdatei|*.txt|Alle Dateien|*.*";
                         dlg.Title = "Textdatei speichern";
                         dlg.DefaultExt = "txt";
-                        dlg.InitialDirectory = Environment.CurrentDirectory + "\\Default";
+                        dlg.InitialDirectory = ZZielpfad +  "Default";
+                        CreateDirectoryIfNotExists(dlg.InitialDirectory);
 
                         if (dlg.ShowDialog() == DialogResult.OK)
                         {
@@ -3481,7 +3521,9 @@ namespace Anzeige
                         dlg.Filter = "Textdatei|*.txt|Alle Dateien|*.*";
                         dlg.Title = "Textdatei öffnen";
                         dlg.DefaultExt = "txt";
-                        dlg.InitialDirectory = Environment.CurrentDirectory + "\\Default";
+                        dlg.InitialDirectory = ZZielpfad + "Default";
+                        CreateDirectoryIfNotExists(dlg.InitialDirectory);
+//                         dlg.InitialDirectory = "Z:\\Dokumente\\Anzeigen\\Default";
 
                         if (dlg.ShowDialog() == DialogResult.OK)
                         {
@@ -3879,6 +3921,44 @@ namespace Anzeige
             panel10.BorderStyle = BorderStyle.FixedSingle;
             panel11.BorderStyle = BorderStyle.FixedSingle;
             panel12.BorderStyle = BorderStyle.FixedSingle;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            // String s = File.ReadAllText(@"Dieser PC\Nokia 2.3\Interner gemeinsamer Speicher\Android\data\edu.mit.appinventor.aicompanion3\files\Textdatei.txt");
+            DriveInfo[] drives = DriveInfo.GetDrives();
+
+            foreach (DriveInfo drive in drives)
+            {
+                if (drive.DriveType == DriveType.Removable) // Überprüfen Sie, ob es sich um ein USB-Gerät handelt
+                {
+                    Console.WriteLine($"USB-Gerät gefunden: {drive.Name}");
+                    // Fügen Sie hier Ihren Code zum Herunterladen von Dateien hinzu
+                }
+            }
+
+        }
+
+        private void CFilelist_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CContent.Items.Clear();
+            CContent.Items.AddRange(File.ReadAllLines(CFilelist.SelectedItem.ToString()));
+        }
+
+        private void CContent_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            String line = CContent.SelectedItem.ToString();
+            abstandsmeter1.Line = line;
+        }
+
+        private void abstandsmeter1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void abstandsmeter1_Click(object sender, EventArgs e)
+        {
+            abstandsmeter1.Visible = false;
         }
     }
 }

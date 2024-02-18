@@ -60,6 +60,7 @@ namespace Anzeige
             // 
             // C1
             // 
+            this.C1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.C1.Enabled = false;
             this.C1.Location = new System.Drawing.Point(3, 62);
             this.C1.Name = "C1";
@@ -79,6 +80,7 @@ namespace Anzeige
             // 
             // VW
             // 
+            this.VW.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.VW.Enabled = false;
             this.VW.Location = new System.Drawing.Point(83, 163);
             this.VW.Name = "VW";
@@ -99,6 +101,7 @@ namespace Anzeige
             // 
             // CGes
             // 
+            this.CGes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.CGes.Enabled = false;
             this.CGes.Location = new System.Drawing.Point(83, 198);
             this.CGes.Name = "CGes";
@@ -118,6 +121,7 @@ namespace Anzeige
             // 
             // CPT
             // 
+            this.CPT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.CPT.Enabled = false;
             this.CPT.Location = new System.Drawing.Point(5, 163);
             this.CPT.Name = "CPT";
@@ -159,6 +163,7 @@ namespace Anzeige
             // 
             // C2
             // 
+            this.C2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.C2.Enabled = false;
             this.C2.Location = new System.Drawing.Point(68, 62);
             this.C2.Name = "C2";
@@ -167,6 +172,7 @@ namespace Anzeige
             // 
             // C3
             // 
+            this.C3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.C3.Enabled = false;
             this.C3.Location = new System.Drawing.Point(133, 62);
             this.C3.Name = "C3";
@@ -221,6 +227,7 @@ namespace Anzeige
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.Controls.Add(this.CBH);
             this.Controls.Add(this.CBG);
             this.Controls.Add(this.CVT);

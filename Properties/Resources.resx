@@ -154,6 +154,9 @@
   <data name="z11" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\z1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="urban" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\urban.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ue1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ue.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -181,7 +184,7 @@
   <data name="340" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\340.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="urban" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\urban.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ABSTAND" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ABSTAND.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

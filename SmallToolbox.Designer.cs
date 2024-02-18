@@ -39,14 +39,14 @@ namespace Anzeige
             this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "right.png");
-            this.imageList1.Images.SetKeyName(1, "left.png");
+            this.imageList1.Images.SetKeyName(0, "right.gif");
+            this.imageList1.Images.SetKeyName(1, "leftr.gif");
             // 
             // SmallToolbox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Yellow;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.Name = "SmallToolbox";
             this.Size = new System.Drawing.Size(226, 39);

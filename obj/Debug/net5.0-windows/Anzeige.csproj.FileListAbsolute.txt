@@ -137,3 +137,4 @@ C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anz
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.Edit_Adress.resources
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.SmallToolbox.resources
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.csproj.AssemblyReference.cache
+C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Debug\net5.0-windows\Anzeige.Abstandsmeter.resources
