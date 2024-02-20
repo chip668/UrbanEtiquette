@@ -17,6 +17,8 @@ namespace Anzeige
 {
     public partial class Main : Form
     {
+        // Messwerte.Messwert CurrentMesswert = null;
+        Messwerte messwerte = null;
         KeyEventArgs ed = null;
         /// <summary>
         /// Korrekturliste kennzheichenerkennung
@@ -1542,6 +1544,7 @@ namespace Anzeige
                     graphics.DrawLine(penDist, dist1, dist2);
                     // graphics.DrawLine(penHelp, stop, new Point(stop.X, 0));
                     graphics.DrawLine(penHelp, downhelp, new Point(stop.X, 0));
+                    graphics.DrawLine(penHelp, new Point (lineImage.Width, stop.Y) , new Point(0, stop.Y));
                     Font largerFont = new Font(this.Font.FontFamily, this.Font.Size * scaleFactor, this.Font.Style);
                     graphics.DrawString("Distanz: " + Distance.Text, largerFont, new SolidBrush(Color.White), new Point(20, 20));
 
@@ -2743,9 +2746,10 @@ namespace Anzeige
         }
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            abstandsmeter1.Visible = false;
             edit_Adress1.Hide();
             edit_Line1.Hide();
+            abstandsmeter1.Visible = false;
+
             if (tabControl1.SelectedTab == CTAbstand)
             {
                 // ShellExecute(IntPtr.Zero, "open", @"C:\Users\schip\source\repos\BildMessen\BildMessen\bin\Debug\netcoreapp3.1\BildMessen.exe", "", "", 5);
@@ -2759,8 +2763,8 @@ namespace Anzeige
             {
                 CFilelist.Items.Clear();
                 CFilelist.Items.AddRange(Directory.GetFiles(ZZielpfad + "AMK", "*.log"));
+                abstandsmeter1.CurrentMesswert.Abstand2 = 100;
                 abstandsmeter1.Visible = true;
-                // CContent
             }
             else
             {
@@ -2911,7 +2915,7 @@ namespace Anzeige
             // Aktualisieren Sie das Textfeld mit dem berechneten Ergebnis
             Distance.Text = $"{relativeDistance:F2}"; // Anpassen Sie die Formatierung nach Bedarf
             RealDistance.Text = (relativeDistance - Convert.ToDouble(ownwidth.Text) / 2).ToString("F2");
-            abstandsmeter1.Abstand = (int)(relativeDistance - Convert.ToDouble(ownwidth.Text) / 2);
+            abstandsmeter1.CurrentMesswert.Abstand = (int)(relativeDistance - Convert.ToDouble(ownwidth.Text) / 2);
         }
         private double MeasureDistance(Point point1, Point point2)
         {
@@ -3938,17 +3942,16 @@ namespace Anzeige
             }
 
         }
-
         private void CFilelist_SelectedIndexChanged(object sender, EventArgs e)
         {
+            messwerte = new Messwerte(CFilelist.SelectedItem.ToString());
             CContent.Items.Clear();
-            CContent.Items.AddRange(File.ReadAllLines(CFilelist.SelectedItem.ToString()));
+            CContent.Items.AddRange(messwerte.data);
         }
 
         private void CContent_SelectedIndexChanged(object sender, EventArgs e)
         {
-            String line = CContent.SelectedItem.ToString();
-            abstandsmeter1.Line = line;
+            abstandsmeter1.CurrentMesswert = new Messwerte.Messwert(CContent.SelectedItem.ToString());
         }
 
         private void abstandsmeter1_Load(object sender, EventArgs e)
@@ -3956,9 +3959,5 @@ namespace Anzeige
 
         }
 
-        private void abstandsmeter1_Click(object sender, EventArgs e)
-        {
-            abstandsmeter1.Visible = false;
-        }
     }
 }

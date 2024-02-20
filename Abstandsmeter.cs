@@ -12,15 +12,24 @@ namespace Anzeige
 {
     public partial class Abstandsmeter : UserControl
     {
-        public int _Abstand;
-        public int Abstand
+        private Messwerte.Messwert _CurrentMesswert = new Messwerte.Messwert(150, 100);
+        public Messwerte.Messwert CurrentMesswert
         {
-            get { return _Abstand; }
+            get { return _CurrentMesswert; }
             set 
-            {
-                _Abstand = value;
-                CCar.Left = 400 -  _Abstand - CCar.Width; 
+            { 
+                _CurrentMesswert = value;
+                CCar.Left = 400 - value.Abstand - CCar.Width;
                 if (CCar.Left + CCar.Width > CBike.Left)
+                {
+                    CBike.BackgroundImage = CTemplate.BackgroundImage;
+                }
+                else
+                {
+                    CBike.BackgroundImage = CTemplate.Image;
+                }
+                CCar2.Left = 480 + value.Abstand2;
+                if (CCar2.Left < 480)
                 {
                     CBike.BackgroundImage = CTemplate.BackgroundImage;
                 }
@@ -30,43 +39,55 @@ namespace Anzeige
                 }
             }
         }
-        public int Rechts { get; private set; }
-        public int LinksVorne { get; private set; }
-        public int LinksHinten { get; private set; }
-        public double Longitude { get; private set; }
-        public double Latitude { get; private set; }
-        public String Zeit { get; private set; }
-        public string Line
-        {
-            get => $"{Rechts},{LinksVorne},{LinksHinten},{Longitude},{Latitude},{Zeit}";
-            set
-            {
-                string[] values = value.Split(',');
-
-                if (values.Length == 6)
-                {
-                    Rechts = Convert.ToInt32(values[0]);
-                    LinksVorne = Convert.ToInt32(values[1]);
-                    LinksHinten = Convert.ToInt32(values[2]);
-                    Longitude = Convert.ToDouble(values[3]);
-                    Latitude = Convert.ToDouble(values[4]);
-                    Zeit = values[5];
-                }
-                else
-                {
-                    throw new ArgumentException("Ungültige Anzahl von Werten im Eingabestring.");
-                }
-            }
-        }
-
         public Abstandsmeter()
         {
             InitializeComponent();
         }
-
         private void Abstandsmeter_Load(object sender, EventArgs e)
         {
+            this.Size = new Size(580, 490);
+            CExpand.Visible = false;
+            if (CurrentMesswert!=null)
+                CurrentMesswert.Abstand2 = 200;
+        }
 
+        private void Abstandsmeter_Click(object sender, EventArgs e)
+        {
+            this.Size = CExpand.Size;
+            CExpand.Visible = true;
+        }
+
+        private void CExpand_Click(object sender, EventArgs e)
+        {
+            this.Size = new Size(580, 490);
+            CExpand.Visible = false;
+        }
+
+        private void Abstandsmeter_Paint(object sender, PaintEventArgs e)
+        {
+            if (CCar.Left - CCar.Width < 0)
+            {
+                // Der Abstandsmesser-Rahmen
+                int frameWidth = 200;
+                int frameHeight = 20;
+                // Position des Rahmens
+                int frameX = CCar.Left - frameWidth;
+                int frameY = (CCar.Top + CCar.Bottom) / 2 - frameHeight / 2;
+                // Überprüfen, ob der Rahmen innerhalb des sichtbaren Bereichs liegt
+                if (frameX > 0)
+                {
+                    // Pfeil zeichnen
+                    Point[] arrowPoints = new Point[]
+                    {
+                        new Point(frameX, frameY + frameHeight / 2),
+                        new Point(frameX + 10, frameY),
+                        new Point(frameX + 10, frameY + frameHeight),
+                    };
+                    e.Graphics.FillPolygon(Brushes.Black, arrowPoints);
+                    // Rahmen zeichnen
+                    e.Graphics.DrawRectangle(Pens.Black, frameX, frameY, frameWidth, frameHeight);
+                }
+            }
         }
     }
 }

@@ -4,3 +4,4 @@ Todo Liste
 3. Deim Ausdruck von PDF formularen werden keine Biler übernommen.
 4. Druckfunktionen / Bericht für eine eventuelle Gerichtsverhandlung drucken.
 5. Anonymisierung muss auf alle angehängten Bilder angewand werden.
+6. Einbinden Anstandssensor

@@ -126,6 +126,7 @@ namespace Anzeige
             this.CDataList = new System.Windows.Forms.ListBox();
             this.CTabPages = new System.Windows.Forms.TabControl();
             this.CSave = new System.Windows.Forms.TabPage();
+            this.COCRPicture = new System.Windows.Forms.PictureBox();
             this.abstandsmeter1 = new Anzeige.Abstandsmeter();
             this.panel13 = new System.Windows.Forms.Panel();
             this.CNew = new System.Windows.Forms.Button();
@@ -150,7 +151,6 @@ namespace Anzeige
             this.edit_Adress1 = new Anzeige.Edit_Adress();
             this.edit_Line1 = new Anzeige.Edit_Line();
             this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.COCRPicture = new System.Windows.Forms.PictureBox();
             this.CAusschnitt = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -198,9 +198,9 @@ namespace Anzeige
             this.CAdressen.SuspendLayout();
             this.CTabPages.SuspendLayout();
             this.CSave.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.COCRPicture)).BeginInit();
             this.panel13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.COCRPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CAusschnitt)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
@@ -1447,20 +1447,32 @@ namespace Anzeige
             this.CSave.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CFoto_MouseUp);
             this.CSave.Resize += new System.EventHandler(this.CFotoAnzeige_Resize);
             // 
+            // COCRPicture
+            // 
+            this.COCRPicture.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.COCRPicture.Location = new System.Drawing.Point(3, 3);
+            this.COCRPicture.Name = "COCRPicture";
+            this.COCRPicture.Size = new System.Drawing.Size(80, 41);
+            this.COCRPicture.TabIndex = 3;
+            this.COCRPicture.TabStop = false;
+            this.COCRPicture.Visible = false;
+            // 
             // abstandsmeter1
             // 
-            this.abstandsmeter1.Abstand = 30;
+            this.abstandsmeter1.CurrentMesswert.Abstand = 0;
+            this.abstandsmeter1.CurrentMesswert.Abstand2 = 0;
             this.abstandsmeter1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("abstandsmeter1.BackgroundImage")));
             this.abstandsmeter1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.abstandsmeter1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.abstandsmeter1.Line = "0,0,0,0,0,";
-            this.abstandsmeter1.Location = new System.Drawing.Point(3, 3);
+            this.abstandsmeter1.CurrentMesswert.Line = "0,0,0,0,0,";
+            this.abstandsmeter1.CurrentMesswert.LinksHinten = 0;
+            this.abstandsmeter1.CurrentMesswert.LinksVorne = 0;
+            this.abstandsmeter1.Location = new System.Drawing.Point(6, 95);
             this.abstandsmeter1.Name = "abstandsmeter1";
-            this.abstandsmeter1.Size = new System.Drawing.Size(480, 500);
+            this.abstandsmeter1.CurrentMesswert.Rechts = 0;
+            this.abstandsmeter1.Size = new System.Drawing.Size(580, 490);
             this.abstandsmeter1.TabIndex = 8;
             this.abstandsmeter1.Visible = false;
             this.abstandsmeter1.Load += new System.EventHandler(this.abstandsmeter1_Load);
-            this.abstandsmeter1.Click += new System.EventHandler(this.abstandsmeter1_Click);
             // 
             // panel13
             // 
@@ -1483,10 +1495,11 @@ namespace Anzeige
             this.panel13.Controls.Add(this.CToo);
             this.panel13.Controls.Add(this.Ctoall);
             this.panel13.Controls.Add(this.CBack);
-            this.panel13.Location = new System.Drawing.Point(433, 926);
+            this.panel13.Location = new System.Drawing.Point(693, 959);
             this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(69, 62);
+            this.panel13.Size = new System.Drawing.Size(52, 41);
             this.panel13.TabIndex = 7;
+            this.toolTip1.SetToolTip(this.panel13, "Hiddeen Control");
             this.panel13.Visible = false;
             // 
             // CNew
@@ -1742,9 +1755,9 @@ namespace Anzeige
             // edit_Adress1
             // 
             this.edit_Adress1.Line = ";;;;about:blank";
-            this.edit_Adress1.Location = new System.Drawing.Point(6, 703);
+            this.edit_Adress1.Location = new System.Drawing.Point(470, 950);
             this.edit_Adress1.Name = "edit_Adress1";
-            this.edit_Adress1.Size = new System.Drawing.Size(77, 60);
+            this.edit_Adress1.Size = new System.Drawing.Size(77, 43);
             this.edit_Adress1.TabIndex = 5;
             this.edit_Adress1.Visible = false;
             this.edit_Adress1.Changed += new System.EventHandler(this.edit_Adress1_Changed);
@@ -1752,7 +1765,7 @@ namespace Anzeige
             // edit_Line1
             // 
             this.edit_Line1.Caption = "Caption";
-            this.edit_Line1.Location = new System.Drawing.Point(6, 747);
+            this.edit_Line1.Location = new System.Drawing.Point(562, 957);
             this.edit_Line1.Name = "edit_Line1";
             this.edit_Line1.Size = new System.Drawing.Size(117, 36);
             this.edit_Line1.TabIndex = 4;
@@ -1764,7 +1777,7 @@ namespace Anzeige
             this.pictureBox.BackgroundImage = global::Anzeige.Properties.Resources.abstand;
             this.pictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.pictureBox.Location = new System.Drawing.Point(562, 8);
+            this.pictureBox.Location = new System.Drawing.Point(295, 903);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(159, 94);
             this.pictureBox.TabIndex = 1;
@@ -1773,16 +1786,6 @@ namespace Anzeige
             this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
             this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseMove);
             this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
-            // 
-            // COCRPicture
-            // 
-            this.COCRPicture.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.COCRPicture.Location = new System.Drawing.Point(3, 3);
-            this.COCRPicture.Name = "COCRPicture";
-            this.COCRPicture.Size = new System.Drawing.Size(80, 41);
-            this.COCRPicture.TabIndex = 3;
-            this.COCRPicture.TabStop = false;
-            this.COCRPicture.Visible = false;
             // 
             // CAusschnitt
             // 
@@ -1999,9 +2002,9 @@ namespace Anzeige
             this.CAdressen.ResumeLayout(false);
             this.CTabPages.ResumeLayout(false);
             this.CSave.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.COCRPicture)).EndInit();
             this.panel13.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.COCRPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CAusschnitt)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
