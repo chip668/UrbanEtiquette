@@ -167,6 +167,7 @@ namespace Anzeige
             this.CAbout = new System.Windows.Forms.TabPage();
             this.CPolice = new System.Windows.Forms.TabPage();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.pictureBox12 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -209,6 +210,7 @@ namespace Anzeige
             this.splitContainer2.SuspendLayout();
             this.CTabPageOA.SuspendLayout();
             this.CTest.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -960,6 +962,7 @@ namespace Anzeige
             this.CTAbstand.Controls.Add(this.pictureBox9);
             this.CTAbstand.Controls.Add(this.pictureBox8);
             this.CTAbstand.Controls.Add(this.pictureBox7);
+            this.CTAbstand.Controls.Add(this.pictureBox12);
             this.CTAbstand.Controls.Add(this.pictureBox11);
             this.CTAbstand.Controls.Add(this.pictureBox10);
             this.CTAbstand.Controls.Add(this.pictureBox5);
@@ -1023,9 +1026,9 @@ namespace Anzeige
             // numericUpDown1
             // 
             this.numericUpDown1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
-            this.numericUpDown1.Location = new System.Drawing.Point(12, 313);
+            this.numericUpDown1.Location = new System.Drawing.Point(1, 311);
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(135, 29);
+            this.numericUpDown1.Size = new System.Drawing.Size(101, 29);
             this.numericUpDown1.TabIndex = 11;
             this.numericUpDown1.Value = new decimal(new int[] {
             1,
@@ -1038,7 +1041,7 @@ namespace Anzeige
             // 
             this.pictureBox6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox6.BackgroundImage")));
             this.pictureBox6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox6.Location = new System.Drawing.Point(12, 453);
+            this.pictureBox6.Location = new System.Drawing.Point(1, 446);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(99, 59);
             this.pictureBox6.TabIndex = 24;
@@ -1050,7 +1053,7 @@ namespace Anzeige
             // 
             this.pictureBox9.BackgroundImage = global::Anzeige.Properties.Resources.z2;
             this.pictureBox9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox9.Location = new System.Drawing.Point(12, 630);
+            this.pictureBox9.Location = new System.Drawing.Point(1, 619);
             this.pictureBox9.Name = "pictureBox9";
             this.pictureBox9.Size = new System.Drawing.Size(99, 59);
             this.pictureBox9.TabIndex = 23;
@@ -1061,7 +1064,7 @@ namespace Anzeige
             // 
             this.pictureBox8.BackgroundImage = global::Anzeige.Properties.Resources.z1;
             this.pictureBox8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox8.Location = new System.Drawing.Point(12, 571);
+            this.pictureBox8.Location = new System.Drawing.Point(1, 561);
             this.pictureBox8.Name = "pictureBox8";
             this.pictureBox8.Size = new System.Drawing.Size(99, 59);
             this.pictureBox8.TabIndex = 23;
@@ -1072,7 +1075,7 @@ namespace Anzeige
             // 
             this.pictureBox7.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox7.BackgroundImage")));
             this.pictureBox7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox7.Location = new System.Drawing.Point(6, 512);
+            this.pictureBox7.Location = new System.Drawing.Point(1, 505);
             this.pictureBox7.Name = "pictureBox7";
             this.pictureBox7.Size = new System.Drawing.Size(99, 59);
             this.pictureBox7.TabIndex = 23;
@@ -1084,9 +1087,9 @@ namespace Anzeige
             // 
             this.pictureBox11.BackgroundImage = global::Anzeige.Properties.Resources._340;
             this.pictureBox11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox11.Location = new System.Drawing.Point(12, 807);
+            this.pictureBox11.Location = new System.Drawing.Point(1, 781);
             this.pictureBox11.Name = "pictureBox11";
-            this.pictureBox11.Size = new System.Drawing.Size(99, 59);
+            this.pictureBox11.Size = new System.Drawing.Size(99, 48);
             this.pictureBox11.TabIndex = 22;
             this.pictureBox11.TabStop = false;
             this.pictureBox11.Click += new System.EventHandler(this.pictureBox11_Click);
@@ -1095,9 +1098,9 @@ namespace Anzeige
             // 
             this.pictureBox10.BackgroundImage = global::Anzeige.Properties.Resources.hl;
             this.pictureBox10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox10.Location = new System.Drawing.Point(9, 748);
+            this.pictureBox10.Location = new System.Drawing.Point(1, 730);
             this.pictureBox10.Name = "pictureBox10";
-            this.pictureBox10.Size = new System.Drawing.Size(99, 59);
+            this.pictureBox10.Size = new System.Drawing.Size(99, 53);
             this.pictureBox10.TabIndex = 22;
             this.pictureBox10.TabStop = false;
             this.pictureBox10.Click += new System.EventHandler(this.pictureBox10_Click);
@@ -1106,9 +1109,9 @@ namespace Anzeige
             // 
             this.pictureBox5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox5.BackgroundImage")));
             this.pictureBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox5.Location = new System.Drawing.Point(12, 689);
+            this.pictureBox5.Location = new System.Drawing.Point(1, 677);
             this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(99, 59);
+            this.pictureBox5.Size = new System.Drawing.Size(99, 53);
             this.pictureBox5.TabIndex = 22;
             this.pictureBox5.TabStop = false;
             this.toolTip1.SetToolTip(this.pictureBox5, "Bekanntes Objekt auswählen um die Referenzbreite zu bestimmen.");
@@ -1118,7 +1121,7 @@ namespace Anzeige
             // 
             this.pictureBox4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox4.BackgroundImage")));
             this.pictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox4.Location = new System.Drawing.Point(12, 394);
+            this.pictureBox4.Location = new System.Drawing.Point(1, 390);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(99, 59);
             this.pictureBox4.TabIndex = 21;
@@ -1130,7 +1133,7 @@ namespace Anzeige
             // 
             this.pictureBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.BackgroundImage")));
             this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox3.Location = new System.Drawing.Point(12, 335);
+            this.pictureBox3.Location = new System.Drawing.Point(1, 336);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(99, 59);
             this.pictureBox3.TabIndex = 20;
@@ -1142,7 +1145,7 @@ namespace Anzeige
             // 
             this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox2.Location = new System.Drawing.Point(11, 261);
+            this.pictureBox2.Location = new System.Drawing.Point(1, 259);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(99, 59);
             this.pictureBox2.TabIndex = 19;
@@ -1153,7 +1156,7 @@ namespace Anzeige
             // 
             this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Location = new System.Drawing.Point(11, 209);
+            this.pictureBox1.Location = new System.Drawing.Point(1, 209);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(99, 59);
             this.pictureBox1.TabIndex = 25;
@@ -1176,7 +1179,7 @@ namespace Anzeige
             this.Distance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.Distance.Enabled = false;
             this.Distance.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Distance.Location = new System.Drawing.Point(3, 907);
+            this.Distance.Location = new System.Drawing.Point(3, 912);
             this.Distance.Name = "Distance";
             this.Distance.Size = new System.Drawing.Size(152, 29);
             this.Distance.TabIndex = 16;
@@ -1198,7 +1201,7 @@ namespace Anzeige
             // textBox1
             // 
             this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
-            this.textBox1.Location = new System.Drawing.Point(3, 872);
+            this.textBox1.Location = new System.Drawing.Point(3, 883);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(152, 29);
             this.textBox1.TabIndex = 15;
@@ -1459,16 +1462,10 @@ namespace Anzeige
             // 
             // abstandsmeter1
             // 
-            this.abstandsmeter1.CurrentMesswert.Abstand = 0;
-            this.abstandsmeter1.CurrentMesswert.Abstand2 = 0;
             this.abstandsmeter1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("abstandsmeter1.BackgroundImage")));
             this.abstandsmeter1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.abstandsmeter1.CurrentMesswert.Line = "0,0,0,0,0,";
-            this.abstandsmeter1.CurrentMesswert.LinksHinten = 0;
-            this.abstandsmeter1.CurrentMesswert.LinksVorne = 0;
             this.abstandsmeter1.Location = new System.Drawing.Point(6, 95);
             this.abstandsmeter1.Name = "abstandsmeter1";
-            this.abstandsmeter1.CurrentMesswert.Rechts = 0;
             this.abstandsmeter1.Size = new System.Drawing.Size(580, 490);
             this.abstandsmeter1.TabIndex = 8;
             this.abstandsmeter1.Visible = false;
@@ -1954,6 +1951,17 @@ namespace Anzeige
             this.CPolice.TabIndex = 8;
             this.CPolice.Text = "Polizei";
             // 
+            // pictureBox12
+            // 
+            this.pictureBox12.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox12.BackgroundImage")));
+            this.pictureBox12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox12.Location = new System.Drawing.Point(2, 830);
+            this.pictureBox12.Name = "pictureBox12";
+            this.pictureBox12.Size = new System.Drawing.Size(99, 48);
+            this.pictureBox12.TabIndex = 22;
+            this.pictureBox12.TabStop = false;
+            this.pictureBox12.Click += new System.EventHandler(this.pictureBox11_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -2016,6 +2024,7 @@ namespace Anzeige
             this.CTabPageOA.PerformLayout();
             this.CTest.ResumeLayout(false);
             this.CTest.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2170,6 +2179,7 @@ namespace Anzeige
         private System.Windows.Forms.ListBox CFilelist;
         private System.Windows.Forms.ListBox CContent;
         private Abstandsmeter abstandsmeter1;
+        private System.Windows.Forms.PictureBox pictureBox12;
     }
 }
 

@@ -20,6 +20,7 @@ namespace Anzeige
             { 
                 _CurrentMesswert = value;
                 CCar.Left = 400 - value.Abstand - CCar.Width;
+                CCar2.Left = 480 + value.Abstand2;
                 if (CCar.Left + CCar.Width > CBike.Left)
                 {
                     CBike.BackgroundImage = CTemplate.BackgroundImage;
@@ -27,16 +28,16 @@ namespace Anzeige
                 else
                 {
                     CBike.BackgroundImage = CTemplate.Image;
+                    if (CCar2.Left < 480)
+                    {
+                        CBike.BackgroundImage = CTemplate.BackgroundImage;
+                    }
+                    else
+                    {
+                        CBike.BackgroundImage = CTemplate.Image;
+                    }
                 }
-                CCar2.Left = 480 + value.Abstand2;
-                if (CCar2.Left < 480)
-                {
-                    CBike.BackgroundImage = CTemplate.BackgroundImage;
-                }
-                else
-                {
-                    CBike.BackgroundImage = CTemplate.Image;
-                }
+                this.Refresh();
             }
         }
         public Abstandsmeter()
@@ -50,44 +51,50 @@ namespace Anzeige
             if (CurrentMesswert!=null)
                 CurrentMesswert.Abstand2 = 200;
         }
-
         private void Abstandsmeter_Click(object sender, EventArgs e)
         {
             this.Size = CExpand.Size;
             CExpand.Visible = true;
         }
-
         private void CExpand_Click(object sender, EventArgs e)
         {
             this.Size = new Size(580, 490);
             CExpand.Visible = false;
         }
-
         private void Abstandsmeter_Paint(object sender, PaintEventArgs e)
         {
-            if (CCar.Left - CCar.Width < 0)
+            if (CCar.Left + CCar.Width < 0)
             {
                 // Der Abstandsmesser-Rahmen
                 int frameWidth = 200;
-                int frameHeight = 20;
+                int frameHeight = CCar.Height;
                 // Position des Rahmens
-                int frameX = CCar.Left - frameWidth;
-                int frameY = (CCar.Top + CCar.Bottom) / 2 - frameHeight / 2;
+                int frameX = 0;
+                int frameY = CCar.Top;
                 // Überprüfen, ob der Rahmen innerhalb des sichtbaren Bereichs liegt
-                if (frameX > 0)
+                if (frameX >= 0)
                 {
                     // Pfeil zeichnen
                     Point[] arrowPoints = new Point[]
                     {
-                        new Point(frameX, frameY + frameHeight / 2),
-                        new Point(frameX + 10, frameY),
-                        new Point(frameX + 10, frameY + frameHeight),
+                        new Point(frameX+frameWidth, frameY),
+                        new Point(frameX+frameWidth, frameY + frameHeight),
+                        new Point(frameX, frameY + frameHeight/2),
+                        new Point(frameX+frameWidth, frameY)
                     };
-                    e.Graphics.FillPolygon(Brushes.Black, arrowPoints);
+                    e.Graphics.FillPolygon(Brushes.Blue, arrowPoints);
                     // Rahmen zeichnen
-                    e.Graphics.DrawRectangle(Pens.Black, frameX, frameY, frameWidth, frameHeight);
+                    e.Graphics.DrawRectangle(Pens.Blue, frameX, frameY, frameWidth, frameHeight);
                 }
             }
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            CBike.BackgroundImage = CTemplate.BackgroundImage;
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            CBike.BackgroundImage = CTemplate.Image;
         }
     }
 }

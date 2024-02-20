@@ -2915,7 +2915,7 @@ namespace Anzeige
             // Aktualisieren Sie das Textfeld mit dem berechneten Ergebnis
             Distance.Text = $"{relativeDistance:F2}"; // Anpassen Sie die Formatierung nach Bedarf
             RealDistance.Text = (relativeDistance - Convert.ToDouble(ownwidth.Text) / 2).ToString("F2");
-            abstandsmeter1.CurrentMesswert.Abstand = (int)(relativeDistance - Convert.ToDouble(ownwidth.Text) / 2);
+            abstandsmeter1.CurrentMesswert = new Messwerte.Messwert((int)(relativeDistance - Convert.ToDouble(ownwidth.Text) / 2));
         }
         private double MeasureDistance(Point point1, Point point2)
         {
@@ -3147,7 +3147,7 @@ namespace Anzeige
         }
         private void pictureBox11_Click(object sender, EventArgs e)
         {
-            refwidth = 12;
+            refwidth = 143.5;
             selectedRef = pictureBox11;
             textrefresh();
         }
@@ -3612,8 +3612,6 @@ namespace Anzeige
             toolTip1.Hide(s);
             toolTip1.ShowAlways = false;
         }
-
-
         /// Obsolet
         private void CNew_Click(object sender, EventArgs e)
         {
@@ -3909,7 +3907,6 @@ namespace Anzeige
             CVerstossaus.Items.Clear();
             CAnzeigeText.Text = Message;
         }
-
         private void panel_ClickBack(object sender, EventArgs e)
         {
             panel1.BackColor = Color.Gold;
@@ -3926,7 +3923,6 @@ namespace Anzeige
             panel11.BorderStyle = BorderStyle.FixedSingle;
             panel12.BorderStyle = BorderStyle.FixedSingle;
         }
-
         private void button6_Click(object sender, EventArgs e)
         {
             // String s = File.ReadAllText(@"Dieser PC\Nokia 2.3\Interner gemeinsamer Speicher\Android\data\edu.mit.appinventor.aicompanion3\files\Textdatei.txt");
@@ -3948,16 +3944,13 @@ namespace Anzeige
             CContent.Items.Clear();
             CContent.Items.AddRange(messwerte.data);
         }
-
         private void CContent_SelectedIndexChanged(object sender, EventArgs e)
         {
             abstandsmeter1.CurrentMesswert = new Messwerte.Messwert(CContent.SelectedItem.ToString());
         }
-
         private void abstandsmeter1_Load(object sender, EventArgs e)
         {
 
         }
-
     }
 }

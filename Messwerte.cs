@@ -38,7 +38,8 @@ namespace Anzeige
                 }
                 set
                 {
-                    _Abstand = value;
+                    _LinksHinten = value;
+                    _LinksVorne = value;
                 }
             }
             public int Abstand2
@@ -128,14 +129,14 @@ namespace Anzeige
             {
                 if (zeit == "")
                     zeit = DateTime.Now.ToString();
-                Abstand = abstand;
-                Abstand2 = abstand2;
-                Rechts = rechts;
                 LinksVorne = linksVorne;
                 LinksHinten = linksHinten;
                 Longitude = longitude;
                 Latitude = latitude;
                 Zeit = zeit;
+                Abstand = abstand;
+                Abstand2 = abstand2;
+                Rechts = rechts;
                 mode = Kopplung.leftMin;
             }
             public Messwert(string line)
