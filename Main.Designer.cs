@@ -97,6 +97,7 @@ namespace Anzeige
             this.pictureBox9 = new System.Windows.Forms.PictureBox();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.pictureBox12 = new System.Windows.Forms.PictureBox();
             this.pictureBox11 = new System.Windows.Forms.PictureBox();
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
@@ -119,6 +120,16 @@ namespace Anzeige
             this.CTAbstandSerie = new System.Windows.Forms.TabPage();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.CFilelist = new System.Windows.Forms.ListBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.photoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.locationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.routeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.splitContainer4 = new System.Windows.Forms.SplitContainer();
+            this.CRoute = new System.Windows.Forms.Button();
+            this.CLocateMessung = new System.Windows.Forms.Button();
+            this.CPhoto = new System.Windows.Forms.Button();
+            this.CAddMesswert = new System.Windows.Forms.Button();
             this.CContent = new System.Windows.Forms.ListBox();
             this.CAdressen = new System.Windows.Forms.TabPage();
             this.button5 = new System.Windows.Forms.Button();
@@ -167,7 +178,6 @@ namespace Anzeige
             this.CAbout = new System.Windows.Forms.TabPage();
             this.CPolice = new System.Windows.Forms.TabPage();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.pictureBox12 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -184,6 +194,7 @@ namespace Anzeige
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
@@ -196,6 +207,11 @@ namespace Anzeige
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
+            this.splitContainer4.Panel1.SuspendLayout();
+            this.splitContainer4.Panel2.SuspendLayout();
+            this.splitContainer4.SuspendLayout();
             this.CAdressen.SuspendLayout();
             this.CTabPages.SuspendLayout();
             this.CSave.SuspendLayout();
@@ -210,7 +226,6 @@ namespace Anzeige
             this.splitContainer2.SuspendLayout();
             this.CTabPageOA.SuspendLayout();
             this.CTest.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -1083,6 +1098,17 @@ namespace Anzeige
             this.toolTip1.SetToolTip(this.pictureBox7, "Bekanntes Objekt auswählen um die Referenzbreite zu bestimmen.");
             this.pictureBox7.Click += new System.EventHandler(this.pictureBox7_Click);
             // 
+            // pictureBox12
+            // 
+            this.pictureBox12.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox12.BackgroundImage")));
+            this.pictureBox12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox12.Location = new System.Drawing.Point(2, 830);
+            this.pictureBox12.Name = "pictureBox12";
+            this.pictureBox12.Size = new System.Drawing.Size(99, 48);
+            this.pictureBox12.TabIndex = 22;
+            this.pictureBox12.TabStop = false;
+            this.pictureBox12.Click += new System.EventHandler(this.pictureBox11_Click);
+            // 
             // pictureBox11
             // 
             this.pictureBox11.BackgroundImage = global::Anzeige.Properties.Resources._340;
@@ -1332,13 +1358,14 @@ namespace Anzeige
             // 
             // splitContainer3.Panel2
             // 
-            this.splitContainer3.Panel2.Controls.Add(this.CContent);
+            this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
             this.splitContainer3.Size = new System.Drawing.Size(432, 996);
             this.splitContainer3.SplitterDistance = 269;
             this.splitContainer3.TabIndex = 0;
             // 
             // CFilelist
             // 
+            this.CFilelist.ContextMenuStrip = this.contextMenuStrip1;
             this.CFilelist.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CFilelist.FormattingEnabled = true;
             this.CFilelist.ItemHeight = 21;
@@ -1348,14 +1375,120 @@ namespace Anzeige
             this.CFilelist.TabIndex = 0;
             this.CFilelist.SelectedIndexChanged += new System.EventHandler(this.CFilelist_SelectedIndexChanged);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addToolStripMenuItem,
+            this.photoToolStripMenuItem,
+            this.locationToolStripMenuItem,
+            this.routeToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(140, 108);
+            // 
+            // addToolStripMenuItem
+            // 
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.addToolStripMenuItem.Text = "Add";
+            this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
+            // 
+            // photoToolStripMenuItem
+            // 
+            this.photoToolStripMenuItem.Name = "photoToolStripMenuItem";
+            this.photoToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.photoToolStripMenuItem.Text = "Photo";
+            this.photoToolStripMenuItem.Click += new System.EventHandler(this.photoToolStripMenuItem_Click);
+            // 
+            // locationToolStripMenuItem
+            // 
+            this.locationToolStripMenuItem.Name = "locationToolStripMenuItem";
+            this.locationToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.locationToolStripMenuItem.Text = "Location";
+            this.locationToolStripMenuItem.Click += new System.EventHandler(this.locationToolStripMenuItem_Click);
+            // 
+            // routeToolStripMenuItem
+            // 
+            this.routeToolStripMenuItem.Name = "routeToolStripMenuItem";
+            this.routeToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.routeToolStripMenuItem.Text = "Route";
+            this.routeToolStripMenuItem.Click += new System.EventHandler(this.routeToolStripMenuItem_Click);
+            // 
+            // splitContainer4
+            // 
+            this.splitContainer4.Cursor = System.Windows.Forms.Cursors.HSplit;
+            this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer4.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer4.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer4.Name = "splitContainer4";
+            this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer4.Panel1
+            // 
+            this.splitContainer4.Panel1.Controls.Add(this.CRoute);
+            this.splitContainer4.Panel1.Controls.Add(this.CLocateMessung);
+            this.splitContainer4.Panel1.Controls.Add(this.CPhoto);
+            this.splitContainer4.Panel1.Controls.Add(this.CAddMesswert);
+            // 
+            // splitContainer4.Panel2
+            // 
+            this.splitContainer4.Panel2.Controls.Add(this.CContent);
+            this.splitContainer4.Size = new System.Drawing.Size(432, 723);
+            this.splitContainer4.SplitterDistance = 46;
+            this.splitContainer4.TabIndex = 2;
+            // 
+            // CRoute
+            // 
+            this.CRoute.Dock = System.Windows.Forms.DockStyle.Left;
+            this.CRoute.Location = new System.Drawing.Point(267, 0);
+            this.CRoute.Name = "CRoute";
+            this.CRoute.Size = new System.Drawing.Size(89, 46);
+            this.CRoute.TabIndex = 4;
+            this.CRoute.Text = "🚲";
+            this.CRoute.UseVisualStyleBackColor = true;
+            this.CRoute.Click += new System.EventHandler(this.CRoute_Click);
+            // 
+            // CLocateMessung
+            // 
+            this.CLocateMessung.Dock = System.Windows.Forms.DockStyle.Left;
+            this.CLocateMessung.Location = new System.Drawing.Point(178, 0);
+            this.CLocateMessung.Name = "CLocateMessung";
+            this.CLocateMessung.Size = new System.Drawing.Size(89, 46);
+            this.CLocateMessung.TabIndex = 3;
+            this.CLocateMessung.Text = "🌐";
+            this.CLocateMessung.UseVisualStyleBackColor = true;
+            this.CLocateMessung.Click += new System.EventHandler(this.CLocateMessung_Click);
+            // 
+            // CPhoto
+            // 
+            this.CPhoto.Dock = System.Windows.Forms.DockStyle.Left;
+            this.CPhoto.Location = new System.Drawing.Point(89, 0);
+            this.CPhoto.Name = "CPhoto";
+            this.CPhoto.Size = new System.Drawing.Size(89, 46);
+            this.CPhoto.TabIndex = 2;
+            this.CPhoto.Text = "📷";
+            this.CPhoto.UseVisualStyleBackColor = true;
+            this.CPhoto.Click += new System.EventHandler(this.CPhoto_Click);
+            // 
+            // CAddMesswert
+            // 
+            this.CAddMesswert.Dock = System.Windows.Forms.DockStyle.Left;
+            this.CAddMesswert.Location = new System.Drawing.Point(0, 0);
+            this.CAddMesswert.Name = "CAddMesswert";
+            this.CAddMesswert.Size = new System.Drawing.Size(89, 46);
+            this.CAddMesswert.TabIndex = 1;
+            this.CAddMesswert.Text = "+";
+            this.CAddMesswert.UseVisualStyleBackColor = true;
+            this.CAddMesswert.Click += new System.EventHandler(this.CAddMesswert_Click);
+            // 
             // CContent
             // 
+            this.CContent.ContextMenuStrip = this.contextMenuStrip1;
             this.CContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CContent.FormattingEnabled = true;
             this.CContent.ItemHeight = 21;
             this.CContent.Location = new System.Drawing.Point(0, 0);
             this.CContent.Name = "CContent";
-            this.CContent.Size = new System.Drawing.Size(432, 723);
+            this.CContent.Size = new System.Drawing.Size(432, 673);
             this.CContent.TabIndex = 0;
             this.CContent.SelectedIndexChanged += new System.EventHandler(this.CContent_SelectedIndexChanged);
             // 
@@ -1464,12 +1597,13 @@ namespace Anzeige
             // 
             this.abstandsmeter1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("abstandsmeter1.BackgroundImage")));
             this.abstandsmeter1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.abstandsmeter1.Location = new System.Drawing.Point(6, 95);
+            this.abstandsmeter1.Location = new System.Drawing.Point(145, 0);
             this.abstandsmeter1.Name = "abstandsmeter1";
             this.abstandsmeter1.Size = new System.Drawing.Size(580, 490);
             this.abstandsmeter1.TabIndex = 8;
             this.abstandsmeter1.Visible = false;
             this.abstandsmeter1.Load += new System.EventHandler(this.abstandsmeter1_Load);
+            this.abstandsmeter1.Resize += new System.EventHandler(this.abstandsmeter1_Resize);
             // 
             // panel13
             // 
@@ -1951,17 +2085,6 @@ namespace Anzeige
             this.CPolice.TabIndex = 8;
             this.CPolice.Text = "Polizei";
             // 
-            // pictureBox12
-            // 
-            this.pictureBox12.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox12.BackgroundImage")));
-            this.pictureBox12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox12.Location = new System.Drawing.Point(2, 830);
-            this.pictureBox12.Name = "pictureBox12";
-            this.pictureBox12.Size = new System.Drawing.Size(99, 48);
-            this.pictureBox12.TabIndex = 22;
-            this.pictureBox12.TabStop = false;
-            this.pictureBox12.Click += new System.EventHandler(this.pictureBox11_Click);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -1995,6 +2118,7 @@ namespace Anzeige
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
@@ -2007,6 +2131,11 @@ namespace Anzeige
             this.splitContainer3.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
+            this.splitContainer4.Panel1.ResumeLayout(false);
+            this.splitContainer4.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
+            this.splitContainer4.ResumeLayout(false);
             this.CAdressen.ResumeLayout(false);
             this.CTabPages.ResumeLayout(false);
             this.CSave.ResumeLayout(false);
@@ -2024,7 +2153,6 @@ namespace Anzeige
             this.CTabPageOA.PerformLayout();
             this.CTest.ResumeLayout(false);
             this.CTest.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2180,6 +2308,16 @@ namespace Anzeige
         private System.Windows.Forms.ListBox CContent;
         private Abstandsmeter abstandsmeter1;
         private System.Windows.Forms.PictureBox pictureBox12;
+        private System.Windows.Forms.SplitContainer splitContainer4;
+        private System.Windows.Forms.Button CAddMesswert;
+        private System.Windows.Forms.Button CPhoto;
+        private System.Windows.Forms.Button CLocateMessung;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem photoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem locationToolStripMenuItem;
+        private System.Windows.Forms.Button CRoute;
+        private System.Windows.Forms.ToolStripMenuItem routeToolStripMenuItem;
     }
 }
 

@@ -69,3 +69,4 @@ C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Release\net5.0-windows\r
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Release\net5.0-windows\Urban Etiquette.pdb
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Release\net5.0-windows\Anzeige.genruntimeconfig.cache
 C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Release\net5.0-windows\Anzeige.Abstandsmeter.resources
+C:\Users\schip\source\repos\Anzeige\Anzeige\Anzeige\obj\Release\net5.0-windows\Anzeige.csproj.AssemblyReference.cache

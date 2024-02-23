@@ -5,4 +5,3 @@ Todo Liste
 4. Druckfunktionen / Bericht für eine eventuelle Gerichtsverhandlung drucken.
 5. Anonymisierung muss auf alle angehängten Bilder angewand werden.
 6. Einbinden Anstandssensor
-7. 3D BGox. Diue untere Box vorne links mit 0,1mm entworfen. Funktioniert nur mit JGAurora A1S oder A5S. Andere Drucker brauchen mindestens 2mm

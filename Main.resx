@@ -4957,7 +4957,7 @@
   <data name="pictureBox12.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAABO0AAAG8CAYAAACCMVHrAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAA/7JJREFUeF7s/Xd0FUe6/42ev+5f77rvXXet93fPOnnCmfEkezwG2+Scc7LJKOec
+        vAAADrwBlbxySQAA/7JJREFUeF7s/Xd0FUe6/42ev+5f77rvXXet93fPOnnCmfEkezwG2+Scc7LJKOec
         trSlrZyQkEASkpCEyOAcZuxxICOUcwKJnHM0wTa24Xufp1qFiqa2QAHwnKO19Fmt3bu7qnZXddfzfPup
         qn/y9PREd3En3Lxo6+0l8PDxFnj6+jzE29/PLj5+fvB7AgEBAV0SGBjYa4KCggTBwcGCkJAQQWho6BPR
         paci07SHLs3nRTARFEa/ITREEEC/OSAkFP7BIQK/oBCqwwB4eDOBcPP0h6uHH1zcfeDsxvgqeHfi7vUQ
@@ -22361,6 +22361,9 @@
         ///jy1ltrdeiKgAAAABJRU5ErkJggg==
 </value>
   </data>
+  <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>130, 17</value>
+  </metadata>
   <data name="CSave.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         R0lGODlhWQJZAocAAAAAADMAAGYAAJkAAMwAAP8AAAAzADMzAGYzAJkzAMwzAP8zAABmADNmAGZmAJlm

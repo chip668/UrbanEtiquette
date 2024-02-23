@@ -114,8 +114,8 @@ namespace Anzeige
                         if (values.Length > 0) Rechts = Convert.ToInt32(values[0]);
                         if (values.Length > 1) LinksVorne = Convert.ToInt32(values[1]);
                         if (values.Length > 2) LinksHinten = Convert.ToInt32(values[2]);
-                        if (values.Length > 3) Longitude = Convert.ToDouble(values[3]);
-                        if (values.Length > 4) Latitude = Convert.ToDouble(values[4]);
+                        if (values.Length > 3) Longitude = Convert.ToDouble(values[4].Replace('.', ','));
+                        if (values.Length > 4) Latitude = Convert.ToDouble(values[3].Replace('.', ','));
                         if (values.Length > 5) Zeit = values[5];
                         Abstand = MinimumLinks;
                     }

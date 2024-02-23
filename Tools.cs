@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Anzeige
 {
     public class Tools
     {
+        [DllImport("shell32.dll")]
+        static extern IntPtr ShellExecute(IntPtr hwnd, string lpOperation, string lpFile, string lpParameters, string lpDirectory, int nShowCmd);
+
         static void InitializeUmlautMap(Dictionary<string, string> umlautToAscii, Dictionary<string, string> asciiToUmlaut)
         {
             // Umwandlungen in beide Richtungen
@@ -143,5 +149,36 @@ namespace Anzeige
 
             return result.ToString();
         }
+        public static Bitmap ErstelleFormKopie(Form frm)
+        {
+            Bitmap bildschirmkopie = new Bitmap(frm.Width, frm.Height);
+            using (Graphics g = Graphics.FromImage(bildschirmkopie))
+                frm.DrawToBitmap(bildschirmkopie, new Rectangle(0, 0, frm.Width, frm.Height));
+            return bildschirmkopie;
+        }
+        public static Bitmap ErstelleControlKopie(Control ctl)
+        {
+            Bitmap bildschirmkopie = new Bitmap(ctl.Width, ctl.Height);
+            using (Graphics g = Graphics.FromImage(bildschirmkopie))
+                ctl.DrawToBitmap(bildschirmkopie, new Rectangle(0, 0, ctl.Width, ctl.Height));
+            return bildschirmkopie;
+        }
+        public static string GenerateGoogleMapsURL(double latitude, double longitude)
+        {
+            // Ersetze die Platzhalter in der Google Maps URL mit den tatsächlichen Geodaten des Bildes
+            // string urlTemplate = "https://www.google.com/maps/place/{latitude},{longitude}";
+            // 
+            string urlTemplate = "http://maps.google.de/maps?q={latitude},{longitude}&t=k&z=19";
+
+            string url = urlTemplate.Replace("{latitude}", latitude.ToString().Replace(",", ".")).Replace("{longitude}", longitude.ToString().Replace(",", "."));
+            return url;
+        }
+        public static void CallGoogleMapsURL(double latitude, double longitude)
+        {
+            String url = GenerateGoogleMapsURL(latitude, longitude);
+
+            ShellExecute(IntPtr.Zero, "open", url, "", "", 5);
+        }
+
     }
 }

@@ -33,6 +33,42 @@ namespace Anzeige
             { 'P', new List<char>(){ 'P', 'R' } },
             { 'S', new List<char>(){ 'S', '5' } }
         };
+        private Color distColor
+        {
+            get 
+            {
+                Color result = Color.White;
+
+                try
+                {
+                    int d = (int)Convert.ToDouble(RealDistance.Text.Replace(".", ","));
+                    if (d < 50)
+                    {
+                        result = Color.Red;
+                    }
+                    else if (d < 100)
+                    {
+                        result = Color.Orange;
+                    }
+                    else if (d < 150)
+                    {
+                        result = Color.Yellow;
+                    }
+                    else if (d < 200)
+                    {
+                        result = Color.Green;
+                    }
+                    else if (d < 300)
+                    {
+                        result = Color.Blue;
+                    }
+
+                }
+                catch { }
+                return result;
+            }
+        }
+
         private Color c2;        // Abstandsmessung 
         Double refwidth = 30;
         float scaleFactor = 3.0f; // Vergrößerungsfaktor
@@ -789,6 +825,7 @@ namespace Anzeige
         }
         public string PDFFilename { get; private set; }
         public bool UseLogo { get; private set; }
+        public List<Messwerte.Messwert> Zusammenstellung { get; private set; }
 
         AboutBox1 aboutdlg = null;
         /// <summary>
@@ -1556,8 +1593,17 @@ namespace Anzeige
                         if (f2 != 0)
                         {
                             float lamba = 1 - (f1 / f2);
+                            // Point[] polygonPoints = { paug, dist1, new Point(dist2.X + (int)(0.5 * (dist2.X - dist1.X)), dist1.Y) };
+                            Point[] polygonPoints = { paug, dist1, new Point((int)(dist2.X - (lamba) * (dist2.X - dist1.X)), dist1.Y) };
+                            Schraffur(graphics, polygonPoints, distColor);
+
+                            // Point[] polygonBiker = { paug, dist1, dist2 };
+                            // Point[] polygonBiker = { paug, dist1, new Point((int)(dist2.X + (lamba) * (dist2.X - dist1.X)), dist1.Y) };
+                            // Schraffur(graphics, polygonBiker, Color.Green);
+
                             graphics.DrawLine(penDist, paug.X, paug.Y, dist2.X - lamba * (dist2.X - dist1.X), dist1.Y);
                             graphics.DrawLine(penDist, paug.X, paug.Y, dist2.X + (lamba) * (dist2.X - dist1.X), dist1.Y);
+                            graphics.DrawLine(penDist, paug.X, paug.Y, dist1.X, dist1.Y);
                         }
                     }
                     catch { }
@@ -1566,7 +1612,17 @@ namespace Anzeige
             }
         }
 
-
+        private void Schraffur (Graphics graphics, Point[] polygonPoints, Color c)
+        {
+            GraphicsPath path = new GraphicsPath();
+            path.AddPolygon(polygonPoints);
+            Region region = new Region(path);
+            graphics.Clip = region;
+            HatchBrush hatchBrush = new HatchBrush(HatchStyle.BackwardDiagonal, c, Color.Transparent);
+            Rectangle rect = new Rectangle(0, 0, pictureBox.Width, pictureBox.Height);
+            graphics.FillRectangle(hatchBrush, rect);
+            graphics.ResetClip();
+        }
 
         // ====== Eventhandling ==============================
         /// <summary>
@@ -2081,7 +2137,7 @@ namespace Anzeige
             edit_Line1.Size = CSave.Size;
             edit_Adress1.Location = new Point(0, 0);
             edit_Adress1.Size = CSave.Size;
-
+            abstandsmeter1.Left = CSave.Width - abstandsmeter1.Width;
         }
         private void CFiles_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -2803,7 +2859,7 @@ namespace Anzeige
 
             penFlucht = new Pen(Color.Yellow, 2.0f);
             penRef = new Pen(Color.Blue, 2.0f);
-            penDist = new Pen(Color.Red, 2.0f);
+            penDist = new Pen(distColor, 2.0f);
             penHelp = new Pen(Color.Green, 2.0f);
 
             // Zeigen Sie das geladene Bild auf dem PictureBox-Steuerelement an
@@ -2844,11 +2900,17 @@ namespace Anzeige
                             // Text zeichnen
                             Font largerFont = new Font(this.Font.FontFamily, this.Font.Size * scaleFactor, this.Font.Style);
                             g.DrawString("Abstand: " + RealDistance.Text, largerFont, new SolidBrush(Color.White), x, y);
-
+                            
                             // vertical lines 
-                            Pen greenPen = new Pen(Color.Green, 1);
-                            g.DrawLine(greenPen, dist1, new Point(dist1.X, 0));
-                            g.DrawLine(greenPen, dist2, new Point(dist2.X, 0));
+                            // Pen greenPen = new Pen(Color.Green, 1);
+                            // g.DrawLine(greenPen, dist1, new Point(dist1.X, 0));
+                            // g.DrawLine(greenPen, dist2, new Point(dist2.X, 0));
+
+                            Bitmap bmp = Tools.ErstelleControlKopie(abstandsmeter1);
+                            float targetWidth = copiedImage.Width / 3f;
+                            float aspectRatio = (float)bmp.Width / bmp.Height;
+                            float targetHeight = targetWidth / aspectRatio;
+                            g.DrawImage(bmp, new Rectangle(copiedImage.Width * 2 / 3, 0, (int)targetWidth, (int)targetHeight));
                         }
                     }
                     // Bitmap speichern
@@ -3084,8 +3146,12 @@ namespace Anzeige
         }
         private void textBox1_TextChanged_1(object sender, EventArgs e)
         {
-            refwidth = Convert.ToDouble(textBox1.Text);
-            textrefresh();
+            try 
+            {
+                refwidth = Convert.ToDouble(textBox1.Text);
+                textrefresh();
+            }
+            catch { }
         }
         private void pictureBox8_Click(object sender, EventArgs e)
         {
@@ -3147,7 +3213,7 @@ namespace Anzeige
         }
         private void pictureBox11_Click(object sender, EventArgs e)
         {
-            refwidth = 143.5;
+            refwidth = 12.5;
             selectedRef = pictureBox11;
             textrefresh();
         }
@@ -3938,19 +4004,199 @@ namespace Anzeige
             }
 
         }
+        private void abstandsmeter1_Load(object sender, EventArgs e)
+        {
+
+        }
         private void CFilelist_SelectedIndexChanged(object sender, EventArgs e)
         {
             messwerte = new Messwerte(CFilelist.SelectedItem.ToString());
             CContent.Items.Clear();
             CContent.Items.AddRange(messwerte.data);
+            Zusammenstellung = new List<Messwerte.Messwert>();
         }
         private void CContent_SelectedIndexChanged(object sender, EventArgs e)
         {
             abstandsmeter1.CurrentMesswert = new Messwerte.Messwert(CContent.SelectedItem.ToString());
         }
-        private void abstandsmeter1_Load(object sender, EventArgs e)
+        private void CAddMesswert_Click(object sender, EventArgs e)
         {
+            if (CContent.SelectedIndex > -1)
+                Zusammenstellung.Add(new Messwerte.Messwert(CContent.SelectedItem.ToString()));
+        }
+        private void CPhoto_Click_old(object sender, EventArgs e)
+        {
+            int n = Zusammenstellung.Count;
 
+            foreach (Messwerte.Messwert w in Zusammenstellung)
+            {
+                abstandsmeter1.CurrentMesswert = w;
+                Bitmap bmp = Tools.ErstelleControlKopie(abstandsmeter1);
+            }
+
+        }
+        private void CPhoto_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetImage(ErstelleGesamtBitmap(Zusammenstellung));
+        }
+        private Bitmap ErstelleGesamtBitmap(List<Messwerte.Messwert> zusammenstellung)
+        {
+            // Berechne die Anzahl der benötigten Zeilen
+            int zeilen = (int)Math.Ceiling((double)zusammenstellung.Count / 4);
+
+            // Größe des Ziel-Bitmap berechnen
+            int zielBreite = 4 * abstandsmeter1.Width;  // Annahme: abstandsmeter1 ist das Control, dessen Breite verwendet wird
+            int zielHoehe = zeilen * abstandsmeter1.Height;
+
+            // Erstelle das Ziel-Bitmap
+            Bitmap zielBitmap = new Bitmap(zielBreite, zielHoehe);
+
+            using (Graphics g = Graphics.FromImage(zielBitmap))
+            {
+                // Schleife über die Messwerte und füge die Bilder ins Ziel-Bitmap ein
+                for (int i = 0; i < zusammenstellung.Count; i++)
+                {
+                    // Berechne die Position des aktuellen Messwerts im Raster
+                    int zeile = i / 4;
+                    int spalte = i % 4;
+
+                    // Weise den aktuellen Messwert abstandsmeter1 zu
+                    abstandsmeter1.CurrentMesswert = zusammenstellung[i];
+
+                    // Erstelle ein temporäres Bitmap für abstandsmeter1
+                    Bitmap tempBitmap = Tools.ErstelleControlKopie(abstandsmeter1);
+
+                    // Zeichne das tempBitmap an die richtige Position im Ziel-Bitmap
+                    g.DrawImage(tempBitmap, spalte * abstandsmeter1.Width, zeile * abstandsmeter1.Height);
+
+                    // Lösche das tempBitmap, da es nicht mehr benötigt wird
+                    tempBitmap.Dispose();
+                }
+            }
+
+            // Gib das fertige Ziel-Bitmap zurück
+            return zielBitmap;
+        }
+        private void CLocateMessung_Click(object sender, EventArgs e)
+        {
+            if (CContent.SelectedIndex > -1)
+            {
+                Messwerte.Messwert m = new Messwerte.Messwert(CContent.SelectedItem.ToString());
+                Tools.CallGoogleMapsURL(m.Latitude, m.Longitude);
+                
+            }
+        }
+        private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CAddMesswert_Click(sender, e);
+        }
+        private void photoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CPhoto_Click(sender, e);
+        }
+        private void locationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CLocateMessung_Click(sender, e);
+        }
+        private void routeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CRoute_Click(sender, e);
+        }
+        private void CRoute_Click_old(object sender, EventArgs e)
+        {
+            if (CContent.SelectedIndex > -1)
+            {
+                Messwerte.Messwert m0 = new Messwerte.Messwert(CContent.SelectedItem.ToString());
+
+                foreach (String i in CContent.Items)
+                {
+                    Messwerte.Messwert m = new Messwerte.Messwert(i);
+
+                }
+            }
+        }
+        private List<PointF> pathPoints = new List<PointF>();
+        private double minLongitude = double.MaxValue;
+        private double maxLongitude = double.MinValue;
+        private double minLatitude = double.MaxValue;
+        private double maxLatitude = double.MinValue;
+        private int BitmapWidth = 1024;
+        private int BitmapHeight = 1024;
+
+        private PointF ScalePoint(PointF point, double scaleX, double scaleY, double offsetX, double offsetY)
+        {
+            float scaledX = (float)((point.X - offsetX) * scaleX);
+            float scaledY = (float)((point.Y - offsetY) * scaleY);
+            return new PointF(scaledX, scaledY);
+        }
+
+        private void CRoute_Click(object sender, EventArgs e)
+        {
+            if (CContent.SelectedIndex > -1)
+            {
+                // Zurücksetzen der Listen und Grenzen
+                pathPoints.Clear();
+                minLongitude = double.MaxValue;
+                maxLongitude = double.MinValue;
+                minLatitude = double.MaxValue;
+                maxLatitude = double.MinValue;
+
+                foreach (String i in CContent.Items)
+                {
+                    Messwerte.Messwert m = new Messwerte.Messwert(i);
+
+                    // Hinzufügen der Koordinaten zum Pfad
+                    PointF point = new PointF((float)m.Longitude, (float)m.Latitude);
+                    pathPoints.Add(point);
+
+                    // Aktualisieren der Grenzen
+                    if (m.Longitude!=0 && m.Latitude != 0)
+                    {
+                        minLongitude = Math.Min(minLongitude, m.Longitude);
+                        maxLongitude = Math.Max(maxLongitude, m.Longitude);
+                        minLatitude = Math.Min(minLatitude, m.Latitude);
+                        maxLatitude = Math.Max(maxLatitude, m.Latitude);
+                    }
+                }
+
+                // Berechnen Sie die Skalierungsfaktoren
+                double deltaLongitude = maxLongitude - minLongitude;
+                double deltaLatitude = maxLatitude - minLatitude;
+                double scaleX = BitmapWidth / Math.Max(deltaLongitude, deltaLatitude);
+                double scaleY = BitmapHeight / Math.Max(deltaLongitude, deltaLatitude);
+
+                // Skalieren und zeichnen Sie den Pfad in ein Bitmap
+                DrawPath(scaleX, scaleY);
+            }
+        }
+
+        private void DrawPath(double scaleX, double scaleY)
+        {
+            // Erstellen Sie ein neues Bitmap
+            Bitmap bitmap = new Bitmap(BitmapWidth, BitmapHeight);
+
+            // Zeichnen Sie den Pfad auf das skalierte Bitmap
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.Clear(Color.White);
+
+                for (int i = 0; i < pathPoints.Count - 1; i++)
+                {
+                    PointF startPoint = ScalePoint(pathPoints[i], scaleX, scaleY, minLongitude, minLatitude);
+                    PointF endPoint = ScalePoint(pathPoints[i + 1], scaleX, scaleY, minLongitude, minLatitude);
+
+                    g.DrawLine(Pens.Blue, startPoint, endPoint);
+                }
+            }
+
+            // Verwenden Sie das Bitmap für Ihre Zwecke
+            // z.B. Anzeige in einem PictureBox
+            CSave.BackgroundImage = bitmap;
+        }
+
+        private void abstandsmeter1_Resize(object sender, EventArgs e)
+        {
+            abstandsmeter1.Left = CSave.Width - abstandsmeter1.Width;
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Anzeige
                         double longitudeValue = ConvertGpsCoordinate(longitude);
 
                         // Generiere die Google Maps URL mit den tatsächlichen Geodaten des Bildes
-                        GoogleMapsURL = GenerateGoogleMapsURL(latitudeValue, longitudeValue);
+                        GoogleMapsURL = Tools.GenerateGoogleMapsURL(latitudeValue, longitudeValue);
 
                         LocationInfo lki = new LocationInfo(latitudeValue, longitudeValue);
                         lki.RetrieveAddressSync();
@@ -71,17 +71,6 @@ namespace Anzeige
             double seconds = coordinates[2];
 
             return degrees + (minutes / 60.0) + (seconds / 3600.0);
-        }
-
-        private string GenerateGoogleMapsURL(double latitude, double longitude)
-        {
-            // Ersetze die Platzhalter in der Google Maps URL mit den tatsächlichen Geodaten des Bildes
-            // string urlTemplate = "https://www.google.com/maps/place/{latitude},{longitude}";
-            // 
-            string urlTemplate = "http://maps.google.de/maps?q={latitude},{longitude}&t=k&z=19";
-
-            string url = urlTemplate.Replace("{latitude}", latitude.ToString().Replace(",", ".")).Replace("{longitude}", longitude.ToString().Replace(",", "."));
-            return url;
         }
     }
 }
