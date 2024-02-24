@@ -50,6 +50,11 @@ namespace Anzeige
                     _Rechts = value;
                 }
             }
+            public int eigeneBreite = 40;
+            public int Distanz
+            {
+                get { return Abstand + eigeneBreite; }
+            }
             private int _Rechts = 100;
             public int Rechts
             {

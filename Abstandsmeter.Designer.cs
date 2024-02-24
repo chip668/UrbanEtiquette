@@ -47,7 +47,7 @@ namespace Anzeige
             this.CCar.BackColor = System.Drawing.Color.Transparent;
             this.CCar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("CCar.BackgroundImage")));
             this.CCar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.CCar.Location = new System.Drawing.Point(0, 62);
+            this.CCar.Location = new System.Drawing.Point(0, 60);
             this.CCar.Name = "CCar";
             this.CCar.Size = new System.Drawing.Size(210, 426);
             this.CCar.TabIndex = 0;
@@ -59,7 +59,7 @@ namespace Anzeige
             this.CBike.BackColor = System.Drawing.Color.Transparent;
             this.CBike.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("CBike.BackgroundImage")));
             this.CBike.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.CBike.Location = new System.Drawing.Point(400, 69);
+            this.CBike.Location = new System.Drawing.Point(400, 60);
             this.CBike.Name = "CBike";
             this.CBike.Size = new System.Drawing.Size(80, 195);
             this.CBike.TabIndex = 0;

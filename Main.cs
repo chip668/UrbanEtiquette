@@ -15,9 +15,29 @@ using System.Windows.Forms;
 
 namespace Anzeige
 {
+
     public partial class Main : Form
     {
-        // Messwerte.Messwert CurrentMesswert = null;
+        private List<PointF> pathPoints = new List<PointF>();
+        private double minLongitude = double.MaxValue;
+        private double maxLongitude = double.MinValue;
+        private double minLatitude = double.MaxValue;
+        private double maxLatitude = double.MinValue;
+        private int BitmapWidth = 1024;
+        private int BitmapHeight = 1024;
+
+        private String _logPath = null;
+        private String logPath
+        {
+            get { return _logPath; }
+            set 
+            {
+                _logPath = (value + "\\").Replace("\\\\", "\\");
+                CFilelist.Items.Clear();
+                CFilelist.Items.AddRange(Directory.GetFiles(_logPath, "*.log"));
+            }
+        }
+        
         Messwerte messwerte = null;
         KeyEventArgs ed = null;
         /// <summary>
@@ -108,7 +128,6 @@ namespace Anzeige
         /// <summary>
         /// Enthält Ladungsfähige Anschift
         /// </summary>
-        // String configfile = "config.txt";
         String _configfile = "config.txt";
         String configfile
         {
@@ -591,7 +610,6 @@ namespace Anzeige
                 "\nOPLZ Zeuge=" + ZPLZ +
                 "\nStrasse Zeuge=" + ZStrasse +
                 "\nHausnummer Zeuge=" + ZHausnummer +
-                // "\nMessage=" + Message +
                 "\nFiles=" + Files;
             }
             set
@@ -661,9 +679,6 @@ namespace Anzeige
                             case "Hausnummer Zeuge":
                                 ZHausnummer = propertyValue;
                                 break;
-                            // case "Message":
-                            //     Message = propertyValue;
-                            //     break;
                             case "Files":
                                 Files = propertyValue;
                                 break;
@@ -684,24 +699,11 @@ namespace Anzeige
             String key = "";
             verstossbussgeld = new Bussgeld();
             List<string> allLines = new List<string>();
-            // if (!File.Exists (configfile))
-            // {
-            //     string configfileept = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.ept");
-            //     MessageBox.Show("Sie müssen zunächst ihre ladungsfähige Anschrift eingeben damit sie als Zeuge des Vorfalls geladen werden können. Bitte beachten : Anzeigen sind nicht anonym möglich. " + configfileept);
-            //     File.Move(configfileept, configfile);
-            //     ShellExecute(IntPtr.Zero, "open", configfile, "", "", 5);
-            //     Environment.Exit(0);
-            // }
-
-
             allLines.AddRange(File.ReadAllLines(configfile));
             allLines.AddRange(File.ReadAllLines("Data.txt"));
             string[] lines = allLines.ToArray();
             CDataList.Items.Clear();
             CDataList.Items.AddRange(File.ReadAllLines("Data.txt"));
-
-            // String[] lines = File.ReadAllLines("Data.txt");
-
             if (!verstossonly) COrt.Items.Clear();
             CVerstossaus.Items.Clear();
             if (!verstossonly) CMarke.Items.Clear();
@@ -901,10 +903,7 @@ namespace Anzeige
             {
                 original = (Bitmap)Bitmap.FromFile(fileName);
                 ausschnitt = original;
-                // ausschnitt = ScaleImage(original, CSave.Width, CSave.Height);
-                // CFoto.Image = Bitmap.FromFile(fileName);
                 CSave.BackgroundImage = ausschnitt;
-                // currentfilename = fileName;
                 if (!data.Valid)
                 {
                     GPSLocation = data.GoogleMapsURL;
@@ -1120,16 +1119,8 @@ namespace Anzeige
                 (int)((Bildausschnitt.Y - y0) * faktor),
                 (int)(Bildausschnitt.Width * faktor),
                 (int)(Bildausschnitt.Height * faktor));
-
-            // Rectangle Bildausschnitt; // clientkoordinaten
-            // Rectangle bmpAusschnitt;  // bitmapkoordinaten
-            // ausschnitt = CropRectangleFromBitmap(ausschnitt, bmpAusschnitt);
             DrawRectangleAndCopyToClipboard(ausschnitt, bmpAusschnitt);
             CSave.Refresh();
-
-            // Rectangle Bildausschnitt; // clientkoordinaten
-            // Rectangle bmpAusschnitt;  // bitmapkoordinaten
-            // DrawRectangleAndCopyToClipboard(ausschnitt, bmpAusschnitt);
             return result;
         }
         /// <summary>
@@ -1177,13 +1168,9 @@ namespace Anzeige
             try
             {
                 original = (Bitmap)Bitmap.FromFile(fileName);
-
                 // Scale the image to fit in CSave
-
                 CSave.BackgroundImage = ausschnitt;
-
                 // Restliche Logik bleibt unverändert...
-
             }
             catch
             {
@@ -1221,93 +1208,7 @@ namespace Anzeige
 
             return scaledImage;
         }
-        /// <summary>
-        /// Versucht OCR ERkennung zu korregieren
-        /// </summary>
-        /// <param name="original"></param>
-        /// <returns>koprregierter String</returns>
-        public string FixOCRText_old(String original)
-        {
-            String result = "";
-            String numbers = "";
-            String letters = "";
-            String ort = "";
-            int i = original.Length - 1;
-            int Status = 0;
-            while (i >= 0)
-            {
-                switch (Status)
-                {
-                    case 0:
-                        if (isNumeric(original[i]))
-                        {
-                            Status++;
-                            numbers = original[i].ToString() + numbers;
-                        }
-                        break;
 
-                    case 1:
-                        if (isNumeric(original[i]) && numbers.Length < 4)
-                        {
-                            numbers = original[i].ToString() + numbers;
-                        }
-                        else if (isSpace(original[i]))
-                        {
-                            Status++;
-                        }
-                        else if (isAlpha(original[i]))
-                        {
-                            numbers = original[i].ToString() + numbers;
-                            Status++;
-                        }
-                        break;
-
-                    case 2:
-                        {
-                            // original = MakeNumberToChar(original, i);
-                            if (isNumeric(original[i]))
-                            {
-                                result = original[i].ToString();
-                                Status = 1;
-                            }
-                            else if (isSpace(original[i]) || isPlaque(original[i]))
-                            {
-                                result = " " + result;
-                                Status = 4;
-                            }
-                            else if (isAlpha(original[i]))
-                            {
-                                letters = original[i].ToString() + letters;
-                            }
-                            else if (isNewline(original[i]) || i == 0)
-                            {
-                                i = 0;
-                            }
-                        }
-                        break;
-
-                    case 3:
-                        if (isSpace(original[i]) || isPlaque(original[i]))
-                        {
-                            result = " " + result;
-                            Status = 3;
-                        }
-                        else if (isNewline(original[i]) || i == 0)
-                        {
-                            i = 0;
-                        }
-                        else if (isNumeric(original[i]))
-                        {
-                            Status++;
-                            ort = original[i].ToString() + ort;
-                        }
-                        break;
-                }
-                i--;
-            }
-            // return ort + " " + letters + " " + numbers;
-            return original;
-        }
         /// <summary>
         /// OCR des Kennzeichens
         /// </summary>
@@ -1341,16 +1242,10 @@ namespace Anzeige
                     for (int y = 0; y < originalBitmap.Height; y++)
                     {
                         Color originalColor = originalBitmap.GetPixel(x, y);
-
                         // Durchschnitt der RGB-Werte berechnen
                         int averageColor = (originalColor.R + originalColor.G + originalColor.B) / 3;
-
-                        // Schwellenwert für die Konvertierung festlegen (z.B., 128 für einen einfachen Mittelwert)
-                        // int threshold = 128;
-
                         // Schwarz oder Weiß basierend auf dem Schwellenwert setzen
                         Color bwColor = (averageColor > threshold) ? Color.White : Color.Black;
-
                         // Pixel im Schwarzweiß-Bitmap setzen
                         bwBitmap.SetPixel(x, y, bwColor);
                     }
@@ -1377,7 +1272,6 @@ namespace Anzeige
         /// <param name="faktor">Skalierung</param>
         public void ScaledSave(Bitmap original, String dst, double faktor)
         {
-            // Bitmap original = (Bitmap)Image.FromFile(src);
             Bitmap resized = new Bitmap(original, new Size((int)(original.Width * faktor), (int)(original.Height * faktor)));
             resized.Save(dst);
         }
@@ -1559,16 +1453,7 @@ namespace Anzeige
                 return null;
             }
         }
-        /*        
-         *      Point pleft;
-                Point pright;
-                Point paug;
-                Point pref1;
-                Point pref2;
-                Pen penFlucht;
-                Pen penRef;
-        */
-        public void DrawLines()
+        public void DrawLines(Boolean drawCross = true)
         {
             if (loadedImage != null)
             {
@@ -1580,8 +1465,11 @@ namespace Anzeige
                     graphics.DrawLine(penRef, pref1, pref2);
                     graphics.DrawLine(penDist, dist1, dist2);
                     // graphics.DrawLine(penHelp, stop, new Point(stop.X, 0));
-                    graphics.DrawLine(penHelp, downhelp, new Point(stop.X, 0));
-                    graphics.DrawLine(penHelp, new Point (lineImage.Width, stop.Y) , new Point(0, stop.Y));
+                    if (drawCross)
+                    {
+                        graphics.DrawLine(penHelp, downhelp, new Point(stop.X, 0));
+                        graphics.DrawLine(penHelp, new Point(lineImage.Width, stop.Y), new Point(0, stop.Y));
+                    }
                     Font largerFont = new Font(this.Font.FontFamily, this.Font.Size * scaleFactor, this.Font.Style);
                     graphics.DrawString("Distanz: " + Distance.Text, largerFont, new SolidBrush(Color.White), new Point(20, 20));
 
@@ -1593,14 +1481,8 @@ namespace Anzeige
                         if (f2 != 0)
                         {
                             float lamba = 1 - (f1 / f2);
-                            // Point[] polygonPoints = { paug, dist1, new Point(dist2.X + (int)(0.5 * (dist2.X - dist1.X)), dist1.Y) };
                             Point[] polygonPoints = { paug, dist1, new Point((int)(dist2.X - (lamba) * (dist2.X - dist1.X)), dist1.Y) };
                             Schraffur(graphics, polygonPoints, distColor);
-
-                            // Point[] polygonBiker = { paug, dist1, dist2 };
-                            // Point[] polygonBiker = { paug, dist1, new Point((int)(dist2.X + (lamba) * (dist2.X - dist1.X)), dist1.Y) };
-                            // Schraffur(graphics, polygonBiker, Color.Green);
-
                             graphics.DrawLine(penDist, paug.X, paug.Y, dist2.X - lamba * (dist2.X - dist1.X), dist1.Y);
                             graphics.DrawLine(penDist, paug.X, paug.Y, dist2.X + (lamba) * (dist2.X - dist1.X), dist1.Y);
                             graphics.DrawLine(penDist, paug.X, paug.Y, dist1.X, dist1.Y);
@@ -1657,10 +1539,7 @@ namespace Anzeige
             left.Checked = true;
             SetImage(global::Anzeige.Properties.Resources.eng);
             selectedRef = pictureBox4;
-            // selectedRef.Parent.Paint += Parent_Paint;
             aboutdlg.Hide();
-            // edit_Adress1.Dock = DockStyle.Fill;
-            // edit_Line1.Dock = DockStyle.Fill;
         }
         /// <summary>
         /// Farbe auswählen
@@ -1673,7 +1552,6 @@ namespace Anzeige
             Farbe = (String)(psender.Tag);
             CAnzeigeText.Text = Message;
             panel1.BackColor = psender.BackColor;
-            // panel1.BackColor = Color.Gold;
             CAnzeigeText.Text = Message;
             panel1.BorderStyle = BorderStyle.FixedSingle;
             panel2.BorderStyle = BorderStyle.FixedSingle;
@@ -1793,23 +1671,6 @@ namespace Anzeige
                     Color c2 = Color.Gold;
                     panel1.BackColor = c;
                     c2 = ColorHelper.FindClosestColor(refcolor, c);
-                    //panel1.BackColor = c2;
-
-                    /*
-                    Color clickcolor = c;
-                    c = refcolor[0];
-                    double mxdiff = double.MaxValue;
-                    foreach (Color i in refcolor)
-                    {
-                        double d = ColorDistance(i, panel1.BackColor);
-                        if (d < mxdiff)
-                        {
-                            mxdiff = d;
-                            panel1.BackColor = i;
-                        }
-
-                    }
-                    */
                 }
                 else
                 {
@@ -1839,83 +1700,6 @@ namespace Anzeige
                     }
                     catch { }
                 }
-            }
-        }
-        private void CFoto_MouseUp_Old(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                try
-                {
-                    if (ausschnitt != null)
-                    {
-                        Rectangle rcl = Transform(Bildausschnitt, CSave.ClientRectangle, ausschnitt.Size);
-                        Bitmap tempausschnitt = CropRectangleFromBitmap(ausschnitt, bmpAusschnitt); ;
-                        CAusschnitt.BackgroundImage = tempausschnitt;
-                        CAusschnitt.Show();
-                        ausschnittTemp = (AddPath) ? Path.GetTempFileName().Replace(".tmp", ".jpg") : null;
-                        if (tempausschnitt != null)
-                        {
-                            // COCRPicture.BackgroundImage = ConvertToBlackAndWhite(tempausschnitt);
-                            ScaledSave(tempausschnitt, ausschnittTemp, 3);
-
-                            if (!CPixeln.Checked)
-                            {
-                                // Hier wird eine Kopie der Originaldatei erstellt
-                                Bitmap kopie = new Bitmap(ausschnitt);
-                                // Den ausgeschnittenen Bereich in der Kopie schwarz färben
-                                BlackOutRegion(kopie, bmpAusschnitt);
-
-                                // Den Dateipfad für die geschwärzte Kopie festlegen
-                                // string geschwaerzteKopiePfad = Path.GetTempFileName().Replace(".tmp", ".jpg");
-                                CreateDirectoryIfNotExists(ZZielpfad + "public\\");
-                                string geschwaerzteKopiePfad = ZZielpfad + "public\\" + Guid.NewGuid().ToString() + ".jpg"; ;
-                                // Die geschwärzte Kopie speichern
-                                kopie.Save(geschwaerzteKopiePfad, ImageFormat.Jpeg);
-                                // Jetzt haben Sie die geschwärzte Kopie in der Variable 'geschwaerzteKopiePfad'
-                            }
-                            else
-                            {
-                                PixelOutRegion(ausschnitt, bmpAusschnitt);
-                                //original
-                                CSave.BackgroundImage = ausschnitt;
-                                CSave.Refresh();
-                                Bitmap tempausschnitt2 = CropRectangleFromBitmap(ausschnitt, bmpAusschnitt); ;
-                                CAusschnitt.BackgroundImage = tempausschnitt2;
-                                CAusschnitt.Show();
-                                // original.Save(currentfilename);
-                            }
-                        }
-                        Bitmap bmp = (Bitmap)CAusschnitt.BackgroundImage;
-                        if (bmp!=null)
-                        {
-                            if (bmp.Width * bmp.Height < 400000)
-                            {
-                                for (int th = 0; th < 256; th += 16)
-                                {
-                                    bmp = ConvertToBlackAndWhite((Bitmap)CAusschnitt.BackgroundImage, (int)th);
-                                    String text = ReadTextFromBitmap((Bitmap)COCRPicture.BackgroundImage);
-                                    String[] s = text.Split(' ');
-                                    if (s.Length == 3 && CKennzeichen.Text == "")
-                                    {
-                                        CKennzeichen.Text = text;
-                                        COCRPicture.BackgroundImage = bmp;
-                                    }
-                                    COCRPicture.Refresh();
-                                }
-                            }
-                        }
-                        if (CKennzeichen.Text == "" && !CPixeln.Checked)
-                        {
-                            CKennzeichen.Text = ReadTextFromBitmap(tempausschnitt);
-                        }
-                        CAusschnitt.Refresh();
-                    }
-                    else
-                    {
-                    }
-                }
-                catch { }
             }
         }
         private void CFoto_MouseUp(object sender, MouseEventArgs e)
@@ -2039,7 +1823,6 @@ namespace Anzeige
                     }
                     string tempFilePath = Path.GetTempFileName();
                     copiedBitmap.Save(tempFilePath, ImageFormat.Png);
-                    // Clipboard.SetText(tempFilePath);
                 }
             }
             catch (Exception ex)
@@ -2080,8 +1863,6 @@ namespace Anzeige
                 String[] items = CKennzeichen.Text.Split(' ');
                 ortsname = FindOrtName(items[0]);
                 selectOrt(ortsname);
-                // String[] items = COrt.Text.Split(';');
-                // CAnzeigeText.Text = Message;
             }
         }
         private void CStrasse_TextChanged(object sender, EventArgs e)
@@ -2203,13 +1984,10 @@ namespace Anzeige
                 {
                     GPSLocation = "https://www.google.de/maps";
                 }
-                // oabrowser.Navigate(GPSLocation);
-                // CGMaps.Controls.Add(oabrowser);
                 ShellExecute(IntPtr.Zero, "open", GPSLocation, "", "", 5);
             }
             else if (CTabPages.SelectedTab == CTest)
             {
-                // TestOCRFIX();
             }
             else if (CTabPages.SelectedTab == CAbout)
             {
@@ -2452,8 +2230,6 @@ namespace Anzeige
                 }
                 i--;
             }
-
-            // String o2 = FindOrt(ort);
             if (ort.Length == 0 || ort != FindOrt(ort))
             {
                 ort = FindOrt(letters);
@@ -2464,7 +2240,6 @@ namespace Anzeige
 
             }
             return (ort + " " + letters + " " + numbers).Trim();
-            // return original;
         }
         private Ort FindOrtObjekt(string letters)
         {
@@ -2604,7 +2379,6 @@ namespace Anzeige
                         {
                             File.Delete(fullfilename);
                         }
-                        // File.Copy(Bild, fullfilename);
                         ScaleAndSaveImage(Bild, fullfilename);
                         filelist.Add(fullfilename);
                         _Files.Add(fullfilename);
@@ -2708,8 +2482,6 @@ namespace Anzeige
         }
         private void CFiles_MouseDown(object sender, MouseEventArgs e)
         {
-            // Panel source = (Panel)sender;
-            // DoDragDrop(source.BackgroundImage, DragDropEffects.Copy);
         }
         private void CDatum_Click(object sender, EventArgs e)
         {
@@ -2808,7 +2580,6 @@ namespace Anzeige
 
             if (tabControl1.SelectedTab == CTAbstand)
             {
-                // ShellExecute(IntPtr.Zero, "open", @"C:\Users\schip\source\repos\BildMessen\BildMessen\bin\Debug\netcoreapp3.1\BildMessen.exe", "", "", 5);
                 splitContainer1.SplitterDistance = 160;
                 pictureBox.Visible = true;
                 pictureBox.Dock = DockStyle.Fill;
@@ -2817,8 +2588,8 @@ namespace Anzeige
             }
             else if (tabControl1.SelectedTab == CTAbstandSerie)
             {
-                CFilelist.Items.Clear();
-                CFilelist.Items.AddRange(Directory.GetFiles(ZZielpfad + "AMK", "*.log"));
+                if (_logPath==null)
+                    this.logPath = ZZielpfad + "AMK";
                 abstandsmeter1.CurrentMesswert.Abstand2 = 100;
                 abstandsmeter1.Visible = true;
             }
@@ -2846,9 +2617,7 @@ namespace Anzeige
         }
         private void SetImage (Bitmap bmp)
         {
-            // global::Anzeige.Properties.Resources.eng
             loadedImage = bmp;
-
             pleft = new Point(0, loadedImage.Height);
             pright = new Point(loadedImage.Width, loadedImage.Height);
             paug = new Point(loadedImage.Width / 2, 0); ;
@@ -2863,7 +2632,6 @@ namespace Anzeige
             penHelp = new Pen(Color.Green, 2.0f);
 
             // Zeigen Sie das geladene Bild auf dem PictureBox-Steuerelement an
-            // pictureBox.Image = loadedImage;
             DrawLines();
         }
         private void LoadImage(String filename)
@@ -2883,6 +2651,7 @@ namespace Anzeige
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
+                    DrawLines(false);
                     // Kopie der Bitmap erstellen
                     Bitmap copiedImage = new Bitmap(lineImage);
 
@@ -2901,11 +2670,7 @@ namespace Anzeige
                             Font largerFont = new Font(this.Font.FontFamily, this.Font.Size * scaleFactor, this.Font.Style);
                             g.DrawString("Abstand: " + RealDistance.Text, largerFont, new SolidBrush(Color.White), x, y);
                             
-                            // vertical lines 
-                            // Pen greenPen = new Pen(Color.Green, 1);
-                            // g.DrawLine(greenPen, dist1, new Point(dist1.X, 0));
-                            // g.DrawLine(greenPen, dist2, new Point(dist2.X, 0));
-
+                            // Insert Distance Control into piucture
                             Bitmap bmp = Tools.ErstelleControlKopie(abstandsmeter1);
                             float targetWidth = copiedImage.Width / 3f;
                             float aspectRatio = (float)bmp.Width / bmp.Height;
@@ -2952,7 +2717,6 @@ namespace Anzeige
         {
             textBox1.Text = refwidth.ToString();
             CalculateAndDisplayDistance();
-            // Distance.Text = Math.Round(refwidth * (double)numericUpDown1.Value, 2).ToString();
         }
         private void CalculateAndDisplayDistance()
         {
@@ -3292,7 +3056,6 @@ namespace Anzeige
                     File.Delete("Data.bak");
                 if (File.Exists("Data.txt"))
                     File.Move("Data.txt", "Data.bak");
-                // CDataList.Items.Cast<object>().ToList().ForEach(item => File.WriteAllText("ComboBoxData.txt", item.ToString() + Environment.NewLine));
                 File.AppendAllText("Data.txt", string.Join(Environment.NewLine, CDataList.Items.Cast<object>().Select(item => item.ToString())));
 
                 Application.Restart();
@@ -3309,7 +3072,6 @@ namespace Anzeige
                 {
                     PdfHelper pdfHelper = new PdfHelper();
                     CreatePDFFile("Mangel");
-                    // PDFFilename = pdfHelper.ErstelleLEVPDF();
                     ShellExecute(IntPtr.Zero, "open", items[4], "", "", 5);
                     Clipboard.SetText(PDFFilename);
                     ShellExecute(IntPtr.Zero, "open", PDFFilename, "", "", 5);
@@ -3359,7 +3121,6 @@ namespace Anzeige
                         openFileDialog.Multiselect = true;
                         openFileDialog.InitialDirectory = ZZielpfad + "Download";
 
-                        // ShellExecute(IntPtr.Zero, "open", openFileDialog.InitialDirectory, "", "", 5);
                         // Filter für verschiedene Bilddateitypen festlegen
                         openFileDialog.Filter = "JPEG-Bilder (*.jpg, *.jpeg)|*.jpg;*.jpeg|" +
                                                 "PNG-Bilder (*.png)|*.png|" +
@@ -3413,7 +3174,6 @@ namespace Anzeige
                             CStrasse.Text = street;
                             CHN.Text = houseNumber;
                             CMail.Text = Mail;
-                            // CTabPages.SelectedTab = CTabPageOA;
                         }
                     }
                     break;
@@ -3425,7 +3185,6 @@ namespace Anzeige
             {
                 case 0:
                     {
-                        // CTabPages.SelectedIndex = 2;
                         String fullpath = ZZielpfad + Ort;
                         CreateDirectoryIfNotExists(fullpath);
                         fullpath = fullpath + "\\" + this.Kennzeichen;
@@ -3437,7 +3196,6 @@ namespace Anzeige
                             String fullfilename = fullpath + "\\" + fi.Name;
                             if (File.Exists(fullfilename))
                                 File.Delete(fullfilename);
-                            // File.Copy(Bild, fullfilename);
                             ScaleAndSaveImage(Bild, fullfilename, 0.5);
                             filelist.Add(fullfilename);
                         }
@@ -3485,7 +3243,6 @@ namespace Anzeige
                     break;
                 case 3:
                     {
-                        // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
                         ShellExecute(IntPtr.Zero, "open", FullPath, "", "", 5);
                     }
                     break;
@@ -3496,9 +3253,6 @@ namespace Anzeige
                         {
                             SelectFile(s);
                             CFiles.Items.Add(s);
-                            // _Files.Add(s);
-                            // CFiles.Items.Add(s);
-                            // CSave.BackgroundImage = Bitmap.FromFile(s);
                         }
                         CAnzeigeText.Text = Message;
                         this.Refresh();
@@ -3537,7 +3291,6 @@ namespace Anzeige
                     break;
                 case 2:
                     {
-                        // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
                         ConfigEditorForm dlg = new ConfigEditorForm();
                         dlg.Configfile = configfile;
                         dlg.ShowDialog();
@@ -3545,7 +3298,6 @@ namespace Anzeige
                     break;
                 case 3:
                     {
-                        // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
                         EditTemplate dlg = new EditTemplate();
                         dlg.Template = Template;
                         dlg.ShowDialog();
@@ -3593,8 +3345,6 @@ namespace Anzeige
                         dlg.DefaultExt = "txt";
                         dlg.InitialDirectory = ZZielpfad + "Default";
                         CreateDirectoryIfNotExists(dlg.InitialDirectory);
-//                         dlg.InitialDirectory = "Z:\\Dokumente\\Anzeigen\\Default";
-
                         if (dlg.ShowDialog() == DialogResult.OK)
                         {
                             if (!string.IsNullOrEmpty(dlg.FileName))
@@ -3655,7 +3405,6 @@ namespace Anzeige
                         CVerstoss.Items.Clear();
                         foreach (String i in CVerstossaus.Items)
                         {
-                            // CVerstoss.Items.Add(i);
                             AddVerstoss(i);
                         }
                         CVerstossaus.Items.Clear();
@@ -3678,6 +3427,79 @@ namespace Anzeige
             toolTip1.Hide(s);
             toolTip1.ShowAlways = false;
         }
+        private Bitmap ErstelleGesamtBitmap(List<Messwerte.Messwert> zusammenstellung)
+        {
+            // Berechne die Anzahl der benötigten Zeilen
+            int zeilen = (int)Math.Ceiling((double)zusammenstellung.Count / 4);
+
+            // Größe des Ziel-Bitmap berechnen
+            int zielBreite = 4 * abstandsmeter1.Width;  // Annahme: abstandsmeter1 ist das Control, dessen Breite verwendet wird
+            int zielHoehe = zeilen * abstandsmeter1.Height;
+
+            // Erstelle das Ziel-Bitmap
+            Bitmap zielBitmap = new Bitmap(zielBreite, zielHoehe);
+
+            using (Graphics g = Graphics.FromImage(zielBitmap))
+            {
+                // Schleife über die Messwerte und füge die Bilder ins Ziel-Bitmap ein
+                for (int i = 0; i < zusammenstellung.Count; i++)
+                {
+                    // Berechne die Position des aktuellen Messwerts im Raster
+                    int zeile = i / 4;
+                    int spalte = i % 4;
+
+                    // Weise den aktuellen Messwert abstandsmeter1 zu
+                    abstandsmeter1.CurrentMesswert = zusammenstellung[i];
+
+                    // Erstelle ein temporäres Bitmap für abstandsmeter1
+                    Bitmap tempBitmap = Tools.ErstelleControlKopie(abstandsmeter1);
+
+                    // Zeichne das tempBitmap an die richtige Position im Ziel-Bitmap
+                    g.DrawImage(tempBitmap, spalte * abstandsmeter1.Width, zeile * abstandsmeter1.Height);
+
+                    // Lösche das tempBitmap, da es nicht mehr benötigt wird
+                    tempBitmap.Dispose();
+                }
+            }
+
+            // Gib das fertige Ziel-Bitmap zurück
+            return zielBitmap;
+        }
+        private PointF ScalePoint(PointF point, double scaleX, double scaleY, double offsetX, double offsetY)
+        {
+            float scaledX = (float)((point.X - offsetX) * scaleX);
+            float scaledY = (float)((point.Y - offsetY) * scaleY);
+            return new PointF(scaledX, scaledY);
+        }
+        private void DrawPath(double scaleX, double scaleY)
+        {
+            // Erstellen Sie ein neues Bitmap
+            Bitmap bitmap = new Bitmap(BitmapWidth, BitmapHeight);
+
+            // Zeichnen Sie den Pfad auf das skalierte Bitmap
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.Clear(Color.White);
+
+                for (int i = 0; i < pathPoints.Count - 1; i++)
+                {
+                    PointF startPoint = ScalePoint(pathPoints[i], scaleX, scaleY, minLongitude, minLatitude);
+                    PointF endPoint = ScalePoint(pathPoints[i + 1], scaleX, scaleY, minLongitude, minLatitude);
+
+                    g.DrawLine(Pens.Blue, startPoint, endPoint);
+                }
+            }
+
+            // Verwenden Sie das Bitmap für Ihre Zwecke
+            // z.B. Anzeige in einem PictureBox
+            CSave.BackgroundImage = bitmap;
+        }
+        private void abstandsmeter1_Resize(object sender, EventArgs e)
+        {
+            abstandsmeter1.Left = CSave.Width - abstandsmeter1.Width;
+        }
+
+
         /// Obsolet
         private void CNew_Click(object sender, EventArgs e)
         {
@@ -3713,8 +3535,6 @@ namespace Anzeige
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = true;
             openFileDialog.InitialDirectory = ZZielpfad + "Download";
-
-            // ShellExecute(IntPtr.Zero, "open", openFileDialog.InitialDirectory, "", "", 5);
             // Filter für verschiedene Bilddateitypen festlegen
             openFileDialog.Filter = "JPEG-Bilder (*.jpg, *.jpeg)|*.jpg;*.jpeg|" +
                                     "PNG-Bilder (*.png)|*.png|" +
@@ -3748,9 +3568,6 @@ namespace Anzeige
                 string fullAddress = items[0];
                 string street = string.Empty;
                 string houseNumber = string.Empty;
-
-
-
                 // Suche nach dem letzten Leerzeichen, um die Hausnummer zu trennen
                 int lastSpaceIndex = fullAddress.LastIndexOf(' ');
                 if (lastSpaceIndex != -1 && lastSpaceIndex < fullAddress.Length - 1)
@@ -3767,12 +3584,10 @@ namespace Anzeige
                 CStrasse.Text = street;
                 CHN.Text = houseNumber;
                 CMail.Text = Mail;
-                // CTabPages.SelectedTab = CTabPageOA;
             }
         }
         private void CSpeichern_Click(object sender, EventArgs e)
         {
-            // CTabPages.SelectedIndex = 2;
             String fullpath = ZZielpfad + Ort;
             CreateDirectoryIfNotExists(fullpath);
             fullpath = fullpath + "\\" + this.Kennzeichen;
@@ -3784,7 +3599,6 @@ namespace Anzeige
                 String fullfilename = fullpath + "\\" + fi.Name;
                 if (File.Exists(fullfilename))
                     File.Delete(fullfilename);
-                // File.Copy(Bild, fullfilename);
                 ScaleAndSaveImage(Bild, fullfilename, 0.5);
                 filelist.Add(fullfilename);
             }
@@ -3826,7 +3640,6 @@ namespace Anzeige
         }
         private void CDirOpen_Click(object sender, EventArgs e)
         {
-            // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
             ShellExecute(IntPtr.Zero, "open", FullPath, "", "", 5);
         }
         private void CClipImage_Click(object sender, EventArgs e)
@@ -3836,17 +3649,10 @@ namespace Anzeige
             {
                 SelectFile(s);
                 CFiles.Items.Add(s);
-                // _Files.Add(s);
-                // CFiles.Items.Add(s);
-                // CSave.BackgroundImage = Bitmap.FromFile(s);
             }
             CAnzeigeText.Text = Message;
             this.Refresh();
         }
-        // public string Ort
-        // public string PLZ
-        // public string Strasse
-        // public string HN
         private void cOrtSuche_Click(object sender, EventArgs e)
         {
             String url = ortssuche;
@@ -3872,14 +3678,11 @@ namespace Anzeige
         }
         private void CSettings_Click(object sender, EventArgs e)
         {
-            // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
             ConfigEditorForm dlg = new ConfigEditorForm();
-
             dlg.ShowDialog();
         }
         private void CText_Click(object sender, EventArgs e)
         {
-            // ShellExecute(IntPtr.Zero, "open", Directory.GetCurrentDirectory(), "", "", 5);
             EditTemplate dlg = new EditTemplate();
             dlg.Template = Template;
             dlg.ShowDialog();
@@ -3967,7 +3770,6 @@ namespace Anzeige
             CVerstoss.Items.Clear();
             foreach (String i in CVerstossaus.Items)
             {
-                // CVerstoss.Items.Add(i);
                 AddVerstoss(i);
             }
             CVerstossaus.Items.Clear();
@@ -3991,9 +3793,7 @@ namespace Anzeige
         }
         private void button6_Click(object sender, EventArgs e)
         {
-            // String s = File.ReadAllText(@"Dieser PC\Nokia 2.3\Interner gemeinsamer Speicher\Android\data\edu.mit.appinventor.aicompanion3\files\Textdatei.txt");
             DriveInfo[] drives = DriveInfo.GetDrives();
-
             foreach (DriveInfo drive in drives)
             {
                 if (drive.DriveType == DriveType.Removable) // Überprüfen Sie, ob es sich um ein USB-Gerät handelt
@@ -4002,10 +3802,6 @@ namespace Anzeige
                     // Fügen Sie hier Ihren Code zum Herunterladen von Dateien hinzu
                 }
             }
-
-        }
-        private void abstandsmeter1_Load(object sender, EventArgs e)
-        {
 
         }
         private void CFilelist_SelectedIndexChanged(object sender, EventArgs e)
@@ -4024,58 +3820,9 @@ namespace Anzeige
             if (CContent.SelectedIndex > -1)
                 Zusammenstellung.Add(new Messwerte.Messwert(CContent.SelectedItem.ToString()));
         }
-        private void CPhoto_Click_old(object sender, EventArgs e)
-        {
-            int n = Zusammenstellung.Count;
-
-            foreach (Messwerte.Messwert w in Zusammenstellung)
-            {
-                abstandsmeter1.CurrentMesswert = w;
-                Bitmap bmp = Tools.ErstelleControlKopie(abstandsmeter1);
-            }
-
-        }
         private void CPhoto_Click(object sender, EventArgs e)
         {
             Clipboard.SetImage(ErstelleGesamtBitmap(Zusammenstellung));
-        }
-        private Bitmap ErstelleGesamtBitmap(List<Messwerte.Messwert> zusammenstellung)
-        {
-            // Berechne die Anzahl der benötigten Zeilen
-            int zeilen = (int)Math.Ceiling((double)zusammenstellung.Count / 4);
-
-            // Größe des Ziel-Bitmap berechnen
-            int zielBreite = 4 * abstandsmeter1.Width;  // Annahme: abstandsmeter1 ist das Control, dessen Breite verwendet wird
-            int zielHoehe = zeilen * abstandsmeter1.Height;
-
-            // Erstelle das Ziel-Bitmap
-            Bitmap zielBitmap = new Bitmap(zielBreite, zielHoehe);
-
-            using (Graphics g = Graphics.FromImage(zielBitmap))
-            {
-                // Schleife über die Messwerte und füge die Bilder ins Ziel-Bitmap ein
-                for (int i = 0; i < zusammenstellung.Count; i++)
-                {
-                    // Berechne die Position des aktuellen Messwerts im Raster
-                    int zeile = i / 4;
-                    int spalte = i % 4;
-
-                    // Weise den aktuellen Messwert abstandsmeter1 zu
-                    abstandsmeter1.CurrentMesswert = zusammenstellung[i];
-
-                    // Erstelle ein temporäres Bitmap für abstandsmeter1
-                    Bitmap tempBitmap = Tools.ErstelleControlKopie(abstandsmeter1);
-
-                    // Zeichne das tempBitmap an die richtige Position im Ziel-Bitmap
-                    g.DrawImage(tempBitmap, spalte * abstandsmeter1.Width, zeile * abstandsmeter1.Height);
-
-                    // Lösche das tempBitmap, da es nicht mehr benötigt wird
-                    tempBitmap.Dispose();
-                }
-            }
-
-            // Gib das fertige Ziel-Bitmap zurück
-            return zielBitmap;
         }
         private void CLocateMessung_Click(object sender, EventArgs e)
         {
@@ -4102,34 +3849,6 @@ namespace Anzeige
         {
             CRoute_Click(sender, e);
         }
-        private void CRoute_Click_old(object sender, EventArgs e)
-        {
-            if (CContent.SelectedIndex > -1)
-            {
-                Messwerte.Messwert m0 = new Messwerte.Messwert(CContent.SelectedItem.ToString());
-
-                foreach (String i in CContent.Items)
-                {
-                    Messwerte.Messwert m = new Messwerte.Messwert(i);
-
-                }
-            }
-        }
-        private List<PointF> pathPoints = new List<PointF>();
-        private double minLongitude = double.MaxValue;
-        private double maxLongitude = double.MinValue;
-        private double minLatitude = double.MaxValue;
-        private double maxLatitude = double.MinValue;
-        private int BitmapWidth = 1024;
-        private int BitmapHeight = 1024;
-
-        private PointF ScalePoint(PointF point, double scaleX, double scaleY, double offsetX, double offsetY)
-        {
-            float scaledX = (float)((point.X - offsetX) * scaleX);
-            float scaledY = (float)((point.Y - offsetY) * scaleY);
-            return new PointF(scaledX, scaledY);
-        }
-
         private void CRoute_Click(object sender, EventArgs e)
         {
             if (CContent.SelectedIndex > -1)
@@ -4169,34 +3888,23 @@ namespace Anzeige
                 DrawPath(scaleX, scaleY);
             }
         }
-
-        private void DrawPath(double scaleX, double scaleY)
+        private void pfadWählenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Erstellen Sie ein neues Bitmap
-            Bitmap bitmap = new Bitmap(BitmapWidth, BitmapHeight);
-
-            // Zeichnen Sie den Pfad auf das skalierte Bitmap
-            using (Graphics g = Graphics.FromImage(bitmap))
+            using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
             {
-                g.Clear(Color.White);
+                // Setzen Sie den aktuellen Pfad des Dialogs auf den aktuellen logPath-Wert
+                folderBrowserDialog.SelectedPath = Path.Combine(ZZielpfad, _logPath);
 
-                for (int i = 0; i < pathPoints.Count - 1; i++)
+                // Zeigen Sie den Dialog an
+                DialogResult result = folderBrowserDialog.ShowDialog();
+
+                // Überprüfen Sie, ob der Benutzer "OK" ausgewählt hat
+                if (result == DialogResult.OK)
                 {
-                    PointF startPoint = ScalePoint(pathPoints[i], scaleX, scaleY, minLongitude, minLatitude);
-                    PointF endPoint = ScalePoint(pathPoints[i + 1], scaleX, scaleY, minLongitude, minLatitude);
-
-                    g.DrawLine(Pens.Blue, startPoint, endPoint);
+                    // Setzen Sie den logPath-Wert auf den ausgewählten Ordner
+                    logPath = folderBrowserDialog.SelectedPath;
                 }
             }
-
-            // Verwenden Sie das Bitmap für Ihre Zwecke
-            // z.B. Anzeige in einem PictureBox
-            CSave.BackgroundImage = bitmap;
-        }
-
-        private void abstandsmeter1_Resize(object sender, EventArgs e)
-        {
-            abstandsmeter1.Left = CSave.Width - abstandsmeter1.Width;
         }
     }
 }

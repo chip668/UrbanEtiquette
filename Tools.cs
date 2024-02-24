@@ -13,7 +13,6 @@ namespace Anzeige
     {
         [DllImport("shell32.dll")]
         static extern IntPtr ShellExecute(IntPtr hwnd, string lpOperation, string lpFile, string lpParameters, string lpDirectory, int nShowCmd);
-
         static void InitializeUmlautMap(Dictionary<string, string> umlautToAscii, Dictionary<string, string> asciiToUmlaut)
         {
             // Umwandlungen in beide Richtungen
@@ -59,7 +58,6 @@ namespace Anzeige
 
             return result.ToString();
         }
-
         static void InitializeSonderzeichenMap(Dictionary<string, string> sonderzeichenToAscii, Dictionary<string, string> asciiToSonderzeichen)
         {
             // Umwandlungen in beide Richtungen
@@ -130,8 +128,20 @@ namespace Anzeige
             sonderzeichenToAscii.Add(sonderzeichen, ascii);
             asciiToSonderzeichen.Add(ascii, sonderzeichen);
         }
+        /// <summary>
+        /// Konverterliste sonderzeichen in ascii 
+        /// </summary>
         static Dictionary<string, string> sonderzeichenToAscii = null;
+        /// <summary>
+        /// Konverterliste ascii in sonderzeichen
+        /// </summary>
         static Dictionary<string, string> asciiToSonderzeichen = null;
+        /// <summary>
+        /// Wandelt Sonderueziche naus unicode in Ascii um
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="sonderzeichenMap"></param>
+        /// <returns></returns>
         public static string ConvertSonderzeichens(string input, Dictionary<string, string> sonderzeichenMap)
         {
             if (sonderzeichenToAscii == null)
@@ -149,6 +159,11 @@ namespace Anzeige
 
             return result.ToString();
         }
+        /// <summary>
+        /// Erstellt ein Bitmap aus der Annsicht einer Form
+        /// </summary>
+        /// <param name="frm"></param>
+        /// <returns></returns>
         public static Bitmap ErstelleFormKopie(Form frm)
         {
             Bitmap bildschirmkopie = new Bitmap(frm.Width, frm.Height);
@@ -156,6 +171,11 @@ namespace Anzeige
                 frm.DrawToBitmap(bildschirmkopie, new Rectangle(0, 0, frm.Width, frm.Height));
             return bildschirmkopie;
         }
+        /// <summary>
+        /// Kopiert ein Control in ein Bitmap
+        /// </summary>
+        /// <param name="ctl"></param>
+        /// <returns></returns>
         public static Bitmap ErstelleControlKopie(Control ctl)
         {
             Bitmap bildschirmkopie = new Bitmap(ctl.Width, ctl.Height);
@@ -163,6 +183,12 @@ namespace Anzeige
                 ctl.DrawToBitmap(bildschirmkopie, new Rectangle(0, 0, ctl.Width, ctl.Height));
             return bildschirmkopie;
         }
+        /// <summary>
+        /// Erste4llt aus dem Geotag eine URL uzm auf google maps zuzugreifen
+        /// </summary>
+        /// <param name="latitude"></param>
+        /// <param name="longitude"></param>
+        /// <returns></returns>
         public static string GenerateGoogleMapsURL(double latitude, double longitude)
         {
             // Ersetze die Platzhalter in der Google Maps URL mit den tatsächlichen Geodaten des Bildes
@@ -173,6 +199,11 @@ namespace Anzeige
             string url = urlTemplate.Replace("{latitude}", latitude.ToString().Replace(",", ".")).Replace("{longitude}", longitude.ToString().Replace(",", "."));
             return url;
         }
+        /// <summary>
+        /// Ruft anhand der Geodaten Goofle maps auf
+        /// </summary>
+        /// <param name="latitude"></param>
+        /// <param name="longitude"></param>
         public static void CallGoogleMapsURL(double latitude, double longitude)
         {
             String url = GenerateGoogleMapsURL(latitude, longitude);

@@ -178,6 +178,7 @@ namespace Anzeige
             this.CAbout = new System.Windows.Forms.TabPage();
             this.CPolice = new System.Windows.Forms.TabPage();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.pfadWählenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -1381,38 +1382,40 @@ namespace Anzeige
             this.addToolStripMenuItem,
             this.photoToolStripMenuItem,
             this.locationToolStripMenuItem,
-            this.routeToolStripMenuItem});
+            this.routeToolStripMenuItem,
+            this.pfadWählenToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(140, 108);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 156);
             // 
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.addToolStripMenuItem.Text = "Add";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
             // photoToolStripMenuItem
             // 
             this.photoToolStripMenuItem.Name = "photoToolStripMenuItem";
-            this.photoToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.photoToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.photoToolStripMenuItem.Text = "Photo";
             this.photoToolStripMenuItem.Click += new System.EventHandler(this.photoToolStripMenuItem_Click);
             // 
             // locationToolStripMenuItem
             // 
             this.locationToolStripMenuItem.Name = "locationToolStripMenuItem";
-            this.locationToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.locationToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.locationToolStripMenuItem.Text = "Location";
             this.locationToolStripMenuItem.Click += new System.EventHandler(this.locationToolStripMenuItem_Click);
             // 
             // routeToolStripMenuItem
             // 
             this.routeToolStripMenuItem.Name = "routeToolStripMenuItem";
-            this.routeToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.routeToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.routeToolStripMenuItem.Text = "Route";
             this.routeToolStripMenuItem.Click += new System.EventHandler(this.routeToolStripMenuItem_Click);
-            // 
+            
+
             // splitContainer4
             // 
             this.splitContainer4.Cursor = System.Windows.Forms.Cursors.HSplit;
@@ -1602,7 +1605,6 @@ namespace Anzeige
             this.abstandsmeter1.Size = new System.Drawing.Size(580, 490);
             this.abstandsmeter1.TabIndex = 8;
             this.abstandsmeter1.Visible = false;
-            this.abstandsmeter1.Load += new System.EventHandler(this.abstandsmeter1_Load);
             this.abstandsmeter1.Resize += new System.EventHandler(this.abstandsmeter1_Resize);
             // 
             // panel13
@@ -2085,6 +2087,13 @@ namespace Anzeige
             this.CPolice.TabIndex = 8;
             this.CPolice.Text = "Polizei";
             // 
+            // pfadWählenToolStripMenuItem
+            // 
+            this.pfadWählenToolStripMenuItem.Name = "pfadWählenToolStripMenuItem";
+            this.pfadWählenToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.pfadWählenToolStripMenuItem.Text = "Pfad wählen";
+            this.pfadWählenToolStripMenuItem.Click += new System.EventHandler(this.pfadWählenToolStripMenuItem_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -2318,6 +2327,7 @@ namespace Anzeige
         private System.Windows.Forms.ToolStripMenuItem locationToolStripMenuItem;
         private System.Windows.Forms.Button CRoute;
         private System.Windows.Forms.ToolStripMenuItem routeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pfadWählenToolStripMenuItem;
     }
 }
 
