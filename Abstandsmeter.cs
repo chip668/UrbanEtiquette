@@ -56,14 +56,10 @@ namespace Anzeige
             this.Size = CExpand.Size;
             CExpand.Visible = true;
         }
-        public void Expaned()
+        private void CExpand_Click(object sender, EventArgs e)
         {
             this.Size = new Size(580, 490);
             CExpand.Visible = false;
-        }
-        private void CExpand_Click(object sender, EventArgs e)
-        {
-            Expaned();
         }
         private void Abstandsmeter_Paint(object sender, PaintEventArgs e)
         {

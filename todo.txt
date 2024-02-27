@@ -3,5 +3,5 @@ Todo Liste
 2. Farberkennung ist sehr schwierig da ähnlichkeiten nicht einfach über eine rein num erische Distzanz zwischen Farben bestimmt werden kann
 3. Deim Ausdruck von PDF formularen werden keine Biler übernommen.
 4. Druckfunktionen / Bericht für eine eventuelle Gerichtsverhandlung drucken.
-5. Aonymisierung muss auf alle angehängten Bilder angewand werden.
+5. Anonymisierung muss auf alle angehängten Bilder angewand werden.
 6. Einbinden Anstandssensor
