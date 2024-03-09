@@ -99,7 +99,6 @@ namespace Anzeige
             set { _loadedImage = value; }
         }
         private Bitmap lineImage;
-        Point stop;
         static toleranz toleranzwerte = new toleranz();
         Point stop { get; set; }
         Point downhelp { get; set; }
