@@ -107,6 +107,7 @@ namespace Anzeige
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.RealDistance = new System.Windows.Forms.TextBox();
             this.Distance = new System.Windows.Forms.TextBox();
+            this.corretion = new System.Windows.Forms.TextBox();
             this.ownwidth = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.CDist2 = new System.Windows.Forms.RadioButton();
@@ -125,6 +126,7 @@ namespace Anzeige
             this.photoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.locationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.routeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pfadWählenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.CRoute = new System.Windows.Forms.Button();
             this.CLocateMessung = new System.Windows.Forms.Button();
@@ -178,7 +180,6 @@ namespace Anzeige
             this.CAbout = new System.Windows.Forms.TabPage();
             this.CPolice = new System.Windows.Forms.TabPage();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.pfadWählenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -988,6 +989,7 @@ namespace Anzeige
             this.CTAbstand.Controls.Add(this.pictureBox1);
             this.CTAbstand.Controls.Add(this.RealDistance);
             this.CTAbstand.Controls.Add(this.Distance);
+            this.CTAbstand.Controls.Add(this.corretion);
             this.CTAbstand.Controls.Add(this.ownwidth);
             this.CTAbstand.Controls.Add(this.textBox1);
             this.CTAbstand.Controls.Add(this.CDist2);
@@ -1006,10 +1008,10 @@ namespace Anzeige
             // 
             // CScaleMess
             // 
-            this.CScaleMess.Location = new System.Drawing.Point(39, 32);
+            this.CScaleMess.Location = new System.Drawing.Point(83, 32);
             this.CScaleMess.Minimum = 10;
             this.CScaleMess.Name = "CScaleMess";
-            this.CScaleMess.Size = new System.Drawing.Size(117, 31);
+            this.CScaleMess.Size = new System.Drawing.Size(73, 31);
             this.CScaleMess.TabIndex = 29;
             this.CScaleMess.Value = 100;
             this.CScaleMess.Scroll += new System.Windows.Forms.ScrollEventHandler(this.CScaleMess_Scroll);
@@ -1213,6 +1215,19 @@ namespace Anzeige
             this.Distance.Text = "0";
             this.toolTip1.SetToolTip(this.Distance, "Berechneter Abstand");
             // 
+            // corretion
+            // 
+            this.corretion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
+            this.corretion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.corretion.Location = new System.Drawing.Point(44, 34);
+            this.corretion.Name = "corretion";
+            this.corretion.Size = new System.Drawing.Size(33, 29);
+            this.corretion.TabIndex = 16;
+            this.corretion.Text = "0";
+            this.toolTip1.SetToolTip(this.corretion, "Wurde die Kamera mweiter links angebracht dann  hier die Strecke zur mitte eintra" +
+        "gen. links >0 rechts <0");
+            this.corretion.TextChanged += new System.EventHandler(this.corretion_TextChanged);
+            // 
             // ownwidth
             // 
             this.ownwidth.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
@@ -1385,37 +1400,43 @@ namespace Anzeige
             this.routeToolStripMenuItem,
             this.pfadWählenToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 156);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(166, 134);
             // 
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
             this.addToolStripMenuItem.Text = "Add";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
             // photoToolStripMenuItem
             // 
             this.photoToolStripMenuItem.Name = "photoToolStripMenuItem";
-            this.photoToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.photoToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
             this.photoToolStripMenuItem.Text = "Photo";
             this.photoToolStripMenuItem.Click += new System.EventHandler(this.photoToolStripMenuItem_Click);
             // 
             // locationToolStripMenuItem
             // 
             this.locationToolStripMenuItem.Name = "locationToolStripMenuItem";
-            this.locationToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.locationToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
             this.locationToolStripMenuItem.Text = "Location";
             this.locationToolStripMenuItem.Click += new System.EventHandler(this.locationToolStripMenuItem_Click);
             // 
             // routeToolStripMenuItem
             // 
             this.routeToolStripMenuItem.Name = "routeToolStripMenuItem";
-            this.routeToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.routeToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
             this.routeToolStripMenuItem.Text = "Route";
             this.routeToolStripMenuItem.Click += new System.EventHandler(this.routeToolStripMenuItem_Click);
-            
-
+            // 
+            // pfadWählenToolStripMenuItem
+            // 
+            this.pfadWählenToolStripMenuItem.Name = "pfadWählenToolStripMenuItem";
+            this.pfadWählenToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
+            this.pfadWählenToolStripMenuItem.Text = "Pfad wählen";
+            this.pfadWählenToolStripMenuItem.Click += new System.EventHandler(this.pfadWählenToolStripMenuItem_Click);
+            // 
             // splitContainer4
             // 
             this.splitContainer4.Cursor = System.Windows.Forms.Cursors.HSplit;
@@ -2087,13 +2108,6 @@ namespace Anzeige
             this.CPolice.TabIndex = 8;
             this.CPolice.Text = "Polizei";
             // 
-            // pfadWählenToolStripMenuItem
-            // 
-            this.pfadWählenToolStripMenuItem.Name = "pfadWählenToolStripMenuItem";
-            this.pfadWählenToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
-            this.pfadWählenToolStripMenuItem.Text = "Pfad wählen";
-            this.pfadWählenToolStripMenuItem.Click += new System.EventHandler(this.pfadWählenToolStripMenuItem_Click);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -2328,6 +2342,7 @@ namespace Anzeige
         private System.Windows.Forms.Button CRoute;
         private System.Windows.Forms.ToolStripMenuItem routeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pfadWählenToolStripMenuItem;
+        private System.Windows.Forms.TextBox corretion;
     }
 }
 

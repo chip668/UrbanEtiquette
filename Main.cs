@@ -90,7 +90,6 @@ namespace Anzeige
         }
 
         private Color c2;        // Abstandsmessung 
-        Double refwidth = 30;
         float scaleFactor = 3.0f; // Vergrößerungsfaktor
         // private String currentfilename;
         private Bitmap _loadedImage;
@@ -101,14 +100,56 @@ namespace Anzeige
         }
         private Bitmap lineImage;
         Point stop;
-        Point downhelp;
-        Point pleft;
-        Point pright;
-        Point paug;
-        Point pref1;
-        Point pref2;
-        Point dist1;
-        Point dist2;
+        static toleranz toleranzwerte = new toleranz();
+        Point stop { get; set; }
+        Point downhelp { get; set; }
+        public Point pleft
+        {
+            get { return toleranzwerte.pleft; }
+            set { toleranzwerte.pleft = value; }
+        }
+
+        public Point pright
+        {
+            get { return toleranzwerte.pright; }
+            set { toleranzwerte.pright = value; }
+        }
+
+        public Point paug
+        {
+            get { return toleranzwerte.paug; }
+            set { toleranzwerte.paug = value; }
+        }
+
+        public Point pref1
+        {
+            get { return toleranzwerte.pref1; }
+            set { toleranzwerte.pref1 = value; }
+        }
+
+        public Point pref2
+        {
+            get { return toleranzwerte.pref2; }
+            set { toleranzwerte.pref2 = value; }
+        }
+
+        public Point dist1
+        {
+            get { return toleranzwerte.dist1; }
+            set { toleranzwerte.dist1 = value; }
+        }
+
+        public Point dist2
+        {
+            get { return toleranzwerte.dist2; }
+            set { toleranzwerte.dist2 = value; }
+        }      
+        Double refwidth
+        {
+            get { return toleranzwerte.refwidth; }
+            set { toleranzwerte.refwidth = value; }
+        }        
+
         Pen penFlucht;
         Pen penRef;
         Pen penDist;
@@ -863,6 +904,7 @@ namespace Anzeige
         /// </summary>
         public Main()
         {
+            refwidth = 30;
             aboutdlg = new AboutBox1();
             aboutdlg.Show();
             aboutdlg.Refresh();
@@ -1471,6 +1513,7 @@ namespace Anzeige
                         graphics.DrawLine(penHelp, new Point(lineImage.Width, stop.Y), new Point(0, stop.Y));
                     }
                     Font largerFont = new Font(this.Font.FontFamily, this.Font.Size * scaleFactor, this.Font.Style);
+                    // graphics.DrawString("Distanz: " + Distance.Text + "±" + toleranzwerte.ToString(), largerFont, new SolidBrush(Color.White), new Point(20, 20));
                     graphics.DrawString("Distanz: " + Distance.Text, largerFont, new SolidBrush(Color.White), new Point(20, 20));
 
                     // Gespiegelte Linie zeichnen
@@ -2708,11 +2751,6 @@ namespace Anzeige
                 MessageBox.Show("Die Zwischenablage enthält kein Bild.");
             }
         }
-        private void ownwidth_TextChanged(object sender, EventArgs e)
-        {
-            refwidth = Convert.ToDouble(textBox1.Text);
-            textrefresh();
-        }
         private void textrefresh()
         {
             textBox1.Text = refwidth.ToString();
@@ -3905,6 +3943,16 @@ namespace Anzeige
                     logPath = folderBrowserDialog.SelectedPath;
                 }
             }
+        }
+
+        private void ownwidth_TextChanged(object sender, EventArgs e)
+        {
+            refwidth = Convert.ToDouble(ownwidth.Text) - Convert.ToDouble(corretion.Text);
+            textrefresh();
+        }
+        private void corretion_TextChanged(object sender, EventArgs e)
+        {
+            ownwidth_TextChanged(sender, e);
         }
     }
 }
