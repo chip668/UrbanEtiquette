@@ -27,7 +27,19 @@ namespace Anzeige
         public Point dist2 { get; set; }
         public double ddist
         {
-            get { return Math.Sqrt(Math.Pow(dist2.X - dist1.X, 2) + Math.Pow(dist2.Y - dist1.Y, 2)); }
+            get { return Math.Sqrt(Math.Pow(dist2.X - dist1.X, 2) + Math.Pow(dist2.Y - dist1.Y, 2)) * faktor; }
+        }
+        public double reftiefe // Vertikale Strecke Augpunkt zur Referenz 
+        {
+            get { return (pref1.Y + pref2.Y)/2 - paug.Y; }
+        }
+        public double messtiefe // Vertikale Strecke Augpunkt zur Messung(links) 
+        {
+            get { return (dist1.Y+ dist2.Y)/2 - paug.Y; }
+        }
+        public double faktor // Faktor 
+        {
+            get { return messtiefe / reftiefe; }
         }
         public Double refwidth { get; set; }
         public double bild2real
@@ -38,7 +50,6 @@ namespace Anzeige
         {
             get { return bild2real * ddist; }
         }
-
         public double T1
         {
             get { return k * dpref / distanz * refwidth; }
@@ -51,18 +62,14 @@ namespace Anzeige
         {
             get { return T1 * T4; }
         }
-
         public double Toleranzwert
         {
             get { return distanz * T; }
         }
-
         public toleranz()
         {
             k = 1.5;
         }
-
-
         public double ToleranzInRealkoordinaten
         {
             get

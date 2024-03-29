@@ -89,22 +89,35 @@ namespace Anzeige
             this.CTInfo = new System.Windows.Forms.TabPage();
             this.bussgeldrechner1 = new Anzeige.Bussgeldrechner();
             this.CTAbstand = new System.Windows.Forms.TabPage();
-            this.CScaleMess = new System.Windows.Forms.HScrollBar();
-            this.Insert = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.CIsLevel = new System.Windows.Forms.CheckBox();
+            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.pictureBox9 = new System.Windows.Forms.PictureBox();
-            this.pictureBox8 = new System.Windows.Forms.PictureBox();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
-            this.pictureBox12 = new System.Windows.Forms.PictureBox();
-            this.pictureBox11 = new System.Windows.Forms.PictureBox();
-            this.pictureBox10 = new System.Windows.Forms.PictureBox();
+            this.pictureBox13 = new System.Windows.Forms.PictureBox();
+            this.pictureBox14 = new System.Windows.Forms.PictureBox();
+            this.pictureBox15 = new System.Windows.Forms.PictureBox();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox10 = new System.Windows.Forms.PictureBox();
+            this.pictureBox11 = new System.Windows.Forms.PictureBox();
+            this.pictureBox12 = new System.Windows.Forms.PictureBox();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.pictureBox8 = new System.Windows.Forms.PictureBox();
+            this.pictureBox9 = new System.Windows.Forms.PictureBox();
+            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.pictureBox17 = new System.Windows.Forms.PictureBox();
+            this.pictureBox16 = new System.Windows.Forms.PictureBox();
+            this.pictureBox18 = new System.Windows.Forms.PictureBox();
+            this.pictureBox19 = new System.Windows.Forms.PictureBox();
+            this.CScaleMess = new System.Windows.Forms.HScrollBar();
+            this.button7 = new System.Windows.Forms.Button();
+            this.Insert = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.RealDistance = new System.Windows.Forms.TextBox();
             this.Distance = new System.Windows.Forms.TextBox();
             this.corretion = new System.Windows.Forms.TextBox();
@@ -139,6 +152,7 @@ namespace Anzeige
             this.CDataList = new System.Windows.Forms.ListBox();
             this.CTabPages = new System.Windows.Forms.TabControl();
             this.CSave = new System.Windows.Forms.TabPage();
+            this.CReferenzhelp = new System.Windows.Forms.PictureBox();
             this.COCRPicture = new System.Windows.Forms.PictureBox();
             this.abstandsmeter1 = new Anzeige.Abstandsmeter();
             this.panel13 = new System.Windows.Forms.Panel();
@@ -175,6 +189,7 @@ namespace Anzeige
             this.CStadtPate = new System.Windows.Forms.TabPage();
             this.CGMaps = new System.Windows.Forms.TabPage();
             this.CTest = new System.Windows.Forms.TabPage();
+            this.button8 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.CTestText = new System.Windows.Forms.TextBox();
             this.CAbout = new System.Windows.Forms.TabPage();
@@ -191,19 +206,30 @@ namespace Anzeige
             this.panel1.SuspendLayout();
             this.CTInfo.SuspendLayout();
             this.CTAbstand.SuspendLayout();
+            this.tabControl2.SuspendLayout();
+            this.tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).BeginInit();
+            this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
+            this.tabPage7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox18)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).BeginInit();
             this.CTAbstandSerie.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
@@ -217,6 +243,7 @@ namespace Anzeige
             this.CAdressen.SuspendLayout();
             this.CTabPages.SuspendLayout();
             this.CSave.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CReferenzhelp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.COCRPicture)).BeginInit();
             this.panel13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -971,22 +998,12 @@ namespace Anzeige
             // 
             this.CTAbstand.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.CTAbstand.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.CTAbstand.Controls.Add(this.CIsLevel);
+            this.CTAbstand.Controls.Add(this.tabControl2);
             this.CTAbstand.Controls.Add(this.CScaleMess);
+            this.CTAbstand.Controls.Add(this.button7);
             this.CTAbstand.Controls.Add(this.Insert);
             this.CTAbstand.Controls.Add(this.button4);
-            this.CTAbstand.Controls.Add(this.numericUpDown1);
-            this.CTAbstand.Controls.Add(this.pictureBox6);
-            this.CTAbstand.Controls.Add(this.pictureBox9);
-            this.CTAbstand.Controls.Add(this.pictureBox8);
-            this.CTAbstand.Controls.Add(this.pictureBox7);
-            this.CTAbstand.Controls.Add(this.pictureBox12);
-            this.CTAbstand.Controls.Add(this.pictureBox11);
-            this.CTAbstand.Controls.Add(this.pictureBox10);
-            this.CTAbstand.Controls.Add(this.pictureBox5);
-            this.CTAbstand.Controls.Add(this.pictureBox4);
-            this.CTAbstand.Controls.Add(this.pictureBox3);
-            this.CTAbstand.Controls.Add(this.pictureBox2);
-            this.CTAbstand.Controls.Add(this.pictureBox1);
             this.CTAbstand.Controls.Add(this.RealDistance);
             this.CTAbstand.Controls.Add(this.Distance);
             this.CTAbstand.Controls.Add(this.corretion);
@@ -1006,45 +1023,111 @@ namespace Anzeige
             this.CTAbstand.TabIndex = 2;
             this.CTAbstand.Text = "Abstand";
             // 
-            // CScaleMess
+            // CIsLevel
             // 
-            this.CScaleMess.Location = new System.Drawing.Point(83, 32);
-            this.CScaleMess.Minimum = 10;
-            this.CScaleMess.Name = "CScaleMess";
-            this.CScaleMess.Size = new System.Drawing.Size(73, 31);
-            this.CScaleMess.TabIndex = 29;
-            this.CScaleMess.Value = 100;
-            this.CScaleMess.Scroll += new System.Windows.Forms.ScrollEventHandler(this.CScaleMess_Scroll);
+            this.CIsLevel.AutoSize = true;
+            this.CIsLevel.Location = new System.Drawing.Point(7, 856);
+            this.CIsLevel.Name = "CIsLevel";
+            this.CIsLevel.Size = new System.Drawing.Size(37, 25);
+            this.CIsLevel.TabIndex = 31;
+            this.CIsLevel.Text = "↑";
+            this.toolTip1.SetToolTip(this.CIsLevel, "Es kann nur entweder eine Referenz auf der gleichen Ebene ↔ oder aber in der Höhe" +
+        " in gleicher entfernung verwedet werden. Je nach einstellung erfolgt eine passen" +
+        "de Korrektur.");
+            this.CIsLevel.UseVisualStyleBackColor = true;
+            this.CIsLevel.CheckedChanged += new System.EventHandler(this.CIsLevel_CheckedChanged);
             // 
-            // Insert
+            // tabControl2
             // 
-            this.Insert.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
-            this.Insert.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Insert.Location = new System.Drawing.Point(109, 0);
-            this.Insert.Name = "Insert";
-            this.Insert.Size = new System.Drawing.Size(47, 28);
-            this.Insert.TabIndex = 3;
-            this.Insert.Text = "📋";
-            this.toolTip1.SetToolTip(this.Insert, "Einfügen eines Bildes ");
-            this.Insert.UseVisualStyleBackColor = false;
-            this.Insert.Click += new System.EventHandler(this.Insert_Click);
+            this.tabControl2.Controls.Add(this.tabPage5);
+            this.tabControl2.Controls.Add(this.tabPage6);
+            this.tabControl2.Controls.Add(this.tabPage7);
+            this.tabControl2.Location = new System.Drawing.Point(1, 211);
+            this.tabControl2.Margin = new System.Windows.Forms.Padding(0);
+            this.tabControl2.Name = "tabControl2";
+            this.tabControl2.SelectedIndex = 0;
+            this.tabControl2.Size = new System.Drawing.Size(133, 638);
+            this.tabControl2.TabIndex = 30;
             // 
-            // button4
+            // tabPage5
             // 
-            this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
-            this.button4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button4.Location = new System.Drawing.Point(55, 0);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(47, 28);
-            this.button4.TabIndex = 2;
-            this.button4.Text = "💾";
-            this.button4.UseVisualStyleBackColor = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.tabPage5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.tabPage5.Controls.Add(this.pictureBox1);
+            this.tabPage5.Controls.Add(this.pictureBox2);
+            this.tabPage5.Controls.Add(this.pictureBox3);
+            this.tabPage5.Controls.Add(this.pictureBox4);
+            this.tabPage5.Controls.Add(this.numericUpDown1);
+            this.tabPage5.Controls.Add(this.pictureBox6);
+            this.tabPage5.Controls.Add(this.pictureBox13);
+            this.tabPage5.Controls.Add(this.pictureBox14);
+            this.tabPage5.Controls.Add(this.pictureBox15);
+            this.tabPage5.Location = new System.Drawing.Point(4, 30);
+            this.tabPage5.Margin = new System.Windows.Forms.Padding(0);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Size = new System.Drawing.Size(125, 604);
+            this.tabPage5.TabIndex = 0;
+            this.tabPage5.Text = "1";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox1.Location = new System.Drawing.Point(3, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(124, 82);
+            this.pictureBox1.TabIndex = 25;
+            this.pictureBox1.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBox1, "Mosaiksteine kurze Seite");
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pictureBox1.MouseEnter += new System.EventHandler(this.CReferenz_Enter);
+            this.pictureBox1.MouseLeave += new System.EventHandler(this.CReferenz_Leave);
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox2.Location = new System.Drawing.Point(3, 74);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(124, 82);
+            this.pictureBox2.TabIndex = 19;
+            this.pictureBox2.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBox2, "Mosai9kstein langeseite");
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+            this.pictureBox2.MouseEnter += new System.EventHandler(this.CReferenz_Enter);
+            this.pictureBox2.MouseLeave += new System.EventHandler(this.CReferenz_Leave);
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.BackgroundImage")));
+            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox3.Location = new System.Drawing.Point(3, 148);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(124, 82);
+            this.pictureBox3.TabIndex = 20;
+            this.pictureBox3.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBox3, "Gehwegplatte 30cm");
+            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
+            this.pictureBox3.MouseEnter += new System.EventHandler(this.CReferenz_Enter);
+            this.pictureBox3.MouseLeave += new System.EventHandler(this.CReferenz_Leave);
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox4.BackgroundImage")));
+            this.pictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox4.Location = new System.Drawing.Point(3, 222);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(124, 82);
+            this.pictureBox4.TabIndex = 21;
+            this.pictureBox4.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBox4, "Bordsteinkante (oberkante) 12cm");
+            this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
+            this.pictureBox4.MouseEnter += new System.EventHandler(this.CReferenz_Enter);
+            this.pictureBox4.MouseLeave += new System.EventHandler(this.CReferenz_Leave);
             // 
             // numericUpDown1
             // 
             this.numericUpDown1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
-            this.numericUpDown1.Location = new System.Drawing.Point(1, 311);
+            this.numericUpDown1.Location = new System.Drawing.Point(6, 108);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(101, 29);
             this.numericUpDown1.TabIndex = 11;
@@ -1059,138 +1142,285 @@ namespace Anzeige
             // 
             this.pictureBox6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox6.BackgroundImage")));
             this.pictureBox6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox6.Location = new System.Drawing.Point(1, 446);
+            this.pictureBox6.Location = new System.Drawing.Point(3, 296);
             this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(99, 59);
+            this.pictureBox6.Size = new System.Drawing.Size(124, 82);
             this.pictureBox6.TabIndex = 24;
             this.pictureBox6.TabStop = false;
-            this.toolTip1.SetToolTip(this.pictureBox6, "Bekanntes Objekt auswählen um die Referenzbreite zu bestimmen.");
+            this.toolTip1.SetToolTip(this.pictureBox6, "Kanal");
             this.pictureBox6.Click += new System.EventHandler(this.pictureBox6_Click);
+            this.pictureBox6.MouseEnter += new System.EventHandler(this.CReferenz_Enter);
+            this.pictureBox6.MouseLeave += new System.EventHandler(this.CReferenz_Leave);
             // 
-            // pictureBox9
+            // pictureBox13
             // 
-            this.pictureBox9.BackgroundImage = global::Anzeige.Properties.Resources.z2;
-            this.pictureBox9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox9.Location = new System.Drawing.Point(1, 619);
-            this.pictureBox9.Name = "pictureBox9";
-            this.pictureBox9.Size = new System.Drawing.Size(99, 59);
-            this.pictureBox9.TabIndex = 23;
-            this.pictureBox9.TabStop = false;
-            this.pictureBox9.Click += new System.EventHandler(this.pictureBox9_Click);
+            this.pictureBox13.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox13.BackgroundImage")));
+            this.pictureBox13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox13.Location = new System.Drawing.Point(3, 518);
+            this.pictureBox13.Name = "pictureBox13";
+            this.pictureBox13.Size = new System.Drawing.Size(124, 82);
+            this.pictureBox13.TabIndex = 23;
+            this.pictureBox13.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBox13, "Fußgängerfurt Lücke");
+            this.pictureBox13.Click += new System.EventHandler(this.pictureBox13_Click);
+            this.pictureBox13.MouseEnter += new System.EventHandler(this.CReferenz_Enter);
+            this.pictureBox13.MouseLeave += new System.EventHandler(this.CReferenz_Leave);
             // 
-            // pictureBox8
+            // pictureBox14
             // 
-            this.pictureBox8.BackgroundImage = global::Anzeige.Properties.Resources.z1;
-            this.pictureBox8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox8.Location = new System.Drawing.Point(1, 561);
-            this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(99, 59);
-            this.pictureBox8.TabIndex = 23;
-            this.pictureBox8.TabStop = false;
-            this.pictureBox8.Click += new System.EventHandler(this.pictureBox8_Click);
+            this.pictureBox14.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox14.BackgroundImage")));
+            this.pictureBox14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox14.Location = new System.Drawing.Point(3, 444);
+            this.pictureBox14.Name = "pictureBox14";
+            this.pictureBox14.Size = new System.Drawing.Size(124, 82);
+            this.pictureBox14.TabIndex = 23;
+            this.pictureBox14.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBox14, "Fußgängerfurt weißer Strich");
+            this.pictureBox14.Click += new System.EventHandler(this.pictureBox14_Click);
+            this.pictureBox14.MouseEnter += new System.EventHandler(this.CReferenz_Enter);
+            this.pictureBox14.MouseLeave += new System.EventHandler(this.CReferenz_Leave);
             // 
-            // pictureBox7
+            // pictureBox15
             // 
-            this.pictureBox7.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox7.BackgroundImage")));
-            this.pictureBox7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox7.Location = new System.Drawing.Point(1, 505);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(99, 59);
-            this.pictureBox7.TabIndex = 23;
-            this.pictureBox7.TabStop = false;
-            this.toolTip1.SetToolTip(this.pictureBox7, "Bekanntes Objekt auswählen um die Referenzbreite zu bestimmen.");
-            this.pictureBox7.Click += new System.EventHandler(this.pictureBox7_Click);
+            this.pictureBox15.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox15.BackgroundImage")));
+            this.pictureBox15.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox15.Location = new System.Drawing.Point(3, 370);
+            this.pictureBox15.Name = "pictureBox15";
+            this.pictureBox15.Size = new System.Drawing.Size(124, 82);
+            this.pictureBox15.TabIndex = 23;
+            this.pictureBox15.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBox15, "Blindenleitstreifen");
+            this.pictureBox15.Click += new System.EventHandler(this.pictureBox15_Click);
+            this.pictureBox15.MouseEnter += new System.EventHandler(this.CReferenz_Enter);
+            this.pictureBox15.MouseLeave += new System.EventHandler(this.CReferenz_Leave);
             // 
-            // pictureBox12
+            // tabPage6
             // 
-            this.pictureBox12.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox12.BackgroundImage")));
-            this.pictureBox12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox12.Location = new System.Drawing.Point(2, 830);
-            this.pictureBox12.Name = "pictureBox12";
-            this.pictureBox12.Size = new System.Drawing.Size(99, 48);
-            this.pictureBox12.TabIndex = 22;
-            this.pictureBox12.TabStop = false;
-            this.pictureBox12.Click += new System.EventHandler(this.pictureBox11_Click);
-            // 
-            // pictureBox11
-            // 
-            this.pictureBox11.BackgroundImage = global::Anzeige.Properties.Resources._340;
-            this.pictureBox11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox11.Location = new System.Drawing.Point(1, 781);
-            this.pictureBox11.Name = "pictureBox11";
-            this.pictureBox11.Size = new System.Drawing.Size(99, 48);
-            this.pictureBox11.TabIndex = 22;
-            this.pictureBox11.TabStop = false;
-            this.pictureBox11.Click += new System.EventHandler(this.pictureBox11_Click);
-            // 
-            // pictureBox10
-            // 
-            this.pictureBox10.BackgroundImage = global::Anzeige.Properties.Resources.hl;
-            this.pictureBox10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox10.Location = new System.Drawing.Point(1, 730);
-            this.pictureBox10.Name = "pictureBox10";
-            this.pictureBox10.Size = new System.Drawing.Size(99, 53);
-            this.pictureBox10.TabIndex = 22;
-            this.pictureBox10.TabStop = false;
-            this.pictureBox10.Click += new System.EventHandler(this.pictureBox10_Click);
+            this.tabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.tabPage6.Controls.Add(this.pictureBox5);
+            this.tabPage6.Controls.Add(this.pictureBox10);
+            this.tabPage6.Controls.Add(this.pictureBox11);
+            this.tabPage6.Controls.Add(this.pictureBox12);
+            this.tabPage6.Controls.Add(this.pictureBox7);
+            this.tabPage6.Controls.Add(this.pictureBox8);
+            this.tabPage6.Controls.Add(this.pictureBox9);
+            this.tabPage6.Location = new System.Drawing.Point(4, 30);
+            this.tabPage6.Margin = new System.Windows.Forms.Padding(0);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Size = new System.Drawing.Size(125, 604);
+            this.tabPage6.TabIndex = 1;
+            this.tabPage6.Text = "2";
             // 
             // pictureBox5
             // 
             this.pictureBox5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox5.BackgroundImage")));
             this.pictureBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox5.Location = new System.Drawing.Point(1, 677);
+            this.pictureBox5.Location = new System.Drawing.Point(6, 6);
             this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(99, 53);
+            this.pictureBox5.Size = new System.Drawing.Size(124, 82);
             this.pictureBox5.TabIndex = 22;
             this.pictureBox5.TabStop = false;
-            this.toolTip1.SetToolTip(this.pictureBox5, "Bekanntes Objekt auswählen um die Referenzbreite zu bestimmen.");
-            this.pictureBox5.Click += new System.EventHandler(this.pictureBox5_Click);
+            this.toolTip1.SetToolTip(this.pictureBox5, "Kanaldekel run 73cm");
+            this.pictureBox5.Click += new System.EventHandler(this.pictureBox5_Click_1);
+            this.pictureBox5.MouseEnter += new System.EventHandler(this.CReferenz_Enter);
+            this.pictureBox5.MouseLeave += new System.EventHandler(this.CReferenz_Leave);
             // 
-            // pictureBox4
+            // pictureBox10
             // 
-            this.pictureBox4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox4.BackgroundImage")));
-            this.pictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox4.Location = new System.Drawing.Point(1, 390);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(99, 59);
-            this.pictureBox4.TabIndex = 21;
-            this.pictureBox4.TabStop = false;
-            this.toolTip1.SetToolTip(this.pictureBox4, "Bekanntes Objekt auswählen um die Referenzbreite zu bestimmen.");
-            this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
+            this.pictureBox10.BackgroundImage = global::Anzeige.Properties.Resources.hl;
+            this.pictureBox10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox10.Location = new System.Drawing.Point(6, 80);
+            this.pictureBox10.Name = "pictureBox10";
+            this.pictureBox10.Size = new System.Drawing.Size(124, 82);
+            this.pictureBox10.TabIndex = 22;
+            this.pictureBox10.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBox10, "Haltelinie");
+            this.pictureBox10.Click += new System.EventHandler(this.pictureBox10_Click);
+            this.pictureBox10.MouseEnter += new System.EventHandler(this.CReferenz_Enter);
+            this.pictureBox10.MouseLeave += new System.EventHandler(this.CReferenz_Leave);
             // 
-            // pictureBox3
+            // pictureBox11
             // 
-            this.pictureBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.BackgroundImage")));
-            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox3.Location = new System.Drawing.Point(1, 336);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(99, 59);
-            this.pictureBox3.TabIndex = 20;
-            this.pictureBox3.TabStop = false;
-            this.toolTip1.SetToolTip(this.pictureBox3, "Bekanntes Objekt auswählen um die Referenzbreite zu bestimmen.");
-            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
+            this.pictureBox11.BackgroundImage = global::Anzeige.Properties.Resources._340;
+            this.pictureBox11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox11.Location = new System.Drawing.Point(6, 154);
+            this.pictureBox11.Name = "pictureBox11";
+            this.pictureBox11.Size = new System.Drawing.Size(124, 82);
+            this.pictureBox11.TabIndex = 22;
+            this.pictureBox11.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBox11, "VZ340 breite Schutzstreifenmarkierung");
+            this.pictureBox11.Click += new System.EventHandler(this.pictureBox11_Click);
+            this.pictureBox11.MouseEnter += new System.EventHandler(this.CReferenz_Enter);
+            this.pictureBox11.MouseLeave += new System.EventHandler(this.CReferenz_Leave);
             // 
-            // pictureBox2
+            // pictureBox12
             // 
-            this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox2.Location = new System.Drawing.Point(1, 259);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(99, 59);
-            this.pictureBox2.TabIndex = 19;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+            this.pictureBox12.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox12.BackgroundImage")));
+            this.pictureBox12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox12.Location = new System.Drawing.Point(7, 228);
+            this.pictureBox12.Name = "pictureBox12";
+            this.pictureBox12.Size = new System.Drawing.Size(124, 82);
+            this.pictureBox12.TabIndex = 22;
+            this.pictureBox12.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBox12, "Straßenbahnschiene");
+            this.pictureBox12.Click += new System.EventHandler(this.pictureBox11_Click);
+            this.pictureBox12.MouseEnter += new System.EventHandler(this.CReferenz_Enter);
+            this.pictureBox12.MouseLeave += new System.EventHandler(this.CReferenz_Leave);
             // 
-            // pictureBox1
+            // pictureBox7
             // 
-            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Location = new System.Drawing.Point(1, 209);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(99, 59);
-            this.pictureBox1.TabIndex = 25;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pictureBox7.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox7.BackgroundImage")));
+            this.pictureBox7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox7.Location = new System.Drawing.Point(3, 302);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(124, 82);
+            this.pictureBox7.TabIndex = 23;
+            this.pictureBox7.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBox7, "Bekanntes Objekt auswählen um die Referenzbreite zu bestimmen.");
+            this.pictureBox7.Click += new System.EventHandler(this.pictureBox7_Click);
+            this.pictureBox7.MouseEnter += new System.EventHandler(this.CReferenz_Enter);
+            this.pictureBox7.MouseLeave += new System.EventHandler(this.CReferenz_Leave);
+            // 
+            // pictureBox8
+            // 
+            this.pictureBox8.BackgroundImage = global::Anzeige.Properties.Resources.z1;
+            this.pictureBox8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox8.Location = new System.Drawing.Point(3, 376);
+            this.pictureBox8.Name = "pictureBox8";
+            this.pictureBox8.Size = new System.Drawing.Size(124, 82);
+            this.pictureBox8.TabIndex = 23;
+            this.pictureBox8.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBox8, "Zebrastreifen weiße Fläche");
+            this.pictureBox8.Click += new System.EventHandler(this.pictureBox8_Click);
+            this.pictureBox8.MouseEnter += new System.EventHandler(this.CReferenz_Enter);
+            this.pictureBox8.MouseLeave += new System.EventHandler(this.CReferenz_Leave);
+            // 
+            // pictureBox9
+            // 
+            this.pictureBox9.BackgroundImage = global::Anzeige.Properties.Resources.z2;
+            this.pictureBox9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox9.Location = new System.Drawing.Point(3, 450);
+            this.pictureBox9.Name = "pictureBox9";
+            this.pictureBox9.Size = new System.Drawing.Size(124, 82);
+            this.pictureBox9.TabIndex = 23;
+            this.pictureBox9.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBox9, "Zebrastreifen einmal schwarz und weiß");
+            this.pictureBox9.Click += new System.EventHandler(this.pictureBox9_Click);
+            this.pictureBox9.MouseEnter += new System.EventHandler(this.CReferenz_Enter);
+            this.pictureBox9.MouseLeave += new System.EventHandler(this.CReferenz_Leave);
+            // 
+            // tabPage7
+            // 
+            this.tabPage7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.tabPage7.Controls.Add(this.pictureBox17);
+            this.tabPage7.Controls.Add(this.pictureBox16);
+            this.tabPage7.Controls.Add(this.pictureBox18);
+            this.tabPage7.Controls.Add(this.pictureBox19);
+            this.tabPage7.Location = new System.Drawing.Point(4, 30);
+            this.tabPage7.Name = "tabPage7";
+            this.tabPage7.Size = new System.Drawing.Size(125, 604);
+            this.tabPage7.TabIndex = 2;
+            this.tabPage7.Text = "3";
+            // 
+            // pictureBox17
+            // 
+            this.pictureBox17.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox17.BackgroundImage")));
+            this.pictureBox17.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox17.Location = new System.Drawing.Point(3, 226);
+            this.pictureBox17.Name = "pictureBox17";
+            this.pictureBox17.Size = new System.Drawing.Size(124, 82);
+            this.pictureBox17.TabIndex = 20;
+            this.pictureBox17.TabStop = false;
+            this.pictureBox17.Click += new System.EventHandler(this.pictureBox17_Click);
+            this.pictureBox17.MouseEnter += new System.EventHandler(this.CReferenz_Enter);
+            this.pictureBox17.MouseLeave += new System.EventHandler(this.CReferenz_Leave);
+            // 
+            // pictureBox16
+            // 
+            this.pictureBox16.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox16.BackgroundImage")));
+            this.pictureBox16.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox16.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox16.Name = "pictureBox16";
+            this.pictureBox16.Size = new System.Drawing.Size(124, 82);
+            this.pictureBox16.TabIndex = 21;
+            this.pictureBox16.TabStop = false;
+            this.pictureBox16.Click += new System.EventHandler(this.pictureBox16_Click);
+            this.pictureBox16.MouseEnter += new System.EventHandler(this.CReferenz_Enter);
+            this.pictureBox16.MouseLeave += new System.EventHandler(this.CReferenz_Leave);
+            // 
+            // pictureBox18
+            // 
+            this.pictureBox18.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox18.BackgroundImage")));
+            this.pictureBox18.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox18.Location = new System.Drawing.Point(2, 151);
+            this.pictureBox18.Name = "pictureBox18";
+            this.pictureBox18.Size = new System.Drawing.Size(124, 82);
+            this.pictureBox18.TabIndex = 19;
+            this.pictureBox18.TabStop = false;
+            this.pictureBox18.Click += new System.EventHandler(this.pictureBox18_Click);
+            this.pictureBox18.MouseEnter += new System.EventHandler(this.CReferenz_Enter);
+            this.pictureBox18.MouseLeave += new System.EventHandler(this.CReferenz_Leave);
+            // 
+            // pictureBox19
+            // 
+            this.pictureBox19.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox19.BackgroundImage")));
+            this.pictureBox19.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox19.Location = new System.Drawing.Point(2, 77);
+            this.pictureBox19.Name = "pictureBox19";
+            this.pictureBox19.Size = new System.Drawing.Size(124, 82);
+            this.pictureBox19.TabIndex = 25;
+            this.pictureBox19.TabStop = false;
+            this.pictureBox19.Click += new System.EventHandler(this.pictureBox19_Click);
+            this.pictureBox19.MouseEnter += new System.EventHandler(this.CReferenz_Enter);
+            this.pictureBox19.MouseLeave += new System.EventHandler(this.CReferenz_Leave);
+            // 
+            // CScaleMess
+            // 
+            this.CScaleMess.Location = new System.Drawing.Point(83, 32);
+            this.CScaleMess.Minimum = 10;
+            this.CScaleMess.Name = "CScaleMess";
+            this.CScaleMess.Size = new System.Drawing.Size(73, 31);
+            this.CScaleMess.TabIndex = 29;
+            this.CScaleMess.Value = 100;
+            this.CScaleMess.Scroll += new System.Windows.Forms.ScrollEventHandler(this.CScaleMess_Scroll);
+            // 
+            // button7
+            // 
+            this.button7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
+            this.button7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button7.Location = new System.Drawing.Point(117, 0);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(40, 28);
+            this.button7.TabIndex = 3;
+            this.button7.Text = "🖼";
+            this.toolTip1.SetToolTip(this.button7, "Bild in Zwischenablage");
+            this.button7.UseVisualStyleBackColor = false;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // Insert
+            // 
+            this.Insert.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
+            this.Insert.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Insert.Location = new System.Drawing.Point(79, 0);
+            this.Insert.Name = "Insert";
+            this.Insert.Size = new System.Drawing.Size(40, 28);
+            this.Insert.TabIndex = 3;
+            this.Insert.Text = "📋";
+            this.toolTip1.SetToolTip(this.Insert, "Einfügen eines Bildes ");
+            this.Insert.UseVisualStyleBackColor = false;
+            this.Insert.Click += new System.EventHandler(this.Insert_Click);
+            // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
+            this.button4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button4.Location = new System.Drawing.Point(40, 0);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(40, 28);
+            this.button4.TabIndex = 2;
+            this.button4.Text = "💾";
+            this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // RealDistance
             // 
@@ -1199,7 +1429,7 @@ namespace Anzeige
             this.RealDistance.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.RealDistance.Location = new System.Drawing.Point(1, 942);
             this.RealDistance.Name = "RealDistance";
-            this.RealDistance.Size = new System.Drawing.Size(152, 50);
+            this.RealDistance.Size = new System.Drawing.Size(133, 50);
             this.RealDistance.TabIndex = 17;
             this.RealDistance.Text = "0";
             // 
@@ -1210,7 +1440,7 @@ namespace Anzeige
             this.Distance.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Distance.Location = new System.Drawing.Point(3, 912);
             this.Distance.Name = "Distance";
-            this.Distance.Size = new System.Drawing.Size(152, 29);
+            this.Distance.Size = new System.Drawing.Size(127, 29);
             this.Distance.TabIndex = 16;
             this.Distance.Text = "0";
             this.toolTip1.SetToolTip(this.Distance, "Berechneter Abstand");
@@ -1245,7 +1475,7 @@ namespace Anzeige
             this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
             this.textBox1.Location = new System.Drawing.Point(3, 883);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(152, 29);
+            this.textBox1.Size = new System.Drawing.Size(129, 29);
             this.textBox1.TabIndex = 15;
             this.textBox1.Text = "12";
             this.toolTip1.SetToolTip(this.textBox1, "Referenz breite. Hier die bekannnte breite eintragen oder ein bekanntes objekt au" +
@@ -1344,7 +1574,7 @@ namespace Anzeige
             this.openButton.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.openButton.Location = new System.Drawing.Point(1, 0);
             this.openButton.Name = "openButton";
-            this.openButton.Size = new System.Drawing.Size(47, 28);
+            this.openButton.Size = new System.Drawing.Size(40, 28);
             this.openButton.TabIndex = 1;
             this.openButton.Text = "📂";
             this.openButton.UseVisualStyleBackColor = false;
@@ -1585,6 +1815,7 @@ namespace Anzeige
             this.CSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.CSave.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("CSave.BackgroundImage")));
             this.CSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.CSave.Controls.Add(this.CReferenzhelp);
             this.CSave.Controls.Add(this.COCRPicture);
             this.CSave.Controls.Add(this.abstandsmeter1);
             this.CSave.Controls.Add(this.panel13);
@@ -1607,10 +1838,20 @@ namespace Anzeige
             this.CSave.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CFoto_MouseUp);
             this.CSave.Resize += new System.EventHandler(this.CFotoAnzeige_Resize);
             // 
+            // CReferenzhelp
+            // 
+            this.CReferenzhelp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.CReferenzhelp.Location = new System.Drawing.Point(6, 53);
+            this.CReferenzhelp.Name = "CReferenzhelp";
+            this.CReferenzhelp.Size = new System.Drawing.Size(80, 47);
+            this.CReferenzhelp.TabIndex = 9;
+            this.CReferenzhelp.TabStop = false;
+            this.CReferenzhelp.Visible = false;
+            // 
             // COCRPicture
             // 
             this.COCRPicture.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.COCRPicture.Location = new System.Drawing.Point(3, 3);
+            this.COCRPicture.Location = new System.Drawing.Point(6, 6);
             this.COCRPicture.Name = "COCRPicture";
             this.COCRPicture.Size = new System.Drawing.Size(80, 41);
             this.COCRPicture.TabIndex = 3;
@@ -1621,7 +1862,7 @@ namespace Anzeige
             // 
             this.abstandsmeter1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("abstandsmeter1.BackgroundImage")));
             this.abstandsmeter1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.abstandsmeter1.Location = new System.Drawing.Point(145, 0);
+            this.abstandsmeter1.Location = new System.Drawing.Point(138, 6);
             this.abstandsmeter1.Name = "abstandsmeter1";
             this.abstandsmeter1.Size = new System.Drawing.Size(580, 490);
             this.abstandsmeter1.TabIndex = 8;
@@ -2061,6 +2302,7 @@ namespace Anzeige
             // CTest
             // 
             this.CTest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.CTest.Controls.Add(this.button8);
             this.CTest.Controls.Add(this.button6);
             this.CTest.Controls.Add(this.CTestText);
             this.CTest.Location = new System.Drawing.Point(4, 30);
@@ -2068,6 +2310,16 @@ namespace Anzeige
             this.CTest.Size = new System.Drawing.Size(724, 996);
             this.CTest.TabIndex = 6;
             this.CTest.Text = "Test";
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(85, 179);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(110, 65);
+            this.button8.TabIndex = 1;
+            this.button8.Text = "button6";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button6
             // 
@@ -2136,19 +2388,30 @@ namespace Anzeige
             this.CTInfo.ResumeLayout(false);
             this.CTAbstand.ResumeLayout(false);
             this.CTAbstand.PerformLayout();
+            this.tabControl2.ResumeLayout(false);
+            this.tabPage5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).EndInit();
+            this.tabPage6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
+            this.tabPage7.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox18)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).EndInit();
             this.CTAbstandSerie.ResumeLayout(false);
             this.splitContainer3.Panel1.ResumeLayout(false);
             this.splitContainer3.Panel2.ResumeLayout(false);
@@ -2162,6 +2425,7 @@ namespace Anzeige
             this.CAdressen.ResumeLayout(false);
             this.CTabPages.ResumeLayout(false);
             this.CSave.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.CReferenzhelp)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.COCRPicture)).EndInit();
             this.panel13.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
@@ -2343,6 +2607,21 @@ namespace Anzeige
         private System.Windows.Forms.ToolStripMenuItem routeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pfadWählenToolStripMenuItem;
         private System.Windows.Forms.TextBox corretion;
+        private System.Windows.Forms.TabControl tabControl2;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.PictureBox pictureBox13;
+        private System.Windows.Forms.PictureBox pictureBox14;
+        private System.Windows.Forms.PictureBox pictureBox15;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.PictureBox CReferenzhelp;
+        private System.Windows.Forms.TabPage tabPage7;
+        private System.Windows.Forms.PictureBox pictureBox19;
+        private System.Windows.Forms.PictureBox pictureBox18;
+        private System.Windows.Forms.PictureBox pictureBox17;
+        private System.Windows.Forms.PictureBox pictureBox16;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.CheckBox CIsLevel;
     }
 }
 

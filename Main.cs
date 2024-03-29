@@ -1782,13 +1782,14 @@ namespace Anzeige
                                     if (bussgeldrechner1.bussgeld != null)
                                     {
                                         Bussgeld bussgeld = bussgeldrechner1.bussgeld;
-                                        int y0 = kopie.Height - 280;
+                                        int y0 = kopie.Height - 320 + (bussgeld.Punkte>0?40:0);
                                         g.DrawString($"Parken: {(bussgeld.parken ? "ja" : "nein")}", font, brush, 10, y0); y0 += 40;
                                         g.DrawString($"Halten: {(bussgeld.halten ? "ja" : "nein")}", font, brush, 10, y0); y0 += 40;
                                         g.DrawString($"Mit Behinderung: {(bussgeld.mitbehinderung ? "ja" : "nein")}", font, brush, 10, y0); y0 += 40;
                                         g.DrawString($"Mit Gefährdung: {(bussgeld.mitgefaerdung ? "ja" : "nein")}", font, brush, 10, y0); y0 += 40;
                                         g.DrawString($"Verdopplung: {(bussgeld.faktor == 2 ? "ja" : "nein")}", font, brush, 10, y0); y0 += 40;
                                         g.DrawString($"Bußgeld: {bussgeld.Betrag:C2}", font, brush, 10, y0); y0 += 40;
+                                        if (bussgeld.Punkte > 0) g.DrawString($"Punkte: {bussgeld.PunkteText:C2}", font, brush, 10, y0); y0 += 40;
                                     }
                                 }
 
@@ -2683,6 +2684,37 @@ namespace Anzeige
 
             SetImage(temp);
         }
+        public Bitmap buildImage ()
+        {
+            DrawLines(false);
+            // Kopie der Bitmap erstellen
+            Bitmap copiedImage = new Bitmap(lineImage);
+
+            // Abstand unten links einfügen
+            using (Graphics g = Graphics.FromImage(copiedImage))
+            {
+                // Hier wird der Abstand unter Verwendung von RealDistance.Text eingefügt.
+                float distance;
+                if (float.TryParse(RealDistance.Text, out distance))
+                {
+                    // Setzen Sie hier die gewünschten Werte für X und Y ein.
+                    float x = 10; // Beispiel: 10 Pixel von links
+                    float y = copiedImage.Height - distance - 50; // Beispiel: 10 Pixel von unten abzüglich des Abstands
+
+                    // Text zeichnen
+                    Font largerFont = new Font(this.Font.FontFamily, this.Font.Size * scaleFactor, this.Font.Style);
+                    g.DrawString("Abstand: " + RealDistance.Text, largerFont, new SolidBrush(Color.White), x, y);
+
+                    // Insert Distance Control into piucture
+                    Bitmap bmp = Tools.ErstelleControlKopie(abstandsmeter1);
+                    float targetWidth = copiedImage.Width / 3f;
+                    float aspectRatio = (float)bmp.Width / bmp.Height;
+                    float targetHeight = targetWidth / aspectRatio;
+                    g.DrawImage(bmp, new Rectangle(copiedImage.Width * 2 / 3, 0, (int)targetWidth, (int)targetHeight));
+                }
+            }
+            return copiedImage;
+        }
         private void button4_Click(object sender, EventArgs e)
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
@@ -2693,33 +2725,7 @@ namespace Anzeige
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    DrawLines(false);
-                    // Kopie der Bitmap erstellen
-                    Bitmap copiedImage = new Bitmap(lineImage);
-
-                    // Abstand unten links einfügen
-                    using (Graphics g = Graphics.FromImage(copiedImage))
-                    {
-                        // Hier wird der Abstand unter Verwendung von RealDistance.Text eingefügt.
-                        float distance;
-                        if (float.TryParse(RealDistance.Text, out distance))
-                        {
-                            // Setzen Sie hier die gewünschten Werte für X und Y ein.
-                            float x = 10; // Beispiel: 10 Pixel von links
-                            float y = copiedImage.Height - distance - 50; // Beispiel: 10 Pixel von unten abzüglich des Abstands
-
-                            // Text zeichnen
-                            Font largerFont = new Font(this.Font.FontFamily, this.Font.Size * scaleFactor, this.Font.Style);
-                            g.DrawString("Abstand: " + RealDistance.Text, largerFont, new SolidBrush(Color.White), x, y);
-                            
-                            // Insert Distance Control into piucture
-                            Bitmap bmp = Tools.ErstelleControlKopie(abstandsmeter1);
-                            float targetWidth = copiedImage.Width / 3f;
-                            float aspectRatio = (float)bmp.Width / bmp.Height;
-                            float targetHeight = targetWidth / aspectRatio;
-                            g.DrawImage(bmp, new Rectangle(copiedImage.Width * 2 / 3, 0, (int)targetWidth, (int)targetHeight));
-                        }
-                    }
+                    Bitmap copiedImage = buildImage();
                     // Bitmap speichern
                     copiedImage.Save(saveFileDialog.FileName);
                 }
@@ -2764,7 +2770,7 @@ namespace Anzeige
             double distanceRef1ToAug = MeasureDistance(pref1, paug);
 
             // Berechnen Sie den Vergrößerungsfaktor basierend auf dem Strahlensatz
-            double scaleFactor = distanceRef1ToAug / distanceDist1ToAug;
+            double scaleFactor = CIsLevel.Checked ? 1 : distanceRef1ToAug / distanceDist1ToAug;
 
             // Messen Sie die Entfernung zwischen dist1 und dist2
             double distanceDist1ToDist2 = MeasureDistance(dist1, dist2);
@@ -2997,10 +3003,17 @@ namespace Anzeige
                     break;
 
                 case 3:
+                    if (tabControl1.SelectedTab == CTAbstand)
+                    {
+                        button7_Click(sender, e);
+                    }
+                    else
+                    {
                         if (CFiles.SelectedItem != null)
                         {
                             Clipboard.SetText(CFiles.SelectedItem.ToString());
                         }
+                    }
 
                     break;
 
@@ -3946,12 +3959,124 @@ namespace Anzeige
 
         private void ownwidth_TextChanged(object sender, EventArgs e)
         {
-            refwidth = Convert.ToDouble(ownwidth.Text) - Convert.ToDouble(corretion.Text);
-            textrefresh();
+            try
+            {
+                refwidth = Convert.ToDouble(ownwidth.Text) - Convert.ToDouble(corretion.Text);
+                textrefresh();
+            }
+            catch { }
         }
         private void corretion_TextChanged(object sender, EventArgs e)
         {
             ownwidth_TextChanged(sender, e);
+        }
+
+        private void pictureBox15_Click(object sender, EventArgs e)
+        {
+            refwidth = 30;
+            selectedRef = pictureBox2;
+            textrefresh();
+        }
+
+        private void pictureBox14_Click(object sender, EventArgs e)
+        {
+            refwidth = 50;
+            selectedRef = pictureBox2;
+            textrefresh();
+        }
+
+        private void pictureBox13_Click(object sender, EventArgs e)
+        {
+            refwidth = 20;
+            selectedRef = pictureBox2;
+            textrefresh();
+        }
+
+        private void pictureBox5_Click_1(object sender, EventArgs e)
+        {
+            refwidth = 50;
+            selectedRef = pictureBox10;
+            textrefresh();
+        }
+
+        private void CReferenz_Enter(object sender, EventArgs e)
+        {
+            PictureBox pb = (PictureBox)sender;
+
+            CReferenzhelp.Width = 600;
+            CReferenzhelp.Height = 300;
+            // Tooltiptext des Controls abrufen
+            string toolTipText = toolTip1.GetToolTip(pb);
+
+            // Kopie des Hintergrundbilds erstellen
+            Bitmap backgroundBitmap = new Bitmap(pb.BackgroundImage, 300, 200);
+
+            // Tooltiptext auf das Bitmap schreiben
+            using (Graphics g = Graphics.FromImage(backgroundBitmap))
+            {
+                // Hier kannst du die Schriftart, Farbe usw. anpassen
+                g.DrawString(toolTipText, new Font("Arial", 12), Brushes.Red, new PointF(10, backgroundBitmap.Height - 20));
+            }
+
+            // Bitmap als Hintergrund für CReferenzhelp setzen
+            CReferenzhelp.BackgroundImage = backgroundBitmap;
+
+            // Weitere Einstellungen für CReferenzhelp
+            CReferenzhelp.Visible = true;
+        }
+
+        private void CReferenz_Leave(object sender, EventArgs e)
+        {
+            CReferenzhelp.Visible = false;
+            PictureBox pb = (PictureBox)sender;
+            CReferenzhelp.BackgroundImage = null;
+
+        }
+
+        private void pictureBox16_Click(object sender, EventArgs e)
+        {
+            refwidth = 125;
+            selectedRef = pictureBox10;
+            textrefresh();
+        }
+
+        private void pictureBox19_Click(object sender, EventArgs e)
+        {
+            refwidth = 200;
+            selectedRef = pictureBox10;
+            textrefresh();
+        }
+
+        private void pictureBox18_Click(object sender, EventArgs e)
+        {
+            refwidth = 150;
+            selectedRef = pictureBox10;
+            textrefresh();
+        }
+
+        private void pictureBox17_Click(object sender, EventArgs e)
+        {
+            refwidth = 160;
+            selectedRef = pictureBox10;
+            textrefresh();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetImage(buildImage());
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            test dlg = new test();
+            dlg.ShowDialog();
+
+        }
+
+        private void CIsLevel_CheckedChanged(object sender, EventArgs e)
+        {
+            CIsLevel.Text = (CIsLevel.Checked ? "↔" : "↑");
+            textrefresh();
         }
     }
 }

@@ -38,6 +38,25 @@ namespace Anzeige
                 return betrag;
             }
         }
+        public int Punkte
+        {
+            get 
+            {
+                if (mitbehinderung || mitgefaerdung)
+                {
+                    if (mitbehinderung)
+                        return p2;
+                    else
+                        return p3;
+                }
+                else
+                    return 0;
+            }
+        }
+        public String PunkteText
+        {
+            get { return Punkte.ToString() + (Punkte >1? " Punkte." : " Punkt."); }
+        }
         public Bussgeld()
         {
             this.faktor = 1;
