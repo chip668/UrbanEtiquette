@@ -73,6 +73,7 @@ namespace Anzeige
             this.label4 = new System.Windows.Forms.Label();
             this.CMail = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.CColorPattern = new System.Windows.Forms.Button();
             this.panel12 = new System.Windows.Forms.Panel();
             this.panel11 = new System.Windows.Forms.Panel();
             this.panel10 = new System.Windows.Forms.Panel();
@@ -195,6 +196,7 @@ namespace Anzeige
             this.CAbout = new System.Windows.Forms.TabPage();
             this.CPolice = new System.Windows.Forms.TabPage();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.panel14 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -804,6 +806,8 @@ namespace Anzeige
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Gold;
+            this.panel1.Controls.Add(this.panel14);
+            this.panel1.Controls.Add(this.CColorPattern);
             this.panel1.Controls.Add(this.panel12);
             this.panel1.Controls.Add(this.panel11);
             this.panel1.Controls.Add(this.panel10);
@@ -823,10 +827,21 @@ namespace Anzeige
             this.toolTip1.SetToolTip(this.panel1, "Bitte Farbe des KFZ wählen");
             this.panel1.Click += new System.EventHandler(this.panel_ClickBack);
             // 
+            // CColorPattern
+            // 
+            this.CColorPattern.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.CColorPattern.Location = new System.Drawing.Point(390, 0);
+            this.CColorPattern.Name = "CColorPattern";
+            this.CColorPattern.Size = new System.Drawing.Size(42, 35);
+            this.CColorPattern.TabIndex = 1;
+            this.CColorPattern.Text = "✎";
+            this.CColorPattern.UseVisualStyleBackColor = true;
+            this.CColorPattern.Click += new System.EventHandler(this.CColorPattern_Click);
+            // 
             // panel12
             // 
             this.panel12.BackColor = System.Drawing.Color.Aqua;
-            this.panel12.Location = new System.Drawing.Point(294, 1);
+            this.panel12.Location = new System.Drawing.Point(324, 1);
             this.panel12.Name = "panel12";
             this.panel12.Size = new System.Drawing.Size(28, 32);
             this.panel12.TabIndex = 0;
@@ -837,7 +852,7 @@ namespace Anzeige
             // panel11
             // 
             this.panel11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.panel11.Location = new System.Drawing.Point(265, 1);
+            this.panel11.Location = new System.Drawing.Point(295, 1);
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(28, 32);
             this.panel11.TabIndex = 0;
@@ -848,7 +863,7 @@ namespace Anzeige
             // panel10
             // 
             this.panel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.panel10.Location = new System.Drawing.Point(236, 1);
+            this.panel10.Location = new System.Drawing.Point(266, 1);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(28, 32);
             this.panel10.TabIndex = 0;
@@ -2360,6 +2375,16 @@ namespace Anzeige
             this.CPolice.TabIndex = 8;
             this.CPolice.Text = "Polizei";
             // 
+            // panel14
+            // 
+            this.panel14.BackColor = System.Drawing.Color.Yellow;
+            this.panel14.Location = new System.Drawing.Point(236, 1);
+            this.panel14.Name = "panel14";
+            this.panel14.Size = new System.Drawing.Size(28, 32);
+            this.panel14.TabIndex = 2;
+            this.panel14.Tag = "Gelb";
+            this.toolTip1.SetToolTip(this.panel14, "Bitte Farbe des KFZ wählen");
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -2622,6 +2647,8 @@ namespace Anzeige
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.CheckBox CIsLevel;
+        private System.Windows.Forms.Button CColorPattern;
+        private System.Windows.Forms.Panel panel14;
     }
 }
 

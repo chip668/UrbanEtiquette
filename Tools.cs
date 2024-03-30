@@ -210,6 +210,16 @@ namespace Anzeige
 
             ShellExecute(IntPtr.Zero, "open", url, "", "", 5);
         }
+        public static Bitmap ResizeBitmap(Bitmap originalBitmap, int newWidth, int newHeight)
+        {
+            Bitmap resizedBitmap = new Bitmap(newWidth, newHeight);
+            using (Graphics g = Graphics.FromImage(resizedBitmap))
+            {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.DrawImage(originalBitmap, 0, 0, newWidth, newHeight);
+            }
+            return resizedBitmap;
+        }
 
     }
 }

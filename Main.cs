@@ -926,6 +926,7 @@ namespace Anzeige
             {
                 refcolor.Add(i.BackColor);
             }
+            ColorClassifier.LoadFromFile(Colortraining.colorfile);
         }
         /// <summary>
         /// Wählt aus der Bildeliste das aktuelle Bild und 
@@ -1697,6 +1698,42 @@ namespace Anzeige
         {
 
         }
+        public Point ZoomTransform (Point pntctl, Control ctl, Bitmap bmp)
+        {
+            Point result = new Point(pntctl.X, pntctl.Y);
+            int dxc = ctl.Width;
+            int dyc = ctl.Height;
+            int dxb = bmp.Width;
+            int dyb = bmp.Height;
+            double qx = (Double)dxb/dxc;
+            double qy = (Double)dyb/dyc;
+            int wx = 0;
+            int wy = 0;
+            int dx = 0;
+            int dy = 0;
+            int px = 0;
+            int py = 0;
+
+
+            if (qx>qy)
+            {
+                wx = (int)(qx * dxc);
+                wy = (int)(qx * dyc);
+                dy = (wy - dyb) / 2;
+            }
+            else
+            {
+                wx = (int)(qy * dxc);
+                wy = (int)(qy * dyc);
+                dx = (wx - dxb) / 2;
+            }
+            px = (int)(qx * pntctl.X) - dx;
+            py = (int)(qx * pntctl.Y) - dy;
+            px = Math.Min(dxb, Math.Max(0, px));
+            py = Math.Min(dyb, Math.Max(0, py));
+            result = new Point(px, py);
+            return result;
+        }
         private void CFoto_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -1707,12 +1744,25 @@ namespace Anzeige
             {
                 if (ausschnitt != null)
                 {
-                    Point p = Transform(e.Location, CSave.ClientRectangle, ausschnitt.Size);
+                    Point p = ZoomTransform(e.Location, CSave, (Bitmap)CSave.BackgroundImage);
                     Bitmap b = (Bitmap)CSave.BackgroundImage;
                     Color c = b.GetPixel(p.X, p.Y);
-                    Color c2 = Color.Gold;
-                    panel1.BackColor = c;
-                    c2 = ColorHelper.FindClosestColor(refcolor, c);
+                    panel1.BackColor = ColorClassifier.Classify(c);
+                    // Zeichnen eines Kreises in das Bitmap b an Position p
+                    /*
+                    using (Graphics g = Graphics.FromImage(b))
+                    {
+                        // Annahme: Der Durchmesser des Kreises beträgt 20 Pixel.
+                        int diameter = 6;
+                        int x = p.X - diameter / 2;
+                        int y = p.Y - diameter / 2;
+
+                        // Zeichnen eines Kreises mit zentriertem Mittelpunkt an der Position p
+                        g.DrawEllipse(Pens.Red, x, y, diameter, diameter);
+                    }
+                    CSave.BackgroundImage = b;
+                    CSave.Refresh();
+                    */
                 }
                 else
                 {
@@ -4077,6 +4127,18 @@ namespace Anzeige
         {
             CIsLevel.Text = (CIsLevel.Checked ? "↔" : "↑");
             textrefresh();
+        }
+
+        private void CColorPattern_Click(object sender, EventArgs e)
+        {
+            Colortraining dlg = new Colortraining();
+            if (CSave.BackgroundImage != null)
+                dlg.CReferenzColor.BackgroundImage = CSave.BackgroundImage;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+
+            }
+
         }
     }
 }
