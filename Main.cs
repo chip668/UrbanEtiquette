@@ -18,7 +18,25 @@ namespace Anzeige
 
     public partial class Main : Form
     {
+        private Dictionary<String, List<PixelatedArea>> pixelData = new Dictionary<String, List<PixelatedArea>>();
+        // int cntpixel = 0;
+        private int cntpixel
+        {
+            get 
+            {
+                int result = 0;
+                foreach(string k in pixelData.Keys)
+                {
+                    List<PixelatedArea> pa = pixelData[k];
+                    result += pa.Count;
+                }
+                return result;
+            }
+        }
+
+
         private List<PointF> pathPoints = new List<PointF>();
+        private String CurrentFile { get; set; }
         private double minLongitude = double.MaxValue;
         private double maxLongitude = double.MinValue;
         private double minLatitude = double.MaxValue;
@@ -228,7 +246,6 @@ namespace Anzeige
         int y0 = 0;
         int w = 0;
         int h = 0;
-        int cntpixel = 0;
         // todo : Segmentierung Kennzeichen nicht aktiv
         private PictureBox _selectedRef;
         public  PictureBox selectedRef
@@ -296,10 +313,12 @@ namespace Anzeige
                 string[] fileLines = value.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (string fileValue in fileLines)
                 {
-                    CFiles.Items.Add(fileValue.Trim());
+                    AddFilename(fileValue.Trim());
                 }
             }
         }
+
+
         /// <summary>
         /// Originaldateien, da die Filesliste modifiziert werden kann, werden die Originale für die Rückstellung benötigt
         /// </summary>
@@ -321,7 +340,7 @@ namespace Anzeige
                 string[] fileLines = value.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (string fileValue in fileLines)
                 {
-                    CFiles.Items.Add(fileValue.Trim());
+                    AddFilename(fileValue.Trim());
                 }
             }
         }
@@ -938,10 +957,11 @@ namespace Anzeige
         /// <param name="fileName"></param>
         private void SelectFile(string fileName)
         {
+            CurrentFile = fileName;
             PhotoMetadataExtractor data = new PhotoMetadataExtractor(fileName);
             Datum = data.Date;
             Zeit = data.Time;
-            try
+            try 
             {
                 original = (Bitmap)Bitmap.FromFile(fileName);
                 ausschnitt = original;
@@ -983,6 +1003,7 @@ namespace Anzeige
                 }
                 catch (Exception ex)
                 {
+                    Tools.DummyRef(ex);
                 }
             }
             else
@@ -1078,47 +1099,64 @@ namespace Anzeige
                 }
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bitmap"></param>
+        /// <param name="filename"></param>
+        private void PixelOutRegions(Bitmap bitmap, String filename="")
+        {
+            if (filename == "")
+                filename = CurrentFile;
+            List<PixelatedArea> rects = GetRectangles(filename);
+            foreach (PixelatedArea rcl in rects)
+                PixelOutRegion(bitmap, rcl);
+        }
+
         /// <summary>
         /// verpöixelt eine Region im angegebenen Bitmap
         /// </summary>
         /// <param name="bitmap"></param>
         /// <param name="region"></param>
-        private void PixelOutRegion(Bitmap bitmap, Rectangle region)
+        private void PixelOutRegion(Bitmap bitmap, PixelatedArea region)
         {
-            int raster = (int)CRaster.Value;
-
-            // Stelle sicher, dass die Region innerhalb der Bitmap-Grenzen liegt
-            region.Intersect(new Rectangle(0, 0, bitmap.Width, bitmap.Height));
-            // Verpixeln der Region
-            for (int y = region.Top; y < region.Bottom; y += raster)
+            int raster = (int)CRaster.Value; // onlys if inside bitmap
+            try
             {
-                for (int x = region.Left; x < region.Right; x += raster)
+                region.Area.Intersect(new Rectangle(0, 0, bitmap.Width, bitmap.Height));
+                for (int y = region.Area.Top; y < region.Area.Bottom; y += raster)
                 {
-                    int r = 0;
-                    int g = 0;
-                    int b = 0;
-                    int n = raster * raster;
-                    Color c;
-                    for (int zx = 0; zx < raster; zx++)
+                    for (int x = region.Area.Left; x < region.Area.Right; x += raster)
                     {
-                        for (int zy = 0; zy < raster; zy++)
+                        int r = 0;
+                        int g = 0;
+                        int b = 0;
+                        int n = raster * raster;
+                        Color c;
+                        for (int zx = 0; zx < raster; zx++)
                         {
-                            c = bitmap.GetPixel(x + zx, y + zy);
-                            r += c.R;
-                            g += c.G;
-                            b += c.B;
+                            for (int zy = 0; zy < raster; zy++)
+                            {
+                                c = bitmap.GetPixel(x + zx, y + zy);
+                                r += c.R;
+                                g += c.G;
+                                b += c.B;
+                            }
                         }
-                    }
-                    c = Color.FromArgb(r / n, g / n, b / n);
-                    for (int zx = 0; zx < raster; zx++)
-                    {
-                        for (int zy = 0; zy < raster; zy++)
+                        c = Color.FromArgb(r / n, g / n, b / n);
+                        for (int zx = 0; zx < raster; zx++)
                         {
-                            bitmap.SetPixel(x + zx, y + zy, c);
+                            for (int zy = 0; zy < raster; zy++)
+                            {
+                                bitmap.SetPixel(x + zx, y + zy, c);
+                            }
                         }
                     }
                 }
             }
+            catch 
+            { }
         }
         /// <summary>
         /// Transformation zwischen Bilddarstellung background zoom und bitmap original
@@ -1422,6 +1460,7 @@ namespace Anzeige
             }
             catch (Exception ex)
             {
+                Tools.DummyRef(ex);
                 return new Bitmap (0, 0);
             }
         }
@@ -1444,25 +1483,17 @@ namespace Anzeige
         {
             using (Bitmap sourceBitmap = new Bitmap(sourceFilePath))
             {
-                // Berechne die neuen Dimensionen nach der Skalierung
+                PixelOutRegions(sourceBitmap, sourceFilePath);
                 int newWidth = (int)(sourceBitmap.Width * scale);
                 int newHeight = (int)(sourceBitmap.Height * scale);
-
-                // Erstelle ein neues Bitmap mit den neuen Dimensionen
                 using (Bitmap scaledBitmap = new Bitmap(newWidth, newHeight))
                 {
-                    // Erstelle einen Grafikobjekt zum Zeichnen im neuen Bitmap
                     using (Graphics graphics = Graphics.FromImage(scaledBitmap))
                     {
-                        // Einstellungen für das resampling (Bildabtastung)
                         graphics.SmoothingMode = SmoothingMode.HighSpeed;
                         graphics.InterpolationMode = InterpolationMode.Low;
-
-                        // Skaliere das Bild auf das neue Bitmap
                         graphics.DrawImage(sourceBitmap, 0, 0, newWidth, newHeight);
                     }
-
-                    // Speichere das skalierte Bitmap im Zielverzeichnis
                     scaledBitmap.Save(destinationFilePath, ImageFormat.Jpeg);
                 }
             }
@@ -1851,7 +1882,9 @@ namespace Anzeige
                             }
                             else
                             {
-                                PixelOutRegion(ausschnitt, bmpAusschnitt);
+                                List<PixelatedArea> pixelrects = GetRectangles(CurrentFile);
+                                pixelrects.Add(new PixelatedArea(bmpAusschnitt, ausschnitt, CurrentFile));
+                                PixelOutRegions(ausschnitt, CurrentFile);
                                 CSave.BackgroundImage = ausschnitt;
                                 CSave.Refresh();
                                 Bitmap tempausschnitt2 = CropRectangleFromBitmap(ausschnitt, bmpAusschnitt);
@@ -1920,6 +1953,7 @@ namespace Anzeige
             }
             catch (Exception ex)
             {
+                Tools.DummyRef(ex);
             }
         }
         public Bitmap CropRectangleFromBitmap_x(Bitmap sourceBitmap, Rectangle sourceRectangle)
@@ -1946,6 +1980,8 @@ namespace Anzeige
         private void CFiles_DoubleClick(object sender, EventArgs e)
         {
             SelectFile(CFiles.Text);
+            PixelOutRegions(ausschnitt, CurrentFile);
+            CSave.Refresh();
         }
         private void CKennzeichen_TextChanged(object sender, EventArgs e)
         {
@@ -1994,6 +2030,7 @@ namespace Anzeige
             }
             catch (Exception ex)
             {
+                Tools.DummyRef(ex);
             }
         }
         private void CFotoAnzeige_Click(object sender, EventArgs e)
@@ -2017,7 +2054,6 @@ namespace Anzeige
         {
             setSelectedLineTip((Control)sender);
             ausschnittTemp = "";
-            cntpixel = 0;
             CAusschnitt.Hide();
         }
         private void CTabPages_SelectedIndexChanged(object sender, EventArgs e)
@@ -2350,6 +2386,7 @@ namespace Anzeige
                     }
                     catch (Exception e)
                     {
+                        Tools.DummyRef(e);
                     }
                 }
 
@@ -2395,6 +2432,7 @@ namespace Anzeige
                 }
                 catch (Exception e)
                 {
+                    Tools.DummyRef(e);
                 }
                 i++;
             }
@@ -2425,6 +2463,7 @@ namespace Anzeige
                     }
                     catch (Exception e)
                     {
+                        Tools.DummyRef(e);
                     }
                 }
             }
@@ -3186,6 +3225,25 @@ namespace Anzeige
         {
             CPixeln.Checked = true;
         }
+        private List<PixelatedArea> GetRectangles(String fileName)
+        {
+            List<PixelatedArea> result;
+            if (!pixelData.ContainsKey(fileName))
+            {
+                result = new List<PixelatedArea>();
+                pixelData[fileName] = result;
+            }
+            else
+            {
+                result = pixelData[fileName];
+            }
+            return result;
+        }
+        private void AddFilename(String fileName)
+        {
+            SelectFile(fileName);
+            CFiles.Items.Add(fileName);
+        }
         private void smallToolbox1_ClickTool(object sender, SmallToolbox.ClickToolEventArgs e)
         {
             switch (e.ButtonIndex)
@@ -3208,8 +3266,8 @@ namespace Anzeige
                         CLogo.BackgroundImage = null;
                         CFreeText.Text = "";
                         panel1.BackColor = Color.Gold;
-                        cntpixel = 0;
                         CPixeln.Checked = true;
+                        pixelData = new Dictionary<String, List<PixelatedArea>>();
                         Init();
                     }
                     break;
@@ -3235,8 +3293,7 @@ namespace Anzeige
                             CFiles.Items.Clear();
                             foreach (string fileName in openFileDialog.FileNames)
                             {
-                                SelectFile(fileName);
-                                CFiles.Items.Add(fileName);
+                                AddFilename(fileName);
                             }
                         }
                         CAnzeigeText.Text = Message;
@@ -3322,6 +3379,7 @@ namespace Anzeige
                             }
                             catch (Exception ex)
                             {
+                                Tools.DummyRef(ex);
                             }
                         }
 
@@ -3351,8 +3409,7 @@ namespace Anzeige
                         String s = SaveClipboardImageAsTemporaryFile();
                         if (s != null)
                         {
-                            SelectFile(s);
-                            CFiles.Items.Add(s);
+                            AddFilename(s);
                         }
                         CAnzeigeText.Text = Message;
                         this.Refresh();
@@ -3619,8 +3676,8 @@ namespace Anzeige
             CLogo.BackgroundImage = null;
             CFreeText.Text = "";
             panel1.BackColor = Color.Gold;
-            cntpixel = 0;
             CPixeln.Checked = true;
+            pixelData = new Dictionary<String, List<PixelatedArea>>();
             Init();
         }
         /// <summary>
@@ -3649,8 +3706,7 @@ namespace Anzeige
                 CFiles.Items.Clear();
                 foreach (string fileName in openFileDialog.FileNames)
                 {
-                    SelectFile(fileName);
-                    CFiles.Items.Add(fileName);
+                    AddFilename(fileName);
                 }
             }
             CAnzeigeText.Text = Message;
@@ -3723,6 +3779,7 @@ namespace Anzeige
                 }
                 catch (Exception ex)
                 {
+                    Tools.DummyRef(ex);
                 }
             }
         }
@@ -3747,8 +3804,7 @@ namespace Anzeige
             String s = SaveClipboardImageAsTemporaryFile();
             if (s != null)
             {
-                SelectFile(s);
-                CFiles.Items.Add(s);
+                AddFilename(s);
             }
             CAnzeigeText.Text = Message;
             this.Refresh();
@@ -4132,13 +4188,136 @@ namespace Anzeige
         private void CColorPattern_Click(object sender, EventArgs e)
         {
             Colortraining dlg = new Colortraining();
-            if (CSave.BackgroundImage != null)
-                dlg.CReferenzColor.BackgroundImage = CSave.BackgroundImage;
+            if (CAusschnitt.BackgroundImage != null)
+                dlg.Original = (Bitmap)CAusschnitt.BackgroundImage;
+            else if (CSave.BackgroundImage != null)
+                dlg.Original = (Bitmap)CSave.BackgroundImage;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
 
             }
 
         }
+
+        private void Numberplate_Click_old(object sender, EventArgs e)
+        {
+            Bitmap save = (Bitmap)CSave.BackgroundImage;
+            // Numberplate nbp = new Numberplate((Bitmap)CSave.BackgroundImage);
+            // spiralLoop(nbp.scaledBitmap);
+            // CSave.BackgroundImage = nbp.scaledBitmap;
+            // CSave.Refresh();
+            Rectangle rcl = spiralLoop((Bitmap)CSave.BackgroundImage);
+            // CSave.BackgroundImage = save;
+        }
+        public Rectangle spiralLoop(Bitmap original, int d = 5)
+        {
+            int m = int.MinValue;
+            Bitmap bmp = new Bitmap(original, (int)(original.Width), (int)(original.Height));
+            int n = (bmp.Width * bmp.Height) / (d*d);
+            int i = 0;
+            int x = bmp.Width / 2;
+            int y = bmp.Height * 2 / 3;
+            int l = x;
+            int r = x;
+            int o = y;
+            int u = y;
+            int dx = d;
+            int dy = 0;
+            int xmin = int.MaxValue;
+            int xmax = int.MinValue;
+            int ymin = int.MaxValue;
+            int ymax = int.MinValue;
+
+            while ((i < n-1) || (m > 40))
+            {
+                if ((0 <= x && x < bmp.Width) && (bmp.Height/3 <= y && y < bmp.Height))
+                {
+                    Color c = bmp.GetPixel(x, y);
+                    if (c.B > 128 && c.R < 128 && c.G <160)
+                    {
+                        Color cto = ColorClassifier.Classify(c);
+
+                        if (cto == ColorClassifier.plateblue)
+                        {
+                            // bmp.SetPixel(x, y, Color.Red);
+                            // CSave.BackgroundImage = bmp;
+                            // CSave.Refresh();
+                            xmin = Math.Min(xmin, x);
+                            xmax = Math.Max(xmax, x);
+                            ymin = Math.Min(ymin, y);
+                            ymax = Math.Max(ymax, y);
+                            m = 0;
+                        }
+                    }
+                    i++;
+                }
+                if (x + dx > r)
+                {
+                    x = x + dx;
+                    r = x;
+                    dx = 0;
+                    dy = -d;
+                }
+                else if (y + dy < o)
+                {
+                    y = y + dy;
+                    o = y;
+                    dx = -d;
+                    dy = 0;
+                }
+                else if (x + dx < l)
+                {
+                    x = x + dx;
+                    l = x;
+                    dx = 0;
+                    dy = d;
+                }
+                else if (y + dy > u)
+                {
+                    y = y + dy;
+                    u = y;
+                    dx = d;
+                    dy = 0;
+                }
+                else
+                {
+                    x += dx;
+                    y += dy;
+                }
+
+                if ((r >= bmp.Width && l <= 0 && u >= bmp.Height && o < 0))
+                {
+                    return new Rectangle(0,0,0,0);
+                }
+                m++;
+            }
+            return new Rectangle(xmin, ymin, xmax-xmin, ymax-ymin);
+        }
+        private void Numberplate_Click(object sender, EventArgs e)
+        {
+            Rectangle rcl;
+            Bitmap save = (Bitmap)CSave.BackgroundImage;
+            if (ausschnitt==null)
+                rcl = spiralLoop(save);
+            else
+                rcl = spiralLoop((Bitmap)CAusschnitt.BackgroundImage);
+
+            if (rcl.Width==0 && rcl.Height==0)
+            {
+                // Erstelle eine Graphics-Instanz, um auf das Bitmap zu zeichnen
+                using (Graphics g = Graphics.FromImage(save))
+                {
+                    // Fülle das Rechteck auf dem Bitmap mit der gewünschten Farbe
+                    using (Brush brush = new SolidBrush(Color.FromArgb(128, Color.Blue))) // Hier kannst du die Farbe und Deckkraft anpassen
+                    {
+                        g.FillRectangle(brush, rcl);
+                    }
+                }
+            }
+            // Aktualisiere das Hintergrundbild des Controls mit dem gezeichneten Rechteck
+            CSave.BackgroundImage = save;
+            CSave.Refresh();
+        }
+
     }
 }

@@ -11,13 +11,36 @@ namespace Anzeige
     [Serializable]
     public class ColorClassifier
     {
+        private static Color _plateblue = Color.FromArgb(0, 90, 140);
+        public static Color plateblue
+        {
+            get
+            {
+                return _plateblue;
+            }
+        }
+        private static Boolean _kennzeichen = false;
+        public static Boolean kennzeichen 
+        { 
+            get 
+            { 
+                return _kennzeichen; 
+            }
+            set 
+            { 
+                _kennzeichen = value; 
+            } 
+        }
         private static Dictionary<Color, Color> _weights = new Dictionary<Color, Color>();
+        public static Dictionary<Color, Color> weights 
+        {
+            get { return _weights; }
+        }
         public static void Train(Color output, Color input)
         {
             if (_weights.Keys.Contains (input))
                 _weights.Remove(input);
             _weights.Add(input, output);
-
         }
 
         // Klassifiziere eine Farbe
@@ -33,6 +56,40 @@ namespace Anzeige
                 {
                     min = d;
                     result = _weights[c];
+                    if (kennzeichen)
+                    {
+                        if (result == plateblue)
+                        {
+
+                        }
+                        else if (result == Color.White)
+                        {
+
+                        }
+                        else if (result == Color.Black)
+                        {
+
+                        }
+                        else if (result == Color.Green)
+                        {
+                            result = plateblue;
+                            // result = Color.White;
+                        }
+                        else if (result == Color.Navy)
+                        {
+                            // result = plateblue;
+                            result = plateblue;
+                        }
+                        else if ((result == Color.Yellow) || (result == Color.Silver))
+                        {
+                            result = Color.White;
+                        }
+                        else 
+                        {
+                            result = Color.Gold;
+                            // result = Color.Black;
+                        }
+                    }
                 }
             }
             return result;
@@ -45,9 +102,10 @@ namespace Anzeige
                          Math.Pow(color1.G - color2.G, 2) +
                          Math.Pow(color1.B - color2.B, 2);
 
-            return Math.Sqrt(sum);
+            // return Math.Sqrt(sum);
+            return sum;
         }
-        
+
         // Speichert die ColorClassifier-Instanz in eine Datei
         public static void SaveToFile(string filePath)
         {
@@ -62,7 +120,7 @@ namespace Anzeige
             }
             catch (Exception ex)
             {
-               //  Console.WriteLine("Fehler beim Speichern des ColorClassifier: " + ex.Message);
+                Tools.DummyRef(ex);
             }
         }
         public static void LoadFromFile()
@@ -84,7 +142,7 @@ namespace Anzeige
             }
             catch (Exception ex)
             {
-                // Fehlerbehandlung, z.B. Ausgabe der Fehlermeldung
+                Tools.DummyRef(ex);
             }
         }
     }

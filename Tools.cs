@@ -220,6 +220,29 @@ namespace Anzeige
             }
             return resizedBitmap;
         }
+        public static Color InvertColor (Color c)
+        {
+            int r = 255 - c.R;
+            int g = 255 - c.G;
+            int b = 255 - c.B;
+            Color result = Color.FromArgb(c.A, r, g, b);
 
+            return result;
+        }
+
+        public static Color ShadeColor(Color c, double shade)
+        {
+            double f = Math.Abs(shade);
+            int r = (int)(f * c.R);
+            int g = (int)(f * c.G);
+            int b = (int)(f * c.B);
+            Color result = Color.FromArgb(c.A, r, g, b);
+            return result;
+        }
+
+        public static void DummyRef(Object e)
+        {
+            Object r = e;
+        }
     }
 }
