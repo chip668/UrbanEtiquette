@@ -34,8 +34,8 @@ namespace Anzeige
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.CTAnzeige = new System.Windows.Forms.TabPage();
+            this.CTrainOCR = new System.Windows.Forms.CheckBox();
             this.smallToolbox5 = new Anzeige.SmallToolbox();
-            this.Numberplate = new System.Windows.Forms.Button();
             this.smallToolbox2 = new Anzeige.SmallToolbox();
             this.CVerstossaus = new System.Windows.Forms.ListBox();
             this.smallToolbox4 = new Anzeige.SmallToolbox();
@@ -155,6 +155,7 @@ namespace Anzeige
             this.CDataList = new System.Windows.Forms.ListBox();
             this.CTabPages = new System.Windows.Forms.TabControl();
             this.CSave = new System.Windows.Forms.TabPage();
+            this.CRecognized = new System.Windows.Forms.Label();
             this.CReferenzhelp = new System.Windows.Forms.PictureBox();
             this.COCRPicture = new System.Windows.Forms.PictureBox();
             this.abstandsmeter1 = new Anzeige.Abstandsmeter();
@@ -298,8 +299,8 @@ namespace Anzeige
             // CTAnzeige
             // 
             this.CTAnzeige.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.CTAnzeige.Controls.Add(this.CTrainOCR);
             this.CTAnzeige.Controls.Add(this.smallToolbox5);
-            this.CTAnzeige.Controls.Add(this.Numberplate);
             this.CTAnzeige.Controls.Add(this.smallToolbox2);
             this.CTAnzeige.Controls.Add(this.CVerstossaus);
             this.CTAnzeige.Controls.Add(this.smallToolbox4);
@@ -348,6 +349,18 @@ namespace Anzeige
             this.CTAnzeige.Text = "Anzeige";
             this.CTAnzeige.Click += new System.EventHandler(this.CTAnzeige_Click);
             // 
+            // CTrainOCR
+            // 
+            this.CTrainOCR.AutoSize = true;
+            this.CTrainOCR.Checked = true;
+            this.CTrainOCR.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CTrainOCR.Location = new System.Drawing.Point(370, 688);
+            this.CTrainOCR.Name = "CTrainOCR";
+            this.CTrainOCR.Size = new System.Drawing.Size(51, 25);
+            this.CTrainOCR.TabIndex = 22;
+            this.CTrainOCR.Text = "📚";
+            this.CTrainOCR.UseVisualStyleBackColor = true;
+            // 
             // smallToolbox5
             // 
             this.smallToolbox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
@@ -362,17 +375,6 @@ namespace Anzeige
             this.smallToolbox5.ClickTool += new System.EventHandler<Anzeige.SmallToolbox.ClickToolEventArgs>(this.smallToolbox5_ClickTool);
             this.smallToolbox5.EnterTool += new System.EventHandler<Anzeige.SmallToolbox.ClickToolEventArgs>(this.smallToolbox_EnterTool);
             this.smallToolbox5.LeaveTool += new System.EventHandler<Anzeige.SmallToolbox.ClickToolEventArgs>(this.smallToolbox_LeaveTool);
-            // 
-            // Numberplate
-            // 
-            this.Numberplate.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Numberplate.Location = new System.Drawing.Point(387, 678);
-            this.Numberplate.Name = "Numberplate";
-            this.Numberplate.Size = new System.Drawing.Size(42, 35);
-            this.Numberplate.TabIndex = 1;
-            this.Numberplate.Text = "🚗";
-            this.Numberplate.UseVisualStyleBackColor = true;
-            this.Numberplate.Click += new System.EventHandler(this.Numberplate_Click);
             // 
             // smallToolbox2
             // 
@@ -662,7 +664,7 @@ namespace Anzeige
             this.CKennzeichen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.CKennzeichen.Location = new System.Drawing.Point(103, 684);
             this.CKennzeichen.Name = "CKennzeichen";
-            this.CKennzeichen.Size = new System.Drawing.Size(283, 29);
+            this.CKennzeichen.Size = new System.Drawing.Size(261, 29);
             this.CKennzeichen.TabIndex = 15;
             this.CKennzeichen.TextChanged += new System.EventHandler(this.CKennzeichen_TextChanged);
             // 
@@ -749,9 +751,9 @@ namespace Anzeige
             this.CFiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.CFiles.FormattingEnabled = true;
             this.CFiles.ItemHeight = 21;
-            this.CFiles.Location = new System.Drawing.Point(131, 713);
+            this.CFiles.Location = new System.Drawing.Point(131, 720);
             this.CFiles.Name = "CFiles";
-            this.CFiles.Size = new System.Drawing.Size(298, 130);
+            this.CFiles.Size = new System.Drawing.Size(298, 109);
             this.CFiles.TabIndex = 16;
             this.CFiles.TabStop = false;
             this.toolTip1.SetToolTip(this.CFiles, "Fotos als Beweismittel");
@@ -852,13 +854,14 @@ namespace Anzeige
             // 
             // CColorPattern
             // 
+            this.CColorPattern.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.CColorPattern.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.CColorPattern.Location = new System.Drawing.Point(390, 0);
             this.CColorPattern.Name = "CColorPattern";
             this.CColorPattern.Size = new System.Drawing.Size(42, 35);
             this.CColorPattern.TabIndex = 1;
             this.CColorPattern.Text = "✎";
-            this.CColorPattern.UseVisualStyleBackColor = true;
+            this.CColorPattern.UseVisualStyleBackColor = false;
             this.CColorPattern.Click += new System.EventHandler(this.CColorPattern_Click);
             // 
             // panel12
@@ -1853,6 +1856,7 @@ namespace Anzeige
             this.CSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.CSave.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("CSave.BackgroundImage")));
             this.CSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.CSave.Controls.Add(this.CRecognized);
             this.CSave.Controls.Add(this.CReferenzhelp);
             this.CSave.Controls.Add(this.COCRPicture);
             this.CSave.Controls.Add(this.abstandsmeter1);
@@ -1875,6 +1879,19 @@ namespace Anzeige
             this.CSave.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CFoto_MouseMove);
             this.CSave.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CFoto_MouseUp);
             this.CSave.Resize += new System.EventHandler(this.CFotoAnzeige_Resize);
+            // 
+            // CRecognized
+            // 
+            this.CRecognized.AutoSize = true;
+            this.CRecognized.BackColor = System.Drawing.Color.Transparent;
+            this.CRecognized.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.CRecognized.Font = new System.Drawing.Font("Segoe UI", 72F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.CRecognized.Location = new System.Drawing.Point(3, 865);
+            this.CRecognized.Name = "CRecognized";
+            this.CRecognized.Size = new System.Drawing.Size(75, 128);
+            this.CRecognized.TabIndex = 10;
+            this.CRecognized.Text = ".";
+            this.CRecognized.Visible = false;
             // 
             // CReferenzhelp
             // 
@@ -2463,6 +2480,7 @@ namespace Anzeige
             this.CAdressen.ResumeLayout(false);
             this.CTabPages.ResumeLayout(false);
             this.CSave.ResumeLayout(false);
+            this.CSave.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CReferenzhelp)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.COCRPicture)).EndInit();
             this.panel13.ResumeLayout(false);
@@ -2487,44 +2505,12 @@ namespace Anzeige
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button CLoadPic;
         private System.Windows.Forms.TabPage CSave;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel12;
-        private System.Windows.Forms.Panel panel11;
-        private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.TextBox CMail;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox CHN;
-        private System.Windows.Forms.TextBox CStrasse;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button Ctoall;
         private System.Windows.Forms.Button CToo;
         private System.Windows.Forms.Button CBackall;
         private System.Windows.Forms.Button CBack;
-        private System.Windows.Forms.ListBox CVerstoss;
-        private System.Windows.Forms.ListBox CVerstossaus;
-        private System.Windows.Forms.ComboBox CMarke;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox COrt;
-        private System.Windows.Forms.TextBox CZeit;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox CDatum;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox CPLZ;
         private System.Windows.Forms.TextBox CAnzeigeText;
-        private System.Windows.Forms.ListBox CFiles;
-        private System.Windows.Forms.Button CAnzeige;
-        private System.Windows.Forms.TextBox CKennzeichen;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button CClip;
         private System.Windows.Forms.Button CNew;
         private System.Windows.Forms.PictureBox CAusschnitt;
@@ -2535,38 +2521,24 @@ namespace Anzeige
         private System.Windows.Forms.TabPage CWeglide;
         private System.Windows.Forms.TabPage CStadtPate;
         private System.Windows.Forms.TabPage CGMaps;
-        private System.Windows.Forms.PictureBox CLogo;
         private System.Windows.Forms.Button CLoad;
         private System.Windows.Forms.Button CSpeichern;
         private System.Windows.Forms.Button cOrtSuche;
         private System.Windows.Forms.TabPage CTest;
         private System.Windows.Forms.TextBox CTestText;
-        private System.Windows.Forms.TextBox CFreeText;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.CheckBox CreatePDF;
-        private System.Windows.Forms.CheckBox CAddFile;
-        private System.Windows.Forms.CheckBox CAddPath;
         private System.Windows.Forms.Button CLupe;
         private System.Windows.Forms.Button CDirOpen;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button CSettings;
-        private System.Windows.Forms.DateTimePicker CDTMEdit;
         private System.Windows.Forms.Button CLoadVerstoss;
         private System.Windows.Forms.Button CSaveVerstoss;
         private System.Windows.Forms.Button button3;
         private Bussgeldrechner bussgeldrechner1;
-        private System.Windows.Forms.CheckBox CCopy;
         private System.Windows.Forms.TabPage CAbout;
         private System.Windows.Forms.Button CText;
         private System.Windows.Forms.Button CHelp;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.ComboBox CTemplateFiles;
-        private System.Windows.Forms.TextBox CZeitBis;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.CheckBox CPixeln;
-        private System.Windows.Forms.NumericUpDown CRaster;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Label label13;
@@ -2579,7 +2551,6 @@ namespace Anzeige
         private System.Windows.Forms.TextBox CServer;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.TabPage CTAnzeige;
         private System.Windows.Forms.TabPage CTInfo;
         private System.Windows.Forms.TabPage CTAbstand;
         private System.Windows.Forms.Button Insert;
@@ -2619,13 +2590,7 @@ namespace Anzeige
         private Edit_Adress edit_Adress1;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button CSchaden;
-        private SmallToolbox smallToolbox1;
-        private SmallToolbox smallToolbox2;
-        private SmallToolbox smallToolbox3;
         private System.Windows.Forms.Panel panel13;
-        private SmallToolbox smallToolbox4;
-        private SmallToolbox smallToolbox5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.TabPage CTAbstandSerie;
         private System.Windows.Forms.SplitContainer splitContainer3;
@@ -2660,9 +2625,63 @@ namespace Anzeige
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.CheckBox CIsLevel;
-        private System.Windows.Forms.Button CColorPattern;
+        private System.Windows.Forms.TabPage CTAnzeige;
+        private SmallToolbox smallToolbox5;
+        private SmallToolbox smallToolbox2;
+        private System.Windows.Forms.ListBox CVerstossaus;
+        private SmallToolbox smallToolbox4;
+        private SmallToolbox smallToolbox3;
+        private SmallToolbox smallToolbox1;
+        private System.Windows.Forms.NumericUpDown CRaster;
+        private System.Windows.Forms.Button CSchaden;
+        private System.Windows.Forms.Button CAnzeige;
+        private System.Windows.Forms.DateTimePicker CDTMEdit;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox CCopy;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox CAddFile;
+        private System.Windows.Forms.TextBox CStrasse;
+        private System.Windows.Forms.CheckBox CPixeln;
+        private System.Windows.Forms.TextBox CPLZ;
+        private System.Windows.Forms.CheckBox CAddPath;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.CheckBox CreatePDF;
+        private System.Windows.Forms.TextBox CDatum;
+        private System.Windows.Forms.TextBox CFreeText;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox CKennzeichen;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox CZeit;
+        private System.Windows.Forms.PictureBox CLogo;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox CZeitBis;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ListBox CFiles;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox COrt;
+        private System.Windows.Forms.TextBox CHN;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox CMail;
+        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel14;
-        private System.Windows.Forms.Button Numberplate;
+        private System.Windows.Forms.Button CColorPattern;
+        private System.Windows.Forms.Panel panel12;
+        private System.Windows.Forms.Panel panel11;
+        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.ComboBox CMarke;
+        private System.Windows.Forms.ListBox CVerstoss;
+        private System.Windows.Forms.CheckBox CTrainOCR;
+        private System.Windows.Forms.Label CRecognized;
     }
 }
 

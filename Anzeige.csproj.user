@@ -25,6 +25,9 @@
     <Compile Update="Edit Line.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="EditOCR.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="EditTemplate.cs">
       <SubType>Form</SubType>
     </Compile>

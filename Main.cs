@@ -18,7 +18,7 @@ namespace Anzeige
 
     public partial class Main : Form
     {
-        private Dictionary<String, List<PixelatedArea>> pixelData = new Dictionary<String, List<PixelatedArea>>();
+        public Dictionary<String, List<PixelatedArea>> pixelData = new Dictionary<String, List<PixelatedArea>>();
         // int cntpixel = 0;
         private int cntpixel
         {
@@ -1844,7 +1844,6 @@ namespace Anzeige
                         if (tempausschnitt != null)
                         {
                             ScaledSave(tempausschnitt, ausschnittTemp, 3);
-
                             if (!CPixeln.Checked)
                             {
                                 Bitmap kopie = new Bitmap(ausschnitt);
@@ -1874,7 +1873,9 @@ namespace Anzeige
                                     }
                                 }
 
+
                                 // Die geschwärzte Kopie speichern
+                                CreateDirectoryIfNotExists(ZZielpfad + "public");
                                 kopie.Save(geschwaerzteKopiePfad, ImageFormat.Jpeg);
 
                                 // Kopie freigeben und zerstören
@@ -1893,35 +1894,105 @@ namespace Anzeige
                             }
                         }
                         Bitmap bmp = (Bitmap)CAusschnitt.BackgroundImage;
-                        if (bmp != null && bmp.Width * bmp.Height < 400000)
-                        {
-                            for (int th = 0; th < 256; th += 16)
+                        if (false)
+                        { 
+                            if (bmp != null && bmp.Width * bmp.Height < 400000)
                             {
-                                bmp = ConvertToBlackAndWhite((Bitmap)CAusschnitt.BackgroundImage, (int)th);
-                                String text = ReadTextFromBitmap((Bitmap)COCRPicture.BackgroundImage);
-                                String[] s = text.Split(' ');
-                                if (s.Length == 3 && CKennzeichen.Text == "")
+                                for (int th = 0; th < 256; th += 16)
                                 {
-                                    CKennzeichen.Text = text;
-                                    COCRPicture.BackgroundImage = bmp;
+                                    bmp = ConvertToBlackAndWhite((Bitmap)CAusschnitt.BackgroundImage, (int)th);
+                                    String text = ReadTextFromBitmap((Bitmap)COCRPicture.BackgroundImage);
+                                    String[] s = text.Split(' ');
+                                    if (s.Length == 3 && CKennzeichen.Text == "")
+                                    {
+                                        CKennzeichen.Text = text;
+                                        COCRPicture.BackgroundImage = bmp;
+                                    }
+                                    COCRPicture.Refresh();
                                 }
-                                COCRPicture.Refresh();
                             }
+                            if (CKennzeichen.Text == "" && !CPixeln.Checked)
+                            {
+                                CKennzeichen.Text = ReadTextFromBitmap(tempausschnitt);
+                            }
+                            CAusschnitt.Refresh();
                         }
-                        if (CKennzeichen.Text == "" && !CPixeln.Checked)
-                        {
-                            CKennzeichen.Text = ReadTextFromBitmap(tempausschnitt);
-                        }
-                        CAusschnitt.Refresh();
+                        HoughTransform ht = new HoughTransform();
+                        // double r = ht.BerechneDurchschnittlichenWinkel(bmp);
+                        // CAusschnitt.BackgroundImage = ht.DrehenUmWinkel(bmp);
+                        CAusschnitt.BackgroundImage = ht.DrehenUmWinkel(bmp, CTrainOCR.Checked);
+                        CKennzeichen.Text = ht.AmtlichesKennzeichen;
                     }
                     else
                     {
                     }
                 }
-                catch { }
+                catch (Exception ex){ }
                 cstack.Pop();
             }
         }
+
+        public static Bitmap ApplyFilter(Bitmap original, int contrastValue, int brightnessValue, int radius)
+        {
+            Bitmap filteredBitmap = new Bitmap(original.Width, original.Height);
+
+            // Loop through each pixel in the original bitmap
+            for (int x = 0; x < original.Width; x++)
+            {
+                for (int y = 0; y < original.Height; y++)
+                {
+                    Color originalColor = original.GetPixel(x, y);
+
+                    // Apply contrast adjustment
+                    int adjustedR = AdjustContrast(originalColor.R, contrastValue);
+                    int adjustedG = AdjustContrast(originalColor.G, contrastValue);
+                    int adjustedB = AdjustContrast(originalColor.B, contrastValue);
+
+                    // Apply brightness adjustment
+                    adjustedR = AdjustBrightness(adjustedR, brightnessValue);
+                    adjustedG = AdjustBrightness(adjustedG, brightnessValue);
+                    adjustedB = AdjustBrightness(adjustedB, brightnessValue);
+
+                    // Apply point filter
+                    if (IsWithinRadius(original, x, y, radius))
+                    {
+                        filteredBitmap.SetPixel(x, y, Color.FromArgb(adjustedR, adjustedG, adjustedB));
+                    }
+                    else
+                    {
+                        // Set pixel to black if it's outside the radius
+                        filteredBitmap.SetPixel(x, y, Color.Black);
+                    }
+                }
+            }
+
+            return filteredBitmap;
+        }
+        // Function to adjust contrast
+        private static int AdjustContrast(int colorValue, int contrastValue)
+        {
+            // Here you implement your contrast adjustment algorithm
+            // For simplicity, I'm just returning the original value
+            return colorValue;
+        }
+        // Function to adjust brightness
+        private static int AdjustBrightness(int colorValue, int brightnessValue)
+        {
+            // Here you implement your brightness adjustment algorithm
+            // For simplicity, I'm just adding the brightness value
+            return Math.Max(0, Math.Min(255, colorValue + brightnessValue));
+        }
+        // Function to check if a pixel is within the specified radius
+        private static bool IsWithinRadius(Bitmap bitmap, int x, int y, int radius)
+        {
+            int centerX = bitmap.Width / 2;
+            int centerY = bitmap.Height / 2;
+
+            int distance = (int)Math.Sqrt((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY));
+            return distance <= radius;
+        }
+
+
         private void CFotoAnzeige_Paint(object sender, PaintEventArgs e)
         {
             Rectangle rcl = new Rectangle(x0, y0, w, h);
@@ -1983,6 +2054,7 @@ namespace Anzeige
             PixelOutRegions(ausschnitt, CurrentFile);
             CSave.Refresh();
         }
+        LicensePlateValidator lv = new LicensePlateValidator();
         private void CKennzeichen_TextChanged(object sender, EventArgs e)
         {
             if (COrt.Text == "")
@@ -1992,6 +2064,25 @@ namespace Anzeige
                 String[] items = CKennzeichen.Text.Split(' ');
                 ortsname = FindOrtName(items[0]);
                 selectOrt(ortsname);
+            }
+            if (CKennzeichen.Text.Length>0)
+            {
+                CRecognized.Text = CKennzeichen.Text.Replace(" ", " ");
+                CRecognized.Visible = true;
+            }
+            else
+                CRecognized.Visible = false;
+
+
+            if (lv.ValidateNumberplate(CKennzeichen.Text))
+            {
+                CKennzeichen.BackColor = Color.FromArgb(192, 192, 255);
+                CKennzeichen.ForeColor = SystemColors.WindowText;
+            }
+            else
+            {
+                CKennzeichen.BackColor = Color.Red;
+                CKennzeichen.ForeColor = Color.White;
             }
         }
         private void CStrasse_TextChanged(object sender, EventArgs e)
@@ -4199,125 +4290,14 @@ namespace Anzeige
 
         }
 
-        private void Numberplate_Click_old(object sender, EventArgs e)
+        private void CTrainOCR_Click(object sender, EventArgs e)
         {
-            Bitmap save = (Bitmap)CSave.BackgroundImage;
-            // Numberplate nbp = new Numberplate((Bitmap)CSave.BackgroundImage);
-            // spiralLoop(nbp.scaledBitmap);
-            // CSave.BackgroundImage = nbp.scaledBitmap;
-            // CSave.Refresh();
-            Rectangle rcl = spiralLoop((Bitmap)CSave.BackgroundImage);
-            // CSave.BackgroundImage = save;
+            Bitmap bmp = (Bitmap)CAusschnitt.BackgroundImage;
+            HoughTransform ht = new HoughTransform();
+            // double r = ht.BerechneDurchschnittlichenWinkel(bmp);
+            // CAusschnitt.BackgroundImage = ht.DrehenUmWinkel(bmp);
+            CAusschnitt.BackgroundImage = ht.DrehenUmWinkel(bmp, CTrainOCR.Checked);
+            CKennzeichen.Text = ht.AmtlichesKennzeichen;
         }
-        public Rectangle spiralLoop(Bitmap original, int d = 5)
-        {
-            int m = int.MinValue;
-            Bitmap bmp = new Bitmap(original, (int)(original.Width), (int)(original.Height));
-            int n = (bmp.Width * bmp.Height) / (d*d);
-            int i = 0;
-            int x = bmp.Width / 2;
-            int y = bmp.Height * 2 / 3;
-            int l = x;
-            int r = x;
-            int o = y;
-            int u = y;
-            int dx = d;
-            int dy = 0;
-            int xmin = int.MaxValue;
-            int xmax = int.MinValue;
-            int ymin = int.MaxValue;
-            int ymax = int.MinValue;
-
-            while ((i < n-1) || (m > 40))
-            {
-                if ((0 <= x && x < bmp.Width) && (bmp.Height/3 <= y && y < bmp.Height))
-                {
-                    Color c = bmp.GetPixel(x, y);
-                    if (c.B > 128 && c.R < 128 && c.G <160)
-                    {
-                        Color cto = ColorClassifier.Classify(c);
-
-                        if (cto == ColorClassifier.plateblue)
-                        {
-                            // bmp.SetPixel(x, y, Color.Red);
-                            // CSave.BackgroundImage = bmp;
-                            // CSave.Refresh();
-                            xmin = Math.Min(xmin, x);
-                            xmax = Math.Max(xmax, x);
-                            ymin = Math.Min(ymin, y);
-                            ymax = Math.Max(ymax, y);
-                            m = 0;
-                        }
-                    }
-                    i++;
-                }
-                if (x + dx > r)
-                {
-                    x = x + dx;
-                    r = x;
-                    dx = 0;
-                    dy = -d;
-                }
-                else if (y + dy < o)
-                {
-                    y = y + dy;
-                    o = y;
-                    dx = -d;
-                    dy = 0;
-                }
-                else if (x + dx < l)
-                {
-                    x = x + dx;
-                    l = x;
-                    dx = 0;
-                    dy = d;
-                }
-                else if (y + dy > u)
-                {
-                    y = y + dy;
-                    u = y;
-                    dx = d;
-                    dy = 0;
-                }
-                else
-                {
-                    x += dx;
-                    y += dy;
-                }
-
-                if ((r >= bmp.Width && l <= 0 && u >= bmp.Height && o < 0))
-                {
-                    return new Rectangle(0,0,0,0);
-                }
-                m++;
-            }
-            return new Rectangle(xmin, ymin, xmax-xmin, ymax-ymin);
-        }
-        private void Numberplate_Click(object sender, EventArgs e)
-        {
-            Rectangle rcl;
-            Bitmap save = (Bitmap)CSave.BackgroundImage;
-            if (ausschnitt==null)
-                rcl = spiralLoop(save);
-            else
-                rcl = spiralLoop((Bitmap)CAusschnitt.BackgroundImage);
-
-            if (rcl.Width==0 && rcl.Height==0)
-            {
-                // Erstelle eine Graphics-Instanz, um auf das Bitmap zu zeichnen
-                using (Graphics g = Graphics.FromImage(save))
-                {
-                    // Fülle das Rechteck auf dem Bitmap mit der gewünschten Farbe
-                    using (Brush brush = new SolidBrush(Color.FromArgb(128, Color.Blue))) // Hier kannst du die Farbe und Deckkraft anpassen
-                    {
-                        g.FillRectangle(brush, rcl);
-                    }
-                }
-            }
-            // Aktualisiere das Hintergrundbild des Controls mit dem gezeichneten Rechteck
-            CSave.BackgroundImage = save;
-            CSave.Refresh();
-        }
-
     }
 }
