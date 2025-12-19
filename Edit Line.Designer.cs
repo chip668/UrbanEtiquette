@@ -29,40 +29,43 @@ namespace Anzeige
         /// </summary>
         private void InitializeComponent()
         {
-            this.CCaption = new System.Windows.Forms.Label();
-            this.CText = new System.Windows.Forms.TextBox();
-            this.SuspendLayout();
+            CCaption = new System.Windows.Forms.Label();
+            CText = new System.Windows.Forms.TextBox();
+            SuspendLayout();
             // 
             // CCaption
             // 
-            this.CCaption.AutoSize = true;
-            this.CCaption.Dock = System.Windows.Forms.DockStyle.Top;
-            this.CCaption.Font = new System.Drawing.Font("Segoe UI", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.CCaption.Location = new System.Drawing.Point(0, 0);
-            this.CCaption.Name = "CCaption";
-            this.CCaption.Size = new System.Drawing.Size(117, 40);
-            this.CCaption.TabIndex = 0;
-            this.CCaption.Text = "Caption";
+            CCaption.AutoSize = true;
+            CCaption.Dock = System.Windows.Forms.DockStyle.Top;
+            CCaption.Font = new System.Drawing.Font("Segoe UI", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            CCaption.Location = new System.Drawing.Point(0, 0);
+            CCaption.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            CCaption.Name = "CCaption";
+            CCaption.Size = new System.Drawing.Size(117, 40);
+            CCaption.TabIndex = 0;
+            CCaption.Text = "Caption";
             // 
             // CText
             // 
-            this.CText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CText.Location = new System.Drawing.Point(0, 40);
-            this.CText.Name = "CText";
-            this.CText.Size = new System.Drawing.Size(856, 29);
-            this.CText.TabIndex = 1;
-            this.CText.TextChanged += new System.EventHandler(this.CText_TextChanged);
+            CText.Dock = System.Windows.Forms.DockStyle.Fill;
+            CText.Location = new System.Drawing.Point(0, 40);
+            CText.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            CText.Name = "CText";
+            CText.Size = new System.Drawing.Size(666, 23);
+            CText.TabIndex = 1;
+            CText.TextChanged += CText_TextChanged;
             // 
             // Edit_Line
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.CText);
-            this.Controls.Add(this.CCaption);
-            this.Name = "Edit_Line";
-            this.Size = new System.Drawing.Size(856, 406);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            Controls.Add(CText);
+            Controls.Add(CCaption);
+            Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            Name = "Edit_Line";
+            Size = new System.Drawing.Size(666, 290);
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 

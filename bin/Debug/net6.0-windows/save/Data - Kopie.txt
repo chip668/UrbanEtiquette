@@ -1,0 +1,91 @@
+<ort>;<mail>
+40764;Langenfeld;ordnung@langenfeld.de;https://service.langenfeld.de/detail/-/vr-bis-detail/dienstleistung/6141/show
+40XXX;Düsseldorf;drittanzeige@duesseldorf.de;https://www.duesseldorf.de/ordnungsamt/verkehrueb/drittanzeige
+40721;Hilden;Ordnungsamt@hilden.de;https://www.hilden.de/sv_hilden/Unsere%20Stadt/Rathaus/Ordnungsamt/Ruhender%20Verkehr/
+50XXX;Köln;ordnungs-undverkehrsdienst@stadt-koeln.de;https://www.stadt-koeln.de/service/produkte/00449/index.html
+41xxx;Mönchengladbach;bussgeldstelle@moenchengladbach.de;https://www.moenchengladbach.de/de/rathaus/buergerinfo-a-z/allgemeine-verwaltung-buergerservice-ordnung-feuerwehr-dezernat-iii/ordnungsamt-32
+51373;Leverkusen;302-01@stadt.leverkusen.de;https://www.leverkusen.de/vv/produkte/FB36/Falschparker_melden.php
+40764;Test;Schippers.Norbert@yahoo.com;http://thewebside.de/
+41460;Neuss;verkehrslenkung@stadt.neuss.de;https://www.neuss.de/leben/sicherheit-und-ordnung/ksod
+<bluetooth>
+Nokia 2.3
+<verstoss>
+Parken auf dem Gehweg
+Parken auf dem Radweg/Radfahrstreifen
+Parken auf dem Radweg (VZ241)
+Parken auf dem gemeinsamen Rad und Gehweg (VZ240)
+Parken auf dem Radweg/Radfahrstreifen (VZ237)
+Parken auf dem Schutzstreifen
+Fahrzeug war leer
+Halten auf dem Gehweg
+Halten auf dem Radweg
+Halten auf dem Schutzstreifen
+Mit Behinderung Ausweichen auf die Fahrbahn erforderlich
+Mit Behinderung Ausweichen auf die Radweg erforderlich (VZ241)
+Missbrauch Warnblinker (Vorsatztat)
+Fahrzeug auf Behinderten-Parkplatz
+Fahrzeug vor/auf einem Fußgängerüberweg
+Fahrzeug vor/auf einem Feuerwehrzufahrt
+Fahrzeug vor einem Einfahrt/Ausfahrt
+Fahrzeug vor einer Bordsteinabsenkung
+Fahrzeug in zweiter Reihe
+Fahrzeug im absoluten Halteverbot
+Fahrzeug im eingeschränkten Halteverbot
+Fahrzeug im Kreuzungsbereich
+Fahrzeug in Fußgängerzone
+Fahrzeug auf Bus-Spur oder -Route
+Fahrzeug auf Bushaltestelle
+Fahrzeug auf Sperrfläche
+Fahrzeug ohne Elektroantrieb vor Elektroladesäule
+Fahrzeug auf Grünfläche
+<marke>
+Lieferwagen
+LKW
+Taxi
+Polizei-Fahrzeug
+Alfa Romeo
+Audi
+BMW
+Chevrolet
+Citroen
+Dacia
+Fiat
+Ford
+Honda
+Hyundai
+Jaguar
+Jeep
+Kia
+Land Rover
+Mazda
+Merzedes
+Mini
+Mitsubishi
+Nissan
+Opel
+Peugot
+Porsche
+Renault
+Seat
+Skoda
+Smart
+Suzuki
+Toyota
+Tesla
+Volvo
+Volkswagen
+Sonstiges
+<zname>
+Schippers
+<zvorname>
+Norbert
+<zstrasse>
+Klopstockweg
+<zhausnummer>
+4
+<zplz>
+40764
+<zort>
+Langenfeld
+<zielpfad>
+Z:\Dokumente\Anzeigen\

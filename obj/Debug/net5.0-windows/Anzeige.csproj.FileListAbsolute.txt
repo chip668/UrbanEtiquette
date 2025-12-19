@@ -215,3 +215,6 @@ C:\Users\schip\source\repos\UrbanEtiquette\obj\Debug\net5.0-windows\ref\Urban Et
 C:\Users\schip\source\repos\UrbanEtiquette\obj\Debug\net5.0-windows\Urban Etiquette.pdb
 C:\Users\schip\source\repos\UrbanEtiquette\obj\Debug\net5.0-windows\Anzeige.genruntimeconfig.cache
 C:\Users\schip\source\repos\UrbanEtiquette\obj\Debug\net5.0-windows\Anzeige.EditOCR.resources
+Z:\Dokumente\GitHub\UrbanEtiquette\obj\Debug\net5.0-windows\Anzeige.csproj.AssemblyReference.cache
+Z:\Dokumente\GitHub\UrbanEtiquette\obj\Debug\net5.0-windows\Urban Etiquette.dll
+Z:\Dokumente\GitHub\UrbanEtiquette\obj\Debug\net5.0-windows\Urban Etiquette.pdb

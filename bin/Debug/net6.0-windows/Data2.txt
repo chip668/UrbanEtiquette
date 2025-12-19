@@ -1,0 +1,15 @@
+<zname>
+xxxxxxxxxxxxx
+<zvorname>
+xxxxxxxxxxxxx
+<zstrasse>
+xxxxxxxxxxxxx
+<zhausnummer>
+xxxxxxxxxxxxx
+<zplz>
+xxxxxxxxxxxxx
+<zort>
+xxxxxxxxxxxxx
+<zielpfad>
+Z:\Dokumente\Anzeigen\
+<ort>;<mail>

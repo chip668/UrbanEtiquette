@@ -1,0 +1,157 @@
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.csproj.AssemblyReference.cache
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\Urban Etiquette.exe
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\Urban Etiquette.deps.json
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\Urban Etiquette.runtimeconfig.json
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\Urban Etiquette.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\Urban Etiquette.pdb
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\InTheHand.Net.Personal.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\BitMiracle.LibTiff.NET.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\BouncyCastle.Crypto.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\ExifLib.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\FFmpeg.AutoGen.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\IronOcr.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\SixLabors.Fonts.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\SixLabors.ImageSharp.Drawing.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\IronSoftware.Drawing.Common.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\itextsharp.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\SixLabors.ImageSharp.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\System.CodeDom.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\System.Management.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\Tesseract.Native.deployment.json
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\eng.base.traineddata
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\eng.best.traineddata
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\eng.fast.traineddata
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\eng.user-patterns
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\eng.user-words
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\liblept-5.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\libtesseract-5.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\osd.traineddata
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\pdf.ttf
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\pdf.ttx
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\Tesseract.Native.deployment.json
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\eng.base.traineddata
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\eng.best.traineddata
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\eng.fast.traineddata
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\eng.user-patterns
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\eng.user-words
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\liblept-5.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\libtesseract-5.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\osd.traineddata
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\pdf.ttf
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\pdf.ttx
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\linux-x64\native\IronPdfInterop.so
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\osx-arm64\native\IronPdfInterop.dylib
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\osx-x64\native\IronPdfInterop.dylib
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\IronPdfInterop.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\IronPdfInterop.dll
+C:\projekt\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Management.dll
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.AboutBox1.resources
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.Abstandsmeter.resources
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.assistent.resources
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.Bussgeldrechner.resources
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.Colortraining.resources
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.ConfigEditorForm.resources
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.Edit_Adress.resources
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.Edit_Line.resources
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.EditOCR.resources
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.EditTemplate.resources
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.Main.resources
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.Properties.Resources.resources
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.SmallToolbox.resources
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.test.resources
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.TimePicker.resources
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.csproj.GenerateResource.cache
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.GeneratedMSBuildEditorConfig.editorconfig
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.AssemblyInfoInputs.cache
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.AssemblyInfo.cs
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.csproj.CoreCompileInputs.cache
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.sourcelink.json
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.csproj.Up2Date
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Urban Etiquette.dll
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\refint\Urban Etiquette.dll
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Urban Etiquette.pdb
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.genruntimeconfig.cache
+C:\projekt\UrbanEtiquette\obj\Debug\net6.0-windows\ref\Urban Etiquette.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\Urban Etiquette.exe
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\Urban Etiquette.deps.json
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\Urban Etiquette.runtimeconfig.json
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\Urban Etiquette.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\Urban Etiquette.pdb
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\InTheHand.Net.Personal.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\BitMiracle.LibTiff.NET.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\BouncyCastle.Crypto.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\ExifLib.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\FFmpeg.AutoGen.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\IronOcr.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\SixLabors.Fonts.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\SixLabors.ImageSharp.Drawing.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\IronSoftware.Drawing.Common.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\itextsharp.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\SixLabors.ImageSharp.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\System.CodeDom.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\System.Management.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\Tesseract.Native.deployment.json
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\eng.base.traineddata
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\eng.best.traineddata
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\eng.fast.traineddata
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\eng.user-patterns
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\eng.user-words
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\liblept-5.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\libtesseract-5.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\osd.traineddata
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\pdf.ttf
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\pdf.ttx
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\Tesseract.Native.deployment.json
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\eng.base.traineddata
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\eng.best.traineddata
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\eng.fast.traineddata
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\eng.user-patterns
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\eng.user-words
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\liblept-5.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\libtesseract-5.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\osd.traineddata
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\pdf.ttf
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\pdf.ttx
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\linux-x64\native\IronPdfInterop.so
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\osx-arm64\native\IronPdfInterop.dylib
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\osx-x64\native\IronPdfInterop.dylib
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x64\native\IronPdfInterop.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win-x86\native\IronPdfInterop.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Management.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.csproj.AssemblyReference.cache
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.AboutBox1.resources
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.Abstandsmeter.resources
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.assistent.resources
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.Bussgeldrechner.resources
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.Colortraining.resources
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.ConfigEditorForm.resources
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.Edit_Adress.resources
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.Edit_Line.resources
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.EditOCR.resources
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.EditTemplate.resources
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.Main.resources
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.Properties.Resources.resources
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.SmallToolbox.resources
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.test.resources
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.TimePicker.resources
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.csproj.GenerateResource.cache
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.GeneratedMSBuildEditorConfig.editorconfig
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.AssemblyInfoInputs.cache
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.AssemblyInfo.cs
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.csproj.CoreCompileInputs.cache
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.sourcelink.json
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.csproj.Up2Date
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Urban Etiquette.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\refint\Urban Etiquette.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Urban Etiquette.pdb
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.genruntimeconfig.cache
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\ref\Urban Etiquette.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\Interop.WMPLib.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\bin\Debug\net6.0-windows\AxInterop.WMPLib.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Interop.WMPLib.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\AxInterop.WMPLib.dll
+Y:\Projekte\UrbanEtiquette\UrbanEtiquette\obj\Debug\net6.0-windows\Anzeige.csproj.ResolveComReference.cache

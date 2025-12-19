@@ -48,29 +48,6 @@ namespace Anzeige
         }
         State currentstate = State.Start;
 
-        public Boolean ValidateNumberplate(String plate)
-        {
-            // Initialisiere den Startzustand
-            // State currentState = State.Start;
-            currentstate = State.Start;
-            
-            // Durchlaufe jeden Buchstaben im Nummernschild
-            foreach (char c in plate)
-            {
-                // Überprüfe den aktuellen Zustand und aktualisiere ihn entsprechend
-                currentstate = ChangeState(c.ToString());
-
-                // Wenn der aktuelle Zustand ungültig ist, gib false zurück
-                if (currentstate == State.Invalid)
-                    return false;
-            }
-
-            // Wenn der letzte Zustand gültig ist und ein Endzustand erreicht wurde, gib true zurück
-            if (currentstate == State.Digit || currentstate == State.SDash)
-                return true;
-            else
-                return false;
-        }
         public State ChangeState (String c)
         {
             State result = currentstate;

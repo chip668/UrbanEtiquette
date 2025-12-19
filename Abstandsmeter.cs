@@ -12,6 +12,11 @@ namespace Anzeige
 {
     public partial class Abstandsmeter : UserControl
     {
+        /// <summary>
+        /// Wird ausgelöst, wenn der Expand-Zustand geändert wurde.
+        /// True = aufgeklappt, False = zugeklappt.
+        /// </summary>
+        public event EventHandler<bool> ExpandStateChanged;
         private Messwerte.Messwert _CurrentMesswert = new Messwerte.Messwert(150, 100);
         public Messwerte.Messwert CurrentMesswert
         {
@@ -55,11 +60,14 @@ namespace Anzeige
         {
             this.Size = CExpand.Size;
             CExpand.Visible = true;
+            ExpandStateChanged?.Invoke(this, true);
         }
         private void CExpand_Click(object sender, EventArgs e)
         {
             this.Size = new Size(580, 490);
             CExpand.Visible = false;
+            ExpandStateChanged?.Invoke(this, false);
+
         }
         private void Abstandsmeter_Paint(object sender, PaintEventArgs e)
         {

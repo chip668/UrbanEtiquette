@@ -1,0 +1,34 @@
+<zname>
+dein Nachname
+<zvorname>
+Dein Vorname
+<zstrasse>
+Deine Strasse
+<zhausnummer>
+Deine Hausnummer
+<zplz>
+Deine PLZ
+<zort>
+Dein Ort
+<zemail>
+Deine Mailadresse
+<zphone>
+Deine Telefonnummer
+<zielpfad>
+C:\Anzeigen\
+<zbluetooth>
+NI
+<zsmtpserver>
+smtp.mail.yahoo.com
+<zsmtpport>
+465 
+<zssl>
+yes
+<ztpl>
+yes
+<zsendermail>
+Deine Mailadresse
+<zsubject>
+Anzeige einer Verkehrsordnungswiedrigkeit
+<zpassword>
+************
