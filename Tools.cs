@@ -12,7 +12,7 @@ namespace Anzeige
     public class Tools
     {
         [DllImport("shell32.dll")]
-        static extern IntPtr ShellExecute(IntPtr hwnd, string lpOperation, string lpFile, string lpParameters, string lpDirectory, int nShowCmd);
+        public static extern IntPtr ShellExecute(IntPtr hwnd, string lpOperation, string lpFile, string lpParameters, string lpDirectory, int nShowCmd);
         static void InitializeUmlautMap(Dictionary<string, string> umlautToAscii, Dictionary<string, string> asciiToUmlaut)
         {
             // Umwandlungen in beide Richtungen

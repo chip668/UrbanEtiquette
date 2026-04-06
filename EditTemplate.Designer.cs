@@ -92,7 +92,7 @@ namespace Anzeige
             "<farbe>",
             "<kennzeichen>",
             "<zname>",
-            "<zvorrname>",
+            "<zvorname>",
             "<zstrasse>",
             "<zhausnummer>",
             "<zplz>",

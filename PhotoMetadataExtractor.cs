@@ -18,7 +18,8 @@ namespace Anzeige
         public string PostalCode { get; private set; }
         public string City { get; private set; }
         public bool Valid { get; private set; }
-
+        public double Latitude { get; internal set; } = 0;
+        public double Longitude { get; internal set; } = 0;
 
         public PhotoMetadataExtractor(string imagePath)
         {
@@ -45,13 +46,13 @@ namespace Anzeige
                     if (exifReader.GetTagValue(ExifTags.GPSLatitude, out double[] latitude) &&
                         exifReader.GetTagValue(ExifTags.GPSLongitude, out double[] longitude))
                     {
-                        double latitudeValue = ConvertGpsCoordinate(latitude);
-                        double longitudeValue = ConvertGpsCoordinate(longitude);
+                        Latitude = ConvertGpsCoordinate(latitude);
+                        Longitude = ConvertGpsCoordinate(longitude);
 
                         // Generiere die Google Maps URL mit den tatsächlichen Geodaten des Bildes
-                        GoogleMapsURL = Tools.GenerateGoogleMapsURL(latitudeValue, longitudeValue);
+                        GoogleMapsURL = Tools.GenerateGoogleMapsURL(Latitude, Longitude);
 
-                        LocationInfo lki = new LocationInfo(latitudeValue, longitudeValue);
+                        LocationInfo lki = new LocationInfo(Latitude, Longitude);
                         lki.RetrieveAddressSync();
                         Street = lki.Street;
                         HouseNumber = lki.HouseNumber;

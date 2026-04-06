@@ -649,8 +649,6 @@ namespace Anzeige
         private System.Windows.Forms.Button Reload2;
         private System.Windows.Forms.Button OK2;
         private System.Windows.Forms.Button Candel2;
-        private System.Windows.Forms.TextBox CValue;
-        private System.Windows.Forms.TextBox CKey;
         private System.Windows.Forms.Label CValue1;
         private System.Windows.Forms.Label CKey1;
     }

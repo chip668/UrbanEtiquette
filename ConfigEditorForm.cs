@@ -8,7 +8,6 @@ namespace Anzeige
     public partial class ConfigEditorForm : Form
     {
         // private string configFile = "config.txt";
-        private Dictionary<string, string> configValues;
         private string _Configfile;
         public String Configfile
         {

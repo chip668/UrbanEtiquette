@@ -227,7 +227,6 @@ namespace Anzeige
 
         private System.Windows.Forms.PictureBox CCharakter;
         private System.Windows.Forms.PictureBox CReferenz;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button COK;
         private System.Windows.Forms.Button CCancel;
         private System.Windows.Forms.TextBox CText;

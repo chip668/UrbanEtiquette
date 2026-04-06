@@ -1,7 +1,23 @@
 Todo Liste
-*. email über ShellExecute nimmt keine Bilder ins Attachment, Diese Fu8nktiopn wird mittlerweie vom Betriebssystem unterdrückt.
-2. Farberkennung ist sehr schwierig da ähnlichkeiten nicht einfach über eine rein num erische Distzanz zwischen Farben bestimmt werden kann
-3. Deim Ausdruck von PDF formularen werden keine Biler übernommen.
-4. Druckfunktionen / Bericht für eine eventuelle Gerichtsverhandlung drucken.
-5. Anonymisierung muss auf alle angehängten Bilder angewand werden.
-6. Einbinden Anstandssensor
+==================================================================================
+*Workflow-Optimierung (Prio: Hoch)
+    Drag & Drop für Bilder:
+        AllowDrop aktivieren und Bilder direkt aus dem Explorer in deine AddFilename-Logik ziehen. Das spart das mühsame Durchklicken im Dateidialog.
+* Anonymisierung muss auf alle angehängten Bilder angewand werden.
+    Meschanismus ist bereits für CSave vorhanden. Muss für andere Bilder überrnommen werden. (Methode)
+* Daten-Kontinuität & Basis-Kommunikation (Prio: Mittel)
+    Lade-Logik für "anzeige.txt":
+        Eine Methode schreiben, die beim Programmstart prüft, ob eine anzeige.txt existiert, und die Felder (Kennzeichen, Marke, Ort etc.) automatisch wieder befüllt.
+    Standard Mail-Client Anbindung (mailto):
+        Ein einfacher Button, der den Standard-Client (Outlook/Thunderbird) öffnet und Empfänger sowie Text übergibt. Da Anhänge hier oft scheitern, sollte parallel der Ordner mit dem PDF im Explorer aufspringen.
+* Intelligente Assistenten (Prio: Niedrig / Komfort)
+    Marken-Vorschläge (Historie):
+        Keine KI, sondern eine simple AutoComplete-Liste für das Marken-Feld, die aus deinen Data.txt-Einträgen oder alten Anzeigen lernt.
+    Wetterdaten-Integration:
+        Optionaler Abruf (z. B. Open-Meteo) via GPS/Zeitstempel, um Sichtverhältnisse automatisch im Text zu ergänzen.
+
+* Erweitertes Setup (Nice to Have / Optional)
+    Integrierter SMTP-Versand (Mailserver):
+        Funktion: Ein Einstellungs-Menü für Mailserver (Host, Port, User, Passwort, TLS).
+        Vorteil: Ermöglicht den Versand der Anzeige inklusive PDF-Anhang mit nur einem Klick direkt aus deinem Tool heraus, ohne dass ein externer Mail-Client geöffnet werden muss.
+        Herausforderung: Erfordert eine sichere Speicherung der Zugangsdaten (Verschlüsselung) und eine Fehlerbehandlung bei Verbindungsabbrüchen.

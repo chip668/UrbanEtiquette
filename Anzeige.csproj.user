@@ -51,6 +51,9 @@
     <EmbeddedResource Update="Abstandsmeter.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Update="Colortraining.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Update="Main.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>

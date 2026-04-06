@@ -17,7 +17,6 @@ namespace Anzeige
                 leftMin
             };
             public Kopplung mode { get; set; }
-            private int _Abstand;
             public int Abstand
             {
                 get 
@@ -26,14 +25,10 @@ namespace Anzeige
                     {
                         case Kopplung.leftMean:
                             return MittelwertLinks;
-                            break;
-
                         case Kopplung.leftMin:
                             return MinimumLinks;
-                            break;
                         default:
                             return MinimumLinks;
-                            break;
                     }
                 }
                 set

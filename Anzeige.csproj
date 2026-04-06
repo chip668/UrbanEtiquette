@@ -2,15 +2,17 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows7.0</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
-    <ApplicationIcon>Unbenannt.ico</ApplicationIcon>
+    <ApplicationIcon>Urban.ico</ApplicationIcon>
     <AssemblyName>Urban Etiquette</AssemblyName>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>False</SignAssembly>
     <NoWin32Manifest>true</NoWin32Manifest>
     <Description>Willkommen bei UrbanEtiquette! Wir danken Ihnen herzlich für die Wahl unserer Plattform. Tauchen Sie ein in die Welt der urbanen Etikette und entdecken Sie, wie wir das städtische Leben mit Stil und Respekt gestalten. Wir freuen uns, dass Sie Teil unserer Gemeinschaft sind.</Description>
-    <Authors>GPL, Norbert Schippers</Authors>
     <Company>GPL</Company>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <Authors>Norbert Schippers (2023-2026)</Authors>
+    <Version>2.000</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,6 +36,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Urban.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="32feet.NET" Version="3.5.0" />
     <PackageReference Include="ExifLib" Version="1.7.0" />
     <PackageReference Include="ExifLib.PCL" Version="1.0.1" />
@@ -41,6 +47,7 @@
     <PackageReference Include="IronOcr" Version="2023.7.28" />
     <PackageReference Include="iTextSharp" Version="5.5.13.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="QRCoder" Version="1.7.0" />
     <PackageReference Include="System.Management" Version="8.0.0" />
   </ItemGroup>
 

@@ -89,65 +89,6 @@ namespace Anzeige
 
             return grayImage;
         }
-        private Bitmap ConvertToBlackAndWhite_old(Bitmap image)
-        {
-            Bitmap bwImage = new Bitmap(image.Width, image.Height);
-
-            int threshold = 128; // Schwellenwert für Schwarzweißkonvertierung
-
-            for (int y = 0; y < image.Height; y++)
-            {
-                for (int x = 0; x < image.Width; x++)
-                {
-                    Color pixel = image.GetPixel(x, y);
-                    int grayValue = (int)(0.299 * pixel.R + 0.587 * pixel.G + 0.114 * pixel.B); // Grauwert berechnen
-                    Color newPixel = (grayValue < threshold) ? Color.Black : Color.White; // Überprüfen, ob der Grauwert unter dem Schwellenwert liegt
-                    bwImage.SetPixel(x, y, newPixel);
-                }
-            }
-            return bwImage;
-        }
-        private Bitmap ConvertToBlackAndWhite_old2(Bitmap image)
-        {
-            Bitmap bwImage = new Bitmap(image.Width, image.Height);
-            double whitePercentage = 0;
-
-            // Berechne den Schwellenwert basierend auf dem prozentualen Anteil von weißen und schwarzen Flächen
-            int totalPixels = image.Width * image.Height;
-            int whiteThreshold = (int)(totalPixels * whitePercentage);
-
-            int whiteCount = 0;
-
-            // Zähle die Anzahl der weißen Pixel im Bild
-            for (int y = 0; y < image.Height; y++)
-            {
-                for (int x = 0; x < image.Width; x++)
-                {
-                    Color pixel = image.GetPixel(x, y);
-                    int grayValue = (int)(0.299 * pixel.R + 0.587 * pixel.G + 0.114 * pixel.B); // Grauwert berechnen
-                    if (grayValue > 128) // Wenn der Grauwert über dem Schwellenwert liegt
-                        whiteCount++;
-                }
-            }
-
-            // Wenn der prozentuale Anteil der weißen Fläche größer als der gewünschte prozentuale Anteil ist, invertiere die Farben
-            bool invertColors = whiteCount > whiteThreshold;
-
-            for (int y = 0; y < image.Height; y++)
-            {
-                for (int x = 0; x < image.Width; x++)
-                {
-                    Color pixel = image.GetPixel(x, y);
-                    int grayValue = (int)(0.299 * pixel.R + 0.587 * pixel.G + 0.114 * pixel.B); // Grauwert berechnen
-                    Color newPixel = (grayValue > 128) ? Color.White : Color.Black; // Überprüfen, ob der Grauwert über dem Schwellenwert liegt
-                    if (invertColors)
-                        newPixel = (newPixel == Color.White) ? Color.Black : Color.White; // Farben invertieren, falls erforderlich
-                    bwImage.SetPixel(x, y, newPixel);
-                }
-            }
-
-            return bwImage;
-        }
         private Bitmap ConvertToBlackAndWhite(Bitmap image)
         {
             Bitmap bwImage = new Bitmap(image.Width, image.Height);
@@ -343,7 +284,6 @@ namespace Anzeige
             int maxx = 0;
             int miny = bitmap.Height;
             int maxy = 0;
-            int firstbd = 0;
 
             if (File.Exists(@"C:\Temp\test.bmp"))
                 File.Delete(@"C:\Temp\test.bmp");
@@ -536,6 +476,7 @@ namespace Anzeige
         }
         public class VDurchschuss : Durchschuss
         {
+            
             public String Kennzeichen = "";
             public List<Rectangle> BuchstabenRechtecke = new List<Rectangle>();
             public VDurchschuss(Bitmap bmp, Boolean withEdit) : base()
@@ -586,6 +527,15 @@ namespace Anzeige
                 if (inBuchstabe)
                 {
                     BuchstabenRechtecke.Add(new Rectangle(x0, 0, x1 - x0 + 1, Height));
+                }
+
+                // Entferne Rechtecke in-place, die schmaler sind als 1/4 der Durchschnittsbreite
+                if (BuchstabenRechtecke.Count > 0)
+                {
+                    double durchschnittsBreite = BuchstabenRechtecke.Average(r => r.Width);
+                    double minBreite = durchschnittsBreite / 3.0;
+
+                    BuchstabenRechtecke.RemoveAll(r => r.Width < minBreite);
                 }
 
                 if (BuchstabenRechtecke.Count<3)

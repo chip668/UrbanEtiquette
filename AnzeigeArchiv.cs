@@ -11,6 +11,32 @@ namespace Anzeige
     /// </summary>
     public class AnzeigeArchiv
     {
+        public enum SortierFeld
+        {
+            Kennzeichen = 0,
+            Ort = 1,
+            Datum = 2,
+            Kennzeichentyp = 3,
+            AnzeigeDatei = 4
+        }
+        public void Sortiere(SortierFeld feld, bool aufsteigend)
+        {
+            if (Eintraege is not List<AnzeigeEintrag> list)
+                return;
+
+            Comparison<AnzeigeEintrag> cmp = feld switch
+            {
+                SortierFeld.Kennzeichen => (a, b) => string.Compare(a.Kennzeichen, b.Kennzeichen, StringComparison.OrdinalIgnoreCase),
+                SortierFeld.Ort => (a, b) => string.Compare(a.Ort, b.Ort, StringComparison.OrdinalIgnoreCase),
+                SortierFeld.Datum => (a, b) => a.Datum.CompareTo(b.Datum),
+                SortierFeld.Kennzeichentyp => (a, b) => a.Kennzeichentyp.CompareTo(b.Kennzeichentyp),
+                SortierFeld.AnzeigeDatei => (a, b) => string.Compare(a.AnzeigeDatei, b.AnzeigeDatei, StringComparison.OrdinalIgnoreCase),
+                _ => (a, b) => 0
+            };
+
+            list.Sort((a, b) => aufsteigend ? cmp(a, b) : -cmp(a, b));
+        }
+
         /// <summary>
         /// Haupt-/Wurzelverzeichnisse, die durchsucht wurden
         /// </summary>
@@ -45,12 +71,10 @@ namespace Anzeige
 
                     foreach (var datei in dateien)
                     {
-                        if (eintraege.Count == 226)
-                            ;
                         // Kennzeichen korrekt extrahieren
                         AnzeigeEintrag eintrag = ExtractKennzeichen(datei);
-                        if (eintrag!=null)
-                        eintraege.Add(eintrag);
+                        if (eintrag != null)
+                            eintraege.Add(eintrag);
                     }
                 }
                 catch
@@ -109,7 +133,7 @@ namespace Anzeige
                         if ((pathiterm[i + 2].Length == 8) && (pathiterm[i + 2].All(char.IsDigit)))
                             datum = pathiterm[i + 2];
                         else if (pathiterm[i + 2].ToLower() != "anzeige.txt")
-                            kennzeichen =  pathiterm[i + 2];
+                            kennzeichen = pathiterm[i + 2];
                     }
                     if (pathiterm.Length > i + 3)
                     {
@@ -117,7 +141,7 @@ namespace Anzeige
                             datum = pathiterm[i + 3];
                     }
 
-                    hassubdirs= (pathiterm.Length > i + 4);
+                    hassubdirs = (pathiterm.Length > i + 4);
                     result = new AnzeigeEintrag();
                     result.ZielPfad = string.Join("\\", pathiterm.Take(i + 1));
                     result.AnzeigeDatei = datei;
@@ -160,10 +184,6 @@ namespace Anzeige
                 }
             }
             return result;
-        }
-        private bool IsDatumOrdner(string ordnerName)
-        {
-            return ordnerName.Length == 8 && ordnerName.All(char.IsDigit);
         }
 
         // Standard-Mapping: eindeutige Zuordnung ohne Duplikate
@@ -277,7 +297,6 @@ namespace Anzeige
                 result = result.Replace(key, convertlist[key]);
             return result;
         }
-
     }
 
     /// <summary>
@@ -285,7 +304,7 @@ namespace Anzeige
     /// </summary>
     public class AnzeigeEintrag
     {
-        public string GetSuchText (bool fulltext)
+        public string GetSuchText(bool fulltext)
         {
             string result = $"{Kennzeichen}|{Ort}|{Datum:dd.MM.yyyy HH:mm}|{AnzeigeDatei}";
 
@@ -310,12 +329,10 @@ namespace Anzeige
         private static readonly Regex StandardRegex = new Regex(
             @"^(?<Ort>[A-Z]{1,3})-(?<Buchstaben>[A-Z]{1,3})(?<Zahlen>\d{1,4})(?<Suffix>[EH]?)$",
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
         // Beispielmuster für Ausländerkennzeichen (vereinfacht)
         private static readonly Regex AuslaenderRegex = new Regex(
             @"^[A-Z]{1,3}-[A-Z]{1,3}\d{1,4}$", // kann noch erweitert werden
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
         public KennzeichenTyp Kennzeichentyp
         {
             get => ParseKennzeichen(Kennzeichen);
@@ -345,12 +362,14 @@ namespace Anzeige
         /// Der Haupt-/Zielpfad, unter dem diese Anzeige gefunden wurde
         /// </summary>
         public string ZielPfad { get; set; } = string.Empty;
-
         /// <summary>
         /// Pfad zum Anzeige-Verzeichnis (enthält Anzeige.txt)
         /// </summary>
         public string AnzeigeDatei { get; set; } = string.Empty;
-
+        public string AnzeigePfad
+        {
+            get { return AnzeigeDatei.Replace("Anzeige.txt", ""); }
+        }
         /// <summary>
         /// Kennzeichen (direkt aus Verzeichnis extrahiert)
         /// </summary>
@@ -390,15 +409,12 @@ namespace Anzeige
         public string Ort { get; set; } = string.Empty;
         public DateTime Datum { get; set; }
         public string Text { get; set; } = string.Empty;
-
         public override string ToString() => $"{Kennzeichen} @ {AnzeigeDatei}";
-
         public override bool Equals(object? obj)
         {
             return obj is AnzeigeEintrag other &&
                    AnzeigeDatei.Equals(other.AnzeigeDatei, StringComparison.OrdinalIgnoreCase);
         }
-
         public override int GetHashCode() => AnzeigeDatei.GetHashCode(StringComparison.OrdinalIgnoreCase);
     }
 }

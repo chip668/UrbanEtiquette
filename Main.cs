@@ -1,35 +1,63 @@
 ﻿using AxWMPLib;
-using com.itextpdf.text.pdf;
+using BitMiracle.LibTiff.Classic;
+using ColorPicker;
+using FFmpeg.AutoGen;
 using IronOcr;
-using iTextSharp.text.pdf.parser.clipper;
-using Org.BouncyCastle.Asn1.Cmp;
+using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.DirectoryServices.ActiveDirectory;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Drawing.Printing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Web;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static Anzeige.PatternEngine;
+using static Anzeige.Unfallbeteiligter;
+using static Anzeige.Unfallbeteiligter.Person;
+using static ColorPicker.BackgroundImageTransform;
+using ComboBox = System.Windows.Forms.ComboBox;
 
 
 namespace Anzeige
 {
 
+
     public partial class Main : Form
     {
+        private string _WebPortalScript;
+        public string WebPortalScript
+        {
+            get
+            {
+                return _WebPortalScript;
+            }
+            set
+            {
+                _WebPortalScript = value;
+                if (_WebPortalScript == "")
+                {
+                    CAnzeige.Width = (CWebPortal.Left + CWebPortal.Width) - CAnzeige.Left - 3;
+                    CWebPortal.Visible = false;
+                }
+                else
+                {
+                    CAnzeige.Width = CWebPortal.Left - CAnzeige.Left - 3;
+                    CWebPortal.Visible = true;
+                }
+            }
+        }
         bool skiprcpselect = false;
         SimularComparer cmp = new SimularComparer(false, true, true, false, false, true, false, false);
         public Dictionary<String, List<PixelatedArea>> pixelData = new Dictionary<String, List<PixelatedArea>>();
-        // int cntpixel = 0;
+        BackgroundImageTransform bitf;
         private int cntpixel
         {
             get
@@ -52,12 +80,25 @@ namespace Anzeige
         private int BitmapWidth = 1024;
         private int BitmapHeight = 1024;
         private String _logPath = null;
+        private bool changedBikes
+        {
+            get
+            {
+                bool result = false;
+                foreach (FarradPass fp in CBikeList.Items)
+                {
+                    result |= fp.Changed;
+                }
+                return result;
+            }
+        }
         private String logPath
         {
             get { return _logPath; }
             set
             {
                 _logPath = (value + "\\").Replace("\\\\", "\\");
+                CreateDirectoryIfNotExists(_logPath);
                 CFilelist.Items.Clear();
                 CFilelist.Items.AddRange(Directory.GetFiles(_logPath, "*.log"));
             }
@@ -112,7 +153,6 @@ namespace Anzeige
                 return result;
             }
         }
-        private Color c2;        // Abstandsmessung 
         float scaleFactor = 3.0f; // Vergrößerungsfaktor
         // private String currentfilename;
         private Bitmap _loadedImage;
@@ -176,10 +216,56 @@ namespace Anzeige
             AUGPUNKT,
             REF1,
             REF2,
+            FIXY,
             DIST1,
             DIST2
         }
-        Mode mousemode;
+        Mode _mousemode;
+        bool _mousemodechanging = false;
+        Mode mousemode
+        {
+            get
+            {
+                return _mousemode;
+            }
+            set
+            {
+                if (!_mousemodechanging)
+                {
+                    _mousemodechanging = true;
+                    _mousemode = value;
+                    switch (_mousemode)
+                    {
+                        case Mode.LEFT:
+                            left.Checked = true;
+                            break;
+                        case Mode.RIGHT:
+                            right.Checked = true;
+                            break;
+                        case Mode.AUGPUNKT:
+                            Augpunkt.Checked = true;
+                            break;
+                        case Mode.REF1:
+                            CRef1.Checked = true;
+                            break;
+                        case Mode.REF2:
+                            CRef2.Checked = true;
+                            break;
+                        case Mode.FIXY:
+                            CFixY.Checked = true;
+                            break;
+                        case Mode.DIST1:
+                            CDist1.Checked = true;
+                            break;
+                        case Mode.DIST2:
+                            CDist2.Checked = true;
+                            break;
+                    }
+                    _mousemodechanging = false;
+                }
+            }
+        }
+
         // Falschparker 
         /// <summary>
         /// Enthält Ladungsfähige Anschift
@@ -283,7 +369,61 @@ namespace Anzeige
         /// <summary>
         /// Liste4 der Dateien
         /// </summary>
+        public List<string> FilesList
+        {
+            get
+            {
+                List<string> result = new List<string>();
+                if (this.Kennzeichen != "")
+                {
+                    String fullpath = ZZielpfad + Ort;
+                    fullpath = fullpath + "\\" + this.Kennzeichen + "\\" + DateTime.Now.ToString("yyyyMMdd");
+                    CreateDirectoryIfNotExists(fullpath);
+                    if (AddPath)
+                    {
+                        foreach (String i in CFiles.Items)
+                        {
+                            FileInfo fi = new FileInfo(i);
+                            String fullfilename = fullpath + "\\" + fi.Name;
+                            // result += "\r\n" + fullfilename;
+                            result.Add(fullfilename);
+                        }
+                    }
+                }
+                result.Add(ausschnittTemp);
+                return result;
+            }
+        }
         public string Files
+        {
+            get
+            {
+                String fullpath = ZZielpfad + Ort;
+                fullpath = fullpath + "\\" + this.Kennzeichen + "\\" + DateTime.Now.ToString("yyyyMMdd");
+                CreateDirectoryIfNotExists(fullpath);
+                String result = "";
+                if (AddPath)
+                {
+                    foreach (String i in CFiles.Items)
+                    {
+                        FileInfo fi = new FileInfo(i);
+                        String fullfilename = fullpath + "\\" + fi.Name;
+                        result += "\r\n" + fullfilename;
+                    }
+                }
+                return result;
+            }
+            set
+            {
+                CFiles.Items.Clear();
+                string[] fileLines = value.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string fileValue in fileLines)
+                {
+                    AddFilename(fileValue.Trim());
+                }
+            }
+        }
+        public string AccidentFiles
         {
             get
             {
@@ -351,6 +491,36 @@ namespace Anzeige
                 CDatum.Text = value;
             }
         }
+        public string DatumDD
+        {
+            get
+            {
+                DateTime d;
+                if (DateTime.TryParse(Datum, out d))
+                    return d.Day.ToString("00");
+                return "";
+            }
+        }
+        public string DatumMM
+        {
+            get
+            {
+                DateTime d;
+                if (DateTime.TryParse(Datum, out d))
+                    return d.Month.ToString("00");
+                return "";
+            }
+        }
+        public string DatumYYYY
+        {
+            get
+            {
+                DateTime d;
+                if (DateTime.TryParse(Datum, out d))
+                    return d.Year.ToString();
+                return "";
+            }
+        }
         /// <summary>
         /// Zeit des Verstoßes (von)
         /// </summary>
@@ -362,7 +532,9 @@ namespace Anzeige
             }
             set
             {
-                CZeit.Text = value;
+                // CZeit.Text = value;
+                // CheckAndSwapZeit();
+                SetMinMaxZeit(value);
             }
         }
         /// <summary>
@@ -377,8 +549,53 @@ namespace Anzeige
             }
             set
             {
-                CZeitBis.Text = value;
+                // CZeitBis.Text = value;
+                // CheckAndSwapZeit();
+                SetMinMaxZeit(value);
             }
+        }
+        public string ZeitHH => string.IsNullOrEmpty(CZeit.Text) || CZeit.Text.Length < 2 ? "" : CZeit.Text.Substring(0, 2);
+        public string ZeitMM => string.IsNullOrEmpty(CZeit.Text) || CZeit.Text.Length < 5 ? "" : CZeit.Text.Substring(3, 2);
+        public string ZeitBisHH => string.IsNullOrEmpty(CZeitBis.Text) || CZeitBis.Text.Length < 2 ? "" : CZeitBis.Text.Substring(0, 2);
+        public string ZeitBisMM => string.IsNullOrEmpty(CZeitBis.Text) || CZeitBis.Text.Length < 5 ? "" : CZeitBis.Text.Substring(3, 2); private void SetMinMaxZeit(string value)
+        {
+            if (!DateTime.TryParse(value, out DateTime newTime))
+                return; // value muss gültig sein, sonst kann man nix setzen
+
+            DateTime von = newTime; // Startpunkt für Minimum
+            DateTime bis = newTime; // Startpunkt für Maximum
+
+            // CZeit.Text nur einbeziehen, wenn gültig
+            if (DateTime.TryParse(CZeit.Text, out DateTime parsedVon))
+                von = parsedVon < von ? parsedVon : von;
+
+            // CZeitBis.Text nur einbeziehen, wenn gültig
+            if (DateTime.TryParse(CZeitBis.Text, out DateTime parsedBis))
+                bis = parsedBis > bis ? parsedBis : bis;
+
+            CZeit.Text = von.ToString("HH:mm");
+            CZeitBis.Text = bis.ToString("HH:mm");
+        }
+        bool _running = false;
+        private void CheckAndSwapZeit_X()
+        {
+            if (_running) return; // Ping-Pong-Schutz
+            _running = true;
+
+            DateTime von;
+            DateTime bis;
+
+            bool vonOk = DateTime.TryParse(CZeit.Text, out von);
+            bool bisOk = DateTime.TryParse(CZeitBis.Text, out bis);
+
+            if (vonOk && bisOk && von > bis)
+            {
+                string tmp = CZeit.Text;
+                CZeit.Text = CZeitBis.Text;
+                CZeitBis.Text = tmp;
+            }
+
+            _running = false;
         }
         /// <summary>
         /// Ort des Verstoßes
@@ -406,6 +623,64 @@ namespace Anzeige
 
         }
         /// <summary>
+        /// Ort des Verstoßes
+        /// </summary>
+        public string UOrt
+        {
+            get
+            {
+                String[] items = CUOrt.Text.Split(';');
+                if (items.Length > 1)
+                {
+                    if (UPLZ == "")
+                    {
+                        UPLZ = items[0];
+                    }
+                    Mail = items[2];
+                    return items[1];
+                }
+                return "";
+            }
+            set
+            {
+                CUOrt.Text = value;
+            }
+
+        }
+        public string UStrasse
+        {
+            get
+            {
+                return CUStrasse.Text;
+            }
+            set
+            {
+                CUStrasse.Text = value;
+            }
+        }
+        public string UHN
+        {
+            get
+            {
+                return CUHN.Text;
+            }
+            set
+            {
+                CUHN.Text = value;
+            }
+        }
+        public string Unfallhergang
+        {
+            get
+            {
+                return CUnfallhergang.Text;
+            }
+            set
+            {
+                CUnfallhergang.Text = value;
+            }
+        }
+        /// <summary>
         /// PLZ zum Verstoß
         /// </summary>
         public string PLZ
@@ -417,6 +692,17 @@ namespace Anzeige
             set
             {
                 CPLZ.Text = value;
+            }
+        }
+        public string UPLZ
+        {
+            get
+            {
+                return CUPLZ.Text;
+            }
+            set
+            {
+                CUPLZ.Text = value;
             }
         }
         /// <summary>
@@ -480,6 +766,41 @@ namespace Anzeige
                     CKennzeichen.Text = value;
             }
         }
+        private Match KennzeichenMatch
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(CKennzeichen.Text))
+                    return Match.Empty;
+
+                return Regex.Match(
+                    CKennzeichen.Text.Trim(),
+                    @"^([A-ZÄÖÜ]{1,3})[- ]([A-Z]{1,2})([0-9]{1,4}[A-Z]?)$",
+                    RegexOptions.IgnoreCase
+                );
+            }
+        }
+        public string KennzeichenO
+        {
+            get
+            {
+                return KennzeichenMatch.Success ? KennzeichenMatch.Groups[1].Value : "";
+            }
+        }
+        public string KennzeichenC
+        {
+            get
+            {
+                return KennzeichenMatch.Success ? KennzeichenMatch.Groups[2].Value : "";
+            }
+        }
+        public string KennzeichenN
+        {
+            get
+            {
+                return KennzeichenMatch.Success ? KennzeichenMatch.Groups[3].Value : "";
+            }
+        }
         /// <summary>
         /// Automarke des Verstoßfahrzeuges
         /// </summary>
@@ -504,6 +825,14 @@ namespace Anzeige
         /// <summary>
         /// Liste der Verstöße String mit \r\n getrennt
         /// </summary>
+        public string KFZTyp
+        {
+            get { return "KFZ"; }
+        }
+        public string KFZCountry
+        {
+            get { return "D"; }
+        }
         public string Verstoss
         {
             get
@@ -588,40 +917,107 @@ namespace Anzeige
         {
             get
             {
-                String result = Template;
-                result = result.Replace("<mail>", Mail);
-                result = result.Replace("<verstoss>", Verstoss);
-                result = result.Replace("<freetext>", FreeText);
-                result = result.Replace("<datum>", Datum);
-                result = result.Replace("<zeit>", Zeit);
-                result = result.Replace("<zeitbis>", (Zeit != ZeitBis) ? " bis " + ZeitBis : "");
-                result = result.Replace("<strasse>", Strasse);
-                result = result.Replace("<hausnummer>", HN);
-                result = result.Replace("<plz>", PLZ);
-                result = result.Replace("<ort>", Ort);
-                result = result.Replace("<marke>", Marke);
-                result = result.Replace("<farbe>", Farbe);
-                result = result.Replace("<kennzeichen>", Kennzeichen);
-                result = result.Replace("<zname>", ZName);
-                result = result.Replace("<zvorrname>", ZVorname);
-                result = result.Replace("<zstrasse>", ZStrasse);
-                result = result.Replace("<zhausnummer>", ZHausnummer);
-                result = result.Replace("<zplz>", ZPLZ);
-                result = result.Replace("<zort>", ZOrt);
-                result = result.Replace("<files>", Files);
-                result = result.Replace("<kennzeichenbild>", ausschnittTemp);
-                result = result.Replace("<pdffile>", PDFFilename);
-                result = result.Replace("<zbluetooth>", PDFFilename);
-                result = result.Replace("<zielpfad>", PDFFilename);
-                result = result.Replace("<zvorname>", PDFFilename);
-                result = result.Replace("<zsmtpserver>", PDFFilename);
-                result = result.Replace("<zsmtpport>", PDFFilename);
-                result = result.Replace("<zsendermail>", PDFFilename);
-                result = result.Replace("<zsubject>", PDFFilename);
-                result = result.Replace("<zpassword>", PDFFilename);
-
-                return result;
+                return TranslateMessage(Template);
             }
+        }
+        private string GetMacroFile(string filename)
+        {
+            string template = File.ReadAllText(filename);
+            string macro = TranslateMessage(template);
+            return macro;
+        }
+        private void FCSExecute(string fcsfile)
+        {
+            String fullpath = ZZielpfad + Ort;
+            fullpath = fullpath + "\\" + this.Kennzeichen + "\\" + DateTime.Now.ToString("yyyyMMdd");
+            CreateDirectoryIfNotExists(fullpath);
+            string totalimage = fullpath + "\\Bilder.png";
+            ImageCollageGenerator.WriteOptimalCollage(FilesList, totalimage);
+
+            BrowserControl bc = new BrowserControl();
+            string macrocode = File.ReadAllText(fcsfile).Replace("\r\n", "\n");
+            macrocode = TranslateMessage(macrocode);
+            // File.WriteAllText(@"C:/temp/test.fsc", macrocode);
+            // bc.ExecuteScriptFile("C:/temp/test.fsc");
+            // bc.ExecuteScript(macrocode);
+
+
+            string tempDir = Path.Combine(Path.GetTempPath(), "fsc_temp");
+            Directory.CreateDirectory(tempDir);
+            string tempFile = Path.Combine(tempDir, "test.fsc");
+            File.WriteAllText(tempFile, macrocode);
+            bc.ExecuteScriptFile(tempFile);
+            // Directory.Delete(tempDir, true);
+
+        }
+        private string TranslateMessage(string template)
+        {
+            string result = template;
+            result = result.Replace("<mail>", Mail);
+            result = result.Replace("<verstoss>", Verstoss);
+            result = result.Replace("<freetext>", FreeText);
+            result = result.Replace("<datum>", Datum);
+            result = result.Replace("<datumDD>", DatumDD);
+            result = result.Replace("<datumMM>", DatumMM);
+            result = result.Replace("<datumYYYY>", DatumYYYY);
+            result = result.Replace("<zeit>", Zeit);
+            result = result.Replace("<zeitbis>", (Zeit != ZeitBis) ? " bis " + ZeitBis : "");
+            result = result.Replace("<zeithh>", ZeitHH);
+            result = result.Replace("<zeitmm>", ZeitMM);
+            result = result.Replace("<zeitbishh>", ZeitHH);
+            result = result.Replace("<zeitbismm>", ZeitMM);
+            result = result.Replace("<strasse>", Strasse);
+            result = result.Replace("<hausnummer>", HN);
+            result = result.Replace("<plz>", PLZ);
+            result = result.Replace("<ort>", Ort);
+            result = result.Replace("<marke>", Marke);
+            result = result.Replace("<farbe>", Farbe);
+            result = result.Replace("<kennzeichen>", Kennzeichen);
+            result = result.Replace("<kennzeicheno>", KennzeichenO);
+            result = result.Replace("<kennzeichenc>", KennzeichenC);
+            result = result.Replace("<kennzeichenn>", KennzeichenN);
+
+            result = result.Replace("<kfztyp>", KFZTyp);
+            result = result.Replace("<kfzcountry>", KFZCountry);
+            result = result.Replace("<kennzeichen>", Kennzeichen);
+            result = result.Replace("<zname>", ZName);
+            result = result.Replace("<zvorname>", ZVorname);
+            result = result.Replace("<zstrasse>", ZStrasse);
+            result = result.Replace("<zhausnummer>", ZHausnummer);
+            result = result.Replace("<zplz>", ZPLZ);
+            result = result.Replace("<zort>", ZOrt);
+            result = result.Replace("<zemail>", ZEMail);
+            result = result.Replace("<zphone>", ZPhone);
+            result = result.Replace("<files>", Files);
+            result = result.Replace("<kennzeichenbild>", ausschnittTemp);
+            result = result.Replace("<pdffile>", PDFFilename);
+            result = result.Replace("<zbluetooth>", "BT NI");
+            result = result.Replace("<zielpfad>", ZZielpfad);
+            result = result.Replace("<zvorname>", ZVorname);
+            result = result.Replace("<zsmtpserver>", "192.168.0.1");
+            result = result.Replace("<zsmtpport>", "587");
+            result = result.Replace("<zsendermail>", ZEMail);
+            result = result.Replace("<zsubject>", "Anzeige einer Verkehrsordnungswiedrigkeit");
+            result = result.Replace("<zpassword>", "");
+
+            for (int i = 0; i < CFiles.Items.Count; i++)
+            {
+                string filename = (string)CFiles.Items[i];
+                // Platzhalter <image 0>, <image 1>, ...
+                result = result.Replace($"<image {i}>", filename);
+            }
+
+            String fullpath = ZZielpfad + Ort;
+            fullpath = fullpath + "\\" + this.Kennzeichen + "\\" + DateTime.Now.ToString("yyyyMMdd");
+            CreateDirectoryIfNotExists(fullpath);
+            string totalimage = fullpath + "\\Bilder.png";
+            string totalimagejpg = fullpath + "\\Bilder.jpg";
+            /*
+            ImageCollageGenerator.WriteOptimalCollage(FilesList, totalimage);
+            */
+            result = result.Replace("<totalimage>", totalimage);
+            result = result.Replace("<totalimagejpg>", totalimagejpg);
+            return result;
         }
         /// <summary>
         /// Sollen die Pfade in die Meldung übertragen werden (defautl true)
@@ -751,15 +1147,23 @@ namespace Anzeige
         {
             String key = "";
             verstossbussgeld = new Bussgeld();
+            /*
             List<string> allLines = new List<string>();
             allLines.AddRange(File.ReadAllLines(configfile));
             allLines.AddRange(File.ReadAllLines("Data.txt"));
             string[] lines = allLines.ToArray();
             CDataList.Items.Clear();
             CDataList.Items.AddRange(File.ReadAllLines("Data.txt"));
+            */
+            string[] lines = loadLines();
             if (!verstossonly) COrt.Items.Clear();
             CVerstossaus.Items.Clear();
-            if (!verstossonly) CMarke.Items.Clear();
+            if (!verstossonly)
+            {
+                CMarke.Items.Clear();
+                CHersteller.Items.Clear();
+                CHerstellerMarke.Items.Clear();
+            }
             bussgelder.Clear();
             foreach (String s in lines)
             {
@@ -772,6 +1176,7 @@ namespace Anzeige
                     else if (key == "<ort>;<mail>")
                     {
                         COrt.Items.Add(s);
+                        CUOrt.Items.Add(s);
                     }
                     else if (key == "<verstoss>")
                     {
@@ -818,6 +1223,8 @@ namespace Anzeige
                     else if (key == "<marke>")
                     {
                         CMarke.Items.Add(s);
+                        CHersteller.Items.Add(s);
+                        CHerstellerMarke.Items.Add(s);
                     }
                     else if (key == "<zname>")
                     {
@@ -895,7 +1302,6 @@ namespace Anzeige
             }
             set { _AnzeigenHistory = value; }
         }
-
         AboutBox1 aboutdlg = null;
         /// <summary>
         /// Erzeugt aus einer Vorlage (htmp mit Platzhalter) eine PDF Datei 
@@ -1003,6 +1409,7 @@ namespace Anzeige
             catch
             {
             }
+            bitf = new BackgroundImageTransform(CSave);
         }
         /// <summary>
         /// Erzeugt einen vollständigen Pfad
@@ -1031,6 +1438,31 @@ namespace Anzeige
         /// <returns>true wenn alle Daten korrekt sidn sonst false</returns>
         private Boolean pruefeDaten()
         {
+
+            bool fehler = false;
+            string meldung = "";
+
+            // Prüfen ob Datum gültig ist und nicht älter als 3 Monate
+            if (!DateTime.TryParse(Datum, out DateTime datumVorfall))
+            {
+                fehler = true;
+                meldung = "Datum ist ungültig.";
+            }
+            else if (datumVorfall < DateTime.Today.AddMonths(-3))
+            {
+                fehler = true;
+                meldung = "Der Vorfall ist älter als 3 Monate.";
+            }
+
+            // EIN EINZIGER EXITPOINT
+            if (fehler)
+            {
+                DialogResult result = MessageBox.Show(meldung + "\nSoll die Anzeige trotzdem erfasst werden?",
+                                                      "Hinweis", MessageBoxButtons.YesNo);
+                if (result == DialogResult.No)
+                    return !fehler; // hier wird abgebrochen, sonst weiter
+            }
+
             if (cntpixel == 0) { if (MessageBox.Show("Müssen noch unbeteiligte verpixelt werden?", "DSGVO", MessageBoxButtons.YesNo) == DialogResult.Yes) { return false; } }
             if (Files == "") { MessageBox.Show("Bitte Foto wählen"); return false; }
             if (Datum == "") { MessageBox.Show("Datum des Vorfalls"); return false; }
@@ -1055,7 +1487,6 @@ namespace Anzeige
             return true;
         }
         /// <summary>
-        /// todo : Prüft ob zwei Farben ähnlich sind. Nicht zuverlässig
         /// </summary>
         /// <param name="color1">Farbe 1</param>
         /// <param name="color2">Farbe 2</param>
@@ -1068,7 +1499,6 @@ namespace Anzeige
                    color1.B == color2.B;
         }
         /// <summary>
-        /// todo : Berechnet den Unterschied zwischen zwei Farben. unzuverlässig
         /// </summary>
         /// <param name="a">Farbe 1</param>
         /// <param name="b">Farbe 2</param>
@@ -1124,8 +1554,11 @@ namespace Anzeige
             if (filename == "")
                 filename = CurrentFile;
             List<PixelatedArea> rects = GetRectangles(filename);
-            foreach (PixelatedArea rcl in rects)
-                PixelOutRegion(bitmap, rcl);
+            if (rects != null)
+            {
+                foreach (PixelatedArea rcl in rects)
+                    PixelOutRegion(bitmap, rcl);
+            }
         }
         /// <summary>
         /// verpöixelt eine Region im angegebenen Bitmap
@@ -1356,16 +1789,35 @@ namespace Anzeige
         {
             ScaledSave((Bitmap)Image.FromFile(src), dst, faktor);
         }
+        private void ErrorMessage(string v)
+        {
+            MessageBox.Show(v);
+        }
         /// <summary>
         /// Eerzeugt eine Kopie eines Bildes und skaliert das bild um es dann abzuspeichern
         /// </summary>
         /// <param name="original">Original Bitmap</param>
         /// <param name="dst">Ziel</param>
         /// <param name="faktor">Skalierung</param>
-        public void ScaledSave(Bitmap original, String dst, double faktor)
+        public void ScaledSave(Bitmap original, string dst, double faktor)
         {
-            Bitmap resized = new Bitmap(original, new Size((int)(original.Width * faktor), (int)(original.Height * faktor)));
-            resized.Save(dst);
+            try
+            {
+                Bitmap resized = new Bitmap(
+                    original,
+                    new Size(
+                        (int)(original.Width * faktor),
+                        (int)(original.Height * faktor)
+                    )
+                );
+
+                resized.Save(dst);
+                resized.Dispose();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage("Fehler beim Speichern des skalierten Bildes:\r\n" + ex.Message);
+            }
         }
         /// <summary>
         /// Verstoß aus der Verstossliste entfernen
@@ -1598,21 +2050,35 @@ namespace Anzeige
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
+            CFahrzeugart.DataSource = Enum.GetValues(typeof(Unfallbeteiligter.Fahrzeugart));
+            CZustand.DataSource = Enum.GetValues(typeof(Unfallbeteiligter.Zustand));
+            CKopplung.DataSource = Enum.GetValues(typeof(Unfallbeteiligter.Kopplungsart));
+            CPInsasse.DataSource = Enum.GetValues(typeof(Unfallbeteiligter.Person.PersonArt));
+
             CVideoPlayer.settings.autoStart = false;
             CVideoPlayer.uiMode = "none"; // keine Standard-UI
             smallToolbox1.AddButtons(new string[] { "🗎", "🖼", "📋" }, new string[] { "Neue Anzeige", "Bilder laden", "Adresse einfügen" });
             smallToolbox2.AddButtons(new string[] { "💾", "📁", "🎥", "📁", "🖼", "📋" }, new string[] { "Speichern der aktuellen Anzeige", "Anzeige laden", "Video auswählen", "Ordner öffnen", "Bild aus der Zwischenablage einfügen", "Adressen kopieren" });
             smallToolbox3.AddButtons(new string[] { "🌐", "👷", "⚙", "🗎", "🛈" }, new string[] { "Adresse mbei Google anzeigen", "Assistent", "Einstellung", "Textvorlage bearbeiten", "Hilfe" });
-            smallToolbox4.AddButtons(new string[] { "💾", "📁" }, new string[] { "Anzeigeart speichern", "Anzeigeart laden" });
+            smallToolbox4.AddButtons(new string[] { "💾", "📁", "🖼" }, new string[] { "Anzeigeart speichern", "Anzeigeart laden", "MS Paint" });
             smallToolbox5.AddButtons(new string[] { "⇊", "🠗", "↑", "⇈" }, new string[] { "Alles Verstöße anzeigen", "Verstoß anzeigen", "Verstoß nicht anzeigen", "Keine Verstöße anzeigen" });
             smallToolbox6.AddButtons(new string[] { "⏫", "⇑", "⇓", "⏬" }, new string[] { "Anfang", "Hoch", "runter", "Ende" });
-            smallToolbox7.AddButtons(new string[] { "📂", "🖼", "📏", "📋" }, new string[] { "Laden", "Anzeigen", "Abstand", "Kopieren" });
-            smallToolbox8.AddButtons(new string[] { "A", "B", "🌐", "📏" }, new string[] { "Startpunkt", "Endpunkt", "Maps", "Messen" });
+            smallToolbox7.AddButtons(new string[] { "📂", "⚖️", "📏", "📋", "🖼" }, new string[] { "Laden", "Anzeigen", "Abstand", "Kopieren", "MS Paint" });
+            smallToolbox8.AddButtons(new string[] { "A", "B", "🌐", "⟂", "📏" }, new string[] { "Startpunkt", "Endpunkt", "Maps", "Kartenmessung", "Messen" });
+            smallToolbox9.AddButtons(new string[] { "🚲", "👮", "🖼", "␡", "🗄️", "📦", "🗐", "🗂", "🖶", "💾", "🗎" }, new string[] { "neues Rad", "Fahrradpass Drucken", "Dateien einfügen", "Löschen", "Archivieren", "alle Speichern", "alle Laden", "Verzeichnis", "Drucken", "Speichern", "Laden" });
+            smallToolbox10.AddButtons(new string[] { "⚖", "§", "🏷", "🧰" }, new string[] { "Schadenersatz", "Diebstahl", "QR Code", "QR Code  übernehmen." });
+            smallToolbox11.AddButtons(new string[] { "🔍", "🗃️", "🖨️", "🗂️", "⥮" }, new string[] { "suchen", "Öffnen", "Drucken", "alle drucken", "Sortieren" });
+            smallToolbox12.AddButtons(new string[] { "🗎", "🖼", "📋", "💾", "📁", "🖨️", "🌐", "📋" }, new string[] { "Neue Anzeige", "Bilder laden", "Adresse einfügen", "Speichern", "Laden", "Drucken", "google maps öffenen", "Adreesse einfügen" });
+            smallToolbox14.AddButtons(new string[] { "🔍", "🏠", "◀️", "▶️", "🔄", "⏹️", "🔖", "⚙️", "✚", "💾", "📂" }, new string[] { "Suche starten", "Home", "Zurück", "Weiter", "Aktualisieren", "Stop", "Lesezeichen", "Einstellungen", "Hinzufügen", "Speichern", "Laden" });
+            smallToolbox15.AddButtons(new string[] { "📂" }, new string[] { "Laden" });
+
+
 
             smallToolbox2.OpenMode = false;
             smallToolbox3.OpenMode = false;
             smallToolbox5.OpenMode = false;
             smallToolbox6.OpenMode = false;
+            // smallToolbox10.OpenMode = false;
 
 
             UseLogo = true;
@@ -1630,6 +2096,39 @@ namespace Anzeige
             SetImage(global::Anzeige.Properties.Resources.eng);
             selectedRef = pictureBox4;
             aboutdlg.Hide();
+            oabrowser.Navigated += Oabrowser_Navigated;
+            LoadBookmarks();
+            // CKennzeichenArt.Items.Clear();
+            // CKennzeichenArt.Items.AddRange(PatternEngine.Patterns.Keys.ToArray());
+        }
+        void SetCarColor(Color c, string name)
+        {
+
+        }
+        public void MarkSelectedPanel(string name)
+        {
+            try
+            {
+                Panel[] panels =
+                {
+                    panel1, panel2, panel3, panel4, panel5, panel6, panel7, panel8, panel9, panel10, panel11, panel12
+                };
+
+                foreach (Panel p in panels)
+                {
+                    p.BorderStyle = BorderStyle.FixedSingle;
+
+                    if (p.Tag is string tag && tag == name)
+                    {
+                        p.BorderStyle = BorderStyle.Fixed3D;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Fehler beim Panel-Marking: {ex.Message}",
+                                "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         /// <summary>
         /// Farbe auswählen
@@ -1643,6 +2142,9 @@ namespace Anzeige
             CAnzeigeText.Text = Message;
             panel1.BackColor = psender.BackColor;
             CAnzeigeText.Text = Message;
+            MarkSelectedPanel(Farbe);
+
+            /*
             panel1.BorderStyle = BorderStyle.FixedSingle;
             panel2.BorderStyle = BorderStyle.FixedSingle;
             panel3.BorderStyle = BorderStyle.FixedSingle;
@@ -1657,6 +2159,8 @@ namespace Anzeige
             panel12.BorderStyle = BorderStyle.FixedSingle;
             psender.BorderStyle = BorderStyle.Fixed3D;
             panel1.BorderStyle = BorderStyle.Fixed3D;
+            */
+
         }
         /// <summary>
         /// Bestimmt die Daten zum zugehörigen Ordnungsamt
@@ -1674,11 +2178,14 @@ namespace Anzeige
                 {
                     COrt.SelectedValue = i;
                     COrt.Text = i;
+                    CUOrt.SelectedValue = i;
+                    CUOrt.Text = i;
                     String[] items = i.Split(';');
 
                     if (CPLZ.Text != "")
                     {
                         CPLZ.Text = items[0];
+                        CUPLZ.Text = items[0];
                     }
                     CMail.Text = items[2];
                     URL = items[3];
@@ -1716,15 +2223,6 @@ namespace Anzeige
         private void CPLZ_TextChanged(object sender, EventArgs e)
         {
             CAnzeigeText.Text = Message;
-        }
-        private void COrt_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            String[] items = COrt.Text.Split(';');
-            if (items.Length > 1)
-            {
-                selectOrt(items[1]);
-                CAnzeigeText.Text = Message;
-            }
         }
         private void CMarke_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1904,38 +2402,23 @@ namespace Anzeige
             CSave.Refresh();
         }
         LicensePlateValidator lv = new LicensePlateValidator();
-        private void CKennzeichen_TextChanged(object sender, EventArgs e)
+        public static void SetTextKeepCursor(TextBox box, string newText)
         {
-            if (COrt.Text == "")
-            {
-                String ortsname;
-                CAnzeigeText.Text = Message;
-                String[] items = CKennzeichen.Text.Split(' ');
-                ortsname = FindOrtName(items[0]);
-                selectOrt(ortsname);
-            }
-            if (CKennzeichen.Text.Length > 0)
-            {
-                CRecognized.Text = CKennzeichen.Text.Replace(" ", " ");
-                CRecognized.Visible = true;
-            }
-            else
-                CRecognized.Visible = false;
+            int oldPos = box.SelectionStart;
+            bool cursorWasAtEnd = oldPos == box.Text.Length;
 
-            var engine = new PatternEngine();
+            box.Text = newText;
 
-            if (engine.Validate(CKennzeichen.Text, out string pattern))
+            if (cursorWasAtEnd)
             {
-                CKennzeichen.BackColor = Color.FromArgb(192, 192, 255);
-                CKennzeichen.ForeColor = SystemColors.WindowText;
-                if (pattern != "Standard")
-                    CMarke.Text = pattern;
+                box.SelectionStart = box.Text.Length;
             }
             else
             {
-                CKennzeichen.BackColor = Color.Red;
-                CKennzeichen.ForeColor = Color.White;
+                box.SelectionStart = Math.Min(oldPos, box.Text.Length);
             }
+
+            box.SelectionLength = 0;
         }
         private void CStrasse_TextChanged(object sender, EventArgs e)
         {
@@ -1976,10 +2459,6 @@ namespace Anzeige
                 Tools.DummyRef(ex);
             }
         }
-        private void CFotoAnzeige_Click(object sender, EventArgs e)
-        {
-
-        }
         private void CFotoAnzeige_Resize(object sender, EventArgs e)
         {
             if (ausschnitt != null)
@@ -1992,6 +2471,7 @@ namespace Anzeige
             edit_Adress1.Location = new Point(0, 0);
             edit_Adress1.Size = CSave.Size;
             abstandsmeter1.Left = CSave.Width - abstandsmeter1.Width;
+            bitf = new BackgroundImageTransform(CSave);
         }
         private void CFiles_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -2138,7 +2618,6 @@ namespace Anzeige
         }
         public string FixOCRText(String original)
         {
-            String result = "";
             String numbers = "";
             String letters = "";
             String ort = "";
@@ -2370,13 +2849,21 @@ namespace Anzeige
         }
         private void CAnzeige_Click(object sender, EventArgs e)
         {
+            List<String> filelist = new List<String>();
+            if (PrepareSending(filelist))
+            {
+                SendeEmailMitAnhaengen(Mail, "Anzeige einer Verkehrsordnungswiedrigkeit", Message, filelist);
+            }
+        }
+
+        private bool PrepareSending(List<String> filelist)
+        {
             if (pruefeDaten())
             {
                 try
                 {
                     Bitmap tempausschnitt = (Bitmap)CAusschnitt.BackgroundImage;
 
-                    List<String> filelist = new List<String>();
                     _Files.Clear();
                     foreach (String Bild in CFiles.Items)
                     {
@@ -2398,12 +2885,14 @@ namespace Anzeige
                         if (File.Exists(FullPath + "\\Kenneichen.jpg"))
                             File.Delete(FullPath + "\\Kenneichen.jpg");
                         tempausschnitt.Save(FullPath + "\\Kenneichen.jpg", ImageFormat.Jpeg);
-                        SendeEmailMitAnhaengen(Mail, "Anzeige einer Verkehrsordnungswiedrigkeit", Message, filelist);
+                        return true;
                     }
                 }
                 catch { }
             }
+            return false;
         }
+
         private void button2_Click(object sender, EventArgs e)
         {
 
@@ -2474,23 +2963,6 @@ namespace Anzeige
         {
 
         }
-        private void CFiles_DragDrop(object sender, DragEventArgs e)
-        {
-            //target control will accept data here 
-            Panel destination = (Panel)sender;
-            destination.BackgroundImage = (Bitmap)e.Data.GetData(typeof(Bitmap));
-        }
-        private void CFiles_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(typeof(Bitmap)))
-            {
-                e.Effect = DragDropEffects.Copy;
-            }
-            else
-            {
-                e.Effect = DragDropEffects.None;
-            }
-        }
         private void CFiles_MouseDown(object sender, MouseEventArgs e)
         {
         }
@@ -2533,7 +3005,9 @@ namespace Anzeige
                     break;
 
                 case "Video":
-                    CLupe_Click(this, new EventArgs());
+                    // CLupe_Click(this, new EventArgs());
+                    SynchVideoTab(tabControl1, CVideo, CTabPages, CVideos);
+                    LoadVideoFile();
                     break;
 
                 case "Marke":
@@ -2618,8 +3092,10 @@ namespace Anzeige
             // Zeigen Sie das geladene Bild auf dem PictureBox-Steuerelement an
             DrawLines();
         }
+        string distancefilename = "";
         private void LoadImage(String filename)
         {
+            distancefilename = filename;
             Bitmap temp = new Bitmap(filename);
             temp = ScaleImage(temp, pictureBox.Width, pictureBox.Height);
 
@@ -2810,66 +3286,6 @@ namespace Anzeige
         {
             textrefresh();
         }
-        private void pictureBox_MouseDown(object sender, MouseEventArgs e)
-        {
-            Pointl = e.Location;
-            start = new Point(e.Location.X, e.Location.Y);
-            DrawLines();
-        }
-        private void pictureBox_MouseMove(object sender, MouseEventArgs e)
-        {
-            stop = new Point(e.Location.X, (CLockY.Checked ? Pointl.Y : e.Location.Y));
-
-            if (loadedImage != null)
-                downhelp = new Point(e.Location.X, loadedImage.Height);
-            DrawLines();
-        }
-        private void pictureBox_MouseUp(object sender, MouseEventArgs e)
-        {
-            CLockY.Checked = false;
-            switch (mousemode)
-            {
-                case Mode.LEFT:
-                    CLockY.Checked = false;
-                    pleft = stop;
-                    right.Checked = true;
-                    pright = new Point(pright.X, pleft.Y);
-                    break;
-                case Mode.RIGHT:
-                    CLockY.Checked = false;
-                    pright = stop;
-                    Augpunkt.Checked = true;
-                    break;
-                case Mode.AUGPUNKT:
-                    CLockY.Checked = false;
-                    paug = stop;
-                    break;
-                case Mode.REF1:
-                    CLockY.Checked = true;
-                    pref1 = stop;
-                    mousemode = Mode.REF2;
-                    CRef2.Checked = true;
-                    pref2 = new Point(pref2.X, pref1.Y);
-                    break;
-                case Mode.REF2:
-                    // CLockY.Checked = true;
-                    pref2 = stop;
-                    break;
-                case Mode.DIST1:
-                    CLockY.Checked = true;
-                    dist1 = stop;
-                    CDist2.Checked = true;
-                    dist2 = new Point(paug.X, dist1.Y);
-                    break;
-                case Mode.DIST2:
-                    // CLockY.Checked = true;
-                    dist2 = stop;
-                    CalculateAndDisplayDistance();
-                    break;
-            }
-            textrefresh();
-            DrawLines();
-        }
         private Bitmap ScaleImage(Bitmap originalImage, float scaleFactor)
         {
             int newWidth = (int)(originalImage.Width * scaleFactor);
@@ -2947,6 +3363,33 @@ namespace Anzeige
                     {
                         Insert_Click(sender, new EventArgs());
                     }
+                    else if (tabControl1.SelectedTab == CFarradPassSelect)
+                    {
+                        if (Clipboard.ContainsImage() && _currentFahrradPass != null)
+                        {
+                            try
+                            {
+                                string filename = GetNewPassFileName();
+                                CBikeList.SelectedItem = currentFahrradPass;
+                                Image clipboardImage = Clipboard.GetImage();
+                                if (clipboardImage != null)
+                                {
+                                    clipboardImage.Save(filename);
+                                    currentFahrradPass.FotoDateien.Add(filename);
+                                    UpdateBikepass();
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Ein Fehler ist aufgetreten: " + ex.Message);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Die Zwischenablage enthält kein Bild.");
+                        }
+                    }
                     else
                     {
                         CClipImage_Click(sender, new EventArgs());
@@ -2956,7 +3399,7 @@ namespace Anzeige
                 case 3:
                     if (tabControl1.SelectedTab == CTAbstand)
                     {
-                        button7_Click(sender, e);
+                        BTMClip_Click(sender, e);
                     }
                     else
                     {
@@ -2972,6 +3415,56 @@ namespace Anzeige
                     if (CFiles.SelectedItem != null)
                     {
                         Clipboard.SetImage(CSave.BackgroundImage);
+                    }
+                    break;
+
+                case 6:
+                    {
+                        CLockY.Visible = !CLockY.Visible;
+                        CLockY.Checked = CLockY.Visible;
+                    }
+                    break;
+
+                case 14:
+                    {
+                        switch (mousemode)
+                        {
+                            case Mode.LEFT:
+                            case Mode.RIGHT:
+                            case Mode.AUGPUNKT:
+                                mousemode = Mode.REF1;
+                                break;
+                            case Mode.REF1:
+                            case Mode.REF2:
+                                mousemode = Mode.FIXY;
+                                break;
+                            case Mode.FIXY:
+                            case Mode.DIST1:
+                            case Mode.DIST2:
+                                mousemode = Mode.LEFT;
+                                break;
+                        }
+                    }
+                    break;
+                case 16:
+                    {
+                        switch (mousemode)
+                        {
+                            case Mode.LEFT:
+                            case Mode.RIGHT:
+                            case Mode.AUGPUNKT:
+                                mousemode = Mode.FIXY;
+                                break;
+                            case Mode.REF1:
+                            case Mode.REF2:
+                                mousemode = Mode.LEFT;
+                                break;
+                            case Mode.FIXY:
+                            case Mode.DIST1:
+                            case Mode.DIST2:
+                                mousemode = Mode.REF1;
+                                break;
+                        }
                     }
                     break;
             }
@@ -3005,6 +3498,11 @@ namespace Anzeige
             int pos = idx - 1;
             while ((pos > -1) && (((String)CDataList.Items[pos])).Substring(0, 1) != "<")
                 pos--;
+
+            if (edit_Adress1.Index > -1 && edit_Adress1.changed)
+            {
+                CDataList.Items[edit_Adress1.Index] = edit_Adress1.Line;
+            }
             if (pos > -1)
             {
                 String s = (String)CDataList.Items[pos];
@@ -3016,12 +3514,14 @@ namespace Anzeige
                         case "<ort>;<mail>":
                             edit_Line1.Visible = false;
                             edit_Adress1.Line = s0;
+                            edit_Adress1.Index = idx;
                             edit_Adress1.Dock = DockStyle.Fill;
                             edit_Adress1.Visible = true;
                             break;
 
                         default:
                             edit_Adress1.Visible = false;
+                            edit_Adress1.Index = -1;
                             edit_Line1.Caption = s;
                             edit_Line1.Text = s0;
                             edit_Line1.Dock = DockStyle.Fill;
@@ -3079,25 +3579,20 @@ namespace Anzeige
                 }
             }
         }
-        private void CKennzeichen_GotFocus(object sender, EventArgs e)
-        {
-            CPixeln.Checked = false;
-        }
-        private void CKennzeichen_LostFocus(object sender, EventArgs e)
-        {
-            CPixeln.Checked = true;
-        }
         private List<PixelatedArea> GetRectangles(String fileName)
         {
-            List<PixelatedArea> result;
-            if (!pixelData.ContainsKey(fileName))
+            List<PixelatedArea> result = null;
+            if (fileName != null)
             {
-                result = new List<PixelatedArea>();
-                pixelData[fileName] = result;
-            }
-            else
-            {
-                result = pixelData[fileName];
+                if (!pixelData.ContainsKey(fileName))
+                {
+                    result = new List<PixelatedArea>();
+                    pixelData[fileName] = result;
+                }
+                else
+                {
+                    result = pixelData[fileName];
+                }
             }
             return result;
         }
@@ -3105,6 +3600,29 @@ namespace Anzeige
         {
             SelectFile(fileName);
             CFiles.Items.Add(fileName);
+            tabControl1.SelectedTab = CTAnzeige;
+        }
+        void InitAnzeige(SmallToolbox.ClickToolEventArgs e)
+        {
+            ausschnittTemp = "";
+            CStrasse.Text = "";
+            CHN.Text = "";
+            CMarke.Text = "";
+            CVerstoss.Items.Clear();
+            CFiles.Items.Clear();
+            panel_Click(panel4, e);
+            CSave.BackgroundImage = null;
+            CDatum.Text = "";
+            CZeit.Text = "";
+            CZeitBis.Text = "";
+            CAusschnitt.Hide();
+            CKennzeichen.Text = "";
+            CLogo.BackgroundImage = null;
+            CFreeText.Text = "";
+            panel1.BackColor = Color.Gold;
+            CPixeln.Checked = true;
+            pixelData = new Dictionary<String, List<PixelatedArea>>();
+            Init();
         }
         private void smallToolbox1_ClickTool(object sender, SmallToolbox.ClickToolEventArgs e)
         {
@@ -3112,25 +3630,7 @@ namespace Anzeige
             {
                 case 0:
                     {
-                        ausschnittTemp = "";
-                        CStrasse.Text = "";
-                        CHN.Text = "";
-                        CMarke.Text = "";
-                        CVerstoss.Items.Clear();
-                        CFiles.Items.Clear();
-                        panel_Click(panel4, e);
-                        CSave.BackgroundImage = null;
-                        CDatum.Text = "";
-                        CZeit.Text = "";
-                        CZeitBis.Text = "";
-                        CAusschnitt.Hide();
-                        CKennzeichen.Text = "";
-                        CLogo.BackgroundImage = null;
-                        CFreeText.Text = "";
-                        panel1.BackColor = Color.Gold;
-                        CPixeln.Checked = true;
-                        pixelData = new Dictionary<String, List<PixelatedArea>>();
-                        Init();
+                        InitAnzeige(e);
                     }
                     break;
                 case 1:
@@ -3142,20 +3642,50 @@ namespace Anzeige
                         openFileDialog.InitialDirectory = ZZielpfad + "Download";
 
                         // Filter für verschiedene Bilddateitypen festlegen
-                        openFileDialog.Filter = "JPEG-Bilder (*.jpg, *.jpeg)|*.jpg;*.jpeg|" +
+                        openFileDialog.Filter = "Alle Dateien (*.*)|*.*|" +
+                                                "JPEG-Bilder (*.jpg, *.jpeg)|*.jpg;*.jpeg|" +
                                                 "PNG-Bilder (*.png)|*.png|" +
                                                 "GIF-Bilder (*.gif)|*.gif|" +
                                                 "BMP-Bilder (*.bmp)|*.bmp|" +
                                                 "TIFF-Bilder (*.tiff)|*.tiff|" +
-                                                "TIFF-Bilder (*.tif)|*.tif|" +
-                                                "Alle Dateien (*.*)|*.*";
+                                                "TIFF-Bilder (*.tif)|*.tif";
 
                         if (openFileDialog.ShowDialog() == DialogResult.OK)
                         {
-                            CFiles.Items.Clear();
-                            foreach (string fileName in openFileDialog.FileNames)
+                            String videofile = null;
+                            try
                             {
-                                AddFilename(fileName);
+                                CFiles.Items.Clear();
+
+                                foreach (string fileName in openFileDialog.FileNames)
+                                {
+                                    FileInfo fi = new FileInfo(fileName);
+
+                                    string[] videoExtensions = { ".mp4", ".avi", ".mov", ".wmv", ".mkv", ".flv", ".mpeg", ".mpg", ".3gp", ".webm", ".ts" };
+
+                                    if (videoExtensions.Contains(fi.Extension.ToLower()))
+                                    {
+                                        videofile = fileName;
+                                        LoadVideo(fileName);
+                                    }
+                                    else
+                                    {
+                                        // normaler Pfad
+                                        AddFilename(fileName);
+                                    }
+                                }
+                                CAnzeigeText.Text = Message;
+                                if (videofile != null)
+                                {
+                                    tabControl1.SelectedTab = CVideo;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Fehler beim Laden der Dateien: {ex.Message}",
+                                                "Fehler",
+                                                MessageBoxButtons.OK,
+                                                MessageBoxIcon.Error);
                             }
                         }
                         CAnzeigeText.Text = Message;
@@ -3169,8 +3699,8 @@ namespace Anzeige
 
                         if (items.Length == 2)
                         {
-                            String plz = items[1].Substring(0, 6);
-                            String ort = items[1].Substring(7);
+                            String plz = items[1].Substring(0, 6).Trim();
+                            String ort = items[1].Substring(7).Trim();
                             selectOrt(ort);
                             string fullAddress = items[0];
                             string street = string.Empty;
@@ -3225,7 +3755,30 @@ namespace Anzeige
 
                     }
                     break;
-                case 1:
+                case 1: // Anzeige laden
+                    {
+                        OpenFileDialog openFileDialog = new OpenFileDialog();
+                        openFileDialog.Filter = "Anzeige Textdatei (*.txt)|*.txt";
+                        openFileDialog.InitialDirectory = ZZielpfad;
+
+                        if (openFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            try
+                            {
+                                InitAnzeige(e);
+                                // 1. Deine fertige Methode aufrufen (befüllt die Attribute der Klasse)
+                                LadeAnzeigeDaten(openFileDialog.FileName);
+                                selectOrt(COrt.Text);
+                                CFilterRCP.Visible = false;
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Fehler beim Laden: " + ex.Message);
+                            }
+                        }
+                    }
+                    break;
+                case 30001:
                     {
                         OpenFileDialog openFileDialog = new OpenFileDialog();
                         openFileDialog.Filter = "WH2-Dateien|*.WH2|Alle Dateien|*.*";
@@ -3297,6 +3850,32 @@ namespace Anzeige
                     }
                     break;
                 case 1:
+                    {
+                        assistent dlg = new assistent();
+                        dlg.masterform = this;
+
+                        // Hol dir den Screen, auf dem die Main-Form aktuell angezeigt wird
+                        Screen currentScreen = Screen.FromControl(this);
+                        Rectangle workingArea = currentScreen.WorkingArea;
+
+                        this.StartPosition = FormStartPosition.Manual;
+
+                        // Main-Form ganz links auf dem aktuellen Screen positionieren
+                        this.Location = workingArea.Location;
+
+                        // Breite anpassen: Volle WorkingArea minus die Breite des Assistenten
+                        this.Width = workingArea.Width - dlg.Width;
+                        // Optional: Höhe auch an den Screen anpassen
+                        this.Height = workingArea.Height;
+
+                        // Assistent rechts daneben anocken
+                        dlg.StartPosition = FormStartPosition.Manual;
+                        dlg.Location = new Point(this.Left + this.Width, workingArea.Y);
+
+                        dlg.Show();
+                    }
+                    break;
+                case 300001:
                     {
                         assistent dlg = new assistent();
                         dlg.masterform = this;
@@ -3381,6 +3960,11 @@ namespace Anzeige
                                 }
                             }
                         }
+                    }
+                    break;
+                case 2:
+                    {
+                        ShellExecute(IntPtr.Zero, "open", CurrentFile, null, null, 1);
                     }
                     break;
             }
@@ -4017,10 +4601,6 @@ namespace Anzeige
             selectedRef = pictureBox10;
             textrefresh();
         }
-        private void button7_Click(object sender, EventArgs e)
-        {
-            Clipboard.SetImage(buildImage());
-        }
         private void button8_Click(object sender, EventArgs e)
         {
             // test dlg = new test();
@@ -4132,10 +4712,3036 @@ namespace Anzeige
             ShellExecute(IntPtr.Zero, "open", CAnzeigenList.Text, "", "", 5);
             ShellExecute(IntPtr.Zero, "open", CAnzeigenList.Text.Replace("Anzeige.txt", ""), "", "", 5);
         }
-        private void CSave_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void pictureBox_DoubleClick(object sender, EventArgs e)
         {
         }
-        private void CFoto_MouseDown(object sender, MouseEventArgs e)
+        private void CLockY_CheckedChanged(object sender, EventArgs e)
+        {
+            CLockY.Visible = CLockY.Checked;
+        }
+        public void SaveVideoFile()
+        {
+            FileInfo fi = new FileInfo(CVideoPlayer.URL);
+            string path = ZZielpfad + @"Download\" + DateTime.Now.ToString("yyyyMMdd");
+            CreateDirectoryIfNotExists(path);
+            string filename = path + "\\" + fi.Name;
+            try
+            {
+                File.Copy(fi.Name, filename);
+            }
+            catch
+            {
+
+            }
+        }
+        private void WmpOnPlayStateChange(object sender, _WMPOCXEvents_PlayStateChangeEvent e)
+        {
+            if (e.newState == 3) // playing
+            {
+                CVideoPlayer.Ctlcontrols.pause();
+
+                CVideoPosition.Maximum = (int)CVideoPlayer.currentMedia.duration;
+                CVideoPlayer.PlayStateChange -= WmpOnPlayStateChange;
+            }
+        }
+        int tempcounter = 0;
+        private Bitmap TakeScreenshot()
+        {
+            var bmp = WmpScreenshot.Capture(CVideoPlayer);
+            if (bmp == null)
+            {
+                MessageBox.Show("Screenshot konnte nicht erstellt werden!");
+            }
+            return bmp;
+        }
+        private void CVideoPosition_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+        private bool isSeeking = false;
+        private bool VideoChanging;
+        public static class WmpScreenshot
+        {
+            // Win32-Strukturen und Funktionen
+            [DllImport("user32.dll")]
+            private static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect);
+
+            [DllImport("user32.dll")]
+            private static extern bool ClientToScreen(IntPtr hWnd, ref POINT lpPoint);
+
+            [StructLayout(LayoutKind.Sequential)]
+            private struct RECT { public int Left, Top, Right, Bottom; }
+
+            [StructLayout(LayoutKind.Sequential)]
+            private struct POINT { public int X, Y; }
+
+            /// <summary>
+            /// Liefert ein Bitmap des aktuell sichtbaren Frames des Windows Media Player.
+            /// </summary>
+            /// <param name="player">Das AxWindowsMediaPlayer-Steuerelement</param>
+            /// <returns>Bitmap des Frames oder null bei Fehler</returns>
+            public static Bitmap Capture(AxWindowsMediaPlayer player)
+            {
+                if (player == null || player.currentMedia == null)
+                    return null;
+
+                // Fenstergröße abrufen
+                if (!GetClientRect(player.Handle, out RECT rect))
+                    return null;
+
+                // Position auf Bildschirm-Koordinaten umrechnen
+                POINT pt = new POINT { X = rect.Left, Y = rect.Top };
+                ClientToScreen(player.Handle, ref pt);
+
+                int width = rect.Right - rect.Left;
+                int height = rect.Bottom - rect.Top;
+
+                if (width <= 0 || height <= 0)
+                    return null;
+
+                // Bitmap erstellen und Bildschirmbereich kopieren
+                Bitmap bmp = new Bitmap(width, height);
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    g.CopyFromScreen(pt.X, pt.Y, 0, 0, new Size(width, height), CopyPixelOperation.SourceCopy);
+                }
+
+                return bmp;
+            }
+        }
+        void SynchVideoTab(TabControl control1, TabPage tab1, TabControl control2, TabPage tab2)
+        {
+            if (VideoChanging) return;
+            VideoChanging = true;
+            control1.SelectedTab = tab1;
+            control2.SelectedTab = tab2;
+            VideoChanging = false;
+        }
+        private void CTabPages_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CStadtPate.Controls.Clear();
+            CTabPageOA.Controls.Clear();
+            CWeglide.Controls.Clear();
+            CGMaps.Controls.Clear();
+            CLockY.Visible = false;
+            splitContainer1.SplitterDistance = 440;
+
+            if (CTabPages.SelectedTab == CTabPageOA)
+            {
+                if (URL != null)
+                {
+                    if (URL.Length < 1)
+                    {
+
+                    }
+                    else if (URL == "{pdf}")
+                    {
+                        CreatePDF.Checked = false;
+                        CreatePDF.Checked = true;
+
+                        if (PDFFilename != "")
+                        {
+                            ShellExecute(IntPtr.Zero, "open", PDFFilename, "", "", 5);
+                        }
+                    }
+                    else if (URL.Substring(0, 1) == "@")
+                    {
+                        ShellExecute(IntPtr.Zero, "open", URL.Substring(1), "", "", 5);
+                    }
+                    else
+                    {
+                        oabrowser.Navigate(URL);
+                        CTabPageOA.Controls.Add(oabrowser);
+                    }
+                }
+            }
+            else if (CTabPages.SelectedTab == CStadtPate)
+            {
+                oabrowser.Navigate("https://stadtpate.de/<ort>/OWI".Replace("<ort>", Ort));
+                CStadtPate.Controls.Add(oabrowser);
+            }
+            else if (CTabPages.SelectedTab == CWeglide)
+            {
+                oabrowser.Navigate("https://weg-li.de".Replace("<ort>", Ort));
+                CWeglide.Controls.Add(oabrowser);
+            }
+            else if (CTabPages.SelectedTab == CPolice)
+            {
+                oabrowser.Navigate("https://www.google.com/search?q=polizei+<ort>".Replace("<ort>", Ort));
+                CPolice.Controls.Add(oabrowser);
+            }
+            else if (CTabPages.SelectedTab == CGMaps)
+            {
+                if (GPSLocation == "")
+                {
+                    GPSLocation = "https://www.google.de/maps";
+                }
+                ShellExecute(IntPtr.Zero, "open", GPSLocation, "", "", 5);
+            }
+            else if (CTabPages.SelectedTab == CTest)
+            {
+            }
+            else if (CTabPages.SelectedTab == CAbout)
+            {
+                AboutBox1 dlg = new AboutBox1();
+                dlg.ShowDialog();
+            }
+            else if (CTabPages.SelectedTab == CAnzeigen)
+            {
+                if (!(CAnzeigenList.Items.Count > 0))
+                {
+                    string[] dateien = Directory.GetFiles(ZZielpfad, "Anzeige.txt", SearchOption.AllDirectories);
+
+                    // In die ListBox einfügen
+                    CAnzeigenList.Items.Clear();
+                    foreach (string datei in dateien)
+                    {
+                        CAnzeigenList.Items.Add(datei);
+                    }
+                }
+            }
+            else if (CTabPages.SelectedTab == CVideos)
+            {
+                SynchVideoTab(tabControl1, CVideo, CTabPages, CVideos);
+            }
+            else if (CTabPages.SelectedTab == CAnzeigenArchive)
+            {
+                SynchVideoTab(tabControl1, CAnzeigenArchiv, CTabPages, CAnzeigenArchive);
+            }
+            else if (CTabPages.SelectedTab == CFahrradPass)
+            {
+                SynchVideoTab(tabControl1, CFarradPassSelect, CTabPages, CFahrradPass);
+            }
+            else if (CTabPages.SelectedTab == CUnfallAufnahme)
+            {
+                SynchVideoTab(tabControl1, CUnfallSelect, CTabPages, CUnfallAufnahme);
+            }
+            else if (CTabPages.SelectedTab == CFahrradSicherheitPage)
+            {
+                SynchVideoTab(tabControl1, CFahrradSicherheit, CTabPages, CFahrradSicherheitPage);
+                if (oabrowser != null)
+                {
+                    CFahrradSicherheitPage.Controls.Clear();
+                    CFahrradSicherheitPage.Controls.Add(oabrowser);
+                    oabrowser.Dock = DockStyle.Fill;
+                    oabrowser.Navigate("https://duckduckgo.com/");
+                    LoadBookmarks();
+                }
+
+            }
+        }
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CLockY.Hide();
+            edit_Adress1.Hide();
+            edit_Line1.Hide();
+            abstandsmeter1.Visible = false;
+            splitContainer1.SplitterDistance = 440;
+
+            if (tabControl1.SelectedTab == CVideo)
+            {
+                SynchVideoTab(tabControl1, CVideo, CTabPages, CVideos);
+            }
+            else if (tabControl1.SelectedTab == CAnzeigenArchiv)
+            {
+                SynchVideoTab(tabControl1, CAnzeigenArchiv, CTabPages, CAnzeigenArchive);
+                cstack.Push(this.Cursor);
+                this.Cursor = Cursors.WaitCursor;
+                ViewArchiv();
+                this.Cursor = cstack.Pop();
+            }
+            else if (tabControl1.SelectedTab == CFarradPassSelect)
+            {
+                SynchVideoTab(tabControl1, CFarradPassSelect, CTabPages, CFahrradPass);
+                AllesLaden();
+            }
+            else if (tabControl1.SelectedTab == CUnfallSelect)
+            {
+                SynchVideoTab(tabControl1, CUnfallSelect, CTabPages, CUnfallAufnahme);
+            }
+            else if (tabControl1.SelectedTab == CFahrradSicherheit)
+            {
+                SynchVideoTab(tabControl1, CFahrradSicherheit, CTabPages, CFahrradSicherheitPage);
+                if (oabrowser != null)
+                {
+                    CFahrradSicherheitPage.Controls.Clear();
+                    CFahrradSicherheitPage.Controls.Add(oabrowser);
+                    oabrowser.Dock = DockStyle.Fill;
+                    oabrowser.Navigate("https://duckduckgo.com/");
+                    LoadBookmarks();
+                }
+            }
+            else
+            {
+                CTabPages.SelectedTab = CSave;
+                if (tabControl1.SelectedTab == CTAbstand)
+                {
+                    splitContainer1.SplitterDistance = 160;
+                    pictureBox.Visible = true;
+                    pictureBox.Dock = DockStyle.Fill;
+                    pictureBox.BackgroundImageLayout = ImageLayout.None;
+                    abstandsmeter1.Visible = true;
+                    CLockY.Visible = CLockY.Checked;
+                }
+                else if (tabControl1.SelectedTab == CTAbstandSerie)
+                {
+                    if (_logPath == null)
+                        this.logPath = ZZielpfad + "AMK";
+                    abstandsmeter1.CurrentMesswert.Abstand2 = 100;
+                    abstandsmeter1.Visible = true;
+                }
+                else
+                {
+                    splitContainer1.SplitterDistance = 440;
+                    pictureBox.Visible = false;
+                }
+            }
+        }
+        private void ViewArchiv()
+        {
+
+            // Alles lesen 
+            AnzeigeArchiv az = AnzeigenHistory;
+            CArchivList.Items.Clear();
+            foreach (AnzeigeEintrag i in az.Eintraege)
+                CArchivList.Items.Add(i);
+        }
+        private void CTrainOCR_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void CDuplikation_Click(object sender, EventArgs e)
+        {
+            SynchVideoTab(tabControl1, CAnzeigenArchiv, CTabPages, CAnzeigenArchive);
+            cstack.Push(this.Cursor);
+            this.Cursor = Cursors.WaitCursor;
+
+            // Alles lesen 
+            AnzeigeArchiv az = AnzeigenHistory;
+            List<AnzeigeEintrag> l = az.SucheNachKennzeichenListe(CKennzeichen.Text);
+
+            this.Cursor = cstack.Pop();
+
+            if (l.Count > 1)
+            {
+                string text = "";
+                foreach (var e2 in l)
+                    text += e2.Kennzeichen + " @ " + e2.ZielPfad + Environment.NewLine;
+
+                MessageBox.Show(text, "Duplikate gefunden",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+            }
+        }
+        private void BTMirror_Click(object sender, EventArgs e)
+        {
+            if (loadedImage != null)
+            {
+                // Kopie des geladenen Bildes erstellen
+                Image mirroredImage = (Image)loadedImage.Clone();
+
+                // Horizontal spiegeln
+                mirroredImage.RotateFlip(RotateFlipType.RotateNoneFlipX);
+
+                // In der PictureBox anzeigen
+                pictureBox.BackgroundImage = mirroredImage;
+
+                // Optional: falls du es auch speichern willst
+                string tempFilePath = Path.GetTempFileName();
+                mirroredImage.Save(tempFilePath);
+                LoadImage(tempFilePath);
+
+                left.Checked = true;
+            }
+            else
+            {
+                MessageBox.Show("Nur Bilder können gespiegelt werden.", "Abstand");
+            }
+        }
+        private void pictureBox20_Click(object sender, EventArgs e)
+        {
+            refwidth = 15;
+            selectedRef = pictureBox5;
+            textrefresh();
+        }
+        private void UpdateVideoPosition()
+        {
+            if (isSeeking) return;
+            if (CVideoPlayer.currentMedia == null) return;
+
+            try
+            {
+                isSeeking = true;
+
+                // Grobwert aus Haupt-Trackbar
+                int coarseValue = Math.Min(Math.Max(CVideoPosition.Value, CVideoPosition.Minimum), CVideoPosition.Maximum);
+
+                // Feinwert aus Micro-Trackbar (-100 .. +100)
+                int microValue = CVideoMicroPosition.Value;
+
+                // Annahme: Microwert ist in Millisekunden
+                double fineOffsetSeconds = microValue / 100.0;
+
+                // Endgültige Position = Grobwert + Feinwert
+                double newPosition = coarseValue + fineOffsetSeconds;
+
+                // Trick: kurz abspielen, Position setzen, sofort pausieren
+                CVideoPlayer.Ctlcontrols.play();
+                CVideoPlayer.Ctlcontrols.currentPosition = newPosition;
+                CVideoPlayer.Ctlcontrols.pause();
+            }
+            finally
+            {
+                isSeeking = false;
+            }
+        }
+        private void CVideoPosition_Scroll(object sender, EventArgs e)
+        {
+        }
+        private void CVideoMicroPosition_Scroll(object sender, EventArgs e)
+        {
+        }
+        private void CCBFulltext_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void CBSuchen_Click(object sender, EventArgs e)
+        {
+            CArchivList.Items.Clear();
+
+            foreach (AnzeigeEintrag eintrag in AnzeigenHistory.Eintraege)
+            {
+                string suchtext = eintrag.GetSuchText(CCBFulltext.Checked);
+                string suchbegriff = CSearchText.Text;
+
+                if (!CCBCase.Checked)
+                {
+                    suchtext = suchtext.ToLower();
+                    suchbegriff = suchbegriff.ToLower();
+                }
+                if (CCBUmlauts.Checked)
+                {
+                    suchtext = AnzeigeArchiv.toUmlauts(suchtext);
+                    suchbegriff = AnzeigeArchiv.toUmlauts(suchbegriff);
+                }
+                if (CCBSpecialchars.Checked)
+                {
+                    suchtext = AnzeigeArchiv.toSpecials(suchtext);
+                    suchbegriff = AnzeigeArchiv.toSpecials(suchbegriff);
+                }
+
+
+                bool cmp;
+                if (CCBStartsWith.Checked)
+                {
+                    cmp = suchtext.StartsWith(suchbegriff);
+                }
+                else if (CCBEndsWith.Checked)
+                {
+                    cmp = suchtext.EndsWith(suchbegriff);
+                }
+                else if (CCBContains.Checked)
+                {
+                    cmp = suchtext.Contains(suchbegriff);
+                }
+                else if (CCBSimular.Checked)
+                {
+                    cmp = (AnzeigeArchiv.CompareSimular(suchtext, suchbegriff) > 0.75);
+                }
+                else
+                    cmp = (suchtext == suchbegriff);
+
+                if (CCBInvers.Checked)
+                    cmp = !cmp;
+                if (cmp)
+                    CArchivList.Items.Add(eintrag);
+            }
+            CArchivCountOf.Text = $"{AnzeigenHistory.Eintraege.Count} von {CArchivList.Items.Count}";
+        }
+        private void CArchivList_SelectedValueChanged(object sender, EventArgs e)
+        {
+            AnzeigeEintrag entry = (AnzeigeEintrag)CArchivList.SelectedItem;
+            if (entry != null)
+            {
+                CSearchText.Text = entry.Kennzeichen;
+                CShowArchivText.Text = entry.Text;
+
+                oabrowser.Hide();
+                splitContainer10.Panel1.Controls.Clear();
+                splitContainer10.Panel1.Controls.Add(oabrowser);
+                oabrowser.Dock = DockStyle.Fill;
+                oabrowser.Navigate(entry.AnzeigePfad);
+                oabrowser.Show();
+
+            }
+        }
+        // --- Textdateien drucken ---
+        // --- Textdateien drucken auf A4 ---
+        private void PrintTxt(string file)
+        {
+            string text = File.ReadAllText(file);
+            PrintDocument pd = new PrintDocument();
+            pd.DefaultPageSettings.PaperSize = new PaperSize("A4", 827, 1169); // A4 in Hundertstel Zoll
+
+            pd.PrintPage += (sender, args) =>
+            {
+                RectangleF printableArea = args.MarginBounds;
+
+                // Dynamische Schriftgröße, damit Text auf A4 passt
+                float fontSize = 10f;
+                Font font = new Font("Arial", fontSize);
+                SizeF textSize = args.Graphics.MeasureString(text, font, (int)printableArea.Width);
+
+                // Schriftgröße anpassen, falls Text zu groß
+                if (textSize.Height > printableArea.Height)
+                {
+                    fontSize *= printableArea.Height / textSize.Height;
+                    font = new Font("Arial", fontSize);
+                }
+
+                args.Graphics.DrawString(text, font, Brushes.Black, printableArea);
+            };
+
+            pd.Print();
+        }
+        // --- Bilddateien drucken auf A4 ---
+        private void PrintImage(string file)
+        {
+            using Image img = Image.FromFile(file);
+            PrintDocument pd = new PrintDocument();
+
+            // A4 in Hundertstel Zoll
+            int a4Width = 827;
+            int a4Height = 1169;
+
+            // 1️⃣ Orientierung nach Bild
+            if (img.Width > img.Height)
+            {
+                // Querformat
+                pd.DefaultPageSettings.Landscape = true;
+                pd.DefaultPageSettings.PaperSize = new PaperSize("A4", a4Height, a4Width);
+            }
+            else
+            {
+                // Hochformat
+                pd.DefaultPageSettings.Landscape = false;
+                pd.DefaultPageSettings.PaperSize = new PaperSize("A4", a4Width, a4Height);
+            }
+
+            pd.PrintPage += (sender, args) =>
+            {
+                // 2️⃣ Nutze die volle Papierfläche, nicht nur MarginBounds
+                Rectangle fullArea = pd.DefaultPageSettings.Landscape
+                    ? new Rectangle(0, 0, pd.DefaultPageSettings.PaperSize.Height, pd.DefaultPageSettings.PaperSize.Width)
+                    : new Rectangle(0, 0, pd.DefaultPageSettings.PaperSize.Width, pd.DefaultPageSettings.PaperSize.Height);
+
+                // 3️⃣ Proportional skalieren
+                float scaleX = (float)fullArea.Width / img.Width;
+                float scaleY = (float)fullArea.Height / img.Height;
+                float scale = Math.Min(scaleX, scaleY);
+
+                int width = (int)(img.Width * scale);
+                int height = (int)(img.Height * scale);
+
+                // 4️⃣ Zentrieren
+                int x = (fullArea.Width - width) / 2;
+                int y = (fullArea.Height - height) / 2;
+
+                args.Graphics.DrawImage(img, x, y, width, height);
+            };
+
+            pd.Print();
+        }
+        private void printfile(string file)
+        {
+            FileInfo fi = new FileInfo(file);
+
+            switch (fi.Extension.ToLower())
+            {
+                case ".txt":
+                    PrintTxt(file);
+                    break;
+
+                case ".jpg":
+                case ".jpeg":
+                case ".png":
+                case ".bmp":
+                    PrintImage(file);
+                    break;
+                default:
+                    ShellExecute(IntPtr.Zero, "print", file, "", "", 5);
+                    break;
+            }
+        }
+        private void printall(object sender, EventArgs e, bool ask = false)
+        {
+            AnzeigeEintrag entry = (AnzeigeEintrag)CArchivList.SelectedItem;
+            if (entry != null)
+            {
+                string dir = entry.AnzeigeDatei.ToLower().Replace("\\anzeige.txt", "");
+
+                if (!Directory.Exists(dir))
+                    return;
+
+                // Nur druckbare Dateien
+                string[] allowedExtensions = { ".txt", ".jpg", ".jpeg", ".png" };
+                string[] files = Directory.GetFiles(dir);
+
+                foreach (var file in files)
+                {
+                    string ext = Path.GetExtension(file).ToLower();
+                    if (!allowedExtensions.Contains(ext))
+                        continue; // nicht druckbar
+
+                    if (!ask || MessageBox.Show("Soll die Datei " + file + "gedrucket werden?", "Drucken", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        printfile(file);
+                    // ShellExecute(IntPtr.Zero, "print", file, "", "", 5);
+                }
+            }
+        }
+        private void button9_Click(object sender, EventArgs e)
+        {
+            var reader = new WegLiCsvReader();
+            var districts = reader.LoadDistricts();
+
+        }
+        private bool TestVideo() // prüfe ob video Geladen ist. 
+        {
+            bool result = CVideoPlayer.currentMedia != null;
+            if (!result)
+                MessageBox.Show("Video laden");
+            return result;
+        }
+        private void smallToolbox7_ClickTool(object sender, Anzeige.SmallToolbox.ClickToolEventArgs e)
+        {
+            CVideoPlayer.Visible = true;
+            switch (e.ButtonIndex)
+            {
+                case 0:
+                    {
+                        LoadVideoFile();
+                    }
+                    break;
+                case 30001:
+                    if (TestVideo())
+                    {
+                        if (CSaveVideoFile.Checked)
+                            SaveVideoFile();
+
+                        cstack.Push(this.Cursor);
+                        this.Cursor = Cursors.WaitCursor;
+
+                        Bitmap bmp = TakeScreenshot();
+                        if (bmp != null)
+                        {
+                            string filename = "";
+                            string videoname = CVideoPlayer.URL;
+                            FileInfo fi = new FileInfo(videoname);
+                            string baseName = Path.GetFileNameWithoutExtension(fi.Name).ToLower();
+
+                            // aktuelle Abspielzeit in hh:mm:ss
+                            double videoTime = CVideoPlayer.Ctlcontrols.currentPosition;
+                            TimeSpan ts = TimeSpan.FromSeconds(videoTime);
+                            string timestamp = ts.ToString(@"hh\:mm\:ss");
+
+                            string name = $"{baseName}_{timestamp}_{tempcounter:D3}.png";
+                            tempcounter++;
+
+                            string path = ZZielpfad + @"Download\" + DateTime.Now.ToString("yyyyMMdd");
+                            CreateDirectoryIfNotExists(path);
+                            filename = Path.Combine(path, name);
+
+                            bmp.Save(filename);
+
+                            FileInfo fi2 = new FileInfo(filename);
+                            fi2.CreationTime = fi.CreationTime; // optional, kannst du auch screenshotTime setzen
+                            File.SetLastWriteTime(filename, fi.LastWriteTime);
+                            File.SetCreationTime(filename, fi.CreationTime);
+
+                            AddFilename(filename);
+                            tabControl1.SelectedIndex = 0;
+                        }
+
+                        this.Cursor = cstack.Pop();
+                    }
+                    break;
+                case 2:
+                    if (TestVideo())
+                    {
+                        if (CSaveVideoFile.Checked)
+                            SaveVideoFile();
+                        cstack.Push(this.Cursor);
+                        this.Cursor = Cursors.WaitCursor;
+                        Bitmap bmp = TakeScreenshot();
+                        if (bmp != null)
+                        {
+                            string filename = "";
+                            string videoname = CVideoPlayer.URL;
+                            FileInfo fi = new FileInfo(videoname);
+                            string baseName = System.IO.Path.GetFileNameWithoutExtension(fi.Name).ToLower();
+                            string timestamp = fi.CreationTime.ToString("yyyyMMdd_HHmmss");
+                            string name = $"{baseName}_{timestamp}_{tempcounter:D3}.png"; // D3 = 3-stellig mit führenden Nullen
+                            tempcounter++;
+                            string path = ZZielpfad + @"Download\" + DateTime.Now.ToString("yyyyMMdd");
+                            CreateDirectoryIfNotExists(path);
+                            filename = path + "\\" + name;
+                            bmp.Save(filename);
+                            FileInfo fi2 = new FileInfo(filename);
+                            fi2.CreationTime = fi.CreationTime;
+                            File.SetLastWriteTime(filename, fi.LastWriteTime);
+                            File.SetCreationTime(filename, fi.CreationTime);
+                            tabControl1.SelectedTab = CTAbstand;
+                            LoadImage(filename);
+                            left.Checked = true;
+                        }
+                        this.Cursor = cstack.Pop();
+
+                    }
+                    break;
+                case 3:
+                    {
+                        Bitmap bmp = TakeScreenshot();
+                        Clipboard.SetImage(bmp);
+                    }
+                    break;
+                case 1:
+                    if (TestVideo())
+                    {
+                        if (CSaveVideoFile.Checked)
+                            SaveVideoFile();
+
+                        cstack.Push(this.Cursor);
+                        this.Cursor = Cursors.WaitCursor;
+
+                        Bitmap bmp = TakeScreenshot();
+                        if (bmp != null)
+                        {
+                            string filename = "";
+                            string videoname = CVideoPlayer.URL;
+                            FileInfo fi = new FileInfo(videoname);
+                            string baseName = Path.GetFileNameWithoutExtension(fi.Name).ToLower();
+
+                            // aktuelle Abspielzeit in Sekunden
+                            double videoTime = CVideoPlayer.Ctlcontrols.currentPosition;
+                            int wholeSeconds = (int)Math.Round(videoTime, 0, MidpointRounding.AwayFromZero);
+                            DateTime screenshotTime = fi.CreationTime.AddSeconds(wholeSeconds);
+                            // DateTime screenshotTime = fi.CreationTime.AddSeconds(videoTime);
+
+                            // Timestamp basierend auf Original-Erstellungszeit + Abspielzeit
+                            string timestamp = screenshotTime.ToString("yyyyMMdd_HHmmss");
+                            string name = $"{baseName}_{timestamp}_{tempcounter:D3}.png";
+                            tempcounter++;
+
+                            string path = ZZielpfad + @"Download\" + DateTime.Now.ToString("yyyyMMdd");
+                            CreateDirectoryIfNotExists(path);
+                            filename = Path.Combine(path, name);
+
+                            bmp.Save(filename);
+
+                            FileInfo fi2 = new FileInfo(filename);
+                            fi2.CreationTime = screenshotTime;
+                            File.SetLastWriteTime(filename, screenshotTime);
+                            File.SetCreationTime(filename, screenshotTime);
+
+                            AddFilename(filename);
+                            tabControl1.SelectedIndex = 0;
+                        }
+
+                        this.Cursor = cstack.Pop();
+                    }
+                    break;
+
+                case 10001:
+                    if (TestVideo())
+                    {
+                        if (CSaveVideoFile.Checked)
+                            SaveVideoFile();
+                        cstack.Push(this.Cursor);
+                        this.Cursor = Cursors.WaitCursor;
+                        Bitmap bmp = TakeScreenshot();
+                        if (bmp != null)
+                        {
+                            string filename = "";
+                            string videoname = CVideoPlayer.URL;
+                            FileInfo fi = new FileInfo(videoname);
+                            string baseName = System.IO.Path.GetFileNameWithoutExtension(fi.Name).ToLower();
+                            string timestamp = fi.CreationTime.ToString("yyyyMMdd_HHmmss");
+                            string name = $"{baseName}_{timestamp}_{tempcounter:D3}.png"; // D3 = 3-stellig mit führenden Nullen
+                            tempcounter++;
+                            string path = ZZielpfad + @"Download\" + DateTime.Now.ToString("yyyyMMdd");
+                            CreateDirectoryIfNotExists(path);
+                            filename = path + "\\" + name;
+                            bmp.Save(filename);
+                            FileInfo fi2 = new FileInfo(filename);
+                            fi2.CreationTime = fi.CreationTime;
+
+                            File.SetLastWriteTime(filename, fi.LastWriteTime);
+                            File.SetCreationTime(filename, fi.CreationTime);
+
+                            AddFilename(filename);
+                            tabControl1.SelectedIndex = 0;
+                        }
+                        this.Cursor = cstack.Pop();
+
+                    }
+                    break;
+                case 4:
+                    {
+                        Bitmap bmp = TakeScreenshot();
+                        string tempPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".png");
+                        bmp.Save(tempPath, System.Drawing.Imaging.ImageFormat.Png);
+                        ShellExecute(IntPtr.Zero, "open", tempPath, null, null, 1);
+                    }
+                    break;
+            }
+        }
+        private OpenFileDialog LoadVideoFile()
+        {
+            var ofd = new OpenFileDialog();
+            ofd.Filter = "Video Files|*.mp4;*.avi;*.mov;*.wmv|All Files|*.*";
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                cstack.Push(this.Cursor);
+                this.Cursor = Cursors.WaitCursor;
+
+                LoadVideo(ofd.FileName);
+            }
+
+            return ofd;
+        }
+        private void LoadVideo(string filename)
+        {
+            cstack.Push(this.Cursor);
+            CVideoPlayer.URL = filename;
+            CVideoPlayer.Ctlcontrols.stop();
+            // später setzen, wenn MetaData da ist
+            CVideoPlayer.PlayStateChange += WmpOnPlayStateChange;
+            CVideoPlayer.Ctlcontrols.play();
+            this.Cursor = cstack.Pop();
+            ASpeedstart = -1;
+            BSpeedend = -1;
+            CDistance.Text = "0";
+            splitContainer5.Panel2.BackgroundImage = null;
+            CVideoPlayer.Dock = DockStyle.Fill;
+            CVideoPlayer.Visible = true;
+            tabControl1.SelectedTab = CVideo;
+            Refresh();
+        }
+        private double ASpeedstart = -1;
+        private double BSpeedend = -1;
+        private Bitmap startPicture = null;
+        private Bitmap endPicture = null;
+        private double DeltaSpeedTime
+        {
+            get { return BSpeedend - ASpeedstart; }
+        }
+        private void ExchangeStartStop()
+        {
+            if (ASpeedstart > BSpeedend)
+            {
+                double h = ASpeedstart;
+                Bitmap hb = startPicture;
+                ASpeedstart = BSpeedend;
+                startPicture = endPicture;
+                BSpeedend = h;
+                endPicture = hb;
+            }
+        }
+        Bitmap carddata = null;
+        Bitmap speedimage;
+        private void smallToolbox8_ClickTool(object sender, Anzeige.SmallToolbox.ClickToolEventArgs e)
+        {
+            panel16.Visible = true;
+            switch (e.ButtonIndex)
+            {
+                case 0:
+                    if (TestVideo())
+                    {
+                        ASpeedstart = CVideoPlayer.Ctlcontrols.currentPosition;
+                        startPicture = TakeScreenshot();
+                        // ExchangeStartStop();
+                        CSpeedStatus.Text = "Maßstab Position 2";
+                        CStartPicture.BackgroundImage = startPicture;
+                        CStartTime.Text = ASpeedstart.ToString();
+                    }
+                    break;
+                case 1:
+                    if (TestVideo())
+                    {
+                        BSpeedend = CVideoPlayer.Ctlcontrols.currentPosition;
+                        endPicture = TakeScreenshot();
+                        ExchangeStartStop();
+                        CSpeedStatus.Text = "Startpositiom";
+                        CEndPicture.BackgroundImage = endPicture;
+                        CEndTime.Text = BSpeedend.ToString();
+                    }
+                    break;
+                case 2:
+                    CVideoPlayer.Visible = false;
+                    {
+                        String url = ortssuche;
+                        url = url.Replace("<strasse>", Strasse);
+                        url = url.Replace("<hn>", HN);
+                        url = url.Replace("<plz>", PLZ);
+                        url = url.Replace("<ort>", Ort);
+                        // ortssuche
+                        ShellExecute(IntPtr.Zero, "open", url, "", "", 5);
+                        // oabrowser.Navigate(url);
+                        currentStatus = MeasurementStatus.ScalePoint1;
+                        CSpeedStatus.Text = "Nächste Position / Ende";
+                    }
+                    break;
+
+                case 3:
+                    {
+                        if (Clipboard.ContainsImage())
+                        {
+                            carddata = (Bitmap)Clipboard.GetImage();
+                            splitContainer6.Panel1.BackgroundImage = carddata;
+                        }
+                        CVideoPlayer.Visible = false;
+                        currentStatus = MeasurementStatus.ScalePoint1;
+                        CSpeedStatus.Text = "Maßstab Position 1";
+                    }
+                    break;
+
+                case 4:
+                    {
+                        if (ASpeedstart >= 0 && BSpeedend >= 0 && BSpeedend > ASpeedstart)
+                        {
+                            double distanceMeters;
+                            if (double.TryParse(CDistance.Text, out distanceMeters))
+                            {
+                                if (distanceMeters > 0)
+                                {
+                                    double speedKmh = distanceMeters * 3.6 / DeltaSpeedTime; //
+                                    speedimage = BuildSpeedBitmap(startPicture, endPicture, GetSpeedImageWithPath(), ASpeedstart, BSpeedend, speedKmh);
+                                    Clipboard.SetImage(speedimage);
+                                    splitContainer5.Panel2.BackgroundImage = speedimage;
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Ungültiger Wert für die Strecke. Bitte Zahl eingeben.",
+                                                "Fehler",
+                                                MessageBoxButtons.OK,
+                                                MessageBoxIcon.Error);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Bitte Start- und Endzeitpunkt und Strecke Messung setzen.", "Fehler",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Error);
+                        }
+                        CVideoPlayer.Visible = true;
+                        panel16.Visible = false;
+                    }
+                    break;
+            }
+        }
+        private Bitmap BuildSpeedBitmap(Bitmap startPicture,
+            Bitmap endPicture,
+            Bitmap mapPicture,
+            double startTime,
+            double endTime,
+            double speedKmh)
+        {
+            int imageSpacing = 20;
+            int textSpacing = 10;
+
+            // --- obere Bildreihe (Start + Ende nebeneinander) ---
+            int topRowHeight = Math.Max(startPicture.Height, endPicture.Height);
+            int topRowWidth = startPicture.Width + imageSpacing + endPicture.Width;
+
+            // Gesamtbreite = größte von (oben oder Karte)
+            int width = Math.Max(topRowWidth, mapPicture.Width);
+
+            Font font = new Font("Segoe UI", 14, FontStyle.Bold);
+            Font bigFont = new Font("Segoe UI", 42, FontStyle.Bold);
+
+            // Geschwindigkeit berechnen
+            double difftime = endTime - startTime;
+            double distance = difftime * speedKmh / 3.6;
+
+            string speedText = $"{difftime:F2}s / {distance:F2}m = {speedKmh:F1} km/h";
+            string fallText = $"wie ein Fall aus {(speedKmh * speedKmh) / 254.0:F1} Meter Höhe";
+
+            // Dummy-Graphics zum Messen
+            using (Bitmap tmp = new Bitmap(1, 1))
+            using (Graphics gTmp = Graphics.FromImage(tmp))
+            {
+                SizeF speedSize = gTmp.MeasureString(speedText, bigFont);
+                SizeF fallSize = gTmp.MeasureString(fallText, font);
+
+                int textBlockHeight = (int)(speedSize.Height + fallSize.Height + 10);
+
+                // Gesamthöhe berechnen
+                int height =
+                    40 +                      // Start/Ende Text oben
+                    topRowHeight +
+                    imageSpacing +
+                    mapPicture.Height +
+                    imageSpacing +
+                    textBlockHeight + 40;
+
+                Bitmap result = new Bitmap(width, height);
+
+                using (Graphics g = Graphics.FromImage(result))
+                {
+                    g.Clear(Color.Black);
+                    Brush brush = Brushes.White;
+
+                    // ----- START -----
+                    string startText = $"Start: {startTime:F2} s";
+                    SizeF startTextSize = g.MeasureString(startText, font);
+
+                    float startX = (width - topRowWidth) / 2f;
+                    g.DrawString(startText, font, brush,
+                        startX + (startPicture.Width - startTextSize.Width) / 2f,
+                        10f);
+
+                    g.DrawImage(startPicture, startX, 40);
+
+                    // ----- ENDE -----
+                    string endText = $"Ende: {endTime:F2} s";
+                    SizeF endTextSize = g.MeasureString(endText, font);
+
+                    float endX = startX + startPicture.Width + imageSpacing;
+
+                    g.DrawString(endText, font, brush,
+                        endX + (endPicture.Width - endTextSize.Width) / 2f,
+                        10f);
+
+                    g.DrawImage(endPicture, endX, 40);
+
+                    // ----- KARTE -----
+                    float mapY = 40 + topRowHeight + imageSpacing;
+                    g.DrawImage(mapPicture, (width - mapPicture.Width) / 2f, mapY);
+
+                    // ----- SPEED TEXT -----
+                    float speedY = mapY + mapPicture.Height + imageSpacing;
+
+                    g.DrawString(speedText, bigFont, brush,
+                        (width - speedSize.Width) / 2f,
+                        speedY);
+
+                    g.DrawString(fallText, font, brush,
+                        (width - fallSize.Width) / 2f,
+                        speedY + speedSize.Height + textSpacing);
+                }
+
+                return result;
+            }
+        }
+        private void CBTOpenArchiv_Click(object sender, EventArgs e)
+        {
+            AnzeigeEintrag entry = (AnzeigeEintrag)CArchivList.SelectedItem;
+            string dir = entry.AnzeigeDatei.ToLower().Replace("\\anzeige.txt", "");
+            ShellExecute(IntPtr.Zero, "open", dir, "", "", 5);
+        }
+        private void ArchPrint_Click(object sender, EventArgs e)
+        {
+            printall(sender, e, true);
+        }
+        private void ArchPrintAll_Click(object sender, EventArgs e)
+        {
+            printall(sender, e);
+        }
+        private void CSearchText_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            switch (e.KeyChar)
+            {
+                case '\r':
+                    CBSuchen_Click(sender, e);
+                    break;
+            }
+        }
+        private void CFarradPass_Click(object sender, EventArgs e)
+        {
+
+        }
+        private bool selectingbike = false;
+        FarradPass _currentFahrradPass = null;
+        FarradPass currentFahrradPass
+        {
+            get { return _currentFahrradPass; }
+            set
+            {
+                _currentFahrradPass = value;
+                UpdateBikepass();
+            }
+
+        }
+        private void UpdateBikepass()
+        {
+            if (_currentFahrradPass != null)
+            {
+                CHerstellerMarke.Text = _currentFahrradPass.Hersteller;
+                CModell.Text = _currentFahrradPass.Modell;
+                CFahrradtyp.Text = _currentFahrradPass.Fahrradtyp;
+                CFahrradFarbe.Text = _currentFahrradPass.Farbe;
+                CRahmennummer.Text = _currentFahrradPass.Rahmennummer;
+                CFahrradtyp.Text = _currentFahrradPass.Fahrradtyp;
+                CReifenGroesse.Text = _currentFahrradPass.Rahmengröße.ToString();
+                CHaendler.Text = _currentFahrradPass.Haendler;
+                CKaufDatum.Value = _currentFahrradPass.Kaufdatum;
+                CPreis.Text = _currentFahrradPass.Kaufpreis.ToString();
+                CZeitwert.Text = _currentFahrradPass.Zeitwert.ToString();
+                CRahmengroeße.Text = _currentFahrradPass.Rahmengröße.ToString();
+                CReifenGroesse.Text = _currentFahrradPass.Reifengröße.ToString();
+                CBesondereMerkmale.Text = _currentFahrradPass.MerkmaleText;
+                CBilder.Items.Clear();
+                foreach (string f in _currentFahrradPass.FotoDateien)
+                {
+                    try
+                    {
+                        FileInfo fi = new FileInfo(f);
+                        CBilder.Items.Add(fi);
+                    }
+                    catch { }
+                }
+                CFahrradImage.BackgroundImage = null;
+            }
+
+        }
+        public List<string> DateienAuswaehlen()
+        {
+            using var dialog = new OpenFileDialog
+            {
+                Title = "Dokumente auswählen",
+                Multiselect = true,
+                Filter =
+                    "Alle Dokumente|*.txt;*.pdf;*.doc;*.docx;*.xls;*.xlsx;*.ppt;*.pptx;*.jpg;*.jpeg;*.png;*.bmp;*.gif|" +
+                    "Textdateien (*.txt)|*.txt|" +
+                    "PDF (*.pdf)|*.pdf|" +
+                    "Office Dokumente|*.doc;*.docx;*.xls;*.xlsx;*.ppt;*.pptx|" +
+                    "Bilder|*.jpg;*.jpeg;*.png;*.bmp;*.gif|" +
+                    "Alle Dateien (*.*)|*.*"
+            };
+
+            return dialog.ShowDialog() == DialogResult.OK
+                ? dialog.FileNames.ToList()
+                : new List<string>();
+        }
+        private void smallToolbox9_ClickTool(object sender, Anzeige.SmallToolbox.ClickToolEventArgs e)
+        {
+            switch (e.ButtonIndex)
+            {
+                case 0: // neu
+                    {
+
+                        CreateDirectoryIfNotExists(ZZielpfad + "Fahrradpass");
+                        currentFahrradPass = new FarradPass();
+                        CBikeList.Items.Add(currentFahrradPass);
+                        CBikeList.SelectedItem = currentFahrradPass;
+                    }
+                    break;
+                case 1: // pass
+                    {
+                        PassPrintCanvas pc = new PassPrintCanvas(currentFahrradPass);
+                        pc.Print();
+                    }
+                    break;
+                case 2: // Bild hinzufügen
+                    {
+                        List<string> images = DateienAuswaehlen();
+                        foreach (string i in images)
+                            _currentFahrradPass.FotoDateien.Add(i);
+                        UpdateBikepass();
+                    }
+                    break;
+                case 3: // Fahrad löschen
+                    {
+                    }
+                    break;
+                case 4: // Archivieren
+                    {
+                    }
+                    break;
+                case 5: // speichern
+                    {
+                        List<FarradPass> bps = new List<FarradPass>();
+                        foreach (FarradPass i in CBikeList.Items)
+                            bps.Add(i);
+                        SpeicherAlleBikepaesse(bps);
+                    }
+                    break;
+                case 6: // laden 
+                    AllesLaden();
+                    break;
+
+                case 7:
+                    ShellExecute(IntPtr.Zero, "open", ZZielpfad + "Fahrradpass", "", "", 5);
+                    break;
+
+                case 8:
+                    {
+                        FileInfo fi = (FileInfo)CBilder.SelectedItem;
+                        if (fi != null)
+                        {
+                            try
+                            {
+                                using var img = Image.FromFile(fi.FullName);
+
+                                PrintDocument pd = new PrintDocument();
+                                pd.PrintPage += (sender, e) =>
+                                {
+                                    // Bildfüllend skalieren, proportional
+                                    float scale = Math.Min((float)e.MarginBounds.Width / img.Width, (float)e.MarginBounds.Height / img.Height);
+                                    int width = (int)(img.Width * scale);
+                                    int height = (int)(img.Height * scale);
+                                    e.Graphics.DrawImage(img, e.MarginBounds.X, e.MarginBounds.Y, width, height);
+                                };
+
+                                pd.Print();
+                            }
+                            catch
+                            {
+                                // Alles was schiefgeht → ShellExecute Fallback
+                                ShellExecute(IntPtr.Zero, "print", fi.FullName, "", "", 5);
+                            }
+                        }
+                    }
+                    break;
+
+                case 9:
+                    if (_currentFahrradPass != null)
+                    {
+                        string verzeichnis = ZZielpfad + "Fahrradpass";
+                        string dateiname = SanitizeFileName(_currentFahrradPass.Rahmennummer) + ".bps";
+                        string pfad = Path.Combine(verzeichnis, dateiname);
+                        try
+                        {
+                            _currentFahrradPass.Speichern(pfad);
+                        }
+                        catch { }
+                    }
+                    break;
+
+                case 10:
+                    if (_currentFahrradPass != null)
+                    {
+                        string verzeichnis = ZZielpfad + "Fahrradpass";
+                        string dateiname = SanitizeFileName(_currentFahrradPass.Rahmennummer) + ".bps";
+                        string pfad = Path.Combine(verzeichnis, dateiname);
+                        try
+                        {
+                            FarradPass temp = FarradPass.Laden(pfad);
+                        }
+                        catch
+                        {
+                            try
+                            {
+                                _currentFahrradPass.Speichern(pfad);
+                            }
+                            catch { }
+                        }
+                    }
+                    break;
+            }
+
+        }
+        private void AllesLaden()
+        {
+            List<FarradPass> bps = LadeAlleBikepaesse();
+            CBikeList.Items.Clear();
+            foreach (FarradPass fp in bps)
+                CBikeList.Items.Add(fp);
+            if (CBikeList.Items.Count > 0)
+                CBikeList.SelectedIndex = 0;
+        }
+        private void FahrradpassChanged(object sender, EventArgs e)
+        {
+            if (_currentFahrradPass != null && !selectingbike)
+            {
+                _currentFahrradPass.Changed = true;
+                _currentFahrradPass.Hersteller = CHerstellerMarke.Text;
+                _currentFahrradPass.Modell = CModell.Text;
+                _currentFahrradPass.Farbe = CFahrradFarbe.Text;
+                _currentFahrradPass.Rahmennummer = CRahmennummer.Text;
+                _currentFahrradPass.Fahrradtyp = CFahrradtyp.Text;
+                _currentFahrradPass.Merkmale = CBesondereMerkmale.Text;
+                if (double.TryParse(CRahmengroeße.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out double rahmengroesse))
+                    _currentFahrradPass.Rahmengröße = rahmengroesse;
+                if (decimal.TryParse(CReifenGroesse.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal reifengroesse))
+                    _currentFahrradPass.Reifengröße = (double)reifengroesse;
+                if (decimal.TryParse(CZeitwert.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal zeitwert))
+                    _currentFahrradPass.Zeitwert = zeitwert;
+                _currentFahrradPass.Haendler = CHaendler.Text;
+                if (DateTime.TryParse(CKaufDatum.Text, out DateTime tempDatum))
+                    _currentFahrradPass.Kaufdatum = tempDatum;
+                if (decimal.TryParse(CPreis.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal tempKaufpreis))
+                    _currentFahrradPass.Kaufpreis = tempKaufpreis;
+                if (decimal.TryParse(CZeitwert.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal tempZeitwert))
+                    _currentFahrradPass.Zeitwert = tempZeitwert;
+                CBikeList.Refresh();
+
+            }
+        }
+        private void CBikeList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CBikeList_SelectedValueChanged(sender, e);
+        }
+        private void CBikeList_SelectedValueChanged(object sender, EventArgs e)
+        {
+            selectingbike = true;
+            _currentFahrradPass = (FarradPass)CBikeList.SelectedItem;
+            UpdateBikepass();
+            selectingbike = false;
+        }
+        public List<FarradPass> LadeAlleBikepaesse()
+        {
+            string verzeichnis = ZZielpfad + "Fahrradpass";
+
+            CreateDirectoryIfNotExists(verzeichnis);
+            if (verzeichnis == null)
+                throw new ArgumentNullException(nameof(verzeichnis));
+
+            if (!Directory.Exists(verzeichnis))
+                throw new DirectoryNotFoundException($"Verzeichnis nicht gefunden: {verzeichnis}");
+
+            var result = new List<FarradPass>();
+
+            foreach (var datei in Directory.EnumerateFiles(verzeichnis, "*.bps"))
+            {
+                try
+                {
+                    var pass = FarradPass.Laden(datei);
+                    result.Add(pass);
+                }
+                catch (Exception ex)
+                {
+                    // bewusst nicht abbrechen → eine kaputte Datei darf nicht alle blockieren
+                    // hier ggf. Logging
+                    Console.Error.WriteLine($"Fehler beim Laden von '{datei}': {ex.Message}");
+                }
+            }
+
+            return result;
+        }
+        private static string SanitizeFileName(string name)
+        {
+            foreach (char c in Path.GetInvalidFileNameChars())
+                name = name.Replace(c, '_');
+
+            return name;
+        }
+        public void SpeicherAlleBikepaesse(List<FarradPass> bikepaesse)
+        {
+            string verzeichnis = ZZielpfad + "Fahrradpass";
+            if (verzeichnis == null)
+                throw new ArgumentNullException(nameof(verzeichnis));
+
+            if (bikepaesse == null)
+                throw new ArgumentNullException(nameof(bikepaesse));
+
+            Directory.CreateDirectory(verzeichnis);
+
+            foreach (var pass in bikepaesse)
+            {
+                if (pass == null)
+                    continue;
+
+                if (string.IsNullOrWhiteSpace(pass.Rahmennummer))
+                    continue; // keine ID → kein Dateiname
+
+                string dateiname = SanitizeFileName(pass.Rahmennummer) + ".bps";
+                string pfad = Path.Combine(verzeichnis, dateiname);
+
+                pass.Speichern(pfad);
+            }
+        }
+        private void CFarradPass_Resize(object sender, EventArgs e)
+        {
+            CFahrradImage.Width = CFahrradPass.Width - CFahrradImage.Left - 3;
+        }
+        private void CBilder_Click(object sender, EventArgs e)
+        {
+            FileInfo fi = (FileInfo)CBilder.SelectedItem;
+            try
+            {
+                if (fi != null)
+                    CFahrradImage.BackgroundImage = new Bitmap(fi.FullName);
+            }
+            catch
+            {
+                ShellExecute(IntPtr.Zero, "open", fi.FullName, "", "", 5);
+
+            } // ot
+        }
+        string GetNewPassFileName(string ext = "png")
+        {
+            string zielpath = ZZielpfad + "Fahrradpass";
+            CreateDirectoryIfNotExists(zielpath);
+            string filename;
+            int i = 0;
+            do
+            {
+                filename = zielpath + "\\" + SanitizeFileName(_currentFahrradPass.Rahmennummer) + "_" + i + "." + ext;
+                i++;
+            } while (File.Exists(filename));
+            return filename;
+        }
+        private void smallToolbox10_ClickTool(object sender, Anzeige.SmallToolbox.ClickToolEventArgs e)
+        {
+            switch (e.ButtonIndex)
+            {
+                case 0: // Schadenersatz 
+                    {
+                    }
+                    break;
+                case 1: // Diebstahlsanzeige
+                    {
+                    }
+                    break;
+                case 2: // Bild hinzufügen
+                    {
+                        if (_currentFahrradPass != null)
+                        {
+                            CFahrradImage.BackgroundImage = _currentFahrradPass.QRCodeAlsBitmap();
+                        }
+                    }
+                    break;
+                case 3: // Bild hinzufügen
+                    {
+                        if (_currentFahrradPass != null)
+                        {
+                            CFahrradImage.BackgroundImage = _currentFahrradPass.QRCodeAlsBitmap();
+                            try
+                            {
+                                string filename = GetNewPassFileName();
+                                CBikeList.SelectedItem = currentFahrradPass;
+                                CFahrradImage.BackgroundImage.Save(filename);
+                                currentFahrradPass.FotoDateien.Add(filename);
+                                UpdateBikepass();
+                            }
+                            catch { }
+                        }
+                    }
+                    break;
+            }
+
+        }
+        private void edit_Adress1_Load(object sender, EventArgs e)
+        {
+
+        }
+        private void smallToolbox11_ClickTool(object sender, Anzeige.SmallToolbox.ClickToolEventArgs e)
+        {
+            switch (e.ButtonIndex)
+            {
+                case 0: // Schadenersatz 
+                    {
+                        // Suchen
+                        CBSuchen_Click(sender, e);
+                    }
+                    break;
+                case 1: // Diebstahlsanzeige
+                    {
+                        // Offnen
+                        CBTOpenArchiv_Click(sender, e);
+                    }
+                    break;
+                case 2: // Bild hinzufügen
+                    {
+                        //  drucken 
+                        ArchPrint_Click(sender, e);
+                    }
+                    break;
+                case 3: // Bild hinzufügen
+                    {
+                        // alle drucken
+                        ArchPrintAll_Click(sender, e);
+                    }
+                    break;
+            }
+        }
+        private void CArchivList_DoubleClick(object sender, EventArgs e)
+        {
+            CBTOpenArchiv_Click(sender, e);
+        }
+        private enum MeasurementStatus
+        {
+            ScalePoint1,
+            ScalePoint2,
+            StartPoint,
+            MeasureLoop
+        }
+        private MeasurementStatus currentStatus = MeasurementStatus.ScalePoint1;
+        // Punkte
+        private Point scalePoint1;
+        private Point scalePoint2;
+        private Point lastPoint;
+        // Skalierung Meter/Pixel
+        private double pixelMassstab = 1;
+        private double meterPerPixel = 0;
+        // Gesamtdistanz
+        private double totalDistanceMeters = 0;
+        private List<Point> measurementPoints = new List<Point>();
+        private PointF PanelToBitmap(Point mousePoint, Bitmap bitmap, Panel panel, float zoom)
+        {
+            // Panel zeigt evtl. zentriert das Bitmap
+            float offsetX = (panel.Width - bitmap.Width * zoom) / 2f;
+            float offsetY = (panel.Height - bitmap.Height * zoom) / 2f;
+
+            float x = (mousePoint.X - offsetX) / zoom;
+            float y = (mousePoint.Y - offsetY) / zoom;
+
+            return new PointF(x, y);
+        }
+        private Bitmap GetSpeedImageWithPath()
+        {
+            if (measurementPoints.Count < 2 || carddata == null)
+                return (Bitmap)carddata?.Clone();
+
+            Bitmap result = (Bitmap)carddata.Clone();
+
+            using (Graphics g = Graphics.FromImage(result))
+            {
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+                using (Pen pen = new Pen(Color.Red, 4))
+                {
+                    pen.LineJoin = System.Drawing.Drawing2D.LineJoin.Round;
+
+                    // Panel → Bitmap-Koordinaten umrechnen (BackgroundImageLayout = Zoom)
+                    float panelW = splitContainer6.Panel1.Width;
+                    float panelH = splitContainer6.Panel1.Height;
+                    float bmpW = carddata.Width;
+                    float bmpH = carddata.Height;
+
+                    float ratioPanel = panelW / panelH;
+                    float ratioBmp = bmpW / bmpH;
+
+                    float scale;
+                    float offsetX = 0;
+                    float offsetY = 0;
+
+                    if (ratioPanel > ratioBmp)
+                    {
+                        // Panel breiter: Bitmap an Höhe angepasst
+                        scale = panelH / bmpH;
+                        offsetX = (panelW - bmpW * scale) / 2f;
+                    }
+                    else
+                    {
+                        // Panel höher: Bitmap an Breite angepasst
+                        scale = panelW / bmpW;
+                        offsetY = (panelH - bmpH * scale) / 2f;
+                    }
+
+                    PointF[] bmpPoints = measurementPoints
+                        .Select(p => new PointF(
+                            (p.X - offsetX) / scale,
+                            (p.Y - offsetY) / scale))
+                        .ToArray();
+
+                    g.DrawLines(pen, bmpPoints);
+                }
+            }
+            return result;
+        }
+        private void splitContainer6_Panel1_MouseClick(object sender, MouseEventArgs e)
+        {
+            switch (currentStatus)
+            {
+                case MeasurementStatus.ScalePoint1:
+                    scalePoint1 = e.Location;
+                    currentStatus = MeasurementStatus.ScalePoint2;
+                    CSpeedStatus.Text = "Maßstab Position 2";
+                    break;
+
+                case MeasurementStatus.ScalePoint2:
+                    scalePoint2 = e.Location;
+                    // Pixel-Distanz zwischen Maßstabspunkten
+                    pixelMassstab = Math.Sqrt(Math.Pow(scalePoint2.X - scalePoint1.X, 2) +
+                                                     Math.Pow(scalePoint2.Y - scalePoint1.Y, 2));
+                    // Reale Distanz vom Massstab
+                    meterPerPixel = (double)CMassstab.Value / pixelMassstab;
+                    currentStatus = MeasurementStatus.StartPoint;
+                    CSpeedStatus.Text = "Startpunkt der Messung";
+                    break;
+
+                case MeasurementStatus.StartPoint:
+                    lastPoint = e.Location;
+                    totalDistanceMeters = 0;  // Distanz zurücksetzen
+                    currentStatus = MeasurementStatus.MeasureLoop;
+                    CSpeedStatus.Text = "Nächster Punkt oder Messen";
+                    measurementPoints.Clear();        // Reset
+                    measurementPoints.Add(e.Location); // Startpunkt speichern
+                    splitContainer6.Panel1.BackgroundImage = GetSpeedImageWithPath();
+                    break;
+
+                case MeasurementStatus.MeasureLoop:
+                    Point newPoint = e.Location;
+                    measurementPoints.Add(e.Location); // Startpunkt speichern
+
+                    // Pixel-Distanz zwischen letztem Punkt und neuem Punkt
+                    double dx = newPoint.X - lastPoint.X;
+                    double dy = newPoint.Y - lastPoint.Y;
+                    double segmentPixels = Math.Sqrt(dx * dx + dy * dy);
+
+                    // Distanz in Metern
+                    double segmentMeters = segmentPixels * meterPerPixel;
+
+                    // addiere zur Gesamtdistanz
+                    totalDistanceMeters += segmentMeters;
+
+                    // Update für nächsten Klick
+                    lastPoint = newPoint;
+
+                    // Zwischenergebnis in Textbox anzeigen
+                    CDistance.Text = totalDistanceMeters.ToString("F2");
+                    splitContainer6.Panel1.BackgroundImage = GetSpeedImageWithPath();
+                    break;
+            }
+        }
+        private void splitContainer5_Panel2_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetImage(speedimage);
+        }
+        private void smallToolbox12_ClickTool(object sender, SmallToolbox.ClickToolEventArgs e)
+        {
+            switch (e.ButtonIndex)
+            {
+                case 0:
+                    {
+                        ausschnittTemp = "";
+                        CUStrasse.Text = "";
+                        CUHN.Text = "";
+                        CUDateTime.Value = DateTime.Now;
+                        CBeteiligteList.Items.Clear();
+                    }
+                    break;
+                case 1:
+                    {
+                        CNew_Click(sender, new SmallToolbox.ClickToolEventArgs(0, "user", ""));
+                        CreateDirectoryIfNotExists(ZZielpfad + "Download");
+                        OpenFileDialog openFileDialog = new OpenFileDialog();
+                        openFileDialog.Multiselect = true;
+                        openFileDialog.InitialDirectory = ZZielpfad + "Download";
+
+                        // Filter für verschiedene Bilddateitypen festlegen
+                        openFileDialog.Filter = "JPEG-Bilder (*.jpg, *.jpeg)|*.jpg;*.jpeg|" +
+                                                "PNG-Bilder (*.png)|*.png|" +
+                                                "GIF-Bilder (*.gif)|*.gif|" +
+                                                "BMP-Bilder (*.bmp)|*.bmp|" +
+                                                "TIFF-Bilder (*.tiff)|*.tiff|" +
+                                                "TIFF-Bilder (*.tif)|*.tif|" +
+                                                "Alle Dateien (*.*)|*.*";
+
+                        if (openFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            CFiles.Items.Clear();
+                            foreach (string fileName in openFileDialog.FileNames)
+                            {
+                                AddFilename(fileName);
+                            }
+                        }
+                        CAnzeigeText.Text = Message;
+                    }
+                    break;
+                case 2:
+                    {
+                        skiprcpselect = true;
+                        // Oberbilker Allee 98, 40227 Düsseldorf
+                        String[] itm = Clipboard.GetText().Split(',');
+
+                        if (itm.Length == 2)
+                        {
+                            String plz = itm[1].Substring(0, 6);
+                            String ort = itm[1].Substring(7);
+                            selectOrt(ort);
+                            string fullAddress = itm[0];
+                            string street = string.Empty;
+                            string houseNumber = string.Empty;
+                            // Suche nach dem letzten Leerzeichen, um die Hausnummer zu trennen
+                            int lastSpaceIndex = fullAddress.LastIndexOf(' ');
+                            if (lastSpaceIndex != -1 && lastSpaceIndex < fullAddress.Length - 1)
+                            {
+                                street = fullAddress.Substring(0, lastSpaceIndex).Trim();
+                                houseNumber = fullAddress.Substring(lastSpaceIndex + 1).Trim();
+                            }
+                            else
+                            {
+                                // Wenn kein Leerzeichen gefunden wurde, verwenden wir die gesamte Eingabe als Straße
+                                street = fullAddress.Trim();
+                            }
+                            CUPLZ.Text = plz;
+                            CUStrasse.Text = street;
+                            CUHN.Text = houseNumber;
+                            skiprcpselect = false;
+                        }
+                    }
+                    break;
+                case 3:
+                    {
+                        var dialog = new SaveFileDialog
+                        {
+                            Title = "Unfallbeteiligten speichern",
+                            Filter = "Textdateien (*.txt)|*.txt|Alle Dateien (*.*)|*.*",
+                            DefaultExt = "txt",
+                            AddExtension = true,
+                            FileName = "Unfallbeteiligter.txt"
+                        };
+
+                        if (dialog.ShowDialog() == DialogResult.OK)
+                        {
+                            FormularSpeichern(dialog.FileName);
+                        }
+                    }
+                    break;
+                case 4:
+                    {
+                        var dialog = new OpenFileDialog
+                        {
+                            Title = "Unfallbeteiligten laden",
+                            Filter = "Textdateien (*.txt)|*.txt|Alle Dateien (*.*)|*.*",
+                            DefaultExt = "txt",
+                            Multiselect = false
+                        };
+
+                        if (dialog.ShowDialog() == DialogResult.OK)
+                        {
+                            FormularLaden(dialog.FileName);
+                        }
+                    }
+                    break;
+
+                case 5:
+                    DruckenUnfallbericht();
+                    break;
+                case 6:
+                    {
+                        String url = ortssuche;
+                        url = url.Replace("<strasse>", CUStrasse.Text);
+                        url = url.Replace("<hn>", CUHN.Text);
+                        url = url.Replace("<plz>", CUPLZ.Text);
+                        url = url.Replace("<ort>", CUOrt.Text);
+                        // ortssuche
+                        ShellExecute(IntPtr.Zero, "open", url, "", "", 5);
+                    }
+                    break;
+                case 7:
+                    skiprcpselect = true;
+                    String[] items = Clipboard.GetText().Split(',');
+                    if (items.Length == 2)
+                    {
+                        String plz = items[1].Substring(0, 6);
+                        String ort = items[1].Substring(7);
+                        selectOrt(ort);
+                        string fullAddress = items[0];
+                        string street = string.Empty;
+                        string houseNumber = string.Empty;
+                        // Suche nach dem letzten Leerzeichen, um die Hausnummer zu trennen
+                        int lastSpaceIndex = fullAddress.LastIndexOf(' ');
+                        if (lastSpaceIndex != -1 && lastSpaceIndex < fullAddress.Length - 1)
+                        {
+                            street = fullAddress.Substring(0, lastSpaceIndex).Trim();
+                            houseNumber = fullAddress.Substring(lastSpaceIndex + 1).Trim();
+                        }
+                        else
+                        {
+                            // Wenn kein Leerzeichen gefunden wurde, verwenden wir die gesamte Eingabe als Straße
+                            street = fullAddress.Trim();
+                        }
+                        CUPLZ.Text = plz;
+                        CUStrasse.Text = street;
+                        CUHN.Text = houseNumber;
+                        CUOrt.Text = ort;
+                        skiprcpselect = false;
+                    }
+                    break;
+            }
+        }
+        private void CPolProtokoll_CheckedChanged(object sender, EventArgs e)
+        {
+            CProtokoll.Visible = !CPolProtokoll.Checked;
+            CBeteiligter.Visible = CProtokoll.Visible;
+            CurrentInsasse.Verletzt = CPolProtokoll.Checked;
+        }
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+        }
+        bool ChkSetBeteiligter = false;
+        Unfallbeteiligter _currentubt;
+        Unfallbeteiligter currentubt
+        {
+            get
+            {
+                return _currentubt;
+            }
+            set
+            {
+                _currentubt = value;
+            }
+        }
+        private void SetBeteiligter(Unfallbeteiligter ubt)
+        {
+            ChkSetBeteiligter = true;
+            _currentubt = ubt;
+            // === ComboBoxen mit Enums ===
+            CFahrzeugart.SelectedItem = ubt.ArtDesFahrzeugs;
+            CZustand.SelectedItem = ubt.Bereifung;
+            CKopplung.SelectedItem = ubt.AnhaengerArt;
+
+            // === TextBoxen ===
+            CFahrzeugKennzeichen.Text = ubt.AmtlichesKennzeichen;
+            CHersteller.Text = ubt.Hersteller;
+            CTyp.Text = ubt.Typ;
+            CAnhängerKennzeichen.Text = ubt.AnhaengerKennzeichen;
+            CVersicherung.Text = ubt.HaftpflichtversichererNameUndAnschrift;
+            CUnfallSchaden.Text = ubt.SonstigeSachschaden;
+
+            // === CheckBox ===
+            CHatAnhaenger.Checked = ubt.HatAnhaenger;
+
+            // === ListBox für Personen (Insassen) ===
+            CInsassen.Items.Clear();
+            foreach (var p in ubt.Personen)
+            {
+                CInsassen.Items.Add(p); // ToString() der Person wird angezeigt
+            }
+            if (CInsassen.Items.Count > 0)
+                CInsassen.SelectedIndex = 0;
+
+            ChkSetBeteiligter = false;
+        }
+        private void CAddBeteiligten_Click(object sender, EventArgs e)
+        {
+            currentubt = new Unfallbeteiligter();
+            CBeteiligteList.Items.Add(currentubt);
+            CBeteiligteList.SelectedItem = currentubt;
+        }
+        private void CBeteiligteList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+        }
+        private void CBeteiligteList_SelectedValueChanged(object sender, EventArgs e)
+        {
+            SetBeteiligter((Unfallbeteiligter)CBeteiligteList.SelectedItem);
+
+        }
+        Unfallbeteiligter.Person CurrentInsasse = new Unfallbeteiligter.Person();
+        private void AddPerson(Unfallbeteiligter.Person.PersonArt art)
+        {
+            CurrentInsasse = new Unfallbeteiligter.Person();
+            CurrentInsasse.Personart = art;
+            CInsassen.Items.Add(CurrentInsasse);
+            currentubt.Personen.Add(CurrentInsasse);
+        }
+        private void CAddHalter_Click(object sender, EventArgs e)
+        {
+            AddPerson(Unfallbeteiligter.Person.PersonArt.Halter);
+        }
+        private void CAddInsasse_Click(object sender, EventArgs e)
+        {
+            AddPerson(Unfallbeteiligter.Person.PersonArt.Insasse);
+        }
+        private void CAddFahrer_Click(object sender, EventArgs e)
+        {
+            AddPerson(Unfallbeteiligter.Person.PersonArt.Fahrer);
+        }
+        private void RefreshComboBox()
+        {
+            RefreshItems(CBeteiligteList);
+        }
+        private void RefreshComboBox_(ComboBox cb)
+        {
+            cb.Visible = false;
+            if (cb.Items.Count > 0)
+            {
+                for (int i = 0; i < cb.Items.Count; i++)
+                    cb.Items[i] = cb.Items[i];
+            }
+            cb.Visible = true;
+        }
+        /// <summary>
+        /// RefreshItems: Aktualisiert die Items eines Controls.
+        /// Nutzung ausschließlich für ComboBox und ListBox.
+        /// </summary>
+        private void RefreshItems(Control ctrl)
+        {
+            ctrl.Visible = false;
+            if (ctrl is ComboBox or ListBox)
+            {
+                dynamic items = ((dynamic)ctrl).Items; // greift auf Items zu, egal ob ComboBox oder ListBox
+                for (int i = 0; i < items.Count; i++)
+                    items[i] = items[i]; // exakt deine Originallogik
+            }
+            ctrl.Visible = true;
+        }
+        private void CFahrzeugart_SelectedIndexChanged(object sender, EventArgs e)
+        {
+        }
+        private void CFahrzeugart_SelectedValueChanged(object sender, EventArgs e)
+        {
+        }
+        private void CFahrzeugart_TextChanged(object sender, EventArgs e)
+        {
+            if (currentubt != null && !ChkSetBeteiligter && ((System.Windows.Forms.ComboBox)sender).SelectedItem != null)
+                currentubt.ArtDesFahrzeugs = (Unfallbeteiligter.Fahrzeugart)((System.Windows.Forms.ComboBox)sender).SelectedItem;
+            RefreshComboBox();
+        }
+        private void CFahrzeugKennzeichen_TextChanged(object sender, EventArgs e)
+        {
+            if (currentubt != null && !ChkSetBeteiligter)
+                currentubt.AmtlichesKennzeichen = ((Control)sender).Text;
+            RefreshComboBox();
+        }
+        private void CHersteller_TextChanged(object sender, EventArgs e)
+        {
+            if (currentubt != null && !ChkSetBeteiligter && !ChkSetBeteiligter)
+                currentubt.Hersteller = ((Control)sender).Text;
+            RefreshComboBox();
+        }
+        private void CTyp_TextChanged(object sender, EventArgs e)
+        {
+            if (currentubt != null && !ChkSetBeteiligter)
+                currentubt.Typ = ((Control)sender).Text;
+            RefreshComboBox();
+        }
+        private void CZustand_TextChanged(object sender, EventArgs e)
+        {
+            if (currentubt != null && !ChkSetBeteiligter && ((System.Windows.Forms.ComboBox)sender).SelectedItem != null)
+                currentubt.Bereifung = (Unfallbeteiligter.Zustand)((System.Windows.Forms.ComboBox)sender).SelectedItem;
+            RefreshComboBox();
+        }
+        private void CKopplung_TextChanged(object sender, EventArgs e)
+        {
+            if (currentubt != null && !ChkSetBeteiligter && ((System.Windows.Forms.ComboBox)sender).SelectedItem != null)
+                currentubt.AnhaengerArt = (Unfallbeteiligter.Kopplungsart)((System.Windows.Forms.ComboBox)sender).SelectedItem;
+            RefreshComboBox();
+            CAnhängerKennzeichen.Enabled = (CKopplung.Text != "");
+        }
+        private void CAnhängerKennzeichen_TextChanged(object sender, EventArgs e)
+        {
+            if (currentubt != null && !ChkSetBeteiligter)
+                currentubt.AnhaengerKennzeichen = ((Control)sender).Text;
+            RefreshComboBox();
+        }
+        private void CUnfallSchaden_TextChanged(object sender, EventArgs e)
+        {
+            if (currentubt != null && !ChkSetBeteiligter)
+                currentubt.SonstigeSachschaden = ((Control)sender).Text;
+            RefreshComboBox();
+        }
+        private void CVersicherung_TextChanged(object sender, EventArgs e)
+        {
+            if (currentubt != null && !ChkSetBeteiligter)
+                currentubt.HaftpflichtversichererNameUndAnschrift = ((Control)sender).Text;
+            RefreshComboBox();
+        }
+        private void CUnfallhergang_TextChanged(object sender, EventArgs e)
+        {
+            if (currentubt != null && !ChkSetBeteiligter)
+                currentubt.Unfallhergang = ((Control)sender).Text;
+            RefreshComboBox();
+        }
+        private void CInsassen_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (CInsassen.Visible)
+            {
+                CurrentInsasse = (Person)CInsassen.SelectedItem;
+                RefreshPerson(CurrentInsasse);
+
+                // RefreshItems(CInsassen);
+            }
+        }
+        private void CInsassen_SelectedValueChanged(object sender, EventArgs e)
+        {
+        }
+        private void BTExternMess_Click(object sender, EventArgs e)
+        {
+            ShellExecute(IntPtr.Zero, "open", "https://wiki.fricklers.org/abstand.html", "", "", 5);
+        }
+        private void CBeteiligteList_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void CHersteller_SelectedValueChanged(object sender, EventArgs e)
+        {
+        }
+        private void CHersteller_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            setSelectedLineTip((Control)sender);
+            if (UseLogo)
+            {
+                try
+                {
+                    CULogo.BackgroundImage = Bitmap.FromFile(CHersteller.Text + ".jpg");
+                }
+                catch
+                {
+                    Clipboard.SetText(CHersteller.Text + ".jpg");
+                    ShellExecute(IntPtr.Zero, "open", $"https://www.google.com/search?q={CMarke.Text}+logo+auto", "", "", 5);
+                }
+            }
+
+        }
+        private void CHerstellerMarke_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            setSelectedLineTip((Control)sender);
+            if (UseLogo)
+            {
+                try
+                {
+                    CFlogo.BackgroundImage = Bitmap.FromFile(CHerstellerMarke.Text + ".jpg");
+                }
+                catch
+                {
+                    Clipboard.SetText(CHerstellerMarke.Text + ".jpg");
+                    ShellExecute(IntPtr.Zero, "open", $"https://www.google.com/search?q={CHerstellerMarke.Text}+logo+auto", "", "", 5);
+                }
+            }
+
+        }
+        private void CHatAnhaenger_CheckedChanged(object sender, EventArgs e)
+        {
+            CAnhaengerData.Visible = CHatAnhaenger.Checked;
+        }
+        private void RefreshPerson(Unfallbeteiligter.Person person)
+        {
+
+            if (CPPerson.Visible)
+            {
+                CPPerson.Visible = false;
+                CPInsasse.SelectedItem = person.Personart;
+                CPName.Text = person.Name;
+                CPOrt.Text = person.Ort;
+                CPStrasse.Text = person.Strasse;
+                CPTelefon.Text = person.Telefon;
+                CPVerletzt.Checked = person.Verletzt;
+                CPVerletzung.Text = person.ArtDerVerletzung;
+                CPSicherung.Text = person.Sicherungssystem;
+                CPPerson.Visible = true;
+            }
+        }
+        private void CPInsasse_SelectedValueChanged(object sender, EventArgs e)
+        {
+            CurrentInsasse.Personart = (Unfallbeteiligter.Person.PersonArt)CPInsasse.SelectedItem;
+        }
+        private void CPName_TextChanged(object sender, EventArgs e)
+        {
+            CurrentInsasse.Name = CPName.Text;
+        }
+        private void CPOrt_TextChanged(object sender, EventArgs e)
+        {
+            CurrentInsasse.Ort = CPOrt.Text;
+        }
+        private void CPStrasse_TextAlignChanged(object sender, EventArgs e)
+        {
+        }
+        private void CPTelefon_TextChanged(object sender, EventArgs e)
+        {
+            CurrentInsasse.Telefon = CPTelefon.Text;
+        }
+        private void CPVerletzung_TextChanged(object sender, EventArgs e)
+        {
+            CurrentInsasse.ArtDerVerletzung = CPVerletzung.Text;
+        }
+        private void CPSicherung_TextChanged(object sender, EventArgs e)
+        {
+            CurrentInsasse.Sicherungssystem = CPSicherung.Text;
+        }
+        private void CPStrasse_TextChanged(object sender, EventArgs e)
+        {
+            CurrentInsasse.Strasse = CPStrasse.Text;
+        }
+        public void FormularSpeichern(string pfad)
+        {
+            using (var sw = new StreamWriter(pfad, false))
+            {
+                // ===== Kopf =====
+                sw.WriteLine("[KOPF]");
+                sw.WriteLine($"Polizeiprotokoll={CPolProtokoll.Checked}");
+                sw.WriteLine($"Datum={CUDateTime.Value:O}");
+                sw.WriteLine($"PLZ={UPLZ}");
+                sw.WriteLine($"Ort={UOrt}");
+                sw.WriteLine($"Strasse={UStrasse}");
+                sw.WriteLine($"Hausnummer={UHN}");
+                sw.WriteLine("Unfallhergang=");
+                sw.WriteLine("[[Unfallhergang]]");
+                sw.WriteLine(Unfallhergang);
+                sw.WriteLine("[[Ende]]");
+                sw.WriteLine("[/KOPF]");
+
+                // ===== Beteiligte =====
+                sw.WriteLine($"Beteiligte={CBeteiligteList.Items.Count}");
+
+                sw.WriteLine("Unfallhergang=");
+                sw.WriteLine("[[Unfallhergang]]");
+                sw.WriteLine(Unfallhergang);
+                sw.WriteLine("[[Ende]]");
+                foreach (Anzeige.Unfallbeteiligter u in CBeteiligteList.Items)
+                {
+                    sw.WriteLine("[BETEILIGTER]");
+                    sw.WriteLine($"Art={u.ArtDesFahrzeugs}");
+                    sw.WriteLine($"Kennzeichen={u.AmtlichesKennzeichen}");
+                    sw.WriteLine($"Hersteller={u.Hersteller}");
+                    sw.WriteLine($"Typ={u.Typ}");
+                    sw.WriteLine($"Bereifung={u.Bereifung}");
+                    sw.WriteLine($"HatAnhaenger={u.HatAnhaenger}");
+                    sw.WriteLine($"AnhaengerArt={u.AnhaengerArt}");
+                    sw.WriteLine($"AnhaengerKennzeichen={u.AnhaengerKennzeichen}");
+                    sw.WriteLine($"Versicherung={u.HaftpflichtversichererNameUndAnschrift}");
+                    sw.WriteLine($"Sachschaden={u.SonstigeSachschaden}");
+                    sw.WriteLine($"Personen={u.Personen.Count}");
+
+                    foreach (var p in u.Personen)
+                    {
+                        sw.WriteLine("[PERSON]");
+                        sw.WriteLine($"Personart={p.Personart}");
+                        sw.WriteLine($"PName={p.Name}");
+                        sw.WriteLine($"POrt={p.Ort}");
+                        sw.WriteLine($"PStrasse={p.Strasse}");
+                        sw.WriteLine($"PTelefon={p.Telefon}");
+                        sw.WriteLine($"PVerletzt={p.Verletzt}");
+                        sw.WriteLine($"PVerletzung={p.ArtDerVerletzung}");
+                        sw.WriteLine($"PSicherungssystem={p.Sicherungssystem}");
+                        sw.WriteLine("[/PERSON]");
+                    }
+
+                    sw.WriteLine("[/BETEILIGTER]");
+                }
+                sw.Flush(); // <-- sorgt dafür, dass alles sofort auf die Datei geschrieben wird
+                sw.Close();
+            }
+        }
+        public void FormularLaden(string pfad)
+        {
+            if (!File.Exists(pfad))
+                return;
+
+            CBeteiligteList.Items.Clear();
+
+            using (var sr = new StreamReader(pfad))
+            {
+                Anzeige.Unfallbeteiligter currentBeteiligter = null;
+                Anzeige.Unfallbeteiligter.Person currentPerson = null;
+
+                while (!sr.EndOfStream)
+                {
+                    string line = sr.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(line))
+                        continue;
+
+                    // ===== Kopf =====
+                    if (line.StartsWith("Polizeiprotokoll="))
+                        CPolProtokoll.Checked = bool.Parse(line.Split('=')[1]);
+
+                    else if (line.StartsWith("Datum="))
+                        CUDateTime.Value = DateTime.Parse(line.Split('=')[1], null, DateTimeStyles.RoundtripKind);
+
+                    else if (line.StartsWith("PLZ="))
+                        UPLZ = line.Split('=')[1];
+
+                    else if (line.StartsWith("Ort="))
+                        UOrt = line.Split('=')[1];
+
+                    else if (line.StartsWith("Strasse="))
+                        UStrasse = line.Split('=')[1];
+
+                    else if (line.StartsWith("Hausnummer="))
+                        UHN = line.Split('=')[1];
+
+                    else if (line == "Unfallhergang=" && currentBeteiligter == null)
+                    {
+                        if (sr.ReadLine() == "[[Unfallhergang]]")
+                        {
+                            var sb = new StringBuilder();
+                            string textLine;
+                            while ((textLine = sr.ReadLine()) != "[[Ende]]")
+                                sb.AppendLine(textLine);
+                            Unfallhergang = sb.ToString().TrimEnd();
+                        }
+                    }
+
+                    // ===== Beteiligter Start =====
+                    else if (line == "[BETEILIGTER]")
+                        currentBeteiligter = new Anzeige.Unfallbeteiligter();
+
+                    else if (line == "[/BETEILIGTER]")
+                    {
+                        CBeteiligteList.Items.Add(currentBeteiligter);
+                        currentBeteiligter = null;
+                    }
+
+                    else if (line.StartsWith("Art="))
+                        currentBeteiligter.ArtDesFahrzeugs =
+                            Enum.Parse<Anzeige.Unfallbeteiligter.Fahrzeugart>(line.Split('=')[1]);
+
+                    else if (line.StartsWith("Kennzeichen="))
+                        currentBeteiligter.AmtlichesKennzeichen = line.Split('=')[1];
+
+                    else if (line.StartsWith("Hersteller="))
+                        currentBeteiligter.Hersteller = line.Split('=')[1];
+
+                    else if (line.StartsWith("Typ="))
+                        currentBeteiligter.Typ = line.Split('=')[1];
+
+                    else if (line.StartsWith("Bereifung="))
+                        currentBeteiligter.Bereifung =
+                            Enum.Parse<Anzeige.Unfallbeteiligter.Zustand>(line.Split('=')[1]);
+
+                    else if (line.StartsWith("HatAnhaenger="))
+                        currentBeteiligter.HatAnhaenger = bool.Parse(line.Split('=')[1]);
+
+                    else if (line.StartsWith("AnhaengerArt="))
+                        currentBeteiligter.AnhaengerArt =
+                            Enum.Parse<Anzeige.Unfallbeteiligter.Kopplungsart>(line.Split('=')[1]);
+
+                    else if (line.StartsWith("AnhaengerKennzeichen="))
+                        currentBeteiligter.AnhaengerKennzeichen = line.Split('=')[1];
+
+                    else if (line.StartsWith("Versicherung="))
+                        currentBeteiligter.HaftpflichtversichererNameUndAnschrift = line.Split('=')[1];
+
+                    else if (line.StartsWith("Sachschaden="))
+                        currentBeteiligter.SonstigeSachschaden = line.Split('=')[1];
+
+                    // ===== Person Start =====
+                    else if (line == "[PERSON]")
+                        currentPerson = new Anzeige.Unfallbeteiligter.Person();
+
+                    else if (line == "[/PERSON]")
+                    {
+                        currentBeteiligter.Personen.Add(currentPerson);
+                        currentPerson = null;
+                    }
+
+                    else if (line.StartsWith("Personart="))
+                        currentPerson.Personart =
+                            Enum.Parse<Anzeige.Unfallbeteiligter.Person.PersonArt>(line.Split('=')[1]);
+
+                    else if (line.StartsWith("PName="))
+                        currentPerson.Name = line.Split('=')[1];
+
+                    else if (line.StartsWith("POrt=") && currentPerson != null)
+                        currentPerson.Ort = line.Split('=')[1];
+
+                    else if (line.StartsWith("PStrasse=") && currentPerson != null)
+                        currentPerson.Strasse = line.Split('=')[1];
+
+                    else if (line.StartsWith("PTelefon="))
+                        currentPerson.Telefon = line.Split('=')[1];
+
+                    else if (line.StartsWith("PVerletzt="))
+                        currentPerson.Verletzt = bool.Parse(line.Split('=')[1]);
+
+                    else if (line.StartsWith("PVerletzung="))
+                        currentPerson.ArtDerVerletzung = line.Split('=')[1];
+
+                    else if (line.StartsWith("PSicherungssystem="))
+                        currentPerson.Sicherungssystem = line.Split('=')[1];
+                }
+            }
+        }
+        public void FormularSpeichern_sys(string pfad)
+        {
+            using (var bw = new BinaryWriter(File.Open(pfad, FileMode.Create)))
+            {
+                // ===== Kopf =====
+                bw.Write(CPolProtokoll.Checked);
+                bw.Write(CUDateTime.Value.ToBinary());
+                bw.Write(UPLZ ?? "");
+                bw.Write(UOrt ?? "");
+                bw.Write(UStrasse ?? "");
+                bw.Write(UHN ?? "");
+                bw.Write(Unfallhergang ?? "");
+
+                // ===== Beteiligte =====
+                bw.Write(CBeteiligteList.Items.Count);
+
+                foreach (Anzeige.Unfallbeteiligter u in CBeteiligteList.Items)
+                {
+                    bw.Write((int)u.ArtDesFahrzeugs);
+                    bw.Write(u.AmtlichesKennzeichen ?? "");
+                    bw.Write(u.Hersteller ?? "");
+                    bw.Write(u.Typ ?? "");
+                    bw.Write((int)u.Bereifung);
+
+                    bw.Write(u.HatAnhaenger);
+                    bw.Write((int)u.AnhaengerArt);
+                    bw.Write(u.AnhaengerKennzeichen ?? "");
+
+                    bw.Write(u.HaftpflichtversichererNameUndAnschrift ?? "");
+                    bw.Write(u.SonstigeSachschaden ?? "");
+                    bw.Write(u.Unfallhergang ?? "");
+
+                    // ===== Personen =====
+                    bw.Write(u.Personen.Count);
+
+                    foreach (var p in u.Personen)
+                    {
+                        bw.Write((int)p.Personart);
+                        bw.Write(p.Name ?? "");
+                        bw.Write(p.Ort ?? "");
+                        bw.Write(p.Strasse ?? "");
+                        bw.Write(p.Telefon ?? "");
+                        bw.Write(p.Verletzt);
+                        bw.Write(p.ArtDerVerletzung ?? "");
+                        bw.Write(p.Sicherungssystem ?? "");
+                    }
+                }
+            }
+        }
+        public void FormularLaden_sys(string pfad)
+        {
+            using (var br = new BinaryReader(File.Open(pfad, FileMode.Open)))
+            {
+                // ===== Kopf =====
+                CPolProtokoll.Checked = br.ReadBoolean();
+                CUDateTime.Value = DateTime.FromBinary(br.ReadInt64());
+                UPLZ = br.ReadString();
+                UOrt = br.ReadString();
+                UStrasse = br.ReadString();
+                UHN = br.ReadString();
+                Unfallhergang = br.ReadString();
+
+                // ===== Beteiligte =====
+                CBeteiligteList.Items.Clear();
+                int anzahlBeteiligte = br.ReadInt32();
+
+                for (int i = 0; i < anzahlBeteiligte; i++)
+                {
+                    var u = new Anzeige.Unfallbeteiligter();
+
+                    u.ArtDesFahrzeugs = (Anzeige.Unfallbeteiligter.Fahrzeugart)br.ReadInt32();
+                    u.AmtlichesKennzeichen = br.ReadString();
+                    u.Hersteller = br.ReadString();
+                    u.Typ = br.ReadString();
+                    u.Bereifung = (Anzeige.Unfallbeteiligter.Zustand)br.ReadInt32();
+
+                    u.HatAnhaenger = br.ReadBoolean();
+                    u.AnhaengerArt = (Anzeige.Unfallbeteiligter.Kopplungsart)br.ReadInt32();
+                    u.AnhaengerKennzeichen = br.ReadString();
+
+                    u.HaftpflichtversichererNameUndAnschrift = br.ReadString();
+                    u.SonstigeSachschaden = br.ReadString();
+                    u.Unfallhergang = br.ReadString();
+
+                    int personenAnzahl = br.ReadInt32();
+
+                    for (int j = 0; j < personenAnzahl; j++)
+                    {
+                        var p = new Anzeige.Unfallbeteiligter.Person();
+
+                        p.Personart = (Anzeige.Unfallbeteiligter.Person.PersonArt)br.ReadInt32();
+                        p.Name = br.ReadString();
+                        p.Ort = br.ReadString();
+                        p.Strasse = br.ReadString();
+                        p.Telefon = br.ReadString();
+                        p.Verletzt = br.ReadBoolean();
+                        p.ArtDerVerletzung = br.ReadString();
+                        p.Sicherungssystem = br.ReadString();
+
+                        u.Personen.Add(p);
+                    }
+
+                    CBeteiligteList.Items.Add(u);
+                }
+            }
+        }
+        private void DruckenUnfallbericht()
+        {
+            string unfallbericht = UnfallberichtText();
+            DocumentPrinter doc = DocumentPrinter.CreateDocumentPrinterByText(unfallbericht);
+            doc.PrintTemplate();
+        }
+        private string UnfallberichtText()
+        {
+            string linesing = "───────────────────────────────────────────────────\n";
+            string lineplus = "===================================================\n";
+            string text = "";
+            text += "UNFALLBERICHT\n" + lineplus;
+
+            if (CPolProtokoll.Checked)
+                text += "Siehe Polizeibericht\n";
+            else
+            {
+                text += $"Datum={CUDateTime.Value:O}\n";
+                text += $"PLZ={UPLZ}\n";
+                text += $"Ort={UOrt}\n";
+                text += $"Strasse={UStrasse}\n";
+                text += $"Hausnummer={UHN}\n";
+                text += "Unfallhergang=\n";
+                text += Unfallhergang + "\n\n\n";
+
+                text += $"Unfallbeteiligte\n\n" + lineplus;
+
+                int n = 1;
+                foreach (Anzeige.Unfallbeteiligter u in CBeteiligteList.Items)
+                {
+                    text += linesing + $"Beteiligter{n}\n" + linesing;
+                    text += $"Fahrzeugart {u.ArtDesFahrzeugs}\n";
+                    text += $"Kennzeichen/Rahmennummer {u.AmtlichesKennzeichen}\n";
+                    text += $"Marke/hersteller={u.Hersteller}\n";
+                    text += $"Fahrzeugt={u.Typ}\n";
+                    text += $"Bereifung={u.Bereifung}\n";
+
+                    if (u.HatAnhaenger)
+                    {
+                        text += $"\tAnhänger\n";
+                        text += $"\tArt d. Anhänger:{u.AnhaengerArt}\n";
+                        text += $"\tKennzeichen:{u.AnhaengerKennzeichen}\n";
+                    }
+
+                    text += $"Versicherung:{u.HaftpflichtversichererNameUndAnschrift}\n";
+                    text += $"Sachschaden:{u.SonstigeSachschaden}\n";
+                    text += $"Personen im Fahrzeug:{u.Personen.Count}\n";
+
+                    int m = 1;
+                    text += linesing;
+
+                    foreach (var p in u.Personen)
+                    {
+                        text += $"Person{m}\n" + linesing;
+                        text += $"Personart={p.Personart}\n";
+                        text += $"Name={p.Name}\n";
+                        text += $"POrt={p.Ort}\n";
+                        text += $"PStrasse={p.Strasse}\n";
+                        text += $"PTelefon={p.Telefon}\n";
+
+                        if (p.Verletzt)
+                        {
+                            text += $"Wurde verletzt:\n";
+                            text += $"{p.Verletzt}\n";
+                            text += $"Sicherungssystem:{p.Sicherungssystem}\n";
+                        }
+
+                        m++;
+                    }
+
+                    text += lineplus;
+                    n++;
+                }
+                text += "\n\nOrt, Datum: ______________________\tUnterschrift: ____________________";
+
+            }
+            return text;
+        }
+        private void CDruckeUnfallFormulare_DoubleClick(object sender, EventArgs e)
+        {
+            switch (CDruckeUnfallFormulare.Text)
+            {
+                case "Alle":
+                    foreach (string file in CDruckeUnfallFormulare.Items)
+                    {
+                        string unfallbericht = UnfallberichtText();
+                        DocumentPrinter doc = DocumentPrinter.CreateDocumentPrinterByText(unfallbericht);
+                        doc.PrintTemplate();
+                    }
+                    break;
+
+                case "Unfallprotokoll":
+                    DruckenUnfallbericht();
+                    break;
+
+                default:
+                    {
+                        MessageBox.Show("Nicht Implementiert. Vorlage wird in die Zwischenablage kopiert.");
+                        Clipboard.SetText(File.ReadAllText(CDruckeUnfallFormulare.Text + ".txt"));
+                    }
+                    break;
+
+
+            }
+        }
+        private void BTPaint_Click(object sender, EventArgs e)
+        {
+            Bitmap bmp = buildImage();
+            string tempPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".png");
+            bmp.Save(tempPath, System.Drawing.Imaging.ImageFormat.Png);
+            ShellExecute(IntPtr.Zero, "open", tempPath, null, null, 1);
+
+        }
+        AnzeigeArchiv.SortierFeld orderby = AnzeigeArchiv.SortierFeld.Kennzeichen;
+        bool upsort = true;
+        private void CSort_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rb = (RadioButton)sender;
+            int val = int.Parse((string)rb.Tag);
+
+            AnzeigenHistory.Sortiere(orderby, upsort);
+            ViewArchiv();
+        }
+        private void CUpSort_CheckedChanged(object sender, EventArgs e)
+        {
+            upsort = CUpSort.Checked;
+            AnzeigenHistory.Sortiere(orderby, upsort);
+            ViewArchiv();
+        }
+        private void splitContainer1_Resize(object sender, EventArgs e)
+        {
+            CSecureBookmarks.Left = 0;
+            CSecureBookmarks.Width = CFahrradSicherheit.Width;
+            CSecureBookmarks.Height = CFahrradSicherheit.Height - CSecureBookmarks.Top - 6;
+        }
+        private void CFahrradSicherheit_Resize(object sender, EventArgs e)
+        {
+        }
+        private void smallToolbox_LeaveTool(object sender, EventArgs e)
+        {
+
+        }
+        private void Oabrowser_Navigated(object sender, WebBrowserNavigatedEventArgs e)
+        {
+            if (tabControl1.SelectedTab == CFahrradSicherheit)
+            {
+                CSecureURL.Text = oabrowser.Url.OriginalString;
+            }
+        }
+        // private List<Bookmark> bookmarks = new List<Bookmark>();
+        private string bookmarkFile = "bookmarks.txt";
+        public class Bookmark
+        {
+            public string Title { get; set; }
+            public string Url { get; set; }
+            public Bookmark(string title, string url)
+            {
+                Title = title;
+                Url = url;
+            }
+            public override string ToString()
+            {
+                return Title; // Anzeige in der ListBox
+            }
+        }
+        private void SaveBookmarks()
+        {
+            // Erstelle die Backup-Datei
+            string backupFile = bookmarkFile + ".bak";
+
+            // Wenn die Backup-Datei schon existiert, lösche sie
+            if (File.Exists(backupFile))
+                File.Delete(backupFile);
+
+            // Wenn die Originaldatei existiert, verschiebe sie als Backup
+            if (File.Exists(bookmarkFile))
+                File.Move(bookmarkFile, backupFile);
+
+            // Jetzt die neue Datei speichern
+            var lines = CSecureBookmarks.Items
+                .Cast<Bookmark>()
+                .Select(b => $"{b.Title};{b.Url}")
+                .ToArray();
+
+            File.WriteAllLines(bookmarkFile, lines);
+        }
+        private void LoadBookmarks()
+        {
+            CSecureBookmarks.Items.Clear();
+            if (!File.Exists("bookmarks.txt"))
+            {
+                LoadDefaultBookmarks();
+                SaveBookmarks();
+            }
+            else
+            {
+                foreach (var line in File.ReadAllLines("bookmarks.txt"))
+                {
+                    var parts = line.Split(';');
+                    if (parts.Length == 2)
+                        CSecureBookmarks.Items.Add(new Bookmark(parts[0], parts[1]));
+                }
+            }
+            RefreshBookmarkList();
+        }
+        private void LoadDefaultBookmarks()
+        {
+            // Community & Apps
+            CSecureBookmarks.Items.Add(new Bookmark("weg-li", "https://www.weg.li/"));
+            CSecureBookmarks.Items.Add(new Bookmark("Bike Citizens App", "https://bikecitizens.net/"));
+            CSecureBookmarks.Items.Add(new Bookmark("Bikefitting", "https://bikefittingfinder.de/"));
+            CSecureBookmarks.Items.Add(new Bookmark("Polizei NRW Fahrradinfos", "https://polizei.nrw/fahrrad"));
+            CSecureBookmarks.Items.Add(new Bookmark("Radkomm", "https://radkomm.de/"));
+            CSecureBookmarks.Items.Add(new Bookmark("ADFC", "https://www.adfc.de/"));
+            CSecureBookmarks.Items.Add(new Bookmark("ADFC Radtourenportal", "https://www.adfc-tour.de/"));
+
+            // Shop & Ausrüstung
+            CSecureBookmarks.Items.Add(new Bookmark("ADFC Shop", "https://shop.adfc.de/"));
+            CSecureBookmarks.Items.Add(new Bookmark("Fahrrad rose", "https://www.rosebikes.de/"));
+            CSecureBookmarks.Items.Add(new Bookmark("Fahrrad XXL", "https://www.fahrrad-xxl.de/"));
+
+            // Sicherheit & Recht
+            CSecureBookmarks.Items.Add(new Bookmark("Critical Mass Sicherheit", "https://tsimg.cloud/v1/images/caad324d-4bd0-e711-8381-00155d099e09.jpg"));
+            CSecureBookmarks.Items.Add(new Bookmark("Verkehrssicheres Fahrrad", "https://www.adfc.de/artikel/das-verkehrssichere-fahrrad"));
+            CSecureBookmarks.Items.Add(new Bookmark("StVO §2 Fahrbahnbenutzung", "https://www.gesetze-im-internet.de/stvo_2013/__2.html"));
+            CSecureBookmarks.Items.Add(new Bookmark("StVO §9 Abbiegen", "https://www.gesetze-im-internet.de/stvo_2013/__9.html"));
+            CSecureBookmarks.Items.Add(new Bookmark("Klingelpflicht §64a StVZO", "https://www.gesetze-im-internet.de/stvzo_2012/__64a.html"));
+            CSecureBookmarks.Items.Add(new Bookmark("Fahrradbeleuchtung §67 StVZO", "https://www.gesetze-im-internet.de/stvzo_2012/__67.html"));
+
+            // Reparatur & Zubehör
+            CSecureBookmarks.Items.Add(new Bookmark("Fahrradschloss Test", "https://www.adac.de/rund-ums-fahrzeug/tests/fahrradschloesser/"));
+            CSecureBookmarks.Items.Add(new Bookmark("Werkzeug & Zubehör", "https://www.bike-components.de/"));
+            CSecureBookmarks.Items.Add(new Bookmark("Fahrradreparatur Tipps", "https://www.fahrrad.de/service/ratgeber/reparatur"));
+
+            // Navigation & Karten
+            CSecureBookmarks.Items.Add(new Bookmark("Google Maps Fahrrad", "https://www.google.com/maps/"));
+            CSecureBookmarks.Items.Add(new Bookmark("Komoot Routenplaner", "https://www.komoot.de/"));
+            CSecureBookmarks.Items.Add(new Bookmark("Komoot App", "https://www.komoot.de/app"));
+            CSecureBookmarks.Items.Add(new Bookmark("OpenStreetMap", "https://www.openstreetmap.org/"));
+            CSecureBookmarks.Items.Add(new Bookmark("Critical Mass Termine", "https://www.radfahren.de/events/critical-mass/"));
+            CSecureBookmarks.Items.Add(new Bookmark("Stadtverkehr & Sperrungen", "https://www.strassen.nrw.de/"));
+
+            // Fitness & Gesundheit
+            CSecureBookmarks.Items.Add(new Bookmark("Fahrrad Fitness Tipps", "https://www.fahrrad-gesundheit.de/"));
+            CSecureBookmarks.Items.Add(new Bookmark("Fahrrad Ergonomie", "https://www.fahrrad.de/service/ratgeber/ergonomie"));
+            CSecureBookmarks.Items.Add(new Bookmark("Fahrradhelme Test", "https://www.test.de/Fahrradhelme/"));
+
+            // Wetter
+            CSecureBookmarks.Items.Add(new Bookmark("Deutscher Wetterdienst", "https://www.dwd.de/DE/wetter/wetter_node.html"));
+            CSecureBookmarks.Items.Add(new Bookmark("WetterOnline Fahrradwetter", "https://www.wetteronline.de/fahrradwetter"));
+
+            // Strava & Tracking
+            CSecureBookmarks.Items.Add(new Bookmark("Strava", "https://www.strava.com/"));
+        }
+        private void RefreshBookmarkList()
+        {
+        }
+        private void CSecureBookmarks_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Bookmark item = (Bookmark)CSecureBookmarks.SelectedItem;
+            oabrowser.Navigate(item.Url);
+        }
+        private void CSecureBookmarks_DoubleClick(object sender, EventArgs e)
+        {
+            Bookmark item = (Bookmark)CSecureBookmarks.SelectedItem;
+            ShellExecute(IntPtr.Zero, "open", item.Url, "", "", 5);
+        }
+        private void smallToolbox14_ClickTool(object sender, SmallToolbox.ClickToolEventArgs e)
+        {
+            switch (e.ButtonIndex)
+            {
+                case 0: // 🔍 Suche starten
+                    if (!string.IsNullOrWhiteSpace(CSecureURL.Text))
+                        oabrowser.Navigate(CSecureURL.Text);
+                    break;
+
+                case 1: // 🏠 Home
+                    oabrowser.GoHome();
+                    CSecureURL.Text = oabrowser.Url?.ToString() ?? "";
+                    break;
+
+                case 2: // ◀️ Zurück
+                    if (oabrowser.CanGoBack)
+                        oabrowser.GoBack();
+                    CSecureURL.Text = oabrowser.Url?.ToString() ?? "";
+                    break;
+
+                case 3: // ▶️ Weiter
+                    if (oabrowser.CanGoForward)
+                        oabrowser.GoForward();
+                    CSecureURL.Text = oabrowser.Url?.ToString() ?? "";
+                    break;
+
+                case 4: // 🔄 Aktualisieren
+                    oabrowser.Refresh();
+                    break;
+
+                case 5: // ⏹️ Stop
+                    oabrowser.Stop();
+                    break;
+
+                case 6: // 🔖 Lesezeichen
+                        // Beispiel: speichert aktuelle URL in einer Liste oder Datei
+                    string bookmark = oabrowser.Url?.ToString() ?? "";
+                    if (!string.IsNullOrEmpty(bookmark))
+                    {
+                        // Hier kann man z.B. in eine Datei oder Liste schreiben
+                        MessageBox.Show($"Lesezeichen hinzugefügt: {bookmark}");
+                    }
+                    break;
+
+                case 7: // ⚙️ Einstellungen
+                    // Hier könntest du z.B. ein Options-Formular öffnen
+                    MessageBox.Show("Öffne Einstellungen...");
+                    break;
+
+                case 8: // hinzufügen
+                    CSecureBookmarks.Items.Add(new Bookmark(oabrowser.DocumentTitle, CSecureURL.Text));
+                    SaveBookmarks();
+                    break;
+
+                case 9: // Speichern
+                    SaveBookmarks();
+                    break;
+
+                case 10: // Laden 
+                    LoadBookmarks();
+                    break;
+            }
+        }
+        private void BTMClip_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetImage(buildImage());
+        }
+        private void CreateImageAndAddToList()
+        {
+            Bitmap bmp = buildImage();
+            if (bmp == null)
+                return;
+
+            string tempPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid() + ".png");
+
+            try
+            {
+                bmp.Save(tempPath, System.Drawing.Imaging.ImageFormat.Png);
+            }
+            finally
+            {
+                bmp.Dispose();
+            }
+
+            if (File.Exists(tempPath))
+            {
+                AddFilename(tempPath);
+            }
+
+            CAnzeigeText.Text = Message;
+            this.Refresh();
+        }
+        private void BTAnzeige_Click(object sender, EventArgs e)
+        {
+            float dist = (float)Convert.ToDecimal(RealDistance.Text);
+            CreateImageAndAddToList();
+
+            tabControl1.SelectedIndex = 0;
+            if (dist > 150)
+                CVerstossaus.Text = "Eng überholen ausserorts";
+            else
+                CVerstossaus.Text = "Eng überholen";
+            CToo_Click(sender, e);
+        }
+        private void Image_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            if (files == null || files.Length == 0) return;
+
+            string lastVideo = null;
+            string[] videoExt = { ".mp4", ".avi", ".mov", ".wmv", ".mkv", ".flv", ".mpeg", ".mpg", ".3gp", ".webm", ".ts" };
+            string[] imageExt = { ".jpg", ".jpeg", ".png", ".bmp" };
+
+            try
+            {
+                foreach (string file in files)
+                {
+                    FileInfo fi = new FileInfo(file);
+                    string ext = fi.Extension.ToLower();
+
+                    // 1. Spezialfall: Sessions-Datei
+                    if (fi.Name.ToLower() == "anzeige.txt")
+                    {
+                        // LoadAnzeige(file); // Später implementieren
+                        continue;
+                    }
+
+                    // 2. Weiche nach Tab-Kontext
+                    if (CTabPages.SelectedTab == CSave || CTabPages.SelectedTab == CVideos)
+                    {
+                        if (videoExt.Contains(ext))
+                        {
+                            lastVideo = file;
+                        }
+                        else if (imageExt.Contains(ext))
+                        {
+                            AddFilename(file);
+                        }
+                    }
+                    else if (CTabPages.SelectedTab == CFahrradPass)
+                    {
+                        if (videoExt.Contains(ext))
+                        {
+                            lastVideo = file;
+                        }
+                        else if (imageExt.Contains(ext))
+                        {
+                            _currentFahrradPass.FotoDateien.Add(file);
+                        }
+                    }
+                    else if (CTabPages.SelectedTab == CFahrradPass)
+                    {
+                        UpdateBikepass();
+                    }
+                }
+
+                // Abschließende Aktionen
+                if (lastVideo != null)
+                    LoadVideo(lastVideo);
+
+
+                CAnzeigeText.Text = Message;
+                this.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Fehler: {ex.Message}", "Drop Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void Image_DragEnter(object sender, DragEventArgs e)
+        {
+            // Prüfen, ob Dateien gezogen werden
+            e.Effect = DragDropEffects.Copy;
+        }
+        private void pictureBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            Pointl = e.Location;
+            start = new Point(e.Location.X, e.Location.Y);
+            DrawLines();
+        }
+        private void pictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            stop = new Point(e.Location.X, (CLockY.Checked ? Pointl.Y : e.Location.Y));
+
+            if (loadedImage != null)
+                downhelp = new Point(e.Location.X, loadedImage.Height);
+            DrawLines();
+        }
+        private void pictureBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            CLockY.Checked = false;
+            switch (mousemode)
+            {
+                case Mode.LEFT:
+                    CLockY.Checked = false;
+                    pleft = stop;
+                    right.Checked = true;
+                    pright = new Point(pright.X, pleft.Y);
+                    break;
+                case Mode.RIGHT:
+                    CLockY.Checked = false;
+                    pright = stop;
+                    Augpunkt.Checked = true;
+                    break;
+                case Mode.AUGPUNKT:
+                    CLockY.Checked = false;
+                    paug = stop;
+                    break;
+                case Mode.REF1:
+                    pref1 = stop;
+                    mousemode = Mode.REF2;
+                    CRef2.Checked = true;
+                    pref2 = new Point(pref2.X, pref1.Y);
+                    break;
+                case Mode.REF2:
+                    // CLockY.Checked = true;
+                    pref2 = stop;
+                    break;
+                case Mode.FIXY:
+                    CLockY.Checked = true;
+                    mousemode = Mode.DIST1;
+                    break;
+                case Mode.DIST1:
+                    CLockY.Checked = true;
+                    dist1 = stop;
+                    CDist2.Checked = true;
+                    dist2 = new Point(paug.X, dist1.Y);
+                    break;
+                case Mode.DIST2:
+                    // CLockY.Checked = true;
+                    dist2 = stop;
+                    CalculateAndDisplayDistance();
+                    break;
+            }
+            textrefresh();
+            DrawLines();
+        }
+        private void CSave_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (ausschnitt != null)
+                {
+                    try
+                    {
+                        Point p = Transform(e.Location, CSave.ClientRectangle, ausschnitt.Size);
+                        Bitmap b = (Bitmap)CSave.BackgroundImage;
+                        if (b != null)
+                        {
+                            Point start1 = new Point(Math.Min(start.X, e.X), Math.Min(start.Y, e.Y));
+                            Point ende1 = new Point(Math.Max(start.X, e.X), Math.Max(start.Y, e.Y));
+
+                            Color c = b.GetPixel(p.X, p.Y);
+                            this.Text = "Wegeheld 2 |" + ToRGB(c) + " | " + ToRGB(panel1.BackColor);
+                            Bildausschnitt = new Rectangle(start1, new Size(ende1.X - start1.X, ende1.Y - start1.Y));
+                        }
+                    }
+                    catch { }
+                }
+            }
+        }
+        public void LadeAnzeigeDaten(string filename)
+        {
+            //string pfad = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Anzeige.txt");
+            if (!File.Exists(filename)) return;
+
+            string[] zeilen = File.ReadAllLines(filename);
+
+            // Suche nach dem Dankestext als festem Ankerpunkt
+            int dankeIndex = Array.FindIndex(zeilen, z => z.Contains("Danke, dass Sie sich"));
+
+            if (dankeIndex >= 5)
+            {
+                // 1. Kennzeichen (Zeile direkt über "Danke...")
+                this.Kennzeichen = zeilen[dankeIndex - 2].Trim();
+
+                // 2. Marke & Farbe (z.B. "Renault, Weiss")
+                string fahrzeugInfo = zeilen[dankeIndex - 3].Trim();
+                if (fahrzeugInfo.Contains(","))
+                {
+                    var fParts = fahrzeugInfo.Split(',');
+                    this.Marke = fParts[0].Trim();
+                    this.Farbe = fParts[1].Trim();
+                }
+
+                // 3. PLZ & Ort (z.B. "51377 Leverkusen")
+                string ortZeile = zeilen[dankeIndex - 4].Trim();
+                var oParts = ortZeile.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (oParts.Length >= 2)
+                {
+                    this.PLZ = oParts[0].Trim();
+                    this.Ort = oParts[1].Trim();
+                }
+
+                // 4. Straße & Hausnummer (z.B. "Kalkstraße 35")
+                string strasseZeile = zeilen[dankeIndex - 5].Trim();
+                int lastSpace = strasseZeile.LastIndexOf(' ');
+                if (lastSpace > 0)
+                {
+                    this.Strasse = strasseZeile.Substring(0, lastSpace).Trim();
+                    this.HN = strasseZeile.Substring(lastSpace).Trim();
+                }
+
+                // 5. Tatzeit & Datum (z.B. "10 April 2025, 14:50 bis 16:09")
+                string zeitZeile = zeilen[dankeIndex - 6].Trim();
+                if (zeitZeile.Contains(","))
+                {
+                    this.Datum = zeitZeile.Split(',')[0].Trim();
+                    string zeiten = zeitZeile.Split(',')[1].Trim();
+                    if (zeiten.Contains(" bis "))
+                    {
+                        var zParts = zeiten.Split(new[] { " bis " }, StringSplitOptions.None);
+                        string vontext = zParts[0].Trim();
+                        this.Zeit = vontext;
+                        this.ZeitBis = vontext;
+                        if (zParts.Length > 1)
+                            this.ZeitBis = zParts[1].Trim();
+                    }
+                }
+
+
+                /*
+                // BILDER LADEN:
+                // Wir extrahieren alle Zeilen, die wie ein Pfad aussehen und eine Bildendung haben
+                var extrahiertePfade = zeilen
+                    .Where(z => (z.Trim().StartsWith(@"C:\") || z.Trim().StartsWith(@"Z:\") || z.Trim().StartsWith(@"Y:\")) &&
+                                (z.ToLower().EndsWith(".jpg") || z.ToLower().EndsWith(".jpeg") || z.ToLower().EndsWith(".png")))
+                    .Select(z => z.Trim())
+                    .ToList();
+                */
+
+                // BILDER LADEN:
+                // 1. Erstmal alle Pfad-Zeilen aus der Datei fischen (egal welches Laufwerk drinsteht)
+                var extrahiertePfade = zeilen
+                    .Where(z => (z.Trim().StartsWith(@"C:\") || z.Trim().StartsWith(@"Z:\") || z.Trim().StartsWith(@"Y:\")) &&
+                                (z.ToLower().EndsWith(".jpg") || z.ToLower().EndsWith(".jpeg") || z.ToLower().EndsWith(".png")))
+                    .Select(z => z.Trim())
+                    .ToList();
+
+
+                // BILDER LADEN:
+                // Wir nehmen das Verzeichnis, in dem die Anzeige.txt liegt
+                string verzeichnis = Path.GetDirectoryName(filename);
+                List<string> validePfade = new List<string>();
+
+                if (Directory.Exists(verzeichnis))
+                {
+                    // Alle gängigen Bildformate aus diesem Ordner abgreifen
+                    string[] filter = { "*.jpg", "*.jpeg", "*.png", "*.bmp", "*.tiff" };
+
+                    foreach (string f in filter)
+                    {
+                        string[] gefundeneBilder = Directory.GetFiles(verzeichnis, f);
+                        foreach (string bildPfad in gefundeneBilder)
+                        {
+                            // In die ListBox einfügen
+                            AddFilename(bildPfad);
+                            // Für die <files> Ersetzung in der Message sammeln
+                            validePfade.Add(bildPfad);
+                        }
+                    }
+                }
+
+                // Das Attribut für die <files> Ersetzung in der Message aktualisieren
+                this.Files = string.Join(Environment.NewLine, validePfade);
+
+                // 2. Start- und Endpunkt festlegen
+                int startAnzeige = Array.FindIndex(zeilen, z => z.Contains("folgende Verkehrsordnungswidrigkeit an:"));
+
+                if (startAnzeige != -1 && dankeIndex > startAnzeige)
+                {
+                    // Block beginnt 2 Zeilen nach dem Header und endet 8 Zeilen vor dem Danke-Satz
+                    int blockStart = startAnzeige + 2;
+                    int blockEnde = dankeIndex - 8;
+
+                    for (int i = blockStart; i <= blockEnde; i++)
+                    {
+                        string aktuelleZeile = zeilen[i].Trim();
+                        if (string.IsNullOrWhiteSpace(aktuelleZeile)) continue;
+
+                        // Prüfen, ob die Zeile exakt so in der Auswahl-Liste (CVerstossaus) steht
+                        bool gefunden = false;
+                        foreach (var item in CVerstossaus.Items)
+                        {
+                            if (item.ToString().Trim() == aktuelleZeile)
+                            {
+                                CVerstoss.Items.Add(item);
+                                gefunden = true;
+                                break;
+                            }
+                        }
+                        foreach (var item in CVerstoss.Items)
+                        {
+                            CVerstossaus.Items.Remove(item);
+                        }
+
+                        // Wenn nicht in CVerstossaus gefunden, dann ist es Freitext
+                        if (!gefunden)
+                        {
+                            this.FreeText += aktuelleZeile + Environment.NewLine;
+                        }
+                    }
+                }
+
+            }
+        }
+        private void smallToolbox15_ClickTool(object sender, SmallToolbox.ClickToolEventArgs e)
+        {
+            switch (e.ButtonIndex)
+            {
+                case 0:
+                    {
+                        if (CArchivList.SelectedItem != null)
+                        {
+                            InitAnzeige(e);
+                            LadeAnzeigeDaten(((AnzeigeEintrag)CArchivList.SelectedItem).AnzeigeDatei);
+                            selectOrt(COrt.Text);
+                            CFilterRCP.Visible = false;
+                            SynchVideoTab(tabControl1, CTAnzeige, CTabPages, CSave);
+                        }
+                    }
+                    break;
+            }
+        }
+        private void splitContainer6_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+        private void CSave_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -4143,6 +7749,19 @@ namespace Anzeige
             }
             else if (e.Button == MouseButtons.Right)
             {
+                Point p0 = e.Location;
+                if (bitf != null)
+                {
+                    Point p = bitf.Control2Image(p0);
+                    Color clsclr = bitf.GetAverageAreaColor(p, 15);
+                    // CSave.BackgroundImage = bitf.FillAreaWithAverageColor(p, 15);
+                    ColorContainer cont = bitf.MatchAverageColor(clsclr);
+                    Farbe = (string)cont.Name;
+                    CAnzeigeText.Text = Message;
+                    panel1.BackColor = cont.ClassColor;
+                    CAnzeigeText.Text = Message;
+                    MarkSelectedPanel(Farbe);
+                }
             }
             else if (e.Button == MouseButtons.Middle)
             {
@@ -4172,6 +7791,90 @@ namespace Anzeige
                 {
 
                 }
+            }
+
+        }
+        private void CSave_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                try
+                {
+                    cstack.Push(this.Cursor);
+                    this.Cursor = Cursors.WaitCursor;
+                    if (ausschnitt != null)
+                    {
+
+                        Rectangle rcl = Transform(Bildausschnitt, CSave.ClientRectangle, ausschnitt.Size);
+                        Bitmap tempausschnitt = CropRectangleFromBitmap(ausschnitt, bmpAusschnitt);
+                        CAusschnitt.BackgroundImage = tempausschnitt;
+                        CAusschnitt.Show();
+                        ausschnittTemp = (AddPath) ? Path.GetTempFileName().Replace(".tmp", ".jpg") : null;
+                        if (tempausschnitt != null)
+                        {
+                            ScaledSave(tempausschnitt, ausschnittTemp, 3);
+                            if (!CPixeln.Checked)
+                            {
+                                Bitmap kopie = new Bitmap(ausschnitt);
+                                BlackOutRegion(kopie, bmpAusschnitt);
+
+                                // Den Dateipfad für die geschwärzte Kopie festlegen
+                                string geschwaerzteKopiePfad = ZZielpfad + "public\\" + Guid.NewGuid().ToString() + ".jpg";
+
+                                // Graphics-Objekt für das Zeichnen auf der Kopie erstellen
+                                using (Graphics g = Graphics.FromImage(kopie))
+                                {
+                                    // Schriftart und Pinsel für den Text festlegen
+                                    Font font = new Font("Arial", 24);
+                                    SolidBrush brush = new SolidBrush(Color.White);
+
+                                    if (bussgeldrechner1.bussgeld != null)
+                                    {
+                                        Bussgeld bussgeld = bussgeldrechner1.bussgeld;
+                                        int y0 = kopie.Height - 320 + (bussgeld.Punkte > 0 ? 40 : 0);
+                                        g.DrawString($"Parken: {(bussgeld.parken ? "ja" : "nein")}", font, brush, 10, y0); y0 += 40;
+                                        g.DrawString($"Halten: {(bussgeld.halten ? "ja" : "nein")}", font, brush, 10, y0); y0 += 40;
+                                        g.DrawString($"Mit Behinderung: {(bussgeld.mitbehinderung ? "ja" : "nein")}", font, brush, 10, y0); y0 += 40;
+                                        g.DrawString($"Mit Gefährdung: {(bussgeld.mitgefaerdung ? "ja" : "nein")}", font, brush, 10, y0); y0 += 40;
+                                        g.DrawString($"Verdopplung: {(bussgeld.faktor == 2 ? "ja" : "nein")}", font, brush, 10, y0); y0 += 40;
+                                        g.DrawString($"Bußgeld: {bussgeld.Betrag:C2}", font, brush, 10, y0); y0 += 40;
+                                        if (bussgeld.Punkte > 0) g.DrawString($"Punkte: {bussgeld.PunkteText:C2}", font, brush, 10, y0); y0 += 40;
+                                    }
+                                }
+
+
+                                // Die geschwärzte Kopie speichern
+                                CreateDirectoryIfNotExists(ZZielpfad + "public");
+                                kopie.Save(geschwaerzteKopiePfad, ImageFormat.Jpeg);
+
+                                // Kopie freigeben und zerstören
+                                kopie.Dispose();
+                            }
+                            else
+                            {
+                                List<PixelatedArea> pixelrects = GetRectangles(CurrentFile);
+                                pixelrects.Add(new PixelatedArea(bmpAusschnitt, ausschnitt, CurrentFile));
+                                PixelOutRegions(ausschnitt, CurrentFile);
+                                CSave.BackgroundImage = ausschnitt;
+                                CSave.Refresh();
+                                Bitmap tempausschnitt2 = CropRectangleFromBitmap(ausschnitt, bmpAusschnitt);
+                                CAusschnitt.BackgroundImage = tempausschnitt2;
+                                CAusschnitt.Show();
+                            }
+                        }
+                        Bitmap bmp = (Bitmap)CAusschnitt.BackgroundImage;
+                        HoughTransform ht = new HoughTransform();
+                        // double r = ht.BerechneDurchschnittlichenWinkel(bmp);
+                        // CAusschnitt.BackgroundImage = ht.DrehenUmWinkel(bmp);
+                        CAusschnitt.BackgroundImage = ht.DrehenUmWinkel(bmp, CTrainOCR.Checked);
+                        CKennzeichen.Text = ht.AmtlichesKennzeichen;
+                    }
+                    else
+                    {
+                    }
+                }
+                catch (Exception ex) { Exception e1 = ex; }
+                cstack.Pop();
             }
         }
         private void CFoto_MouseMove(object sender, MouseEventArgs e)
@@ -4267,29 +7970,6 @@ namespace Anzeige
                             }
                         }
                         Bitmap bmp = (Bitmap)CAusschnitt.BackgroundImage;
-                        if (false)
-                        {
-                            if (bmp != null && bmp.Width * bmp.Height < 400000)
-                            {
-                                for (int th = 0; th < 256; th += 16)
-                                {
-                                    bmp = ConvertToBlackAndWhite((Bitmap)CAusschnitt.BackgroundImage, (int)th);
-                                    String text = ReadTextFromBitmap((Bitmap)COCRPicture.BackgroundImage);
-                                    String[] s = text.Split(' ');
-                                    if (s.Length == 3 && CKennzeichen.Text == "")
-                                    {
-                                        CKennzeichen.Text = text;
-                                        COCRPicture.BackgroundImage = bmp;
-                                    }
-                                    COCRPicture.Refresh();
-                                }
-                            }
-                            if (CKennzeichen.Text == "" && !CPixeln.Checked)
-                            {
-                                CKennzeichen.Text = ReadTextFromBitmap(tempausschnitt);
-                            }
-                            CAusschnitt.Refresh();
-                        }
                         HoughTransform ht = new HoughTransform();
                         // double r = ht.BerechneDurchschnittlichenWinkel(bmp);
                         // CAusschnitt.BackgroundImage = ht.DrehenUmWinkel(bmp);
@@ -4300,816 +7980,257 @@ namespace Anzeige
                     {
                     }
                 }
-                catch (Exception ex) { }
+                catch (Exception ex) { Exception e1 = ex; }
                 cstack.Pop();
             }
-        }
-        private void pictureBox_DoubleClick(object sender, EventArgs e)
-        {
-        }
-        private void CLockY_CheckedChanged(object sender, EventArgs e)
-        {
-            CLockY.Visible = CLockY.Checked;
-        }
 
-        public void SaveVideoFile()
-        {
-            FileInfo fi = new FileInfo(CVideoPlayer.URL);
-            string path = ZZielpfad + @"Download\" + DateTime.Now.ToString("yyyyMMdd");
-            CreateDirectoryIfNotExists(path);
-            string filename = path + "\\" + fi.Name;
-            try
-            {
-                File.Copy(fi.Name, filename);
-            }
-            catch
-            {
-
-            }
         }
-        private void WmpOnPlayStateChange(object sender, _WMPOCXEvents_PlayStateChangeEvent e)
+        bool SelectionNumberplate = false;
+        private void CKennzeichen_TextChanged(object sender, EventArgs e)
         {
-            if (e.newState == 3) // playing
+            if (!SelectionNumberplate)
             {
-                CVideoPlayer.Ctlcontrols.pause();
-
-                CVideoPosition.Maximum = (int)CVideoPlayer.currentMedia.duration;
-                CVideoPlayer.PlayStateChange -= WmpOnPlayStateChange;
-            }
-        }
-        int tempcounter = 0;
-        private Bitmap TakeScreenshot()
-        {
-            var bmp = WmpScreenshot.Capture(CVideoPlayer);
-            if (bmp == null)
-            {
-                MessageBox.Show("Screenshot konnte nicht erstellt werden!");
-            }
-            return bmp;
-        }
-        private void TakeScreenshot_OLD()
-        {
-            var bmp = WmpScreenshot.Capture(CVideoPlayer);
-            if (bmp != null)
-            {
-                using (var sfd = new SaveFileDialog { Filter = "PNG Image|*.png" })
+                if (COrt.Text == "")
                 {
-                    if (sfd.ShowDialog() == DialogResult.OK)
-                    {
-                        bmp.Save(sfd.FileName, System.Drawing.Imaging.ImageFormat.Png);
-                        MessageBox.Show("Screenshot gespeichert!");
-                    }
+                    String ortsname;
+                    CAnzeigeText.Text = Message;
+                    String[] items = CKennzeichen.Text.Split(' ');
+                    ortsname = FindOrtName(items[0]);
+                    selectOrt(ortsname);
                 }
-            }
-            else
-            {
-                MessageBox.Show("Screenshot konnte nicht erstellt werden!");
-            }
-        }
-        private void CVideoPosition_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-        private bool isSeeking = false;
-        private bool VideoChanging;
-        public static class WmpScreenshot
-        {
-            // Win32-Strukturen und Funktionen
-            [DllImport("user32.dll")]
-            private static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect);
-
-            [DllImport("user32.dll")]
-            private static extern bool ClientToScreen(IntPtr hWnd, ref POINT lpPoint);
-
-            [StructLayout(LayoutKind.Sequential)]
-            private struct RECT { public int Left, Top, Right, Bottom; }
-
-            [StructLayout(LayoutKind.Sequential)]
-            private struct POINT { public int X, Y; }
-
-            /// <summary>
-            /// Liefert ein Bitmap des aktuell sichtbaren Frames des Windows Media Player.
-            /// </summary>
-            /// <param name="player">Das AxWindowsMediaPlayer-Steuerelement</param>
-            /// <returns>Bitmap des Frames oder null bei Fehler</returns>
-            public static Bitmap Capture(AxWindowsMediaPlayer player)
-            {
-                if (player == null || player.currentMedia == null)
-                    return null;
-
-                // Fenstergröße abrufen
-                if (!GetClientRect(player.Handle, out RECT rect))
-                    return null;
-
-                // Position auf Bildschirm-Koordinaten umrechnen
-                POINT pt = new POINT { X = rect.Left, Y = rect.Top };
-                ClientToScreen(player.Handle, ref pt);
-
-                int width = rect.Right - rect.Left;
-                int height = rect.Bottom - rect.Top;
-
-                if (width <= 0 || height <= 0)
-                    return null;
-
-                // Bitmap erstellen und Bildschirmbereich kopieren
-                Bitmap bmp = new Bitmap(width, height);
-                using (Graphics g = Graphics.FromImage(bmp))
+                if (CKennzeichen.Text.Length > 0)
                 {
-                    g.CopyFromScreen(pt.X, pt.Y, 0, 0, new Size(width, height), CopyPixelOperation.SourceCopy);
-                }
-
-                return bmp;
-            }
-        }
-        void SynchVideoTab(TabControl control1, TabPage tab1, TabControl control2, TabPage tab2)
-        {
-            if (VideoChanging) return;
-            VideoChanging = true;
-            control1.SelectedTab = tab1;
-            control2.SelectedTab = tab2;
-            VideoChanging = false;
-        }
-        private void CTabPages_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            CStadtPate.Controls.Clear();
-            CTabPageOA.Controls.Clear();
-            CWeglide.Controls.Clear();
-            CGMaps.Controls.Clear();
-            CLockY.Visible = false;
-            if (CTabPages.SelectedTab == CTabPageOA)
-            {
-                if (URL != null)
-                {
-                    if (URL.Length < 1)
-                    {
-
-                    }
-                    else if (URL == "{pdf}")
-                    {
-                        CreatePDF.Checked = false;
-                        CreatePDF.Checked = true;
-
-                        if (PDFFilename != "")
-                        {
-                            ShellExecute(IntPtr.Zero, "open", PDFFilename, "", "", 5);
-                        }
-                    }
-                    else if (URL.Substring(0, 1) == "@")
-                    {
-                        ShellExecute(IntPtr.Zero, "open", URL.Substring(1), "", "", 5);
-                    }
-                    else
-                    {
-                        oabrowser.Navigate(URL);
-                        CTabPageOA.Controls.Add(oabrowser);
-                    }
-                }
-            }
-            else if (CTabPages.SelectedTab == CStadtPate)
-            {
-                oabrowser.Navigate("https://stadtpate.de/<ort>/OWI".Replace("<ort>", Ort));
-                CStadtPate.Controls.Add(oabrowser);
-            }
-            else if (CTabPages.SelectedTab == CWeglide)
-            {
-                oabrowser.Navigate("https://weg-li.de".Replace("<ort>", Ort));
-                CWeglide.Controls.Add(oabrowser);
-            }
-            else if (CTabPages.SelectedTab == CPolice)
-            {
-                oabrowser.Navigate("https://www.google.com/search?q=polizei+<ort>".Replace("<ort>", Ort));
-                CPolice.Controls.Add(oabrowser);
-            }
-            else if (CTabPages.SelectedTab == CGMaps)
-            {
-                if (GPSLocation == "")
-                {
-                    GPSLocation = "https://www.google.de/maps";
-                }
-                ShellExecute(IntPtr.Zero, "open", GPSLocation, "", "", 5);
-            }
-            else if (CTabPages.SelectedTab == CTest)
-            {
-            }
-            else if (CTabPages.SelectedTab == CAbout)
-            {
-                AboutBox1 dlg = new AboutBox1();
-                dlg.ShowDialog();
-            }
-            else if (CTabPages.SelectedTab == CAnzeigen)
-            {
-                if (!(CAnzeigenList.Items.Count > 0))
-                {
-                    string[] dateien = Directory.GetFiles(ZZielpfad, "Anzeige.txt", SearchOption.AllDirectories);
-
-                    // In die ListBox einfügen
-                    CAnzeigenList.Items.Clear();
-                    foreach (string datei in dateien)
-                    {
-                        CAnzeigenList.Items.Add(datei);
-                    }
-                }
-            }
-            else if (CTabPages.SelectedTab == CVideos)
-            {
-                SynchVideoTab(tabControl1, CVideo, CTabPages, CVideos);
-            }
-            else if (CTabPages.SelectedTab == CAnzeigenArchive)
-            {
-                SynchVideoTab(tabControl1, CAnzeigenArchiv, CTabPages, CAnzeigenArchive);
-            }
-        }
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            CLockY.Hide();
-            edit_Adress1.Hide();
-            edit_Line1.Hide();
-            abstandsmeter1.Visible = false;
-
-            if (tabControl1.SelectedTab == CVideo)
-            {
-                SynchVideoTab(tabControl1, CVideo, CTabPages, CVideos);
-            }
-            else if (tabControl1.SelectedTab == CAnzeigenArchiv)
-            {
-                SynchVideoTab(tabControl1, CAnzeigenArchiv, CTabPages, CAnzeigenArchive);
-                cstack.Push(this.Cursor);
-                this.Cursor = Cursors.WaitCursor;
-
-                // Alles lesen 
-                AnzeigeArchiv az = AnzeigenHistory;
-                CAnzeigenList.Items.Clear();
-                foreach (AnzeigeEintrag i in az.Eintraege)
-                    CArchivList.Items.Add(i);
-                this.Cursor = cstack.Pop();
-            }
-            else
-            {
-                CTabPages.SelectedTab = CSave;
-                if (tabControl1.SelectedTab == CTAbstand)
-                {
-                    splitContainer1.SplitterDistance = 160;
-                    pictureBox.Visible = true;
-                    pictureBox.Dock = DockStyle.Fill;
-                    pictureBox.BackgroundImageLayout = ImageLayout.None;
-                    abstandsmeter1.Visible = true;
-                    CLockY.Visible = CLockY.Checked;
-                }
-                else if (tabControl1.SelectedTab == CTAbstandSerie)
-                {
-                    if (_logPath == null)
-                        this.logPath = ZZielpfad + "AMK";
-                    abstandsmeter1.CurrentMesswert.Abstand2 = 100;
-                    abstandsmeter1.Visible = true;
+                    CRecognized.Text = CKennzeichen.Text.Replace(" ", " ");
+                    CRecognized.Visible = true;
                 }
                 else
+                    CRecognized.Visible = false;
+
+                var engine = new PatternEngine();
+
+                // Try correction
+                List<CorrectionData> fixedText = engine.TryFixAllPatterns(CKennzeichen.Text);
+                if (fixedText[0].PatternKey != null)
                 {
-                    splitContainer1.SplitterDistance = 440;
-                    pictureBox.Visible = false;
+                    CKennzeichenArt.Text = fixedText[0].PatternKey;
+                    // CKennzeichen.Text = fixedText.text;
+                    SetTextKeepCursor(CKennzeichen, fixedText[0].CorrectedText);
+                    CKennzeichenArt.Items.Clear();
+                    CKennzeichenArt.Items.AddRange(fixedText.ToArray());
+                }
+
+                if (engine.Validate(CKennzeichen.Text, out string pattern)) // 
+                {
+                    CKennzeichen.BackColor = Color.FromArgb(192, 192, 255);
+                    CKennzeichen.ForeColor = SystemColors.WindowText;
+                    CKennzeichenArt.Text = pattern;
+                }
+                else // Kennzeichen ungültig
+                {
+                    CKennzeichen.BackColor = Color.Red;
+                    CKennzeichen.ForeColor = Color.White;
                 }
             }
         }
-        private void CTrainOCR_CheckedChanged(object sender, EventArgs e)
+        private void CKennzeichenArt_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-        }
-        private void CDuplikation_Click(object sender, EventArgs e)
-        {
-            SynchVideoTab(tabControl1, CAnzeigenArchiv, CTabPages, CAnzeigenArchive);
-            cstack.Push(this.Cursor);
-            this.Cursor = Cursors.WaitCursor;
-
-            // Alles lesen 
-            AnzeigeArchiv az = AnzeigenHistory;
-            List<AnzeigeEintrag> l = az.SucheNachKennzeichenListe(CKennzeichen.Text);
-
-            this.Cursor = cstack.Pop();
-
-            if (l.Count > 1)
+            CorrectionData cd = (CorrectionData)CKennzeichenArt.SelectedItem;
+            SelectionNumberplate = true;
+            CKennzeichen.Text = cd.CorrectedText;
+            SelectionNumberplate = false;
+            if (CMarke.Text == "")
             {
-                string text = "";
-                foreach (var e2 in l)
-                    text += e2.Kennzeichen + " @ " + e2.ZielPfad + Environment.NewLine;
+                switch (cd.PatternKey)
+                {
+                    case "Bundespolizei":           // ^BP-[0-9]{2}-[0-9]{3,4}$
+                    case "PolizeiNRWL":             // ^NRW-[0-9]{1,4}-[A-ZÄÖÜ]{1,4}$
+                    case "PolizeiNRWN":             // ^NRW-[0-9]{1,4}-[0-9]{1,4}$
+                    case "PolizeiDE1":              // ^(B|HH|HB|KA|S|M|N|A|P|C|F|DA|HRO|SN|H|OL|K|D|MZ|KL|SB|DD|L|MD|HAL|KI|EF|G|WÜ)-[0-9]{1,4}(-[A-ZÄÖÜ0-9]{1,4})?$
+                    case "PolizeiDE2":              // ^(B|HH|HB|KA|S|M|N|A|P|C|F|DA|HRO|SN|H|OL|K|D|MZ|KL|SB|DD|L|MD|HAL|KI|EF|G|WÜ)-[0-9]{1,5}?$
+                    case "Landes-Bundespolizei1":  // ^(BWL|BY|B|BBL|HB|HH|MVL|NRW|RPL|SAL|DD|LSA|SH|EF-LP|BP)-[0-9]{1,4}(-[A-ZÄÖÜ0-9]{1,4})?$
+                    case "Landes-Bundespolizei2":  // ^(BWL|BY|B|BBL|HB|HH|MVL|NRW|RPL|SAL|DD|LSA|SH|EF-LP|BP)-[0-9]{1,6}?$
+                    case "BundespolizeiAlt":       // ^BG-[0-9]{1,4}$
+                        CMarke.Text = "Polizei-Fahrzeug";
+                        break;
 
-                MessageBox.Show(text, "Duplikate gefunden",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning);
-            }
-        }
-        private void BTMirror_Click(object sender, EventArgs e)
-        {
-            if (loadedImage != null)
-            {
-                // Kopie des geladenen Bildes erstellen
-                Image mirroredImage = (Image)loadedImage.Clone();
+                    case "Diplomat":           // ^0-[0-9]{3}[ ]?[0-9]{1,3}$
+                    case "DiplomatVar1":       // ^0 ?[A-ZÄÖÜ]{1,2} ?[0-9]{1,3}-[0-9]{1,3}[A-ZÄÖÜ]?$
+                    case "DiplomatVar2":       // ^(B|BN) ?[0-9]{1,3}-[0-9]{1,3}[A-ZÄÖÜ]?$
+                    case "DiplomatVar3":       // ^[A-ZÄÖÜ]{1,2}-9[0-9]{2,4}$
+                    case "DiplomatAlias":      // ^0 ?[0-9]{1,3}-[0-9]{1,3}[A-ZÄÖÜ]$
+                    case "DiplomatHistoric":   // ^0 ?[0-9]{1,3}-[0-9]{1,3}H$
+                    case "ConsularCC":         // ^[A-ZÄÖÜ]{1,2}-9[0-9]{3,4}$
+                    case "Diplomat1":          // ^0 ?[A-ZÄÖÜ]{1,2} ?[0-9]{1,3}-[0-9]{1,3}[A-ZÄÖÜ]?$
+                    case "Diplomat2":          // ^(B|BN) ?[0-9]{1,3}-[0-9]{1,3}[A-ZÄÖÜ]?$
+                    case "Diplomat3":          // ^[A-ZÄÖÜ]{1,2}-9[0-9]{2,4}$
+                        CMarke.Text = "Diplomatenfahrzeug";
+                        break;
 
-                // Horizontal spiegeln
-                mirroredImage.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                    case "Bundeswehr":       // ^Y-[0-9]{1,6}$ – reguläre Bundeswehr-Dienstfahrzeuge, bis zu 6 Ziffern
+                    case "BundeswehrE":      // ^Y-[0-9]{1,6}E$ – Elektrofahrzeuge
+                    case "BundeswehrTest":   // ^Y-[0-9]{1,6}$ – Testfahrzeuge / Erprobung (rote Kennzeichen)
+                        CMarke.Text = "Bundeswehr";
+                        break;
 
-                // In der PictureBox anzeigen
-                pictureBox.BackgroundImage = mirroredImage;
+                    case "Händlerrot":
+                    case "PruefungRot":
+                    case "OldtimerRot":
+                        CMarke.Text = "Händler Kennzeichen";
+                        break;
 
-                // Optional: falls du es auch speichern willst
-                string tempFilePath = Path.GetTempFileName();
-                mirroredImage.Save(tempFilePath);
-                LoadImage(tempFilePath);
+                    case "THW":
+                        CMarke.Text = "THW";
+                        break;
 
-                left.Checked = true;
-            }
-            else
-            {
-                MessageBox.Show("Nur Bilder können gespiegelt werden.", "Abstand");
-            }
-        }
-        private void BTMirror_Click_old(object sender, EventArgs e)
-        {
-            if (loadedImage != null)
-            {
-                string tempFilePath = Path.GetTempFileName();
-                pictureBox.BackgroundImage.Save(tempFilePath);
-                LoadImage(tempFilePath);
-                left.Checked = true;
-            }
-            else
-            {
-                MessageBox.Show("Nur bilder können gespiegelt werden.", "Abstand");
-            }
-        }
-        private void pictureBox20_Click(object sender, EventArgs e)
-        {
-            refwidth = 15;
-            selectedRef = pictureBox5;
-            textrefresh();
-        }
-        private void UpdateVideoPosition()
-        {
-            if (isSeeking) return;
-            if (CVideoPlayer.currentMedia == null) return;
+                    case "Zoll":
+                        CMarke.Text = "Zoll";
+                        break;
 
-            try
-            {
-                isSeeking = true;
+                    case "Austria":       // ^[A-ZÄÖÜ]{1,2} [0-9]{1,4} [A-ZÄÖÜ]{1,2}$ – Österreich (XX 123 AB)
+                    case "France":        // ^[A-ZÄÖÜ]{2}-[0-9]{3}-[A-ZÄÖÜ]{2}$ – Frankreich (AB-123-CD)
+                    case "Italy":         // ^[A-ZÄÖÜ]{2} [0-9]{3} [A-ZÄÖÜ]{2}$ – Italien (AB 123 CD)
+                    case "Spain":         // ^[0-9]{4} [A-ZÄÖÜ]{3}$ – Spanien (1234 ABC)
+                    case "Netherlands":   // ^[A-ZÄÖÜ]{2}-[0-9]{2}-[A-ZÄÖÜ]{2}$ – Niederlande (AB-12-CD)
+                    case "Belgium":       // ^[0-9]-[A-ZÄÖÜ]{3}-[0-9]{3}$ – Belgien (1-ABC-123)
+                    case "Poland":        // ^[A-ZÄÖÜ]{2} [0-9]{1,5}$ – Polen (WX 12345)
+                    case "Czech":         // ^[0-9][A-ZÄÖÜ]{2} [0-9]{4}$ – Tschechien (1AB 1234)
+                    case "Hungary":       // ^[A-ZÄÖÜ]{3}-[0-9]{3}$ – Ungarn (ABC-123)
+                    case "Sweden":        // ^[A-ZÄÖÜ]{3} [0-9]{3}$ – Schweden (ABC 123)
+                    case "Denmark":       // ^[A-ZÄÖÜ]{2} [0-9]{2} [0-9]{3}$ – Dänemark (AB 12 345)
+                    case "Finland":       // ^[A-ZÄÖÜ]{3}-[0-9]{3}$ – Finnland (ABC-123)
+                    case "Ireland":       // ^[0-9]{1,3}-[A-ZÄÖÜ]-[0-9]{1,4}$ – Irland (123-D-4567)
+                    case "Portugal":      // ^[0-9]{2}-[A-ZÄÖÜ]{2}-[0-9]{2}$ – Portugal (12-AB-34)
+                        CMarke.Text = "EU KFZ";
+                        break;
 
-                // Grobwert aus Haupt-Trackbar
-                int coarseValue = Math.Min(Math.Max(CVideoPosition.Value, CVideoPosition.Minimum), CVideoPosition.Maximum);
+                    case "Switzerland":   // ^[A-ZÄÖÜ]{2} [0-9]{1,6}$ – Schweiz (ZH 12345)
+                    case "UK":            // ^[A-ZÄÖÜ]{2}[0-9]{2} [A-ZÄÖÜ]{3}$ – Großbritannien (AB12 CDE)
+                    case "Greece":        // ^[A-ZÄÖÜ]{3}-[0-9]{4}$ – Griechenland (ABX-1234)
+                    case "Turkey":        // ^[0-9]{2} [A-ZÄÖÜ]{1,2} [0-9]{2,4}$ – Türkei (34 AB 1234)                        CMarke.Text = "EU KFZ";
+                        CMarke.Text = "nicht EU KFZ";
+                        break;
 
-                // Feinwert aus Micro-Trackbar (-100 .. +100)
-                int microValue = CVideoMicroPosition.Value;
-
-                // Annahme: Microwert ist in Millisekunden
-                double fineOffsetSeconds = microValue / 100.0;
-
-                // Endgültige Position = Grobwert + Feinwert
-                double newPosition = coarseValue + fineOffsetSeconds;
-
-                // Trick: kurz abspielen, Position setzen, sofort pausieren
-                CVideoPlayer.Ctlcontrols.play();
-                CVideoPlayer.Ctlcontrols.currentPosition = newPosition;
-                CVideoPlayer.Ctlcontrols.pause();
-            }
-            finally
-            {
-                isSeeking = false;
+                    default:
+                        CMarke.Text = "Standard";
+                        break;
+                }
             }
         }
+        private void CKennzeichen_GotFocus(object sender, EventArgs e)
+        {
+            CPixeln.Checked = false;
+        }
+        private void CKennzeichen_LostFocus(object sender, EventArgs e)
+        {
+            CPixeln.Checked = true;
+        }
+        private void CKennzeichen_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            switch (e.KeyChar)
+            {
+                case '\r':
+                    break;
 
-        private void CVideoPosition_Scroll(object sender, EventArgs e)
+            }
+        }
+        private void CMassstab_ValueChanged(object sender, EventArgs e)
+        {
+            // Reale Distanz vom Massstab
+            meterPerPixel = (double)CMassstab.Value / pixelMassstab;
+        }
+        private void CFixY_CheckedChanged(object sender, EventArgs e)
+        {
+            mousemode = Mode.FIXY;
+        }
+        private void CWebPortal_Click(object sender, EventArgs e)
+        {
+            List<String> filelist = new List<String>();
+
+            if (PrepareSending(filelist))
+            {
+                foreach (string f in CFiles.Items)
+                    filelist.Add(f);
+                FCSExecute(WebPortalScript);
+            }
+        }
+
+        private void CVideoPosition_MouseUp(object sender, MouseEventArgs e)
         {
             UpdateVideoPosition();
         }
-
-        private void CVideoMicroPosition_Scroll(object sender, EventArgs e)
+        private void CVideoMicroPosition_MouseUp(object sender, MouseEventArgs e)
         {
             UpdateVideoPosition();
         }
-
-        private void CVideoPosition_Scroll_old(object sender, EventArgs e)
+        private void COrt_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (isSeeking) return;
-            if (CVideoPlayer.currentMedia == null) return;
-
-            try
+            String[] items = COrt.Text.Split(';');
+            if (items.Length > 1)
             {
-                isSeeking = true;
-
-                int newValue = Math.Min(Math.Max(CVideoPosition.Value, CVideoPosition.Minimum), CVideoPosition.Maximum);
-
-                // Trick: kurz abspielen, Position setzen, sofort pausieren
-                CVideoPlayer.Ctlcontrols.play();
-                CVideoPlayer.Ctlcontrols.currentPosition = newValue;
-                CVideoPlayer.Ctlcontrols.pause();
+                selectOrt(items[1]);
+                CAnzeigeText.Text = Message;
             }
-            finally
+            WebPortalScript = (items.Length > 5 ? items[5] : "");
+        }
+
+        private void button2_Click_2(object sender, EventArgs e)
+        {
+            // suche nachsten index von CSearchOrdnungsamt.Text in CDataList.Items
+            string s = CSearchOrdnungsamt.Text;
+            if (string.IsNullOrEmpty(s)) return;
+
+            int start = CDataList.SelectedIndex + 1;
+            int idx = Enumerable.Range(0, CDataList.Items.Count)
+                                .Skip(start).Concat(Enumerable.Range(0, start))
+                                .FirstOrDefault(i => CDataList.Items[i].ToString().Contains(s), -1);
+
+            if (idx != -1) CDataList.SelectedIndex = idx;
+        }
+
+        private void CSaveData_Click(object sender, EventArgs e)
+        {
+            string dataFile = "Data.txt";
+            string backupFile = "Data.bak";
+
+            // Backup erstellen
+            if (File.Exists(dataFile))
+                File.Copy(dataFile, backupFile, true);
+
+            // ListBox -> Datei speichern
+            List<string> lines = new List<string>();
+
+            foreach (var item in CDataList.Items)
+                lines.Add(item.ToString());
+
+            File.WriteAllLines(dataFile, lines);
+            loadLines();
+        }
+
+        private void CLoadData_Click(object sender, EventArgs e)
+        {
+            loadLines();
+        }
+        private string[] loadLines()
+        {
+            List<string> allLines = new List<string>();
+            allLines.AddRange(File.ReadAllLines(configfile));
+            allLines.AddRange(File.ReadAllLines("Data.txt"));
+            string[] lines = allLines.ToArray();
+            CDataList.Items.Clear();
+            CDataList.Items.AddRange(File.ReadAllLines("Data.txt"));
+            return lines;
+        }
+
+        private void CSearchOrdnungsamt_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            switch (e.KeyChar)
             {
-                isSeeking = false;
-            }
-        }
-
-        private void CVideoMicroPosition_Scroll_old(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CCBFulltext_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CBSuchen_Click(object sender, EventArgs e)
-        {
-            CArchivList.Items.Clear();
-
-            foreach (AnzeigeEintrag eintrag in AnzeigenHistory.Eintraege)
-            {
-                string suchtext = eintrag.GetSuchText(CCBFulltext.Checked);
-                string suchbegriff = CSearchText.Text;
-
-                if (!CCBCase.Checked)
-                {
-                    suchtext = suchtext.ToLower();
-                    suchbegriff = suchbegriff.ToLower();
-                }
-                if (CCBUmlauts.Checked)
-                {
-                    suchtext = AnzeigeArchiv.toUmlauts(suchtext);
-                    suchbegriff = AnzeigeArchiv.toUmlauts(suchbegriff);
-                }
-                if (CCBSpecialchars.Checked)
-                {
-                    suchtext = AnzeigeArchiv.toSpecials(suchtext);
-                    suchbegriff = AnzeigeArchiv.toSpecials(suchbegriff);
-                }
-
-
-                bool cmp;
-                if (CCBStartsWith.Checked)
-                {
-                    cmp = suchtext.StartsWith(suchbegriff);
-                }
-                else if (CCBEndsWith.Checked)
-                {
-                    cmp = suchtext.EndsWith(suchbegriff);
-                }
-                else if (CCBContains.Checked)
-                {
-                    cmp = suchtext.Contains(suchbegriff);
-                }
-                else if (CCBSimular.Checked)
-                {
-                    cmp = (AnzeigeArchiv.CompareSimular(suchtext, suchbegriff) > 0.75);
-                }
-                else
-                    cmp = (suchtext == suchbegriff);
-
-                if (CCBInvers.Checked)
-                    cmp = !cmp;
-                if (cmp)
-                    CArchivList.Items.Add(eintrag);
-            }
-        }
-
-        private void CArchivList_SelectedValueChanged(object sender, EventArgs e)
-        {
-            AnzeigeEintrag entry = (AnzeigeEintrag)CArchivList.SelectedItem;
-            CSearchText.Text = entry.Kennzeichen;
-            CShowArchivText.Text = entry.Text;
-        }
-
-        private void CArchivList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void CBTOpenArchiv_Click(object sender, EventArgs e)
-        {
-            AnzeigeEintrag entry = (AnzeigeEintrag)CArchivList.SelectedItem;
-            ShellExecute(IntPtr.Zero, "open", entry.AnzeigeDatei.ToLower().Replace("\\anzeige.txt", ""), "", "", 5);
-        }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-            var reader = new WegLiCsvReader();
-            var districts = reader.LoadDistricts();
-
-        }
-
-        private double CalculateSpeed(double distanceMeters, double frameCount, double fps = 30)
-        {
-            double timeSeconds = frameCount / fps;
-            double speedMs = distanceMeters / timeSeconds;
-            return speedMs * 3.6; // km/h
-        }
-
-        private bool TestVideo() // prüfe ob video Geladen ist. 
-        {
-            bool result = CVideoPlayer.currentMedia != null;
-            if (!result)
-                MessageBox.Show("Video laden");
-            return result;
-        }
-        private void smallToolbox7_ClickTool(object sender, Anzeige.SmallToolbox.ClickToolEventArgs e)
-        {
-            switch (e.ButtonIndex)
-            {
-                case 0:
-                    {
-                        using var ofd = new OpenFileDialog();
-                        ofd.Filter = "Video Files|*.mp4;*.avi;*.mov;*.wmv|All Files|*.*";
-
-                        if (ofd.ShowDialog() == DialogResult.OK)
-                        {
-                            cstack.Push(this.Cursor);
-                            this.Cursor = Cursors.WaitCursor;
-
-                            CVideoPlayer.URL = ofd.FileName;
-                            CVideoPlayer.Ctlcontrols.stop();
-
-                            // später setzen, wenn MetaData da ist
-                            CVideoPlayer.PlayStateChange += WmpOnPlayStateChange;
-                            CVideoPlayer.Ctlcontrols.play();
-                            this.Cursor = cstack.Pop();
-                            ASpeedstart = -1;
-                            BSpeedend = -1;
-                            CDistance.Text = "0";
-                            splitContainer5.Panel2.BackgroundImage = null;
-                        }
-                    }
+                case '\r':
+                    button2_Click_2(sender, e);
                     break;
-                case 1:
-                    if (TestVideo())
-                    {
-                        if (CSaveVideoFile.Checked)
-                            SaveVideoFile();
-                        cstack.Push(this.Cursor);
-                        this.Cursor = Cursors.WaitCursor;
-                        Bitmap bmp = TakeScreenshot();
-                        if (bmp != null)
-                        {
-                            string filename = "";
-                            string videoname = CVideoPlayer.URL;
-                            FileInfo fi = new FileInfo(videoname);
-                            string baseName = System.IO.Path.GetFileNameWithoutExtension(fi.Name).ToLower();
-                            string timestamp = fi.CreationTime.ToString("yyyyMMdd_HHmmss");
-                            string name = $"{baseName}_{timestamp}_{tempcounter:D3}.png"; // D3 = 3-stellig mit führenden Nullen
-                            tempcounter++;
-                            string path = ZZielpfad + @"Download\" + DateTime.Now.ToString("yyyyMMdd");
-                            CreateDirectoryIfNotExists(path);
-                            filename = path + "\\" + name;
-                            bmp.Save(filename);
-                            FileInfo fi2 = new FileInfo(filename);
-                            fi2.CreationTime = fi.CreationTime;
-
-                            File.SetLastWriteTime(filename, fi.LastWriteTime);
-                            File.SetCreationTime(filename, fi.CreationTime);
-
-                            AddFilename(filename);
-                            tabControl1.SelectedIndex = 0;
-                        }
-                        this.Cursor = cstack.Pop();
-
-                    }
-                    break;
-                case 2:
-                    if (TestVideo())
-                    {
-                        if (CSaveVideoFile.Checked)
-                            SaveVideoFile();
-                        cstack.Push(this.Cursor);
-                        this.Cursor = Cursors.WaitCursor;
-                        Bitmap bmp = TakeScreenshot();
-                        if (bmp != null)
-                        {
-                            string filename = "";
-                            string videoname = CVideoPlayer.URL;
-                            FileInfo fi = new FileInfo(videoname);
-                            string baseName = System.IO.Path.GetFileNameWithoutExtension(fi.Name).ToLower();
-                            string timestamp = fi.CreationTime.ToString("yyyyMMdd_HHmmss");
-                            string name = $"{baseName}_{timestamp}_{tempcounter:D3}.png"; // D3 = 3-stellig mit führenden Nullen
-                            tempcounter++;
-                            string path = ZZielpfad + @"Download\" + DateTime.Now.ToString("yyyyMMdd");
-                            CreateDirectoryIfNotExists(path);
-                            filename = path + "\\" + name;
-                            bmp.Save(filename);
-                            FileInfo fi2 = new FileInfo(filename);
-                            fi2.CreationTime = fi.CreationTime;
-                            File.SetLastWriteTime(filename, fi.LastWriteTime);
-                            File.SetCreationTime(filename, fi.CreationTime);
-                            tabControl1.SelectedTab = CTAbstand;
-                            LoadImage(filename);
-                            left.Checked = true;
-                        }
-                        this.Cursor = cstack.Pop();
-
-                    }
-                    break;
-                case 3:
-                    {
-                        Bitmap bmp = TakeScreenshot();
-                        Clipboard.SetImage(bmp);
-                    }
-                    break; 
-            }
-        }
-
-        private double ASpeedstart = -1;
-        private double BSpeedend = -1;
-        private Bitmap startPicture = null;
-        private Bitmap endPicture = null;
-        private double DeltaSpeedTime
-        {
-            get { return BSpeedend - ASpeedstart; }
-        }
-        private void smallToolbox8_ClickTool(object sender, Anzeige.SmallToolbox.ClickToolEventArgs e)
-        {
-            switch (e.ButtonIndex)
-            {
-                case 0:
-                    if (TestVideo())
-                    {
-                        ASpeedstart = CVideoPlayer.Ctlcontrols.currentPosition;
-                        startPicture = TakeScreenshot();
-                    }
-                    break;
-                case 1:
-                    if (TestVideo())
-                    {
-                        BSpeedend = CVideoPlayer.Ctlcontrols.currentPosition;
-                        endPicture = TakeScreenshot();
-                    }
-                    break;
-                case 2:
-                    {
-                        String url = ortssuche;
-                        url = url.Replace("<strasse>", Strasse);
-                        url = url.Replace("<hn>", HN);
-                        url = url.Replace("<plz>", PLZ);
-                        url = url.Replace("<ort>", Ort);
-                        // ortssuche
-                        ShellExecute(IntPtr.Zero, "open", url, "", "", 5);
-                    }
-                    break;
-
-                    case 3:
-                    {
-                        if (ASpeedstart >= 0 && BSpeedend >= 0 && BSpeedend > ASpeedstart)
-                        {
-                            double distanceMeters;
-                            if (double.TryParse(CDistance.Text, out distanceMeters))
-                            {
-                                double speedKmh = CalculateSpeed(distanceMeters, DeltaSpeedTime * 30); // Annahme: 30 FPS
-
-                                Bitmap speedimage = BuildSpeedBitmap(startPicture, endPicture, ASpeedstart, BSpeedend, speedKmh);
-                                Clipboard.SetImage(speedimage);
-                                splitContainer5.Panel2.BackgroundImage = speedimage;
-                            }
-                            else
-                            {
-                                MessageBox.Show("Ungültiger Wert für die Strecke. Bitte Zahl eingeben.",
-                                                "Fehler",
-                                                MessageBoxButtons.OK,
-                                                MessageBoxIcon.Error);
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("Bitte Start- und Endzeitpunkt und Strecke Messung setzen.", "Fehler",
-                                            MessageBoxButtons.OK,
-                                            MessageBoxIcon.Error);
-                        }
-                    }
+                default:
                     break;
             }
         }
-
-        private Bitmap BuildSpeedBitmap(Bitmap startPicture, Bitmap endPicture, double startTime, double endTime, double speedKmh)
-        {
-            int width = Math.Max(startPicture.Width, endPicture.Width);
-            int height = startPicture.Height + endPicture.Height + 180;
-
-            Bitmap result = new Bitmap(width, height);
-
-            Graphics g = Graphics.FromImage(result);
-            g.Clear(Color.Black);
-
-            Font font = new Font("Segoe UI", 14, FontStyle.Bold);
-            Font bigFont = new Font("Segoe UI", 42, FontStyle.Bold);
-            Brush brush = Brushes.White;
-
-            // ---- Start ----
-            string startText = $"Start: {startTime:F2} s";
-            SizeF startSize = g.MeasureString(startText, font);
-            g.DrawString(startText, font, brush, (width - startSize.Width) / 2f, 10f);
-            g.DrawImage(startPicture, (width - startPicture.Width) / 2, 40);
-
-            // ---- Ende ----
-            int endTextY = 40 + startPicture.Height + 20;
-            string endText = $"Ende: {endTime:F2} s";
-            SizeF endSize = g.MeasureString(endText, font);
-            g.DrawString(endText, font, brush, (width - endSize.Width) / 2f, endTextY);
-            g.DrawImage(endPicture, (width - endPicture.Width) / 2, endTextY + 30);
-
-            // ---- Speed ----
-            double difftime = endTime - startTime;
-            double distance = difftime * speedKmh / 3.6;
-
-            string speedText = $"{difftime:F2}s / {distance:F2}m = {speedKmh:F1} km/h";
-            SizeF speedSize = g.MeasureString(speedText, bigFont);
-            g.DrawString(
-                speedText,
-                bigFont,
-                brush,
-                (width - speedSize.Width) / 2f,
-                height - speedSize.Height - 20f
-            );
-
-            return result;
-        }
-        private Bitmap BuildSpeedBitmap_old2(Bitmap startPicture, Bitmap endPicture, double startTime, double endTime, double speedKmh)
-        {
-            int width = Math.Max(startPicture.Width, endPicture.Width);
-            int height = startPicture.Height + endPicture.Height + 180; // Platz für Überschriften + Speed
-
-            Bitmap result = new Bitmap(width, height);
-
-            using (Graphics g = Graphics.FromImage(result))
-            {
-                g.Clear(Color.Black);
-
-                using (Font font = new Font("Segoe UI", 14, FontStyle.Bold))
-                using (Brush brush = Brushes.White)
-                {
-                    // Start-Überschrift zentriert
-                    string startText = $"Start: {startTime:F2} s";
-                    SizeF startSize = g.MeasureString(startText, font);
-                    float startX = (width - startSize.Width) / 2;
-                    g.DrawString(startText, font, brush, startX, 10);
-
-                    // Startbild darunter
-                    g.DrawImage(startPicture, (width - startPicture.Width) / 2, 40);
-
-                    // End-Überschrift zentriert
-                    string endText = $"Ende: {endTime:F2} s";
-                    SizeF endSize = g.MeasureString(endText, font);
-                    float endX = (width - endSize.Width) / 2;
-                    int endTextY = 40 + startPicture.Height + 20;
-                    g.DrawString(endText, font, brush, endX, endTextY);
-
-                    // Endbild darunter
-                    g.DrawImage(endPicture, (width - endPicture.Width) / 2, endTextY + 30);
-
-                    // Geschwindigkeit in 3-facher Schriftgröße
-                    using (Font bigFont = new Font("Segoe UI", 42, FontStyle.Bold))
-                    {
-                        double difftime = Math.Round(endTime - startTime, 2);
-                        double distance = Math.Round(difftime * speedKmh / 3.6, 2);
-                        string speedText = $"{difftime}/{distance} = {speedKmh:F1} km/h";
-                        SizeF speedSize = g.MeasureString(speedText, bigFont);
-                        float speedX = (width - speedSize.Width) / 2;
-                        float speedY = height - speedSize.Height - 20;
-                        g.DrawString(speedText, bigFont, brush, speedX, speedY);
-                    }
-                }
-            }
-
-            return result;
-        }
-
-        private Bitmap BuildSpeedBitmap_old(
-            Bitmap startPicture,
-            Bitmap endPicture,
-            double startTime,
-            double endTime,
-            double speedKmh)
-        {
-            int width = startPicture.Width + endPicture.Width;
-            int height = Math.Max(startPicture.Height, endPicture.Height) + 60;
-
-            Bitmap result = new Bitmap(width, height);
-
-            using (Graphics g = Graphics.FromImage(result))
-            {
-                g.Clear(Color.Black);
-
-                g.DrawImage(startPicture, 0, 0);
-                g.DrawImage(endPicture, startPicture.Width, 0);
-
-                using (Font font = new Font("Segoe UI", 14, FontStyle.Bold))
-                using (Brush brush = Brushes.White)
-                {
-                    g.DrawString($"Start: {startTime:F2} s", font, brush, 10, 10);
-                    g.DrawString($"Ende: {endTime:F2} s", font, brush, startPicture.Width + 10, 10);
-
-                    string speedText = $"{speedKmh:F1} km/h";
-                    SizeF size = g.MeasureString(speedText, font);
-
-                    float x = (width - size.Width) / 2;
-                    float y = height - size.Height - 10;
-
-                    g.DrawString(speedText, font, brush, x, y);
-                }
-            }
-
-            return result;
-        }
-
     }
 }
